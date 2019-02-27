@@ -77,6 +77,7 @@ public class SignUp{
         // Add Name Text Field
         TextField nameField = new TextField();
         nameField.setPrefHeight(prefHeight);
+        nameField.setPromptText("Ola Nordmann");
         gridPane.add(nameField, 1,1);
 
 
@@ -87,6 +88,7 @@ public class SignUp{
         // Add Email Text Field
         TextField emailField = new TextField();
         emailField.setPrefHeight(prefHeight);
+        emailField.setPromptText("party@myhouse.tonight");
         gridPane.add(emailField, 1, 2);
 
         // Add Password Label
@@ -96,6 +98,7 @@ public class SignUp{
         // Add Password Field
         PasswordField passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
+        passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
 
         // Add Submit Button
