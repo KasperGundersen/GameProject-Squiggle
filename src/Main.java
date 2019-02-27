@@ -31,7 +31,7 @@ public class Main extends Application {
     }
 
     private void closeProgram(){
-        Boolean answer = ConfirmBox.display("Feilmelding!!", "Sure you want to exit?");
+        Boolean answer = ConfirmBox.display("Warning!", "Sure you want to exit?");
         if(answer){
             window.close();
         }
