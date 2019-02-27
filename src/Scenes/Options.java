@@ -19,6 +19,8 @@ public class Options{
         // Chekboxes
         CheckBox box1 = new CheckBox("Sound");
         CheckBox box2 = new CheckBox("Music");
+        box1.setSelected(true);
+        box2.setSelected(true);
 
         Button adsButton = new Button("Remove ads");
         Button ratebutton = new Button("Rate the producer");
