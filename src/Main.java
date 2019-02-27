@@ -15,17 +15,17 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         stage.setTitle("Squiggle");
-
+        stage.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
 
         Pane layout = new Pane();
         Scene scene = new Scene(layout, WIDTH, HEIGHT);
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest(e -> {
-            e.consume();
-            closeProgram();
-        });
+
     }
 
     private void closeProgram(){
