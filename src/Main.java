@@ -7,7 +7,7 @@ public class Main extends Application {
 
     private static final double HEIGHT = 700;
     private static final double WIDTH = 1000;
-
+    Stage stage;
     public static void main(String[] args) {
         launch(args);
     }
@@ -21,5 +21,17 @@ public class Main extends Application {
         Scene scene = new Scene(layout, WIDTH, HEIGHT);
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
+    }
+
+    private void closeProgram(){
+        Boolean answer = ConfirmBox.display("Feilmelding!!", "Sure you want to exit?");
+        if(answer){
+            stage.close();
+        }
     }
 }
