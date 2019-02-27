@@ -10,6 +10,7 @@ import javafx.scene.control.CheckBox;
 
 
 public class Options{
+    static String utskrift;
 
     public static void opneBoxer(){
         Stage window = new Stage();
@@ -26,6 +27,17 @@ public class Options{
         Button ratebutton = new Button("Rate the producer");
         Button restartButton = new Button("Restart user");
 
+
+        adsButton.setOnAction(e -> {
+            System.out.println("Ads are disabled");
+        });
+        ratebutton.setOnAction(e -> {
+            System.out.println("Rating was chosen");
+        });
+        restartButton.setOnAction(e -> {
+            System.out.println("Restart was chosen");
+        });
+
         // Layout
         VBox layout = new VBox(10);
         layout.setPadding(new Insets(20, 20, 20, 20));
@@ -33,6 +45,10 @@ public class Options{
 
         // save button
         Button saveButton = new Button("Save");
+        saveButton.setOnAction(e -> {
+            System.out.println("Save was chosen");
+            window.close();
+        });
         GridPane.setConstraints(saveButton, 1, 2);
 
 
