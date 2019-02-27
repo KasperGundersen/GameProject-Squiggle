@@ -3,6 +3,8 @@ package Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -13,18 +15,19 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-
-public class SignUp extends GridPane {
+public class SignUp{
 
     private GridPane gp;
+    private Scene sc;
 
-    public SignUp() {
+    public SignUp(double width, double height) {
         gp = createRegistrationFormPane();
         addUIControls(gp);
+        sc = new Scene(gp, width, height);
     }
 
-    public GridPane getGp() {
-        return gp;
+    public Scene getSc() {
+        return sc;
     }
 
     private GridPane createRegistrationFormPane() {
@@ -59,6 +62,8 @@ public class SignUp extends GridPane {
         return gridPane;
     }
     private void addUIControls(GridPane gridPane) {
+
+        double prefHeight = 40;
         // Add Header
         Label headerLabel = new Label("Registration Form");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -72,7 +77,7 @@ public class SignUp extends GridPane {
 
         // Add Name Text Field
         TextField nameField = new TextField();
-        nameField.setPrefHeight(40);
+        nameField.setPrefHeight(prefHeight);
         gridPane.add(nameField, 1,1);
 
 
@@ -82,7 +87,7 @@ public class SignUp extends GridPane {
 
         // Add Email Text Field
         TextField emailField = new TextField();
-        emailField.setPrefHeight(40);
+        emailField.setPrefHeight(prefHeight);
         gridPane.add(emailField, 1, 2);
 
         // Add Password Label
@@ -91,12 +96,12 @@ public class SignUp extends GridPane {
 
         // Add Password Field
         PasswordField passwordField = new PasswordField();
-        passwordField.setPrefHeight(40);
+        passwordField.setPrefHeight(prefHeight);
         gridPane.add(passwordField, 1, 3);
 
         // Add Submit Button
         Button submitButton = new Button("Submit");
-        submitButton.setPrefHeight(40);
+        submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
         gridPane.add(submitButton, 0, 4, 2, 1);
