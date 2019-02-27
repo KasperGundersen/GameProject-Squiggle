@@ -1,3 +1,4 @@
+import Scenes.SignUp;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -22,8 +23,8 @@ public class Main extends Application {
         });
 
         Pane layout = new Pane();
-        Scene scene = new Scene(layout, WIDTH, HEIGHT);
-        window.setScene(scene);
+        SignUp sc = new SignUp(WIDTH, HEIGHT);
+        window.setScene(sc.getSc());
         window.show();
 
 
