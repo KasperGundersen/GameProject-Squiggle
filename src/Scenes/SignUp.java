@@ -109,5 +109,12 @@ public class SignUp{
         gridPane.add(submitButton, 0, 4, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+
+        // Add option button
+
+        Button optionButton = new Button("Options");
+        optionButton.setOnAction(e -> Options.opneBoxer());
+        gridPane.add(optionButton, 0, 0);
+        //optionButton.setPadding(new Insets(20, 20, 20, 800));
     }
 }
