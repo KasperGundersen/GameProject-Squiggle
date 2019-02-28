@@ -12,6 +12,14 @@ public class Main extends Application {
         launch(args);
     }
 
+    public static double getWidth() {
+        return WIDTH;
+    }
+
+    public static double getHeight() {
+        return HEIGHT;
+    }
+
     @Override
     public void start(Stage stage) {
         window = stage;

@@ -1,4 +1,4 @@
-/*import javafx.geometry.HPos;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -97,12 +97,21 @@ public class LogIn{
         GridPane.setHalignment(logInButton, HPos.CENTER);
         GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
 
+        // Add Registration Button
+        Button regButton = new Button("Register new user");
+        SignUp su = new SignUp(Main.getWidth(), Main.getHeight());
+        regButton.setOnAction(e -> Main.setScene2(su.getSc()));
+
+        regButton.setPrefHeight(prefHeight);
+        regButton.setDefaultButton(true);
+        regButton.setPrefWidth(300);
+        gridPane.add(regButton, 0, 5, 2, 1);
+        GridPane.setHalignment(regButton, HPos.CENTER);
+        GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
         // Add option button
         Button optionButton = new Button("Options");
-        optionButton.setOnAction(e -> Options.opneBoxer());
         gridPane.add(optionButton, 4, 14);
         //optionButton.setPadding(new Insets(20, 20, 20, 800));
     }
 }
-*/

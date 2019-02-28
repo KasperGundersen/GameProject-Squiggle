@@ -113,6 +113,5 @@ public class SignUp{
         Button optionButton = new Button("Options");
         optionButton.setOnAction(e -> Options.opneBoxer());
         gridPane.add(optionButton, 4, 14);
-        //optionButton.setPadding(new Insets(20, 20, 20, 800));
     }
 }
