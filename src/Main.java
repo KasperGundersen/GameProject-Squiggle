@@ -21,7 +21,7 @@ public class Main extends Application {
             closeProgram();
         });
         Pane layout = new Pane();
-        SignUp sc = new SignUp(WIDTH, HEIGHT);
+        LogIn sc = new LogIn(WIDTH, HEIGHT);
         setScene2(sc.getSc());
         window.show();
 

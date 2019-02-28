@@ -17,8 +17,8 @@ public class LogIn{
     private GridPane gp;
     private Scene sc;
 
-    public Login(double width, double height) {
-        gp = createRegistrationFormPane();
+    public LogIn(double width, double height) {
+        gp = createLogInFormPane();
         addUIControls(gp);
         sc = new Scene(gp, width, height);
     }
@@ -27,7 +27,7 @@ public class LogIn{
         return sc;
     }
 
-    private GridPane createRegistrationFormPane() {
+    private GridPane createLogInFormPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
 
@@ -62,35 +62,24 @@ public class LogIn{
 
         double prefHeight = 40;
         // Add Header
-        Label headerLabel = new Label("Registration Form");
+        Label headerLabel = new Label("Login");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
         // Add Name Label
-        Label nameLabel = new Label("Full Name : ");
+        Label nameLabel = new Label("Username: ");
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
         TextField nameField = new TextField();
         nameField.setPrefHeight(prefHeight);
-        nameField.setPromptText("Ola Nordmann");
+        nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
 
-
-        // Add Email Label
-        Label emailLabel = new Label("Email ID : ");
-        gridPane.add(emailLabel, 0, 2);
-
-        // Add Email Text Field
-        TextField emailField = new TextField();
-        emailField.setPrefHeight(prefHeight);
-        emailField.setPromptText("party@myhouse.tonight");
-        gridPane.add(emailField, 1, 2);
-
         // Add Password Label
-        Label passwordLabel = new Label("Password : ");
+        Label passwordLabel = new Label("Password: ");
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
@@ -99,14 +88,14 @@ public class LogIn{
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
 
-        // Add Submit Button
-        Button submitButton = new Button("Submit");
-        submitButton.setPrefHeight(prefHeight);
-        submitButton.setDefaultButton(true);
-        submitButton.setPrefWidth(100);
-        gridPane.add(submitButton, 0, 4, 2, 1);
-        GridPane.setHalignment(submitButton, HPos.CENTER);
-        GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
+        // Add Login Button
+        Button logInButton = new Button("Login");
+        logInButton.setPrefHeight(prefHeight);
+        logInButton.setDefaultButton(true);
+        logInButton.setPrefWidth(100);
+        gridPane.add(logInButton, 0, 4, 2, 1);
+        GridPane.setHalignment(logInButton, HPos.CENTER);
+        GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
 
 
         // Add option button
