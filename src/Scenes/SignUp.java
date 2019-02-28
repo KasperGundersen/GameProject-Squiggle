@@ -18,10 +18,10 @@ import java.sql.Connection;
 public class SignUp extends Scenes {
 
     //UI
-    private TextField nameField;
-    private TextField emailField;
-    private PasswordField passwordField;
-    private PasswordField rePasswordField;
+    private static TextField nameField;
+    private static TextField emailField;
+    private static PasswordField passwordField;
+    private static PasswordField rePasswordField;
 
     private Button submitButton;
     private Button optionButton;
@@ -33,21 +33,21 @@ public class SignUp extends Scenes {
         addUIControls(super.getGp());
     }
 
-    public String getName(){
+    public static String getName(){
         if(nameField.getText().equals(null)){
             throw new IllegalArgumentException("eow");
         }
         return nameField.getText();
     }
 
-    public String getMail(){
+    public static String getMail(){
         if(emailField.getText().equals(null)){
             throw new IllegalArgumentException("hilf");
         }
         return emailField.getText();
     }
 
-    public String getPassword(){
+    public static String getPassword(){
         if(passwordField.getText().equals(null) || rePasswordField.getText().equals(null)){
             throw new IllegalArgumentException("HELP");
         }
@@ -133,21 +133,7 @@ public class SignUp extends Scenes {
 
         // Button submition
         super.buttonAction(backButton, MainScene.li);
-        submitButton.setOnAction(e -> submit());
+        submitButton.setOnAction(e -> Registration.submit());
 
-    }
-
-    private void submit(){
-        Connection con = DBConnection.getCon();
-        String username = getName();
-        String mail = getMail();
-        String password = getPassword();
-
-        if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))){
-            System.out.println("Brukernavn eller epost er allerede registrert");
-        }else{
-            Registration.registerUser(con, username, password, mail, 0);
-        }
-        MainScene.setScene2(MainScene.li.getSc());
     }
 }

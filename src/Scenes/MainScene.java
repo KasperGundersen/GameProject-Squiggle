@@ -30,6 +30,10 @@ public class MainScene {
         window.show();
     }
 
+    public static Scene getSc(Scenes sc) {
+        return sc.getSc();
+    }
+
 
 
     private void closeProgram(){

@@ -1,5 +1,9 @@
 package Components;
 
+import Database.DBConnection;
+import Scenes.MainScene;
+import Scenes.SignUp;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
@@ -16,5 +20,19 @@ public class Registration {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void submit(){
+        Connection con = DBConnection.getCon();
+        String username = SignUp.getName();
+        String mail = SignUp.getMail();
+        String password = SignUp.getPassword();
+
+        if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))){
+            System.out.println("Brukernavn eller epost er allerede registrert");
+        }else{
+            Registration.registerUser(con, username, password, mail, 0);
+        }
+        MainScene.setScene2(MainScene.getSc(MainScene.li));
     }
 }

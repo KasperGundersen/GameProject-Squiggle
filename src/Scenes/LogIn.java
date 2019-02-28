@@ -3,6 +3,7 @@ package Scenes;
 import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -16,6 +17,10 @@ public class LogIn extends Scenes {
     public LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUIControls(super.getGp());
+    }
+
+    public Scene getSc() {
+        return super.getSc();
     }
 
     private void addUIControls(GridPane gridPane) {
