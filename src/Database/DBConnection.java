@@ -4,8 +4,11 @@ import java.sql.*;
 
 public class DBConnection {
 
-    private static final String brukernavn = "zuimran";
-    private static final String passord = "xaXIMlNC"; //xaXIMlNC
+    private static final String username = "zuimran";
+    private static final String password = "xaXIMlNC"; //xaXIMlNC
+
+    private static final String driver = "com.mysql.cj.jdbc.Driver";
+    private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
 
     private Connection con;
     private Statement stmt;
@@ -13,12 +16,28 @@ public class DBConnection {
     private ResultSetMetaData rsmd;
 
     public DBConnection() {
-        DBConnect();
+        con = null;
+        stmt = null;
     }
 
-    public void registerUser(String userName, String password, String userEmail, int avatarID) {
+    public Connection getCon() {
+        try{
+            Class.forName(driver);
+            con = DriverManager.getConnection(dBUrl);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return con;
+    }
+
+
+
+    public void registerUser(Connection conn, String userName, String password, String userEmail, int avatarID) {
         try {
-            stmt.executeUpdate("INSERT INTO USERS VALUES (default, " + userName + ", " + password + ", " + userEmail + ", " + avatarID + ", 0)");
+            Statement stmtt = conn.createStatement();
+            stmtt.executeUpdate("INSERT INTO USERS VALUES (default, \"" + userName + "\", \"" + password + "\", \"" + userEmail + "\", " + avatarID + ", 0)");
         } catch (SQLSyntaxErrorException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -80,8 +99,7 @@ public class DBConnection {
         try{
             String databaseDriver = "com.mysql.cj.jdbc.Driver";
             Class.forName(databaseDriver);
-            String databaseName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/" + brukernavn + "?user=" + brukernavn + "&password=" + passord;
-            con = DriverManager.getConnection(databaseName);
+            con = DriverManager.getConnection(dBUrl);
             stmt = con.createStatement();
             res = null;
             rsmd = null;

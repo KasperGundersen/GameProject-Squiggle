@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.sql.Connection;
+
 public class SignUp extends Scenes {
 
     //DB
@@ -140,22 +142,19 @@ public class SignUp extends Scenes {
     }
 
     private void submit(){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
         dbCon = new DBConnection();
-        System.out.println("Dette fungerer!!");
+        Connection conn = dbCon.getCon();
         String username = getName();
         String mail = getMail();
         String password = getPassword();
+        /*
         if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
             System.out.println("Brukernavn eller epost er allerede registrert");
         }else{
             dbCon.registerUser(username, password, mail, 0);
         }
-        System.out.println("Yay!!");
+        */
+        dbCon.registerUser(conn, username, password, mail, 0);
         MainScene.setScene2(MainScene.li.getSc());
     }
 }
