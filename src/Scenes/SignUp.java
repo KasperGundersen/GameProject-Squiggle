@@ -35,14 +35,23 @@ public class SignUp extends Scenes {
     }
 
     public String getName(){
+        if(nameField.getText().equals(null)){
+            throw new IllegalArgumentException("");
+        }
         return nameField.getText();
     }
 
     public String getMail(){
+        if(emailField.getText().equals(null)){
+            throw new IllegalArgumentException("");
+        }
         return emailField.getText();
     }
 
     public String getPassword(){
+        if(passwordField.getText().equals(null) || rePasswordField.getText().equals(null)){
+            throw new IllegalArgumentException("");
+        }
         if(passwordField.getText().equals(rePasswordField.getText())){
             return passwordField.getText();
         }else throw new IllegalArgumentException("Password don't match");
@@ -124,7 +133,20 @@ public class SignUp extends Scenes {
 
         // Button submition
         super.buttonAction(backButton, MainScene.li);
-        super.buttonAction(submitButton, MainScene.li);
+        submitButton.setOnAction(e -> submit());
+
+    }
+
+    private void submit(){
+            String username = getName();
+            String mail = getMail();
+            String password = getPassword();
+
+            if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
+                throw new IllegalArgumentException("");
+            }else{
+                dbCon.registerUser(username, password, mail, 0);
+            }
     }
 
 }
