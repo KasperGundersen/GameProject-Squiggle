@@ -16,7 +16,7 @@ import java.sql.Connection;
 
 public class SignUp extends Scenes {
 
-    //UI
+    //UI initialiser alt som man bruker som objectvariabler
     private static TextField nameField;
     private static TextField emailField;
     private static PasswordField passwordField;
@@ -26,40 +26,42 @@ public class SignUp extends Scenes {
     private Button optionButton;
     private Button backButton;
 
-
+    //construktør fra super
     public SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
+        //Legg inn metoden som legger til ui
         addUIControls(super.getGp());
     }
 
+    //gettere
     public static String getName(){
-        if(nameField.getText().equals(null)){
-            throw new IllegalArgumentException("eow");
+        if(nameField.getText() == null){
+            throw new IllegalArgumentException("Need username");
         }
         return nameField.getText();
     }
 
     public static String getMail(){
-        if(emailField.getText().equals(null)){
-            throw new IllegalArgumentException("hilf");
+        if(emailField.getText() == null){
+            throw new IllegalArgumentException("Need mail");
         }
         return emailField.getText();
     }
 
     public static String getPassword(){
-        if(passwordField.getText().equals(null) || rePasswordField.getText().equals(null)){
-            throw new IllegalArgumentException("HELP");
+        if(passwordField.getText() == null || rePasswordField.getText() == null){
+            throw new IllegalArgumentException("Need password");
         }
         if(passwordField.getText().equals(rePasswordField.getText())){
             return passwordField.getText();
         }else throw new IllegalArgumentException("Password don't match");
     }
 
+    // Adding UI to Grid
     private void addUIControls(GridPane gridPane) {
-
         double prefHeight = 40;
         // Add Header
-        Label headerLabel = new Label("Registration Form");
+        Label headerLabel = new Label("Sign Up");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
@@ -74,7 +76,6 @@ public class SignUp extends Scenes {
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("Ola Nordmann");
         gridPane.add(nameField, 1,1);
-
 
         // Add Email Label
         Label emailLabel = new Label("Email : ");
@@ -119,7 +120,6 @@ public class SignUp extends Scenes {
         optionButton = new Button("Options");
         gridPane.add(optionButton, 5, 14);
         optionButton.setOnAction(e -> Options.openOptions());
-
 
         // Go back button
         backButton = new Button("Go Back");
