@@ -49,6 +49,16 @@ public class DBConnection {
         }
     }
 
+    public boolean alreadyExistsIn(String columnName, String input) {
+        String[] list = getColumnFromUsers(columnName);
+        for (int i = 0; i < list.length; i++) {
+            if (input.equals(list[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     // Help-method that extracts lists of e.g. usernames or emails
     private String[] getColumnFromUsers(String columnName) {

@@ -111,5 +111,6 @@ public class LogIn{
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
+        optionButton.setOnAction(e -> Options.opneBoxer());
     }
 }
