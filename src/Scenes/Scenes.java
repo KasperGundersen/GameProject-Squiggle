@@ -32,7 +32,7 @@ public abstract class Scenes {
     }
 
     //Buttonaction to swap scenes
-    public void buttonAction(Button btn, Scenes scn){
+    public void buttonChangeScene(Button btn, Scenes scn){
         btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
     }
 
