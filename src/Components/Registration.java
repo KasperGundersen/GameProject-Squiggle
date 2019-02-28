@@ -30,8 +30,10 @@ public class Registration {
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
 
-        if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))){
-            System.out.println("Brukernavn eller epost er allerede registrert");
+        if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
+            System.out.println("This username or email is already registered");
+        }else if(username == null || mail == null || password == null) {
+            System.out.println("Username, password, or email cannot be empty");
         }else{
             Registration.registerUser(con, username, password, mail, 0);
         }
