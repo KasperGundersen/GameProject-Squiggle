@@ -69,7 +69,7 @@ public class LogIn extends Scenes {
         GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
         // Add option button
-        Button optionButton = new Button("Scenes.Options");
+        Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
         optionButton.setOnAction(e -> Options.opneBoxer());
     }
