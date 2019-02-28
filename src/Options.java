@@ -8,13 +8,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.CheckBox;
 
 
-public class Options{
+public class Options extends Scenes{
     static String utskrift;
+
+    public Options(double WIDTH, double HEIGHT) {
+        super(WIDTH, HEIGHT);
+        opneBoxer();
+    }
 
     public static void opneBoxer(){
         Stage window = new Stage();
         window.setTitle("Options");
-
 
         // Chekboxes
         CheckBox box1 = new CheckBox("Sound");
