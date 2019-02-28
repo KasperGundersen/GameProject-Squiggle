@@ -1,6 +1,7 @@
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -59,7 +60,7 @@ public class Options{
         grid.getChildren().addAll(layout, saveButton);
 
         Scene scene = new Scene(grid, 300, 300);
-
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(scene);
         window.show();
     }

@@ -39,6 +39,8 @@ public class ConfirmBox {
         layout.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
 
