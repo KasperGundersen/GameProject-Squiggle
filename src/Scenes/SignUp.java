@@ -129,7 +129,7 @@ public class SignUp extends Scenes {
         GridPane.setValignment(backButton, VPos.CENTER);
 
         // Button submition
-        super.buttonAction(backButton, MainScene.li);
+        super.buttonChangeScene(backButton, MainScene.li);
         submitButton.setOnAction(e -> Authentication.submit());
     }
 }
