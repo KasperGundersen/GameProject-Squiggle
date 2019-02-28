@@ -20,7 +20,7 @@ public class MyPage extends Scenes{
 
     public MyPage(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
-        addUIControls(super.getGP());
+        addUIControls(super.getGp());
 
     }
 
@@ -34,16 +34,5 @@ public class MyPage extends Scenes{
         GridPane.setHalignment(button1, HPos.CENTER);
         GridPane.setValignment(button1, VPos.CENTER);
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-
-    @Override
-    public void start(Stage stage) {
-        mainScene.initialize(stage);
-    }
-
 
 }

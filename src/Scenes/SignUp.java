@@ -121,7 +121,7 @@ public class SignUp extends Scenes {
         // Add option button
         optionButton = new Button("Options");
         gridPane.add(optionButton, 5, 14);
-        optionButton.setOnAction(e -> Options.opneBoxer());
+        optionButton.setOnAction(e -> Options.openOptions());
 
 
         // Go back button
