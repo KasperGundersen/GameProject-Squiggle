@@ -17,31 +17,9 @@ public class DBConnection {
         DBConnect();
     }
 
-    public void DBConnect() {
-        String databaseDriver = "com.mysql.jdbc.Driver";
-        try{
-            Class.forName(databaseDriver);
-        } catch(ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        String databaseName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/" + brukernavn + "?user=" + brukernavn + "&password=" + passord;
-
+    public void registerUser(String userName, String password, String userEmail, int avatarID) {
         try {
-            con = DriverManager.getConnection(databaseName);
-            stmt = con.createStatement();
-            res = null;
-            rsmd = null;
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void DBRegisterUser(String userName, String password, String userEmail, int avatarID) {
-        try {
-            stmt.executeUpdate("INSERT INTO USERS VALUES (default, " + userName + ", " + password + ", " + userEmail + ", " + avatarID + ")");
+            stmt.executeUpdate("INSERT INTO USERS VALUES (default, " + userName + ", " + password + ", " + userEmail + ", " + avatarID + ", 0)");
         } catch (SQLSyntaxErrorException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -50,13 +28,15 @@ public class DBConnection {
     }
 
     public boolean alreadyExistsIn(String columnName, String input) {
-        String[] list = getColumnFromUsers(columnName);
-        for (int i = 0; i < list.length; i++) {
-            if (input.equals(list[i])) {
-                return true;
-            }
+        try {
+            res = stmt.executeQuery("SELECT " + * + " FROM USERS WHERE " + columnName + "=" + input);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return false;
+        if (res == null) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -88,5 +68,27 @@ public class DBConnection {
             e.printStackTrace();
         }
         return list;
+    }
+
+    private void DBConnect() {
+        String databaseDriver = "com.mysql.jdbc.Driver";
+        try{
+            Class.forName(databaseDriver);
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        String databaseName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/" + brukernavn + "?user=" + brukernavn + "&password=" + passord;
+
+        try {
+            con = DriverManager.getConnection(databaseName);
+            stmt = con.createStatement();
+            res = null;
+            rsmd = null;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

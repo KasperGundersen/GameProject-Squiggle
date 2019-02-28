@@ -1,5 +1,6 @@
 package Scenes;
 
+import Database.DBConnection;
 import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -14,6 +15,9 @@ import javafx.scene.text.FontWeight;
 
 public class SignUp extends Scenes {
 
+    //DB
+    DBConnection dbCon = new DBConnection();
+
     //UI
     private TextField nameField;
     private TextField emailField;
@@ -23,6 +27,8 @@ public class SignUp extends Scenes {
     private Button submitButton;
     private Button optionButton;
     private Button backButton;
+
+
     public SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUIControls(super.getGp());
