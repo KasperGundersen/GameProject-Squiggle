@@ -10,7 +10,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-abstract class Scenes {
+public abstract class Scenes {
 
     //Object variables
     private GridPane gp;
@@ -33,7 +33,7 @@ abstract class Scenes {
 
     //Buttonaction to swap scenes
     public void buttonAction(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene2(scn.getSc()));
+        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
     }
 
     //Standard GridPane formation
