@@ -19,10 +19,6 @@ public class LogIn extends Scenes {
         addUIControls(super.getGp());
     }
 
-    public Scene getSc() {
-        return super.getSc();
-    }
-
     private void addUIControls(GridPane gridPane) {
 
         double prefHeight = 40;
