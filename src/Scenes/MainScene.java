@@ -29,6 +29,11 @@ public class MainScene {
         window.show();
     }
 
+    public static Scene getSc(Scenes sc) {
+        return sc.getSc();
+    }
+
+
     private void closeProgram(){
         Boolean answer = ConfirmBox.display("Warning!", "Sure you want to exit?");
         if(answer){
