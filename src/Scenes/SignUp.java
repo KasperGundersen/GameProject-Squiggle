@@ -1,7 +1,6 @@
 package Scenes;
 
 import Components.Registration;
-import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;

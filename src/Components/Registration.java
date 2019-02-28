@@ -3,6 +3,8 @@ package Components;
 import Database.DBConnection;
 import Scenes.MainScene;
 import Scenes.SignUp;
+import Scenes.LogIn;
+import Scenes.Scenes;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,6 +35,6 @@ public class Registration {
         }else{
             Registration.registerUser(con, username, password, mail, 0);
         }
-        MainScene.setScene2(MainScene.getSc(MainScene.li));
+        MainScene.setScene(MainScene.li.getSc());
     }
 }

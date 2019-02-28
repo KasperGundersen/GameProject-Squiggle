@@ -10,7 +10,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-abstract class Scenes {
+public abstract class Scenes {
 
     private GridPane gp;
     private Scene sc;
@@ -34,7 +34,7 @@ abstract class Scenes {
     }
 
     public void buttonAction(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene2(scn.getSc()));
+        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
     }
 
     public GridPane createFormPane() {
