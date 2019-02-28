@@ -71,6 +71,6 @@ public class LogIn extends Scenes {
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
-        optionButton.setOnAction(e -> Options.opneBoxer());
+        optionButton.setOnAction(e -> Options.openOptions());
     }
 }
