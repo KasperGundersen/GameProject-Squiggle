@@ -77,11 +77,11 @@ public class LogIn extends Scenes {
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
         GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
-<<<<<<< HEAD
+
         logInButton.setOnAction(e -> Authentication.logIn());
-=======
+
         super.buttonChangeScene(logInButton, MainScene.mm);
->>>>>>> 0ecd7be1894b237223aabbb52b612a675473e80e
+
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
