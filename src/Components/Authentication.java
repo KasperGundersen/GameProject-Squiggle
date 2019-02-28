@@ -5,13 +5,15 @@ import Scenes.MainScene;
 import Scenes.SignUp;
 import Scenes.LogIn;
 import Scenes.Scenes;
+import com.mysql.cj.log.Log;
+import com.sun.tools.javac.Main;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 
-public class Registration {
+public class Authentication {
 
     public static void registerUser(Connection con, String userName, String password, String userEmail, int avatarID) {
         try {
@@ -35,8 +37,18 @@ public class Registration {
         }else if(username == null || mail == null || password == null) {
             System.out.println("Username, password, or email cannot be empty");
         }else{
-            Registration.registerUser(con, username, password, mail, 0);
+            registerUser(con, username, password, mail, 0);
         }
         MainScene.setScene(MainScene.li.getSc());
+    }
+
+    public static void logIn() {
+        Connection con = DBConnection.getCon();
+        String username = LogIn.getUserName();
+        String password = LogIn.getPassword();
+
+        if((DBConnection.exists(con,"userName", username))&&(DBConnection.exists(con,"password", password))) {
+            MainScene.setScene(MainScene.mm.getSc());
+        }
     }
 }

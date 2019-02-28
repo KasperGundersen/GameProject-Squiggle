@@ -1,6 +1,6 @@
 package Scenes;
 
-import Components.Registration;
+import Components.Authentication;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -132,7 +132,7 @@ public class SignUp extends Scenes {
 
         // Button submition
         super.buttonAction(backButton, MainScene.li);
-        submitButton.setOnAction(e -> Registration.submit());
+        submitButton.setOnAction(e -> Authentication.submit());
 
     }
 }

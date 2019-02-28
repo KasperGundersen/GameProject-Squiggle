@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Authentication;
 import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -14,9 +15,26 @@ import javafx.scene.text.FontWeight;
 
 public class LogIn extends Scenes {
 
+    private static TextField nameField;
+    private static PasswordField passwordField;
+
     public LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUIControls(super.getGp());
+    }
+
+    public static String getUserName(){
+        if(nameField.getText().equals(null)){
+            throw new IllegalArgumentException("eow");
+        }
+        return nameField.getText();
+    }
+
+    public static String getPassword(){
+        if(passwordField.getText().equals(null)){
+            throw new IllegalArgumentException("hilf");
+        }
+        return passwordField.getText();
     }
 
     private void addUIControls(GridPane gridPane) {
@@ -34,7 +52,7 @@ public class LogIn extends Scenes {
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField();
+        nameField = new TextField();
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
@@ -44,7 +62,7 @@ public class LogIn extends Scenes {
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
@@ -57,7 +75,7 @@ public class LogIn extends Scenes {
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
         GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
-        super.buttonAction(logInButton, MainScene.mm);
+        logInButton.setOnAction(e -> Authentication.logIn());
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
