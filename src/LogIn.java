@@ -99,8 +99,7 @@ public class LogIn{
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        SignUp su = new SignUp(Main.getWidth(), Main.getHeight());
-        regButton.setOnAction(e -> Main.setScene2(su.getSc()));
+        regButton.setOnAction(e -> Main.setScene2(Main.su.getSc()));
 
         regButton.setPrefHeight(prefHeight);
         regButton.setDefaultButton(true);
@@ -112,6 +111,5 @@ public class LogIn{
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
-        //optionButton.setPadding(new Insets(20, 20, 20, 800));
     }
 }

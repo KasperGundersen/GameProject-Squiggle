@@ -8,6 +8,9 @@ public class Main extends Application {
     private static final double HEIGHT = 600;
     private static final double WIDTH = 1000;
     public static Stage window;
+    public static LogIn li = new LogIn(WIDTH, HEIGHT);
+    public static SignUp su = new SignUp(WIDTH, HEIGHT);
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -29,8 +32,8 @@ public class Main extends Application {
             closeProgram();
         });
         Pane layout = new Pane();
-        LogIn sc = new LogIn(WIDTH, HEIGHT);
-        setScene2(sc.getSc());
+
+        setScene2(li.getSc());
         window.show();
 
 

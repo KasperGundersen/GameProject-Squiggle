@@ -1,6 +1,7 @@
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -106,12 +107,24 @@ public class SignUp{
         submitButton.setPrefWidth(100);
         gridPane.add(submitButton, 0, 4, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
-        GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
-
+        GridPane.setValignment(submitButton, VPos.CENTER);
 
         // Add option button
         Button optionButton = new Button("Options");
         optionButton.setOnAction(e -> Options.opneBoxer());
         gridPane.add(optionButton, 4, 14);
+
+
+        // Go back button
+        Button backButton = new Button("Go Back");
+        backButton.setOnAction(e -> Main.setScene2(Main.li.getSc()));
+
+        backButton.setPrefHeight(prefHeight);
+        backButton.setDefaultButton(true);
+        backButton.setPrefWidth(100);
+        gridPane.add(backButton, 0, 4, 1, 2);
+        GridPane.setHalignment(backButton, HPos.CENTER);
+        GridPane.setValignment(backButton, VPos.CENTER);
+
     }
 }
