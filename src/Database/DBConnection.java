@@ -29,12 +29,12 @@ public class DBConnection {
 
     public boolean alreadyExistsIn(String columnName, String input) {
         try {
-            res = stmt.executeQuery("SELECT " + * + " FROM USERS WHERE " + columnName + "=" + input);
+            res = stmt.executeQuery("SELECT * FROM USERS WHERE " + columnName + "=" + input);
+            if (res.getString("username") == null) {
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        if (res == null) {
-            return false;
         }
         return true;
     }
@@ -71,24 +71,18 @@ public class DBConnection {
     }
 
     private void DBConnect() {
-        String databaseDriver = "com.mysql.jdbc.Driver";
         try{
+            String databaseDriver = "com.mysql.cj.jdbc.Driver";
             Class.forName(databaseDriver);
-        } catch(ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        String databaseName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/" + brukernavn + "?user=" + brukernavn + "&password=" + passord;
-
-        try {
+            String databaseName = "jdbc:mysql://mysql.stud.iie.ntnu.no:3306/" + brukernavn + "?user=" + brukernavn + "&password=" + passord;
             con = DriverManager.getConnection(databaseName);
             stmt = con.createStatement();
             res = null;
             rsmd = null;
         } catch(SQLException e) {
             e.printStackTrace();
+        } catch(ClassNotFoundException e) {
+            e.printStackTrace();
         }
-
     }
 }
