@@ -1,19 +1,18 @@
+package Scenes;
+
+import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class SignUp extends Scenes{
+public class SignUp extends Scenes {
 
     //UI
     private TextField nameField;
@@ -118,8 +117,8 @@ public class SignUp extends Scenes{
         GridPane.setValignment(backButton, VPos.CENTER);
 
         // Button submition
-        super.buttonAction(backButton, Main.li);
-        super.buttonAction(submitButton, Main.li);
+        super.buttonAction(backButton, MainScene.li);
+        super.buttonAction(submitButton, MainScene.li);
     }
 
 }

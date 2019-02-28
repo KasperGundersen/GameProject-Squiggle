@@ -1,3 +1,5 @@
+package Scenes;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,7 +32,7 @@ abstract class Scenes {
     }
 
     public void buttonAction(Button btn, Scenes scn){
-        btn.setOnAction(e -> Main.setScene2(scn.getSc()));
+        btn.setOnAction(e -> MainScene.setScene2(scn.getSc()));
     }
 
     public GridPane createFormPane() {

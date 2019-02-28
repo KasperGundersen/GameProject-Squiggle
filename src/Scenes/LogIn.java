@@ -1,18 +1,17 @@
+package Scenes;
+
+import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class LogIn extends Scenes{
+public class LogIn extends Scenes {
 
     public LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -60,7 +59,7 @@ public class LogIn extends Scenes{
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        regButton.setOnAction(e -> Main.setScene2(Main.su.getSc()));
+        regButton.setOnAction(e -> MainScene.setScene2(MainScene.su.getSc()));
 
         regButton.setPrefHeight(prefHeight);
         regButton.setDefaultButton(true);
@@ -70,7 +69,7 @@ public class LogIn extends Scenes{
         GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
         // Add option button
-        Button optionButton = new Button("Options");
+        Button optionButton = new Button("Scenes.Options");
         gridPane.add(optionButton, 4, 14);
         optionButton.setOnAction(e -> Options.opneBoxer());
     }

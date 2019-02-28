@@ -1,3 +1,6 @@
+package Scenes;
+
+import Scenes.Scenes;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -8,7 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.CheckBox;
 
 
-public class Options extends Scenes{
+public class Options extends Scenes {
     static String utskrift;
 
     public Options(double WIDTH, double HEIGHT) {

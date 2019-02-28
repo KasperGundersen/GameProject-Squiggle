@@ -1,14 +1,11 @@
+package Scenes;
+
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -41,8 +38,8 @@ public class MainMenu {
         Button joinGameButton = new Button("Join Game");
         gridPane.add(joinGameButton, 0,1);
 
-        // Options game button
-        Button optionButton = new Button("Options");
+        // Scenes.Options game button
+        Button optionButton = new Button("Scenes.Options");
         gridPane.add(optionButton, 1,1);
 
         // Quit button
