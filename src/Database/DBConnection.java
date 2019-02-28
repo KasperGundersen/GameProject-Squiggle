@@ -6,7 +6,6 @@ public class DBConnection {
 
     private static final String brukernavn = "zuimran";
     private static final String passord = "xaXIMlNC"; //xaXIMlNC
-    private static String table = null;
 
     private Connection con;
     private Statement stmt;
@@ -28,15 +27,22 @@ public class DBConnection {
     }
 
     public boolean alreadyExistsIn(String columnName, String input) {
-        try {
-            res = stmt.executeQuery("SELECT * FROM USERS WHERE " + columnName + "=" + input);
-            if (res.getString("username") == null) {
-                return false;
+        try{
+            String databaseDriver = "com.mysql.cj.jdbc.Driver";
+            Class.forName(databaseDriver);
+            res = stmt.executeQuery("SELECT " + columnName + " FROM USERS WHERE " + columnName + "='" + input +"'");
+            while (res.next()) {
+                if (res.getString("username").equals(input)) {
+                    return true;
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            return false;
         }
-        return true;
     }
 
 
