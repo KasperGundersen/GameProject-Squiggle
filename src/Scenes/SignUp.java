@@ -12,8 +12,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.sql.Connection;
-
 public class SignUp extends Scenes {
 
     //UI initialiser alt som man bruker som objectvariabler
@@ -36,21 +34,21 @@ public class SignUp extends Scenes {
     //gettere
     public static String getName(){
         if(nameField.getText() == null){
-            throw new IllegalArgumentException("Need username");
+            throw new NullPointerException("Need username");
         }
         return nameField.getText();
     }
 
     public static String getMail(){
         if(emailField.getText() == null){
-            throw new IllegalArgumentException("Need mail");
+            throw new NullPointerException("Need mail");
         }
         return emailField.getText();
     }
 
     public static String getPassword(){
         if(passwordField.getText() == null || rePasswordField.getText() == null){
-            throw new IllegalArgumentException("Need password");
+            throw new NullPointerException("Need password");
         }
         if(passwordField.getText().equals(rePasswordField.getText())){
             return passwordField.getText();
@@ -131,7 +129,7 @@ public class SignUp extends Scenes {
         GridPane.setValignment(backButton, VPos.CENTER);
 
         // Button submition
-        super.buttonAction(backButton, MainScene.li);
+        super.buttonChangeScene(backButton, MainScene.li);
         submitButton.setOnAction(e -> Registration.submit());
 
     }
