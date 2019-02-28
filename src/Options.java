@@ -1,5 +1,3 @@
-package Scenes;
-
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -61,6 +59,7 @@ public class Options{
         grid.getChildren().addAll(layout, saveButton);
 
         Scene scene = new Scene(grid, 300, 300);
+
         window.setScene(scene);
         window.show();
     }

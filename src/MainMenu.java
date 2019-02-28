@@ -1,5 +1,3 @@
-package Scenes;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

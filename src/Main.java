@@ -1,19 +1,13 @@
-import Scenes.Options;
-import Scenes.SignUp;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
-
-import java.awt.*;
 
 public class Main extends Application {
 
     private static final double HEIGHT = 600;
     private static final double WIDTH = 1000;
-    Stage window;
+    public static Stage window;
     public static void main(String[] args) {
         launch(args);
     }
@@ -28,7 +22,7 @@ public class Main extends Application {
         });
         Pane layout = new Pane();
         SignUp sc = new SignUp(WIDTH, HEIGHT);
-        window.setScene(sc.getSc());
+        setScene2(sc.getSc());
         window.show();
 
 
@@ -39,5 +33,9 @@ public class Main extends Application {
         if(answer){
             window.close();
         }
+    }
+
+    public static void setScene2(Scene sc) {
+        window.setScene(sc);
     }
 }

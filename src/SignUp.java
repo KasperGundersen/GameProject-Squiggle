@@ -1,5 +1,3 @@
-package Scenes;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -110,11 +108,11 @@ public class SignUp{
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20, 0,20,0));
 
-        // Add option button
 
+        // Add option button
         Button optionButton = new Button("Options");
         optionButton.setOnAction(e -> Options.opneBoxer());
-        gridPane.add(optionButton, 0, 0);
+        gridPane.add(optionButton, 4, 14);
         //optionButton.setPadding(new Insets(20, 20, 20, 800));
     }
 }
