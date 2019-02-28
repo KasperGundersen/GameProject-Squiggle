@@ -151,7 +151,7 @@ public class SignUp extends Scenes {
         String mail = getMail();
         String password = getPassword();
         if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
-            throw new IllegalArgumentException("");
+            System.out.println("Brukernavn eller epost er allerede registrert");
         }else{
             dbCon.registerUser(username, password, mail, 0);
         }
