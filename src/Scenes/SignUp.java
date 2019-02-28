@@ -1,7 +1,7 @@
 package Scenes;
 
+import Components.Registration;
 import Database.DBConnection;
-import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -16,10 +16,6 @@ import javafx.scene.text.FontWeight;
 import java.sql.Connection;
 
 public class SignUp extends Scenes {
-
-    //DB
-
-    DBConnection dbCon;
 
     //UI
     private TextField nameField;
@@ -142,19 +138,16 @@ public class SignUp extends Scenes {
     }
 
     private void submit(){
-        dbCon = new DBConnection();
-        Connection conn = dbCon.getCon();
+        Connection con = DBConnection.getCon();
         String username = getName();
         String mail = getMail();
         String password = getPassword();
-        /*
-        if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
+
+        if((DBConnection.alreadyExistsIn("userName", username))||(DBConnection.alreadyExistsIn("userMail", mail))){
             System.out.println("Brukernavn eller epost er allerede registrert");
         }else{
-            dbCon.registerUser(username, password, mail, 0);
+            Registration.registerUser(con, username, password, mail, 0);
         }
-        */
-        dbCon.registerUser(conn, username, password, mail, 0);
         MainScene.setScene2(MainScene.li.getSc());
     }
 }
