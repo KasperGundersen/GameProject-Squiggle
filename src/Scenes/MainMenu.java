@@ -9,14 +9,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class MainMenu {
+public class MainMenu extends Scenes{
     private GridPane gp;
     private Scene sc;
 
     public MainMenu(double width, double height) {
-        gp = new GridPane();
-        addUIControls(gp);
-        sc = new Scene(gp, width, height);
+        super(width, height);
+        addUIControls(super.getGp());
     }
 
     public Scene getScene() {
