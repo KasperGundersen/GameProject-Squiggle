@@ -16,7 +16,8 @@ import javafx.scene.text.FontWeight;
 public class SignUp extends Scenes {
 
     //DB
-    DBConnection dbCon = new DBConnection();
+
+    DBConnection dbCon;
 
     //UI
     private TextField nameField;
@@ -120,6 +121,7 @@ public class SignUp extends Scenes {
         // Add option button
         optionButton = new Button("Options");
         gridPane.add(optionButton, 5, 14);
+        optionButton.setOnAction(e -> Options.opneBoxer());
 
 
         // Go back button
@@ -138,17 +140,22 @@ public class SignUp extends Scenes {
     }
 
     private void submit(){
-            System.out.println("Dette fungerer!!");
-            String username = getName();
-            String mail = getMail();
-            String password = getPassword();
-            if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
-                throw new IllegalArgumentException("");
-            }else{
-                dbCon.registerUser(username, password, mail, 0);
-            }
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        dbCon = new DBConnection();
+        System.out.println("Dette fungerer!!");
+        String username = getName();
+        String mail = getMail();
+        String password = getPassword();
+        if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
+            throw new IllegalArgumentException("");
+        }else{
+            dbCon.registerUser(username, password, mail, 0);
+        }
         System.out.println("Yay!!");
-            MainScene.setScene2(MainScene.li.getSc());
+        MainScene.setScene2(MainScene.li.getSc());
     }
-
 }
