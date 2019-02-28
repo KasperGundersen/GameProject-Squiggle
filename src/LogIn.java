@@ -1,4 +1,4 @@
-import javafx.geometry.HPos;
+/*import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -116,3 +116,4 @@ public class LogIn{
         //optionButton.setPadding(new Insets(20, 20, 20, 800));
     }
 }
+*/
