@@ -13,11 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class SignUp{
-
-    //Scene
-    private GridPane gp;
-    private Scene sc;
+public class SignUp extends Scenes{
 
     //UI
     private TextField nameField;
@@ -28,15 +24,9 @@ public class SignUp{
     private Button submitButton;
     private Button optionButton;
     private Button backButton;
-
-    public SignUp(double width, double height) {
-        gp = createRegistrationFormPane();
-        addUIControls(gp);
-        sc = new Scene(gp, width, height);
-    }
-
-    public Scene getSc() {
-        return sc;
+    public SignUp(double WIDTH, double HEIGHT) {
+        super(WIDTH, HEIGHT);
+        addUIControls(super.getGp());
     }
 
     public String getName(){
@@ -53,39 +43,6 @@ public class SignUp{
         }else throw new IllegalArgumentException("Password don't match");
     }
 
-
-
-    private GridPane createRegistrationFormPane() {
-        // Instantiate a new Grid Pane
-        GridPane gridPane = new GridPane();
-
-        // Position the pane at the center of the screen, both vertically and horizontally
-        gridPane.setAlignment(Pos.CENTER);
-
-        // Set a padding of 20px on each side
-        gridPane.setPadding(new Insets(40, 40, 40, 40));
-
-        // Set the horizontal gap between columns
-        gridPane.setHgap(10);
-
-        // Set the vertical gap between rows
-        gridPane.setVgap(10);
-
-
-        // Add Column Constraints
-
-        // columnOneConstraints will be applied to all the nodes placed in column one.
-        ColumnConstraints columnOneConstraints = new ColumnConstraints(100, 100, Double.MAX_VALUE);
-        columnOneConstraints.setHalignment(HPos.RIGHT);
-
-        // columnTwoConstraints will be applied to all the nodes placed in column two.
-        ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
-        columnTwoConstrains.setHgrow(Priority.ALWAYS);
-
-        gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
-
-        return gridPane;
-    }
     private void addUIControls(GridPane gridPane) {
 
         double prefHeight = 40;
@@ -148,20 +105,21 @@ public class SignUp{
 
         // Add option button
         optionButton = new Button("Options");
-        optionButton.setOnAction(e -> Options.opneBoxer());
         gridPane.add(optionButton, 5, 14);
 
 
         // Go back button
         backButton = new Button("Go Back");
-        backButton.setOnAction(e -> Main.setScene2(Main.li.getSc()));
-
         backButton.setPrefHeight(prefHeight);
         backButton.setDefaultButton(true);
         backButton.setPrefWidth(100);
         gridPane.add(backButton, 0, 5, 1, 2);
         GridPane.setHalignment(backButton, HPos.CENTER);
         GridPane.setValignment(backButton, VPos.CENTER);
+
+        // Button submition
+        super.buttonAction(backButton, Main.li);
+        super.buttonAction(submitButton, Main.li);
     }
 
 }

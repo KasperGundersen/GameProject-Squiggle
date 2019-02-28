@@ -7,20 +7,13 @@ public class Main extends Application {
 
     private static final double HEIGHT = 600;
     private static final double WIDTH = 1000;
+
     public static Stage window;
-    public static LogIn li = new LogIn(WIDTH, HEIGHT);
-    public static SignUp su = new SignUp(WIDTH, HEIGHT);
+    public static Scenes li = new LogIn(WIDTH, HEIGHT);
+    public static Scenes su = new SignUp(WIDTH, HEIGHT);
 
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public static double getWidth() {
-        return WIDTH;
-    }
-
-    public static double getHeight() {
-        return HEIGHT;
     }
 
     @Override
@@ -31,8 +24,6 @@ public class Main extends Application {
             e.consume();
             closeProgram();
         });
-        Pane layout = new Pane();
-
         setScene2(li.getSc());
         window.show();
 
