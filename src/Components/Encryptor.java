@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 
 public class Encryptor{
 
-    public static void Encryptor(String password){
+    public static String Encryptor(String password){
 
         String salted;
         String hashed;
@@ -36,9 +36,12 @@ public class Encryptor{
             System.out.println(salted);
             System.out.println(hashed);
 
+            return hashed + "|" + salted;
+
         } catch (NoSuchAlgorithmException e){
             e.printStackTrace();
         }
+        return null;
     }
 
     private static String buildString(byte[] bs){
