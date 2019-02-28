@@ -5,10 +5,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-public class Encryptor{
-    public static void main(String[] args){
 
-        String password = "Test";
+public class Encryptor{
+
+    public static void Encryptor(String password){
+
+        String salted;
+        String hashed;
 
         try{
             // Select the message digest for the hash computation -> SHA-256
@@ -22,24 +25,28 @@ public class Encryptor{
             // Passing the salt to the digest for the computation
             md.update(salt);
 
-            StringBuilder sbs = new StringBuilder();
-            for (byte b : salt) {
-                //Overfører fra byte til hex
-                sbs.append(String.format("%02x", b));
-            }
+            salted = buildString(salt);
 
-            // Getnerate the saled hash
+            // Generate the salted hash
             byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedPassword) {
-                //Overfører fra byte til hex
-                sb.append(String.format("%02x", b));
-            }
-            System.out.println(sbs);
-            System.out.println(sb);
+            //Hashed password
+            hashed =  buildString(hashedPassword);
+
+            System.out.println(salted);
+            System.out.println(hashed);
+
         } catch (NoSuchAlgorithmException e){
             e.printStackTrace();
         }
+    }
+
+    private static String buildString(byte[] bs){
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bs) {
+            //Convert from byte to hex
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 }
