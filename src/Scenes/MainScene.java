@@ -1,6 +1,5 @@
 package Scenes;
 
-import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -15,7 +14,7 @@ public class MainScene {
     public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
 
 
-    public static void setScene2(Scene sc) {
+    public static void setScene(Scene sc) {
         window.setScene(sc);
     }
 
@@ -26,11 +25,9 @@ public class MainScene {
             e.consume();
             closeProgram();
         });
-        setScene2(li.getSc());
+        setScene(li.getSc());
         window.show();
     }
-
-
 
     private void closeProgram(){
         Boolean answer = ConfirmBox.display("Warning!", "Sure you want to exit?");

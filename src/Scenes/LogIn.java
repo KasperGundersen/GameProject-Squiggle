@@ -3,6 +3,7 @@ package Scenes;
 import Scenes.Scenes;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -60,7 +61,7 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        regButton.setOnAction(e -> MainScene.setScene2(MainScene.su.getSc()));
+        regButton.setOnAction(e -> MainScene.setScene(MainScene.su.getSc()));
 
         regButton.setPrefHeight(prefHeight);
         regButton.setDefaultButton(true);

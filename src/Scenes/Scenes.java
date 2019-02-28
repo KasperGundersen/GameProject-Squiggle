@@ -10,17 +10,19 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-abstract class Scenes {
+public abstract class Scenes {
 
+    //Object variables
     private GridPane gp;
     private Scene sc;
 
-
+    //Constructor for abstract class, use width and height for scene
     public Scenes(double WIDTH, double HEIGHT){
-        gp = createFormPane();
+        gp = createGridPane();
         sc = new Scene(gp, WIDTH, HEIGHT);
     }
 
+    //Getters
     public GridPane getGp() {
         return gp;
     }
@@ -29,15 +31,13 @@ abstract class Scenes {
         return sc;
     }
 
-    public String getTextField(TextField txt){
-        return txt.getText();
-    }
-
+    //Buttonaction to swap scenes
     public void buttonAction(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene2(scn.getSc()));
+        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
     }
 
-    public GridPane createFormPane() {
+    //Standard GridPane formation
+    public GridPane createGridPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
         // Position the pane at the center of the screen, both vertically and horizontally
