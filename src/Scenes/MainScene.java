@@ -12,6 +12,7 @@ public class MainScene {
     public static Stage window;
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
+    public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
 
 
     public static void setScene2(Scene sc) {

@@ -56,6 +56,7 @@ public class LogIn extends Scenes {
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
         GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
+        super.buttonAction(logInButton, MainScene.mm);
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
@@ -71,6 +72,6 @@ public class LogIn extends Scenes {
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
-        optionButton.setOnAction(e -> Options.opneBoxer());
+        optionButton.setOnAction(e -> Options.openOptions());
     }
 }
