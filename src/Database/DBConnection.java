@@ -31,19 +31,16 @@ public class DBConnection {
     }
 
     // This method looks for "input" in the given column in the database
-    public static boolean alreadyExistsIn(Connection con, String columnName, String input) {
-        boolean exists = false;
+    public static boolean exists(Connection con, String columnName, String input) {
         try{
             stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT " + columnName + " FROM USERS WHERE userName=\"" + input + "\";");
-            if (!res.next()) {
-                exists = false;
-            }
+            res = stmt.executeQuery("SELECT " + columnName + " FROM USERS WHERE " + columnName + "=\"" + input + "\";");
+            return res.next();
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-        return exists;
+        return false;
     }
 }

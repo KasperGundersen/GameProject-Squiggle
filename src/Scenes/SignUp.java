@@ -143,7 +143,7 @@ public class SignUp extends Scenes {
         String mail = getMail();
         String password = getPassword();
 
-        if((DBConnection.alreadyExistsIn(con,"userName", username))||(DBConnection.alreadyExistsIn(con,"userMail", mail))){
+        if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))){
             System.out.println("Brukernavn eller epost er allerede registrert");
         }else{
             Registration.registerUser(con, username, password, mail, 0);
