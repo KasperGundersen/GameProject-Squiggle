@@ -36,21 +36,21 @@ public class SignUp extends Scenes {
 
     public String getName(){
         if(nameField.getText().equals(null)){
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("eow");
         }
         return nameField.getText();
     }
 
     public String getMail(){
         if(emailField.getText().equals(null)){
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("hilf");
         }
         return emailField.getText();
     }
 
     public String getPassword(){
         if(passwordField.getText().equals(null) || rePasswordField.getText().equals(null)){
-            throw new IllegalArgumentException("");
+            throw new IllegalArgumentException("HELP");
         }
         if(passwordField.getText().equals(rePasswordField.getText())){
             return passwordField.getText();
@@ -138,15 +138,17 @@ public class SignUp extends Scenes {
     }
 
     private void submit(){
+            System.out.println("Dette fungerer!!");
             String username = getName();
             String mail = getMail();
             String password = getPassword();
-
             if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
                 throw new IllegalArgumentException("");
             }else{
                 dbCon.registerUser(username, password, mail, 0);
             }
+        System.out.println("Yay!!");
+            MainScene.setScene2(MainScene.li.getSc());
     }
 
 }

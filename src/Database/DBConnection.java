@@ -29,7 +29,7 @@ public class DBConnection {
 
     public boolean alreadyExistsIn(String columnName, String input) {
         try {
-            res = stmt.executeQuery("SELECT " + * + " FROM USERS WHERE " + columnName + "=" + input);
+            res = stmt.executeQuery("SELECT * FROM USERS WHERE " + columnName + "=" + input);
         } catch (SQLException e) {
             e.printStackTrace();
         }

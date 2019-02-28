@@ -14,6 +14,7 @@ abstract class Scenes {
 
     private GridPane gp;
     private Scene sc;
+
     public Scenes(double WIDTH, double HEIGHT){
         gp = createFormPane();
         sc = new Scene(gp, WIDTH, HEIGHT);
