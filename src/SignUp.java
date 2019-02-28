@@ -15,8 +15,19 @@ import javafx.scene.text.FontWeight;
 
 public class SignUp{
 
+    //Scene
     private GridPane gp;
     private Scene sc;
+
+    //UI
+    private TextField nameField;
+    private TextField emailField;
+    private PasswordField passwordField;
+    private PasswordField rePasswordField;
+
+    private Button submitButton;
+    private Button optionButton;
+    private Button backButton;
 
     public SignUp(double width, double height) {
         gp = createRegistrationFormPane();
@@ -27,6 +38,22 @@ public class SignUp{
     public Scene getSc() {
         return sc;
     }
+
+    public String getName(){
+        return nameField.getText();
+    }
+
+    public String getMail(){
+        return emailField.getText();
+    }
+
+    public String getPassword(){
+        if(passwordField.getText().equals(rePasswordField.getText())){
+            return passwordField.getText();
+        }else throw new IllegalArgumentException("Password don't match");
+    }
+
+
 
     private GridPane createRegistrationFormPane() {
         // Instantiate a new Grid Pane
@@ -70,22 +97,22 @@ public class SignUp{
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
         // Add Name Label
-        Label nameLabel = new Label("Full Name : ");
+        Label nameLabel = new Label("Username : ");
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
-        TextField nameField = new TextField();
+        nameField = new TextField();
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("Ola Nordmann");
         gridPane.add(nameField, 1,1);
 
 
         // Add Email Label
-        Label emailLabel = new Label("Email ID : ");
+        Label emailLabel = new Label("Email : ");
         gridPane.add(emailLabel, 0, 2);
 
         // Add Email Text Field
-        TextField emailField = new TextField();
+        emailField = new TextField();
         emailField.setPrefHeight(prefHeight);
         emailField.setPromptText("party@myhouse.tonight");
         gridPane.add(emailField, 1, 2);
@@ -95,36 +122,46 @@ public class SignUp{
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
-        PasswordField passwordField = new PasswordField();
+        passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
 
+        // Add RePassword Label
+        Label rePasswordLabel = new Label("Password : ");
+        gridPane.add(rePasswordLabel, 0, 4);
+
+        // Add RePassword Field
+        rePasswordField = new PasswordField();
+        rePasswordField.setPrefHeight(prefHeight);
+        rePasswordField.setPromptText("re-enter password");
+        gridPane.add(rePasswordField, 1, 4);
+
         // Add Submit Button
-        Button submitButton = new Button("Submit");
+        submitButton = new Button("Submit");
         submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
-        gridPane.add(submitButton, 0, 4, 2, 1);
+        gridPane.add(submitButton, 0, 5, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
 
         // Add option button
-        Button optionButton = new Button("Options");
+        optionButton = new Button("Options");
         optionButton.setOnAction(e -> Options.opneBoxer());
-        gridPane.add(optionButton, 4, 14);
+        gridPane.add(optionButton, 5, 14);
 
 
         // Go back button
-        Button backButton = new Button("Go Back");
+        backButton = new Button("Go Back");
         backButton.setOnAction(e -> Main.setScene2(Main.li.getSc()));
 
         backButton.setPrefHeight(prefHeight);
         backButton.setDefaultButton(true);
         backButton.setPrefWidth(100);
-        gridPane.add(backButton, 0, 4, 1, 2);
+        gridPane.add(backButton, 0, 5, 1, 2);
         GridPane.setHalignment(backButton, HPos.CENTER);
         GridPane.setValignment(backButton, VPos.CENTER);
-
     }
+
 }
