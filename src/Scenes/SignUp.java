@@ -4,16 +4,14 @@ import Components.Authentication;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
+import javafx.scene.control.Tooltip;
 
 public class SignUp extends Scenes {
 
@@ -106,6 +104,7 @@ public class SignUp extends Scenes {
         nameField.setPromptText("Ola Nordmann");
         gridPane.add(nameField, 1,1);
 
+
         //Add empty Label
         emptyUser = new Label("Fill in username");
         gridPane.add(emptyUser,2,1,2,1);
@@ -186,5 +185,22 @@ public class SignUp extends Scenes {
         super.buttonChangeScene(backButton, MainScene.li);
         submitButton.setOnAction(e -> Authentication.submit());
         optionButton.setOnAction(e -> Options.openOptions());
+
+        // Tooltips
+        final Tooltip tooltipName = new Tooltip();
+        tooltipName.setText("Write your username");
+        nameField.setTooltip(tooltipName);
+
+        final Tooltip tooltipEmail = new Tooltip();
+        tooltipEmail.setText("Write your Email");
+        emailField.setTooltip(tooltipEmail);
+
+        final Tooltip tooltipPasword = new Tooltip();
+        tooltipPasword.setText("Write your password");
+        passwordField.setTooltip(tooltipPasword);
+
+        final Tooltip tooltipRePassword = new Tooltip();
+        tooltipRePassword.setText("Write your password one more time");
+        rePasswordField.setTooltip(tooltipRePassword);
     }
 }
