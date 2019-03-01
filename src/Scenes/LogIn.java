@@ -3,10 +3,7 @@ package Scenes;
 import Components.Authentication;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -89,5 +86,14 @@ public class LogIn extends Scenes {
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
         optionButton.setOnAction(e -> Options.openOptions());
+
+        // Tooltips
+        final Tooltip tooltipName = new Tooltip();
+        tooltipName.setText("Write your username");
+        nameField.setTooltip(tooltipName);
+
+        final Tooltip tooltipPassword = new Tooltip();
+        tooltipPassword.setText("Write your password");
+        passwordField.setTooltip(tooltipPassword);
     }
 }
