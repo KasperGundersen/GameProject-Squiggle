@@ -108,7 +108,7 @@ public class SignUp extends Scenes {
         //Add empty Label
         emptyUser = new Label("Fill in username");
         gridPane.add(emptyUser,2,1,2,1);
-        //emptyUser.setVisible(false);
+        emptyUser.setVisible(false);
         errorFont(emptyUser);
 
         // Add Email Label
