@@ -65,4 +65,18 @@ public class DBConnection {
         }
         return null;
     }
+
+    public static boolean getLoggedIn(Connection con, String username) {
+        boolean loggedIn = false;
+        try {
+            stmt = con.createStatement();
+            res = stmt.executeQuery("SELECT loggedIn FROM USERS WHERE userName=\"" + username + "\";");
+            res.next();
+            int num = res.getInt("loggedIn");
+            loggedIn = (num == 0 ? false : true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return loggedIn;
+    }
 }

@@ -54,10 +54,14 @@ public class Authentication {
         //generating hash using salt
         String encryptor = Encryptor.Encryptor(password, salt);
         String hash = Encryptor.getHash(encryptor);
+
+
         //Check if
         if((DBConnection.exists(con,"userName", username))&&(DBConnection.exists(con,"password", hash))) {
-            MainScene.setScene(MainScene.mm.getSc());
-            DBConnection.setLoggedIn(con, username, 1);
+            if (!DBConnection.getLoggedIn(con, username)) {
+                MainScene.setScene(MainScene.mm.getSc());
+                DBConnection.setLoggedIn(con, username, 1);
+            }
         }
     }
 }

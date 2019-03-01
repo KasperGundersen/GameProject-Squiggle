@@ -16,10 +16,16 @@ public abstract class Scenes {
     private GridPane gp;
     private Scene sc;
 
+    // Dimensions
+    private final double WIDTH;
+    private final double HEIGHT;
+
     //Constructor for abstract class, use width and height for scene
     public Scenes(double WIDTH, double HEIGHT){
         gp = createGridPane();
         sc = new Scene(gp, WIDTH, HEIGHT);
+        this.WIDTH = WIDTH;
+        this.HEIGHT = HEIGHT;
     }
 
     //Getters
@@ -29,6 +35,14 @@ public abstract class Scenes {
 
     public Scene getSc(){
         return sc;
+    }
+
+    public double getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public double getWIDTH() {
+        return WIDTH;
     }
 
     //Buttonaction to swap scenes

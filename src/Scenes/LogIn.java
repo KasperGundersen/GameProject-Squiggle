@@ -77,7 +77,7 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        regButton.setOnAction(e -> MainScene.setScene(MainScene.su.getSc()));
+        regButton.setOnAction(e -> MainScene.setScene(new SignUp(super.getWIDTH(), super.getHEIGHT()).getSc()));
 
         regButton.setPrefHeight(prefHeight);
         regButton.setDefaultButton(true);
