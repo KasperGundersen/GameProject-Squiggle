@@ -35,4 +35,8 @@ public class MainScene {
             window.close();
         }
     }
+
+    public static void closeStage() {
+        window.close();
+    }
 }
