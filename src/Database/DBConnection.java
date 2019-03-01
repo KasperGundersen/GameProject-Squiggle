@@ -43,4 +43,13 @@ public class DBConnection {
         }
         return false;
     }
+
+    public static void setLoggedIn(Connection con, String username, int loggedIn) {
+        try {
+            stmt = con.createStatement();
+            stmt.executeUpdate("UPDATE USERS SET loggedIn=" + loggedIn + " WHERE userName=\"" + username + "\";");
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

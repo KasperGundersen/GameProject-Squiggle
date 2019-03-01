@@ -4,10 +4,8 @@ import Database.DBConnection;
 import Scenes.MainScene;
 import Scenes.SignUp;
 import Scenes.LogIn;
-import Scenes.Scenes;
-import com.mysql.cj.log.Log;
-import com.sun.tools.javac.Main;
 
+import java.lang.reflect.AnnotatedType;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
@@ -49,6 +47,8 @@ public class Authentication {
 
         if((DBConnection.exists(con,"userName", username))&&(DBConnection.exists(con,"password", password))) {
             MainScene.setScene(MainScene.mm.getSc());
+            DBConnection.setLoggedIn(con, username, 1);
+
         }
     }
 }

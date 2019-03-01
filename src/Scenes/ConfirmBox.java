@@ -1,5 +1,6 @@
 package Scenes;
 
+import Database.DBConnection;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
 
 public class ConfirmBox {
 
@@ -30,6 +33,8 @@ public class ConfirmBox {
         yesButton.setOnAction(e -> {
             ansver = true;
             stage.close();
+            Connection con = DBConnection.getCon();
+            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
         });
         noButton.setOnAction(e -> {
             ansver = false;
