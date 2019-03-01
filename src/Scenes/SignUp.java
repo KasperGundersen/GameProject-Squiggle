@@ -58,10 +58,16 @@ public class SignUp extends Scenes {
 
     //gettere
     public static String getName(){
+        if(nameField.getText().isEmpty()){
+            return null;
+        }
         return nameField.getText();
     }
 
     public static String getMail(){
+        if(emailField.getText().isEmpty()){
+            return null;
+        }
         return emailField.getText();
     }
 
