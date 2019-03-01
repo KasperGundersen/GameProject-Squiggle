@@ -7,7 +7,7 @@ public class DBConnection {
 
     // All information needed to connect to the database
     private static final String username = "zuimran";
-    private static final String password = "xaXIMlNC"; //xaXIMlNC
+    private static final String password = "xaXIMlNC";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
 

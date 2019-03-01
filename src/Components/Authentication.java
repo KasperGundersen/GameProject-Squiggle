@@ -34,6 +34,7 @@ public class Authentication {
         //get salt and hash
         String hash = Encryptor.getHash(encryptor);
         String salt = Encryptor.getSalt(encryptor);
+
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
             System.out.println("This username or email is already registered");
         }else if(username == null || mail == null || password == null) {
