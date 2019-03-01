@@ -102,9 +102,9 @@ public class Authentication {
                 LogIn.setTextLoginError("User already logged in");
                 LogIn.visibleLoginError(true);
             }
-        } else if (!username.isEmpty() && !password.isEmpty()) {
+        } else {
             // wrong username or password error
-            LogIn.setTextLoginError("User already logged in");
+            LogIn.setTextLoginError("Incorrect username or password");
             LogIn.visibleLoginError(true);
         }
         DBConnection.closeConnection(con);
