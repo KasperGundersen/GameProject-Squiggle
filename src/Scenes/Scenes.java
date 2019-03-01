@@ -5,22 +5,34 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
-abstract class Scenes {
+public abstract class Scenes {
 
+    //Object variables
     private GridPane gp;
     private Scene sc;
 
+    // Dimensions
+    private final double WIDTH;
+    private final double HEIGHT;
 
+    //Constructor for abstract class, use width and height for scene
     public Scenes(double WIDTH, double HEIGHT){
-        gp = createFormPane();
+        gp = createGridPane();
         sc = new Scene(gp, WIDTH, HEIGHT);
+        this.WIDTH = WIDTH;
+        this.HEIGHT = HEIGHT;
     }
 
+    //Getters
     public GridPane getGp() {
         return gp;
     }
@@ -29,15 +41,21 @@ abstract class Scenes {
         return sc;
     }
 
-    public String getTextField(TextField txt){
-        return txt.getText();
+    public double getHEIGHT() {
+        return HEIGHT;
     }
 
-    public void buttonAction(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene2(scn.getSc()));
+    public double getWIDTH() {
+        return WIDTH;
     }
 
-    public GridPane createFormPane() {
+    //Buttonaction to swap scenes
+    public void buttonChangeScene(Button btn, Scenes scn){
+        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
+    }
+
+    //Standard GridPane formation
+    public GridPane createGridPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
         // Position the pane at the center of the screen, both vertically and horizontally
@@ -57,5 +75,14 @@ abstract class Scenes {
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
         return gridPane;
+    }
+
+    public void errorFont(Label l){
+        l.setTextFill(Color.RED);
+        l.setFont(Font.font(
+                "Arial",
+                FontPosture.ITALIC,
+                Font.getDefault().getSize()
+        ));
     }
 }

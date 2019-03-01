@@ -1,13 +1,17 @@
 package Scenes;
 
+import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.sql.Connection;
 
 public class MainMenu extends Scenes{
     private GridPane gp;
@@ -35,20 +39,34 @@ public class MainMenu extends Scenes{
 
         // Join game button
         Button joinGameButton = new Button("Join Game");
-        gridPane.add(joinGameButton, 0,1);
+        joinGameButton.setPrefHeight(prefHeight);
+        joinGameButton.setDefaultButton(true);
+        joinGameButton.setPrefWidth(100);
+        gridPane.add(joinGameButton, 0, 1, 2, 1);
+        GridPane.setHalignment(joinGameButton, HPos.CENTER);
+        GridPane.setValignment(joinGameButton, VPos.CENTER);
 
-        // Scenes.Options game button
-        Button optionButton = new Button("Scenes.Options");
-        gridPane.add(optionButton, 1,1);
+        // Options button
+        Button optionButton = new Button("Options");
+        optionButton.setOnAction(e -> Options.openOptions());
+        optionButton.setPrefHeight(prefHeight);
+        optionButton.setPrefWidth(100);
+        gridPane.add(optionButton, 0,2, 2, 1);
+        GridPane.setHalignment(optionButton, HPos.CENTER);
+        GridPane.setValignment(optionButton, VPos.CENTER);
 
         // Quit button
         Button quitButton = new Button("Quit");
+        quitButton.setOnAction(e -> {
+            MainScene.closeStage();
+            Connection con = DBConnection.getCon();
+            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+        });
         quitButton.setPrefHeight(prefHeight);
-        quitButton.setDefaultButton(true);
         quitButton.setPrefWidth(100);
-        gridPane.add(quitButton, 0, 4, 2, 1);
+        gridPane.add(quitButton, 0, 3, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
-        GridPane.setMargin(quitButton, new Insets(20, 0,20,0));
+        GridPane.setValignment(quitButton, VPos.CENTER);
     }
 }
 

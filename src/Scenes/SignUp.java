@@ -1,74 +1,98 @@
 package Scenes;
 
-import Database.DBConnection;
-import Scenes.Scenes;
+import Components.Authentication;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-
-import java.sql.Connection;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.control.Tooltip;
 
 public class SignUp extends Scenes {
 
-    //DB
+    //UI initialiser alt som man bruker som objectvariabler
+    private static TextField nameField;
+    private static TextField emailField;
+    private static PasswordField passwordField;
+    private static PasswordField rePasswordField;
 
-    DBConnection dbCon;
-
-    //UI
-    private TextField nameField;
-    private TextField emailField;
-    private PasswordField passwordField;
-    private PasswordField rePasswordField;
+    private static Label errorUsernMail;
+    private static Label errorPassword;
+    private static Label emptyUser;
+    private static Label emptyMail;
+    private static Label emptyPassword;
 
     private Button submitButton;
     private Button optionButton;
     private Button backButton;
 
+    public static void visibleUserMail(boolean b){
+        errorUsernMail.setVisible(b);
+    }
+    public static void visiblePassword(boolean b){
+        errorPassword.setVisible(b);
+    }
+    public static void visibleEmptyUser(boolean b){
+        emptyUser.setVisible(b);
+    }
+    public static void visibleEmptyMail(boolean b){
+        emptyMail.setVisible(b);
+    }
+    public static void visibleEmptyPassword(boolean b){
+        emptyPassword.setVisible(b);
+    }
 
+    //////////////////////////////////////////////////////////////////////////////
+    //construktør fra super
     public SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
+        //Legg inn metoden som legger til ui
         addUIControls(super.getGp());
     }
 
-    public String getName(){
-        if(nameField.getText().equals(null)){
-            throw new IllegalArgumentException("eow");
+    //gettere
+    public static String getName(){
+        if(nameField.getText().isEmpty()){
+            return null;
         }
         return nameField.getText();
     }
 
-    public String getMail(){
-        if(emailField.getText().equals(null)){
-            throw new IllegalArgumentException("hilf");
+    public static String getMail(){
+        if(emailField.getText().isEmpty()){
+            return null;
         }
         return emailField.getText();
     }
 
-    public String getPassword(){
-        if(passwordField.getText().equals(null) || rePasswordField.getText().equals(null)){
-            throw new IllegalArgumentException("HELP");
-        }
-        if(passwordField.getText().equals(rePasswordField.getText())){
+    public static String getPassword(){
+        if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
             return passwordField.getText();
-        }else throw new IllegalArgumentException("Password don't match");
+        }else {
+            return null;
+        }
     }
 
+    // Adding UI to Grid
     private void addUIControls(GridPane gridPane) {
-
         double prefHeight = 40;
         // Add Header
-        Label headerLabel = new Label("Registration Form");
+        Label headerLabel = new Label("Sign Up");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+        //Add error Label
+        errorUsernMail = new Label("Username or email already taken");
+        gridPane.add(errorUsernMail,1,0,2,2);
+        errorUsernMail.setVisible(false);
+        super.errorFont(errorUsernMail);
 
         // Add Name Label
         Label nameLabel = new Label("Username : ");
@@ -81,6 +105,12 @@ public class SignUp extends Scenes {
         gridPane.add(nameField, 1,1);
 
 
+        //Add empty Label
+        emptyUser = new Label("Fill in username");
+        gridPane.add(emptyUser,2,1,2,1);
+        emptyUser.setVisible(false);
+        super.errorFont(emptyUser);
+
         // Add Email Label
         Label emailLabel = new Label("Email : ");
         gridPane.add(emailLabel, 0, 2);
@@ -91,7 +121,20 @@ public class SignUp extends Scenes {
         emailField.setPromptText("party@myhouse.tonight");
         gridPane.add(emailField, 1, 2);
 
-        // Add Password Label
+        //Add empty Label
+        emptyMail = new Label("Fill in mail");
+        gridPane.add(emptyMail,2,2,2,1);
+        emptyMail.setVisible(false);
+        errorFont(emptyMail);
+
+        //Add error Label
+        errorPassword = new Label("Password don't match");
+        gridPane.add(errorPassword,1,2,2,2);
+        GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
+        errorPassword.setVisible(false);
+        super.errorFont(errorPassword);
+
+        // Add Passfword Label
         Label passwordLabel = new Label("Password : ");
         gridPane.add(passwordLabel, 0, 3);
 
@@ -99,7 +142,14 @@ public class SignUp extends Scenes {
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
+        GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
         gridPane.add(passwordField, 1, 3);
+
+        //Add empty Label
+        emptyPassword = new Label("Fill in password");
+        gridPane.add(emptyPassword,2,3,2,1);
+        emptyPassword.setVisible(false);
+        errorFont(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
@@ -122,39 +172,35 @@ public class SignUp extends Scenes {
 
         // Add option button
         optionButton = new Button("Options");
-        gridPane.add(optionButton, 5, 14);
-        optionButton.setOnAction(e -> Options.openOptions());
-
-
+        gridPane.add(optionButton, 3, 6);
+        GridPane.setHalignment(optionButton, HPos.LEFT);
+        GridPane.setValignment(optionButton, VPos.BOTTOM);
         // Go back button
         backButton = new Button("Go Back");
-        backButton.setPrefHeight(prefHeight);
-        backButton.setDefaultButton(true);
-        backButton.setPrefWidth(100);
-        gridPane.add(backButton, 0, 5, 1, 2);
-        GridPane.setHalignment(backButton, HPos.CENTER);
-        GridPane.setValignment(backButton, VPos.CENTER);
+        gridPane.add(backButton, 0, 6);
+        GridPane.setHalignment(backButton, HPos.LEFT);
+        GridPane.setValignment(backButton, VPos.BOTTOM);
 
         // Button submition
-        super.buttonAction(backButton, MainScene.li);
-        submitButton.setOnAction(e -> submit());
+        super.buttonChangeScene(backButton, MainScene.li);
+        submitButton.setOnAction(e -> Authentication.submit());
+        optionButton.setOnAction(e -> Options.openOptions());
 
-    }
+        // Tooltips
+        final Tooltip tooltipName = new Tooltip();
+        tooltipName.setText("Write your username");
+        nameField.setTooltip(tooltipName);
 
-    private void submit(){
-        dbCon = new DBConnection();
-        Connection conn = dbCon.getCon();
-        String username = getName();
-        String mail = getMail();
-        String password = getPassword();
-        /*
-        if((dbCon.alreadyExistsIn("userName", username))||(dbCon.alreadyExistsIn("userMail", mail))){
-            System.out.println("Brukernavn eller epost er allerede registrert");
-        }else{
-            dbCon.registerUser(username, password, mail, 0);
-        }
-        */
-        dbCon.registerUser(conn, username, password, mail, 0);
-        MainScene.setScene2(MainScene.li.getSc());
+        final Tooltip tooltipEmail = new Tooltip();
+        tooltipEmail.setText("Write your Email");
+        emailField.setTooltip(tooltipEmail);
+
+        final Tooltip tooltipPasword = new Tooltip();
+        tooltipPasword.setText("Write your password");
+        passwordField.setTooltip(tooltipPasword);
+
+        final Tooltip tooltipRePassword = new Tooltip();
+        tooltipRePassword.setText("Write your password one more time");
+        rePasswordField.setTooltip(tooltipRePassword);
     }
 }
