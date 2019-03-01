@@ -29,20 +29,54 @@ public class Authentication {
         String username = SignUp.getName();
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
-        //Encrypt password
-        String encryptor = Encryptor.Encryptor(password,null);
-        //get salt and hash
-        String hash = Encryptor.getHash(encryptor);
-        String salt = Encryptor.getSalt(encryptor);
+        String hash;
+        String salt;
+
+        if(password != null) {
+            //Encrypt password
+            String encryptor = Encryptor.Encryptor(password, null);
+            //get salt and hash
+            hash = Encryptor.getHash(encryptor);
+            salt = Encryptor.getSalt(encryptor);
+        }else{
+            SignUp.visiablePassword(true);
+            hash = null;
+            salt = null;
+        }
+        System.out.println(username + "..." + mail + "..." + password + " hei");
+
+        if(username == null){
+            SignUp.visiableEmptyUser(true);
+            System.out.println("u");
+        } else {
+            SignUp.visiableEmptyUser(false);
+            System.out.println("e");
+        }
+
+        if(mail == null) {
+            SignUp.visiableEmptyMail(true);
+            System.out.println("d");
+        } else {
+            SignUp.visiableEmptyMail(false);
+            System.out.println("c");
+        }
+
+        if(password == null){
+            SignUp.visiableEmptyPassword(true);
+            System.out.println("a");
+        } else {
+            SignUp.visiableEmptyPassword(false);
+            System.out.println("b");
+        }
 
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
-            System.out.println("This username or email is already registered");
-        }else if(username == null || mail == null || password == null) {
-            System.out.println("Username, password, or email cannot be empty");
-        }else{
+            SignUp.visiableUserMail(true);
+        }else if(username != null && mail != null && hash != null && salt != null) {
             registerUser(con, username, hash, salt, mail, 0);
+            MainScene.setScene(MainScene.li.getSc());
+        }else{
+            SignUp.visiableUserMail(false);
         }
-        MainScene.setScene(MainScene.li.getSc());
     }
 
     public static void logIn() {

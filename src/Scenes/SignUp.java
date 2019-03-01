@@ -25,6 +25,9 @@ public class SignUp extends Scenes {
 
     private static Label errorUsernMail;
     private static Label errorPassword;
+    private static Label emptyUser;
+    private static Label emptyMail;
+    private static Label emptyPassword;
 
     private Button submitButton;
     private Button optionButton;
@@ -36,6 +39,15 @@ public class SignUp extends Scenes {
     public static void visiablePassword(boolean b){
         errorPassword.setVisible(b);
     }
+    public static void visiableEmptyUser(boolean b){
+        emptyUser.setVisible(b);
+    }
+    public static void visiableEmptyMail(boolean b){
+        emptyMail.setVisible(b);
+    }
+    public static void visiableEmptyPassword(boolean b){
+        emptyPassword.setVisible(b);
+    }
 
     //construktør fra super
     public SignUp(double WIDTH, double HEIGHT) {
@@ -46,26 +58,19 @@ public class SignUp extends Scenes {
 
     //gettere
     public static String getName(){
-        if(nameField.getText() == null){
-            throw new NullPointerException("Need username");
-        }
         return nameField.getText();
     }
 
     public static String getMail(){
-        if(emailField.getText() == null){
-            throw new NullPointerException("Need mail");
-        }
         return emailField.getText();
     }
 
     public static String getPassword(){
-        if(passwordField.getText() == null || rePasswordField.getText() == null){
-            throw new NullPointerException("Need password");
-        }
         if(passwordField.getText().equals(rePasswordField.getText())){
             return passwordField.getText();
-        }else throw new IllegalArgumentException("Password don't match");
+        }else {
+            return null;
+        }
     }
 
     // Adding UI to Grid
@@ -82,12 +87,7 @@ public class SignUp extends Scenes {
         errorUsernMail = new Label("Username or email already taken");
         gridPane.add(errorUsernMail,1,0,2,2);
         errorUsernMail.setVisible(false);
-        errorUsernMail.setTextFill(Color.RED);
-        errorUsernMail.setFont(Font.font(
-                "Arial",
-                FontPosture.ITALIC,
-                Font.getDefault().getSize()
-        ));
+        errorFont(errorUsernMail);
 
         // Add Name Label
         Label nameLabel = new Label("Username : ");
@@ -99,6 +99,12 @@ public class SignUp extends Scenes {
         nameField.setPromptText("Ola Nordmann");
         gridPane.add(nameField, 1,1);
 
+        //Add empty Label
+        emptyUser = new Label("Fill in username");
+        gridPane.add(emptyUser,2,1,2,1);
+        //emptyUser.setVisible(false);
+        errorFont(emptyUser);
+
         // Add Email Label
         Label emailLabel = new Label("Email : ");
         gridPane.add(emailLabel, 0, 2);
@@ -109,17 +115,18 @@ public class SignUp extends Scenes {
         emailField.setPromptText("party@myhouse.tonight");
         gridPane.add(emailField, 1, 2);
 
+        //Add empty Label
+        emptyMail = new Label("Fill in mail");
+        gridPane.add(emptyMail,2,2,2,1);
+        emptyMail.setVisible(false);
+        errorFont(emptyMail);
+
         //Add error Label
         errorPassword = new Label("Password don't match");
         gridPane.add(errorPassword,1,2,2,2);
         GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
         errorPassword.setVisible(false);
-        errorPassword.setTextFill(Color.RED);
-        errorPassword.setFont(Font.font(
-                "Arial",
-                FontPosture.ITALIC,
-                Font.getDefault().getSize()
-        ));
+        errorFont(errorPassword);
 
         // Add Passfword Label
         Label passwordLabel = new Label("Password : ");
@@ -131,6 +138,12 @@ public class SignUp extends Scenes {
         passwordField.setPromptText("password");
         GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
         gridPane.add(passwordField, 1, 3);
+
+        //Add empty Label
+        emptyPassword = new Label("Fill in password");
+        gridPane.add(emptyPassword,2,3,2,1);
+        emptyPassword.setVisible(false);
+        errorFont(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
@@ -166,5 +179,15 @@ public class SignUp extends Scenes {
         super.buttonChangeScene(backButton, MainScene.li);
         submitButton.setOnAction(e -> Authentication.submit());
         optionButton.setOnAction(e -> Options.openOptions());
+    }
+
+    public void errorFont(Label l){
+        l.setTextFill(Color.RED);
+        l.setFont(Font.font(
+                "Arial",
+                FontPosture.ITALIC,
+                Font.getDefault().getSize()
+        ));
+
     }
 }
