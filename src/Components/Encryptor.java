@@ -22,7 +22,6 @@ public class Encryptor {
             }
             // Passing the salt to the digest for the computation
             md.update(salt);
-            System.out.println(Arrays.toString(salt));
             String salted = buildHexString(salt);
             // Generate the salted hash
             byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
