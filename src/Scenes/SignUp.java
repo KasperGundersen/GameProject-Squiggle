@@ -72,7 +72,7 @@ public class SignUp extends Scenes {
     }
 
     public static String getPassword(){
-        if(passwordField.getText().equals(rePasswordField.getText())){
+        if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
             return passwordField.getText();
         }else {
             return null;
