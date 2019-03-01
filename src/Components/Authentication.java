@@ -61,6 +61,8 @@ public class Authentication {
             if (!DBConnection.getLoggedIn(con, username)) {
                 MainScene.setScene(MainScene.mm.getSc());
                 DBConnection.setLoggedIn(con, username, 1);
+            } else {
+                // insert showLabel method
             }
         }
     }
