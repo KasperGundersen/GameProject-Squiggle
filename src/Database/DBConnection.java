@@ -57,9 +57,10 @@ public class DBConnection {
         try {
             stmt = con.createStatement();
             res = stmt.executeQuery("SELECT salt FROM USERS WHERE userName=\"" + username + "\";");
-            res.next();
-            String salt = res.getString("salt");
-            return salt;
+            if(res.next()) {
+                String salt = res.getString("salt");
+                return salt;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

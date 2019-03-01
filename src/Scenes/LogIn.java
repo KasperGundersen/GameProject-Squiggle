@@ -13,8 +13,22 @@ import javafx.scene.text.FontWeight;
 
 public class LogIn extends Scenes {
 
+    // Fields
     private static TextField nameField;
     private static PasswordField passwordField;
+
+    // Error message
+    private static Label loginError;
+
+    // Error label
+    public static void visibleLoginError(boolean b){
+        loginError.setVisible(b);
+    }
+
+    public static void setTextLoginError(String newText) {
+        loginError.setText(newText);
+    }
+
 
     public LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -44,6 +58,12 @@ public class LogIn extends Scenes {
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+        //Add error Label
+        loginError = new Label();
+        gridPane.add(loginError,1,0,2,2);
+        loginError.setVisible(false);
+        super.errorFont(loginError);
 
         // Add Name Label
         Label nameLabel = new Label("Username: ");

@@ -5,6 +5,7 @@ import Scenes.MainScene;
 import Scenes.SignUp;
 import Scenes.LogIn;
 
+import javax.security.auth.login.LoginContext;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
@@ -93,11 +94,18 @@ public class Authentication {
         //Check if
         if((DBConnection.exists(con,"userName", username))&&(DBConnection.exists(con,"password", hash))) {
             if (!DBConnection.getLoggedIn(con, username)) {
+                SignUp.visibleEmptyPassword(false);
                 MainScene.setScene(MainScene.mm.getSc());
                 DBConnection.setLoggedIn(con, username, 1);
             } else {
-                // insert showLabel method
+                // already logged in error
+                LogIn.setTextLoginError("User already logged in");
+                LogIn.visibleLoginError(true);
             }
+        } else if (!username.isEmpty() && !password.isEmpty()) {
+            // wrong username or password error
+            LogIn.setTextLoginError("User already logged in");
+            LogIn.visibleLoginError(true);
         }
         DBConnection.closeConnection(con);
     }
