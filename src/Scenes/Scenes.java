@@ -5,10 +5,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
 public abstract class Scenes {
 
@@ -71,5 +75,14 @@ public abstract class Scenes {
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
         return gridPane;
+    }
+
+    public void errorFont(Label l){
+        l.setTextFill(Color.RED);
+        l.setFont(Font.font(
+                "Arial",
+                FontPosture.ITALIC,
+                Font.getDefault().getSize()
+        ));
     }
 }

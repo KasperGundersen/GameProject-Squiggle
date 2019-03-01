@@ -49,6 +49,7 @@ public class SignUp extends Scenes {
         emptyPassword.setVisible(b);
     }
 
+    //////////////////////////////////////////////////////////////////////////////
     //construktør fra super
     public SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -93,7 +94,7 @@ public class SignUp extends Scenes {
         errorUsernMail = new Label("Username or email already taken");
         gridPane.add(errorUsernMail,1,0,2,2);
         errorUsernMail.setVisible(false);
-        errorFont(errorUsernMail);
+        super.errorFont(errorUsernMail);
 
         // Add Name Label
         Label nameLabel = new Label("Username : ");
@@ -109,7 +110,7 @@ public class SignUp extends Scenes {
         emptyUser = new Label("Fill in username");
         gridPane.add(emptyUser,2,1,2,1);
         emptyUser.setVisible(false);
-        errorFont(emptyUser);
+        super.errorFont(emptyUser);
 
         // Add Email Label
         Label emailLabel = new Label("Email : ");
@@ -132,7 +133,7 @@ public class SignUp extends Scenes {
         gridPane.add(errorPassword,1,2,2,2);
         GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
         errorPassword.setVisible(false);
-        errorFont(errorPassword);
+        super.errorFont(errorPassword);
 
         // Add Passfword Label
         Label passwordLabel = new Label("Password : ");
@@ -185,15 +186,5 @@ public class SignUp extends Scenes {
         super.buttonChangeScene(backButton, MainScene.li);
         submitButton.setOnAction(e -> Authentication.submit());
         optionButton.setOnAction(e -> Options.openOptions());
-    }
-
-    public void errorFont(Label l){
-        l.setTextFill(Color.RED);
-        l.setFont(Font.font(
-                "Arial",
-                FontPosture.ITALIC,
-                Font.getDefault().getSize()
-        ));
-
     }
 }
