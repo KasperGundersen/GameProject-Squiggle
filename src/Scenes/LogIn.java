@@ -80,7 +80,6 @@ public class LogIn extends Scenes {
         regButton.setOnAction(e -> MainScene.setScene(new SignUp(super.getWIDTH(), super.getHEIGHT()).getSc()));
 
         regButton.setPrefHeight(prefHeight);
-        regButton.setDefaultButton(true);
         regButton.setPrefWidth(300);
         gridPane.add(regButton, 0, 5, 2, 1);
         GridPane.setHalignment(regButton, HPos.CENTER);
