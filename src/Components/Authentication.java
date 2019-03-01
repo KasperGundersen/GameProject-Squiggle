@@ -5,7 +5,6 @@ import Scenes.MainScene;
 import Scenes.SignUp;
 import Scenes.LogIn;
 
-import java.lang.reflect.AnnotatedType;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
@@ -39,44 +38,45 @@ public class Authentication {
             hash = Encryptor.getHash(encryptor);
             salt = Encryptor.getSalt(encryptor);
         }else{
-            SignUp.visiablePassword(true);
+            SignUp.visiblePassword(true);
             hash = null;
             salt = null;
         }
         System.out.println(username + "..." + mail + "..." + password + " hei");
 
         if(username == null){
-            SignUp.visiableEmptyUser(true);
+            SignUp.visibleEmptyUser(true);
             System.out.println("u");
-        } else {
-            SignUp.visiableEmptyUser(false);
+        } else if(username != null) {
+            SignUp.visibleEmptyUser(false);
             System.out.println("e");
         }
 
         if(mail == null) {
-            SignUp.visiableEmptyMail(true);
+            SignUp.visibleEmptyMail(true);
             System.out.println("d");
-        } else {
-            SignUp.visiableEmptyMail(false);
+        } else if(mail != null){
+            SignUp.visibleEmptyMail(false);
             System.out.println("c");
         }
 
         if(password == null){
-            SignUp.visiableEmptyPassword(true);
+            SignUp.visibleEmptyPassword(true);
             System.out.println("a");
-        } else {
-            SignUp.visiableEmptyPassword(false);
+        } else if(password != null){
+            SignUp.visibleEmptyPassword(false);
             System.out.println("b");
         }
 
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
-            SignUp.visiableUserMail(true);
-        }else if(username != null && mail != null && hash != null && salt != null) {
+            SignUp.visibleUserMail(true);
+        }else if((username != null) && (mail != null) && (hash != null) && (salt != null)) {
             registerUser(con, username, hash, salt, mail, 0);
             MainScene.setScene(MainScene.li.getSc());
         }else{
-            SignUp.visiableUserMail(false);
+            SignUp.visibleUserMail(false);
         }
+        DBConnection.closeConnection(con);
     }
 
     public static void logIn() {
@@ -99,5 +99,6 @@ public class Authentication {
                 // insert showLabel method
             }
         }
+        DBConnection.closeConnection(con);
     }
 }

@@ -79,4 +79,12 @@ public class DBConnection {
         }
         return loggedIn;
     }
+
+    public static void closeConnection(Connection con) {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

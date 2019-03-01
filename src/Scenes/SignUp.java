@@ -33,19 +33,19 @@ public class SignUp extends Scenes {
     private Button optionButton;
     private Button backButton;
 
-    public static void visiableUserMail(boolean b){
+    public static void visibleUserMail(boolean b){
         errorUsernMail.setVisible(b);
     }
-    public static void visiablePassword(boolean b){
+    public static void visiblePassword(boolean b){
         errorPassword.setVisible(b);
     }
-    public static void visiableEmptyUser(boolean b){
+    public static void visibleEmptyUser(boolean b){
         emptyUser.setVisible(b);
     }
-    public static void visiableEmptyMail(boolean b){
+    public static void visibleEmptyMail(boolean b){
         emptyMail.setVisible(b);
     }
-    public static void visiableEmptyPassword(boolean b){
+    public static void visibleEmptyPassword(boolean b){
         emptyPassword.setVisible(b);
     }
 
