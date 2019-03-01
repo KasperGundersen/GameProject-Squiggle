@@ -52,4 +52,17 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+    public static String getSalt(Connection con, String username) {
+        try {
+            stmt = con.createStatement();
+            res = stmt.executeQuery("SELECT salt FROM USERS WHERE userName=\"" + username + "\";");
+            res.next();
+            String salt = res.getString("salt");
+            return salt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

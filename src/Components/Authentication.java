@@ -29,11 +29,11 @@ public class Authentication {
         String username = SignUp.getName();
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
-        password = Encryptor.Encryptor(password,null);
-        int splitt = password.indexOf('|');
-        String hash = password.substring(0, splitt);
-        String salt = password.substring(splitt+1, password.length());
-
+        //Encrypt password
+        String encryptor = Encryptor.Encryptor(password,null);
+        //get salt and hash
+        String hash = Encryptor.getHash(encryptor);
+        String salt = Encryptor.getSalt(encryptor);
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
             System.out.println("This username or email is already registered");
         }else if(username == null || mail == null || password == null) {
@@ -48,11 +48,15 @@ public class Authentication {
         Connection con = DBConnection.getCon();
         String username = LogIn.getUserName();
         String password = LogIn.getPassword();
-
-        if((DBConnection.exists(con,"userName", username))&&(DBConnection.exists(con,"password", password))) {
+        //Getting salt from db using username
+        String salt = DBConnection.getSalt(con, username);
+        //generating hash using salt
+        String encryptor = Encryptor.Encryptor(password, salt);
+        String hash = Encryptor.getHash(encryptor);
+        //Check if
+        if((DBConnection.exists(con,"userName", username))&&(DBConnection.exists(con,"password", hash))) {
             MainScene.setScene(MainScene.mm.getSc());
             DBConnection.setLoggedIn(con, username, 1);
-
         }
     }
 }

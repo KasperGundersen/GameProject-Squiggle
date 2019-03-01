@@ -50,19 +50,20 @@ public class Encryptor {
         }
         return b;
     }
-    public static void main(String[] args) {
-        String passord = "Test";
-        String secure = Encryptor(passord, null);
-        System.out.println(secure);
-        int splitt = secure.indexOf('|');
-        String hash = secure.substring(0, splitt);
-        String salt = secure.substring(splitt+1, secure.length());
-        System.out.println(hash.length());
-        System.out.println(salt);
-        String check = Encryptor(passord, salt);
-        System.out.println(check);
-        if(secure.equals(check)){
-            System.out.println("Du klarte det!");
+    //Splitt string from Encryptior to Hash using the splitter
+    public static String getHash(String s){
+        int index = s.indexOf('|');
+        if(index < 0){
+            return null;
         }
+        return s.substring(0, index);
+    }
+    //Splitt string from Encryptior to Salt using the splitter
+    public static String getSalt(String s){
+        int index = s.indexOf('|');
+        if(index < 0){
+            return null;
+        }
+        return s.substring(index+1, s.length());
     }
 }
