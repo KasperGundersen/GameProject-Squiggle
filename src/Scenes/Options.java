@@ -63,7 +63,7 @@ public class Options extends Scenes {
 
        submitButton.setOnAction(e -> {
            Color colour = cp.getValue();
-           String colourString = (String) colour;
+           //String colourString = (String) colour;
            changeBackground(grid, colour);
            System.out.println(colour);
 
@@ -74,13 +74,6 @@ public class Options extends Scenes {
        GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
 
-
-
-
-
-
-
-
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(scene);
@@ -88,7 +81,7 @@ public class Options extends Scenes {
     }
 
     private static void changeBackground(GridPane grid, Color colour) {
-        String colourChosen = Color.valueOf(colour);
+       // String colourChosen = Color.valueOf(colour);
         grid.setStyle("-fx-background-color: " + colour);
     }
 }
