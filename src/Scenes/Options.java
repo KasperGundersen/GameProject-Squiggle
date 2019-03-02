@@ -6,14 +6,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.layout.GridPane;
 
 import static javafx.scene.control.SpinnerValueFactory.*;
 
@@ -62,10 +61,12 @@ public class Options extends Scenes {
        submitButton.setPrefWidth(100);
 
        submitButton.setOnAction(e -> {
-           Color colour = cp.getValue();
-           //String colourString = (String) colour;
-           changeBackground(grid, colour);
-           System.out.println(colour);
+           Paint fill = cp.getValue();
+           BackgroundFill backgroundFill = new BackgroundFill(fill, CornerRadii.EMPTY, Insets.EMPTY);
+           Background background = new Background(backgroundFill);
+           MainScene.mm.getGp().setBackground(background);
+           MainScene.su.getGp().setBackground(background);
+           MainScene.li.getGp().setBackground(background);
 
         });
 
