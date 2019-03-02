@@ -111,9 +111,11 @@ public class LogIn extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
+        tooltipName.setStyle("-fx-background-color: cornflowerblue;");
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
+        tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
     }
 }

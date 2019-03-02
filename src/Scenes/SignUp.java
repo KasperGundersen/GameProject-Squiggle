@@ -190,17 +190,21 @@ public class SignUp extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
+        tooltipName.setStyle("-fx-background-color: cornflowerblue;");
 
         final Tooltip tooltipEmail = new Tooltip();
         tooltipEmail.setText("Write your Email");
         emailField.setTooltip(tooltipEmail);
+        tooltipEmail.setStyle("-fx-background-color: cornflowerblue;");
 
         final Tooltip tooltipPasword = new Tooltip();
         tooltipPasword.setText("Write your password");
         passwordField.setTooltip(tooltipPasword);
+        tooltipPasword.setStyle("-fx-background-color: cornflowerblue;");
 
         final Tooltip tooltipRePassword = new Tooltip();
         tooltipRePassword.setText("Write your password one more time");
         rePasswordField.setTooltip(tooltipRePassword);
+        tooltipRePassword.setStyle("-fx-background-color: cornflowerblue;");
     }
 }
