@@ -4,6 +4,8 @@ import Components.UserInfo;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class MainScene {
 
     private static final double HEIGHT = 600;
@@ -12,11 +14,10 @@ public class MainScene {
     public static Stage window;
 
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
-    public static Scenes mm;
-    public static Scenes sq;
-    public static Scenes su;
-
-    public static Scenes mp;
+    public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
+    public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
+    public static Scenes su = new SignUp(WIDTH, HEIGHT);
+    public static Scenes mp = new MyPage(WIDTH, HEIGHT);
 
     // User
     public static UserInfo user = new UserInfo();
