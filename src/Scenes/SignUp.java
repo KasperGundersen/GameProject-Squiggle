@@ -181,11 +181,6 @@ public class SignUp extends Scenes {
         GridPane.setHalignment(backButton, HPos.LEFT);
         GridPane.setValignment(backButton, VPos.BOTTOM);
 
-        // Button submition
-        super.buttonChangeScene(backButton, MainScene.li);
-        submitButton.setOnAction(e -> Authentication.submit());
-        optionButton.setOnAction(e -> Options.openOptions());
-
         // Tooltips
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
@@ -206,5 +201,13 @@ public class SignUp extends Scenes {
         tooltipRePassword.setText("Write your password one more time");
         rePasswordField.setTooltip(tooltipRePassword);
         tooltipRePassword.setStyle("-fx-background-color: cornflowerblue;");
+
+        // Button submition
+        backButton.setOnAction(e -> {
+            MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.li.getSc());
+        });
+        submitButton.setOnAction(e -> Authentication.submit());
+        optionButton.setOnAction(e -> Options.openOptions());
     }
 }

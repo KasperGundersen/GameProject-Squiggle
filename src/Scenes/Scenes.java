@@ -49,11 +49,6 @@ public abstract class Scenes {
         return WIDTH;
     }
 
-    //Buttonaction to swap scenes
-    public void buttonChangeScene(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
-    }
-
     //Standard GridPane formation
     public GridPane createGridPane() {
         // Instantiate a new Grid Pane
