@@ -208,6 +208,6 @@ public class SignUp extends Scenes {
             MainScene.setScene(MainScene.li.getSc());
         });
         submitButton.setOnAction(e -> Authentication.submit());
-        optionButton.setOnAction(e -> Options.openOptions());
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
     }
 }

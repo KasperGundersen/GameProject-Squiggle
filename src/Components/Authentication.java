@@ -43,7 +43,6 @@ public class Authentication {
             hash = null;
             salt = null;
         }
-        System.out.println(username + "..." + mail + "..." + password + " hei");
 
         if(username == null){
             SignUp.visibleEmptyUser(true);

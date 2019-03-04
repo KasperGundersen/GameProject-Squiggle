@@ -116,7 +116,7 @@ public class LogIn extends Scenes {
         tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
 
         //ButtonAction
-        optionButton.setOnAction(e -> Options.openOptions());
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         logInButton.setOnAction(e -> Authentication.logIn());
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
