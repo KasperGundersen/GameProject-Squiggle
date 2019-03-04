@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.UserInfo;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -12,10 +13,13 @@ public class MainScene {
 
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
     public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
+    public static Scenes sq = new Squiggle(WIDTH,HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
 
     public static Scenes mp = new MyPage(WIDTH, HEIGHT);
 
+    // User
+    public static UserInfo user = new UserInfo();
 
     public static void setScene(Scene sc) {
         window.setScene(sc);

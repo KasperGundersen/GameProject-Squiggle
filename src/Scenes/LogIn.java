@@ -1,12 +1,16 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.UserInfo;
+import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.sql.Connection;
 
 public class LogIn extends Scenes {
 
@@ -116,8 +120,14 @@ public class LogIn extends Scenes {
         tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
 
         //ButtonAction
+        logInButton.setOnAction(e -> {
+            Authentication.logIn();
+            UserInfo.setUserName(getUserName());
+            Connection con = DBConnection.getCon();
+            UserInfo.initializeUser(DBConnection.getUserID(con, getUserName()));
+            DBConnection.closeConnection(con);
+        });
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
-        logInButton.setOnAction(e -> Authentication.logIn());
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());

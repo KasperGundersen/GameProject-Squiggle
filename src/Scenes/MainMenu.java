@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -65,10 +66,9 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(100);
-        gridPane.add(quitButton, 0, 4, 2, 1);
+        gridPane.add(quitButton, 0, 5, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
@@ -83,13 +83,13 @@ public class MainMenu extends Scenes{
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e ->{
-
+            MainScene.setScene(MainScene.sq.getSc());
         });
         logOutButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.li.getSc());
             Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            DBConnection.setLoggedIn(con, UserInfo.getUserName(), 0);
             DBConnection.closeConnection(con);
 
         });
