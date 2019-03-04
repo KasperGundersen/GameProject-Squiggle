@@ -14,6 +14,8 @@ public class MainScene {
     public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
 
+    public static Scenes mp = new MyPage(WIDTH, HEIGHT);
+
 
     public static void setScene(Scene sc) {
         window.setScene(sc);

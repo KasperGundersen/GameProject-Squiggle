@@ -13,6 +13,7 @@ import javafx.scene.text.FontWeight;
 
 import java.sql.Connection;
 
+
 public class MainMenu extends Scenes{
     private GridPane gp;
     private Scene sc;
@@ -54,27 +55,53 @@ public class MainMenu extends Scenes{
         GridPane.setHalignment(optionButton, HPos.CENTER);
         GridPane.setValignment(optionButton, VPos.CENTER);
 
+        // Log Out button
+        Button logOutButton = new Button("Log Out");
+        logOutButton.setPrefHeight(prefHeight);
+        logOutButton.setPrefWidth(100);
+        gridPane.add(logOutButton, 0,3, 2, 1);
+        GridPane.setHalignment(logOutButton, HPos.CENTER);
+        GridPane.setValignment(logOutButton, VPos.CENTER);
+
         // Quit button
         Button quitButton = new Button("Quit");
 
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(100);
-        gridPane.add(quitButton, 0, 3, 2, 1);
+        gridPane.add(quitButton, 0, 4, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
+
+        // My Page button
+        Button myPageButton = new Button("My page");
+        myPageButton.setPrefHeight(prefHeight);
+        myPageButton.setPrefWidth(100);
+        gridPane.add(myPageButton, 0, 4, 2, 1);
+        GridPane.setHalignment(myPageButton, HPos.CENTER);
+        GridPane.setValignment(myPageButton, VPos.CENTER);
 
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e ->{
 
         });
+        logOutButton.setOnAction(e -> {
+            MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.li.getSc());
+            Connection con = DBConnection.getCon();
+            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            DBConnection.closeConnection(con);
+
+        });
         quitButton.setOnAction(e -> {
             Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
             if(quit){
                 MainScene.closeStage();
-                Connection con = DBConnection.getCon();
-                DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
             }
+        });
+        myPageButton.setOnAction(e -> {
+            MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.mp.getSc());
         });
     }
 }
