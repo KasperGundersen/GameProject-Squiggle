@@ -72,8 +72,6 @@ public class MainMenu extends Scenes{
             Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
             if(quit){
                 MainScene.closeStage();
-                Connection con = DBConnection.getCon();
-                DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
             }
         });
     }
