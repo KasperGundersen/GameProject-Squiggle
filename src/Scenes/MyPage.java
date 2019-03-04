@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -117,7 +118,7 @@ public class MyPage extends Scenes{
 
         buttonChoose.setOnAction(e -> {
             Connection con = DBConnection.getCon();
-            DBConnection.setAvatarID(con, index, Userinfo.getUserID());
+            DBConnection.setAvatarID(con, index, UserInfo.getUserID());
             DBConnection.closeConnection(con);
             Image chosenAvatar = chosenAvatar(index);
             avatarImage.setImage(chosenAvatar);

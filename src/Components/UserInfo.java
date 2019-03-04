@@ -8,16 +8,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class UserInfo {
+    private static String userName;
     private static int userID;
     private static String colorHex;
     private static boolean soundOn;
     private static int avatarID;
 
-    public UserInfo(int userID) {
-        this.userID = userID;
+    public UserInfo() {
+        this.userName = null;
+        this.userID = 0;
         this.colorHex = null;
         this.soundOn = true;
-        updateAvatarID(userID);
+        this.avatarID = 0;
+    }
+
+    public static String getUserName() {
+        return userName;
     }
 
     public static int getUserID() {
@@ -34,10 +40,19 @@ public class UserInfo {
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery("SELECT avatarID FROM USERS WHERE userID=\"" + userID + "\";");
             if (res.next()) {
-                this.avatarID = res.getInt("avatarID");
+                avatarID = res.getInt("avatarID");
             }
         } catch(SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void initializeUser(int userId) {
+        userID = userId;
+        updateAvatarID(userId);
+    }
+
+    public static void setUserName(String newName) {
+        userName = newName;
     }
 }

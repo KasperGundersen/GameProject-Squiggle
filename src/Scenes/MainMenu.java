@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -89,7 +90,7 @@ public class MainMenu extends Scenes{
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.li.getSc());
             Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            DBConnection.setLoggedIn(con, UserInfo.getUserName(), 0);
             DBConnection.closeConnection(con);
 
         });

@@ -115,4 +115,17 @@ public class DBConnection {
         return null;
 
     }
+
+    public static int getUserID(Connection con, String username) {
+        try {
+            stmt = con.createStatement();
+            res = stmt.executeQuery("SELECT userID WHERE username=\"" + username + "\";");
+            if (res.next()) {
+                return res.getInt("userId");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
