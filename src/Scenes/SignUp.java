@@ -5,6 +5,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -12,6 +14,9 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Tooltip;
+
+import java.io.File;
+import java.util.Arrays;
 
 public class SignUp extends Scenes {
 
@@ -30,6 +35,10 @@ public class SignUp extends Scenes {
     private Button submitButton;
     private Button optionButton;
     private Button backButton;
+    private Button buttonLeft;
+    private Button buttonRight;
+
+    private int index = 0;
 
     public static void visibleUserMail(boolean b){
         errorUsernMail.setVisible(b);
@@ -81,6 +90,7 @@ public class SignUp extends Scenes {
     // Adding UI to Grid
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
+
         // Add Header
         Label headerLabel = new Label("Sign Up");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -127,57 +137,59 @@ public class SignUp extends Scenes {
         emptyMail.setVisible(false);
         errorFont(emptyMail);
 
+
+
         //Add error Label
         errorPassword = new Label("Password don't match");
-        gridPane.add(errorPassword,1,2,2,2);
+        gridPane.add(errorPassword,1,3,2,2);
         GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
         errorPassword.setVisible(false);
         super.errorFont(errorPassword);
 
         // Add Passfword Label
         Label passwordLabel = new Label("Password : ");
-        gridPane.add(passwordLabel, 0, 3);
+        gridPane.add(passwordLabel, 0, 4);
 
         // Add Password Field
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
-        gridPane.add(passwordField, 1, 3);
+        gridPane.add(passwordField, 1, 4);
 
         //Add empty Label
         emptyPassword = new Label("Fill in password");
-        gridPane.add(emptyPassword,2,3,2,1);
+        gridPane.add(emptyPassword,2,4,2,1);
         emptyPassword.setVisible(false);
         errorFont(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
-        gridPane.add(rePasswordLabel, 0, 4);
+        gridPane.add(rePasswordLabel, 0, 5);
 
         // Add RePassword Field
         rePasswordField = new PasswordField();
         rePasswordField.setPrefHeight(prefHeight);
         rePasswordField.setPromptText("re-enter password");
-        gridPane.add(rePasswordField, 1, 4);
+        gridPane.add(rePasswordField, 1, 5);
 
         // Add Submit Button
         submitButton = new Button("Submit");
         submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
-        gridPane.add(submitButton, 0, 5, 2, 1);
+        gridPane.add(submitButton, 0, 6, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
 
         // Add option button
         optionButton = new Button("Options");
-        gridPane.add(optionButton, 3, 6);
+        gridPane.add(optionButton, 3, 7);
         GridPane.setHalignment(optionButton, HPos.LEFT);
         GridPane.setValignment(optionButton, VPos.BOTTOM);
         // Go back button
         backButton = new Button("Go Back");
-        gridPane.add(backButton, 0, 6);
+        gridPane.add(backButton, 0, 7);
         GridPane.setHalignment(backButton, HPos.LEFT);
         GridPane.setValignment(backButton, VPos.BOTTOM);
 
@@ -209,5 +221,17 @@ public class SignUp extends Scenes {
         });
         submitButton.setOnAction(e -> Authentication.submit());
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+
+    }
+
+    private Image[] getAllAvatars(){
+        Image[] images = new Image[4];
+        File file;
+        for(int i = 1; i < 5; i++){
+            file = new File("..\\..\\resources\\avatars\\" + i + ".jpg");
+            Image image = new Image(file.toURI().toString());
+            images[i-1] = image;
+        }
+        return images;
     }
 }

@@ -72,8 +72,7 @@ public class Options extends Scenes {
            */
 
            int fontSizeChoosen = fontSizeFactory.getValue();
-           fontChange(fontSizeChoosen);
-           //window.close();
+//           //window.close();
         });
 
         grid.add(submitButton, 0,4, 2,1);
