@@ -63,6 +63,14 @@ public class MainMenu extends Scenes{
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
+        // My Page button
+        Button myPageButton = new Button("My page");
+        myPageButton.setPrefHeight(prefHeight);
+        myPageButton.setPrefWidth(100);
+        gridPane.add(myPageButton, 0, 4, 2, 1);
+        GridPane.setHalignment(myPageButton, HPos.CENTER);
+        GridPane.setValignment(myPageButton, VPos.CENTER);
+
         //Button action
         optionButton.setOnAction(e -> Options.openOptions());
         joinGameButton.setOnAction(e ->{
