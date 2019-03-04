@@ -83,7 +83,7 @@ public class MainMenu extends Scenes{
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e ->{
-
+            MainScene.setScene(MainScene.sq.getSc());
         });
         logOutButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
