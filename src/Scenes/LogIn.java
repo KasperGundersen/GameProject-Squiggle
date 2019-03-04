@@ -90,11 +90,9 @@ public class LogIn extends Scenes {
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
         GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
-        logInButton.setOnAction(e -> Authentication.logIn());
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        regButton.setOnAction(e -> MainScene.setScene(new SignUp(super.getWIDTH(), super.getHEIGHT()).getSc()));
 
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(300);
@@ -105,7 +103,6 @@ public class LogIn extends Scenes {
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 4, 14);
-        optionButton.setOnAction(e -> Options.openOptions());
 
         // Tooltips
         final Tooltip tooltipName = new Tooltip();
@@ -117,5 +114,13 @@ public class LogIn extends Scenes {
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
         tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
+
+        //ButtonAction
+        optionButton.setOnAction(e -> Options.openOptions());
+        logInButton.setOnAction(e -> Authentication.logIn());
+        regButton.setOnAction(e -> {
+            MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.su.getSc());
+        });
     }
 }

@@ -1,8 +1,10 @@
 package Scenes;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,11 +15,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
 
 public abstract class Scenes {
 
     //Object variables
-    private GridPane gp;
+    private static GridPane gp;
     private Scene sc;
 
     // Dimensions
@@ -49,11 +52,6 @@ public abstract class Scenes {
         return WIDTH;
     }
 
-    //Buttonaction to swap scenes
-    public void buttonChangeScene(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
-    }
-
     //Standard GridPane formation
     public GridPane createGridPane() {
         // Instantiate a new Grid Pane
@@ -75,6 +73,30 @@ public abstract class Scenes {
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
         return gridPane;
+    }
+
+    public static void fontChange(int size, GridPane grid){
+        /*
+        Text setFontText = new Text("setFont(\"Courier\", 14)");
+        setFontText.setFont(Font.font("Courier", size));
+        setFontText
+
+        Text setStyleText = new Text("setStyle(\"-fx-font-family:Courier; -fx-font-size: 14pt\")");
+        setStyleText.setStyle("-fx-font-family: Courier; -fx-font-size: 14pt");
+        */
+        ObservableList<Node> childrenOfScene = grid.getChildren();
+        System.out.println(childrenOfScene);
+
+        for (Node child : childrenOfScene) {
+            if (child instanceof Button) {
+                Button b = (Button) child;
+                b.setFont(Font.font("Courier", size));
+            }
+            if (child instanceof Label) {
+                Label l = (Label) child;
+                l.setFont(Font.font("Courier", size));
+            }
+        }
     }
 
     public void errorFont(Label l){

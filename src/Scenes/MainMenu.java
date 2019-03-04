@@ -48,7 +48,6 @@ public class MainMenu extends Scenes{
 
         // Options button
         Button optionButton = new Button("Options");
-        optionButton.setOnAction(e -> Options.openOptions());
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(100);
         gridPane.add(optionButton, 0,2, 2, 1);
@@ -70,6 +69,17 @@ public class MainMenu extends Scenes{
         gridPane.add(quitButton, 0, 3, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
+
+        //Button action
+        optionButton.setOnAction(e -> Options.openOptions());
+        quitButton.setOnAction(e -> {
+            MainScene.closeStage();
+            Connection con = DBConnection.getCon();
+            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+        });
+        joinGameButton.setOnAction(e ->{
+
+        });
     }
 }
 
