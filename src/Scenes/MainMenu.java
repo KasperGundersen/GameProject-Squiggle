@@ -13,6 +13,7 @@ import javafx.scene.text.FontWeight;
 
 import java.sql.Connection;
 
+
 public class MainMenu extends Scenes{
     private GridPane gp;
     private Scene sc;
@@ -81,6 +82,10 @@ public class MainMenu extends Scenes{
             if(quit){
                 MainScene.closeStage();
             }
+        });
+        myPageButton.setOnAction(e -> {
+            MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.mp.getSc());
         });
     }
 }

@@ -88,4 +88,14 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+    public static void setAvatarID(Connection con, int userID, int index){
+        try{
+            stmt = con.createStatement();
+            stmt.executeUpdate("update USERS set avatarID=" + index + " where userID=" + userID);
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 }
