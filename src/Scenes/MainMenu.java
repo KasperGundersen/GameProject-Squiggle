@@ -56,6 +56,7 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
+
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(100);
         gridPane.add(quitButton, 0, 3, 2, 1);
@@ -64,13 +65,14 @@ public class MainMenu extends Scenes{
 
         //Button action
         optionButton.setOnAction(e -> Options.openOptions());
-        quitButton.setOnAction(e -> {
-            MainScene.closeStage();
-            Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
-        });
         joinGameButton.setOnAction(e ->{
 
+        });
+        quitButton.setOnAction(e -> {
+            Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
+            if(quit){
+                MainScene.closeStage();
+            }
         });
     }
 }
