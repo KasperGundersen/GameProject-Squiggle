@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,7 +37,7 @@ public abstract class Scenes {
     }
 
     //Getters
-    public GridPane getGp() {
+    public static GridPane getGp() {
         return gp;
     }
 
@@ -75,17 +76,11 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    public static void fontChange(int size, GridPane grid){
-        /*
-        Text setFontText = new Text("setFont(\"Courier\", 14)");
-        setFontText.setFont(Font.font("Courier", size));
-        setFontText
-
-        Text setStyleText = new Text("setStyle(\"-fx-font-family:Courier; -fx-font-size: 14pt\")");
-        setStyleText.setStyle("-fx-font-family: Courier; -fx-font-size: 14pt");
-        */
-        ObservableList<Node> childrenOfScene = grid.getChildren();
+    public static void fontChange(int size){
+        ObservableList<Node> childrenOfScene = gp.getChildren();
         System.out.println(childrenOfScene);
+        System.out.println(gp.getChildren());
+
 
         for (Node child : childrenOfScene) {
             if (child instanceof Button) {
@@ -97,6 +92,8 @@ public abstract class Scenes {
                 l.setFont(Font.font("Courier", size));
             }
         }
+
+
     }
 
     public void errorFont(Label l){

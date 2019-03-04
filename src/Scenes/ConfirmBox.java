@@ -47,6 +47,7 @@ public class ConfirmBox{
             stage.close();
             Connection con = DBConnection.getCon();
             DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            DBConnection.closeConnection(con);
         });
         noButton.setOnAction(e -> {
             ansver = false;

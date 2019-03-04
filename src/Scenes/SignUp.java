@@ -202,12 +202,12 @@ public class SignUp extends Scenes {
         rePasswordField.setTooltip(tooltipRePassword);
         tooltipRePassword.setStyle("-fx-background-color: cornflowerblue;");
 
-        // Button submition
+        // Button action
         backButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.li.getSc());
         });
         submitButton.setOnAction(e -> Authentication.submit());
-        optionButton.setOnAction(e -> Options.openOptions());
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
     }
 }

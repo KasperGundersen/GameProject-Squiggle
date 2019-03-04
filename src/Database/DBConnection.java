@@ -2,6 +2,7 @@
 package Database;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DBConnection {
 
@@ -87,5 +88,44 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setAvatarID(Connection con, int userID, int index) {
+        try {
+            stmt = con.createStatement();
+            stmt.executeUpdate("update USERS set avatarID=" + index + " where UserID=" + userID);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<String> getWords(Connection con, String category) {
+        try {
+            stmt = con.createStatement();
+            res = stmt.executeQuery("SELECT word FROM LIBRARY WHERE category=\"" + category + "\";");
+            ArrayList<String> wordList = new ArrayList<>();
+            while(res.next()) {
+                wordList.add(res.getString("word"));
+                return wordList;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
+    public static int getUserID(Connection con, String username) {
+        try {
+            stmt = con.createStatement();
+            res = stmt.executeQuery("SELECT UserID FROM USERS WHERE userName=\"" + username + "\";");
+            if (res.next()) {
+                return res.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }
