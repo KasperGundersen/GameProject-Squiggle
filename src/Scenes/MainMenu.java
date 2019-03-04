@@ -66,7 +66,7 @@ public class MainMenu extends Scenes{
         //Button action
         optionButton.setOnAction(e -> Options.openOptions());
         joinGameButton.setOnAction(e ->{
-
+            MainScene.setScene(MainScene.sq.getSc());
         });
         quitButton.setOnAction(e -> {
             Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
