@@ -93,7 +93,7 @@ public class DBConnection {
     public static void setAvatarID(Connection con, int userID, int index) {
         try {
             stmt = con.createStatement();
-            stmt.executeUpdate("update USERS set avatarID=" + index + " where userID=" + userID);
+            stmt.executeUpdate("update USERS set avatarID=" + index + " where UserID=" + userID);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -119,9 +119,9 @@ public class DBConnection {
     public static int getUserID(Connection con, String username) {
         try {
             stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT userID WHERE username=\"" + username + "\";");
+            res = stmt.executeQuery("SELECT UserID FROM USERS WHERE userName=\"" + username + "\";");
             if (res.next()) {
-                return res.getInt("userId");
+                return res.getInt("UserID");
             }
         } catch (SQLException e) {
             e.printStackTrace();

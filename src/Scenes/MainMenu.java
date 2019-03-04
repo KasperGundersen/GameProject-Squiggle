@@ -66,10 +66,9 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(100);
-        gridPane.add(quitButton, 0, 4, 2, 1);
+        gridPane.add(quitButton, 0, 5, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 

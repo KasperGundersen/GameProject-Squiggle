@@ -45,6 +45,7 @@ public class UserInfo {
         } catch(SQLException e) {
             e.printStackTrace();
         }
+        DBConnection.closeConnection(con);
     }
 
     public static void initializeUser(int userId) {
