@@ -82,7 +82,7 @@ public class MainMenu extends Scenes{
         GridPane.setValignment(myPageButton, VPos.CENTER);
 
         //Button action
-        optionButton.setOnAction(e -> Options.openOptions());
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e ->{
 
         });

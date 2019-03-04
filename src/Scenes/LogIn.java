@@ -120,7 +120,6 @@ public class LogIn extends Scenes {
         tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
 
         //ButtonAction
-        optionButton.setOnAction(e -> Options.openOptions());
         logInButton.setOnAction(e -> {
             Authentication.logIn();
             UserInfo.setUserName(getUserName());
@@ -128,6 +127,7 @@ public class LogIn extends Scenes {
             UserInfo.initializeUser(DBConnection.getUserID(con, getUserName()));
             DBConnection.closeConnection(con);
         });
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
