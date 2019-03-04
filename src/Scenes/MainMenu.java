@@ -58,9 +58,12 @@ public class MainMenu extends Scenes{
         // Quit button
         Button quitButton = new Button("Quit");
         quitButton.setOnAction(e -> {
-            MainScene.closeStage();
-            Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
+            if(quit){
+                MainScene.closeStage();
+                Connection con = DBConnection.getCon();
+                DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            }
         });
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(100);
