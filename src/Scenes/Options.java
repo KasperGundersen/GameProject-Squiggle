@@ -32,6 +32,7 @@ public class Options extends Scenes {
 
        grid = new GridPane();
        grid.setAlignment(Pos.TOP_CENTER);
+       grid.setGridLinesVisible(true);
 
        Label optionsLabel = new Label("Options");
        optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
@@ -41,6 +42,7 @@ public class Options extends Scenes {
        Label backgroundColourLabel = new Label("Background colour");
        grid.add(backgroundColourLabel, 0,1);
        ColorPicker cp = new ColorPicker();
+       cp.setMinWidth(150);
        grid.add(cp,1,1);
 
        Label fontSizeLabel = new Label("Font size");
@@ -68,6 +70,14 @@ public class Options extends Scenes {
            MainScene.su.getGp().setBackground(background);
            MainScene.li.getGp().setBackground(background);
 
+           int fontSizeChoosen = fontSizeFactory.getValue();
+
+           GridPane grid1 = MainScene.li.getGp();
+           System.out.println(grid1.getChildren());
+           fontChange(fontSizeChoosen, grid1);
+
+
+           window.close();
         });
 
         grid.add(submitButton, 0,4, 2,1);
