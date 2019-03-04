@@ -27,6 +27,7 @@ public class MyPage extends Scenes{
     private static Button buttonLobby;
     private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
+    private static String fileLocation = "..\\..\\resources\\avatars\\";
 
 
     public MyPage(double WIDTH, double HEIGHT){
@@ -125,14 +126,15 @@ public class MyPage extends Scenes{
         });
     }
 
+    // "fileLocation" is found at the top, and will reference the jpgs no matter the computer.
     private Image getAvatar(int UserID){
-        File file =  new File("C:\\Users\\Simon.PC\\IdeaProjects\\squiggle\\resources\\avatars\\" + UserID + ".jpg");
+        File file =  new File(fileLocation + UserID + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
     private Image chosenAvatar(int index){
-        File file = new File("C:\\Users\\Simon.PC\\IdeaProjects\\squiggle\\resources\\avatars\\" + (index+1) + ".jpg");
+        File file = new File(fileLocation + (index+1) + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
@@ -141,7 +143,7 @@ public class MyPage extends Scenes{
         Image[] images = new Image[4];
         File file;
         for(int i = 0; i < 4; i++){
-            file = new File("C:\\Users\\Simon.PC\\IdeaProjects\\squiggle\\resources\\avatars\\" + (i+1) + ".jpg");
+            file = new File(fileLocation + (i+1) + ".jpg");
             Image image = new Image(file.toURI().toString());
             images[i] = image;
         }

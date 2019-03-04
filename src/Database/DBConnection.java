@@ -34,8 +34,10 @@ public class DBConnection {
     // This method looks for "input" in the given column in the database
     public static boolean exists(Connection con, String columnName, String input) {
         try{
-            stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT " + columnName + " FROM USERS WHERE " + columnName + "=\"" + input + "\";");
+            String query = "SELECT " + columnName + " FROM USERS WHERE " + columnName + "= ?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, input);
+            res = prepStmt.executeQuery();
             return res.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,8 +49,11 @@ public class DBConnection {
 
     public static void setLoggedIn(Connection con, String username, int loggedIn) {
         try {
-            stmt = con.createStatement();
-            stmt.executeUpdate("UPDATE USERS SET loggedIn=" + loggedIn + " WHERE userName=\"" + username + "\";");
+            String query = "UPDATE USERS SET loggedIn=? WHERE userName=?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt (1, loggedIn);
+            prepStmt.setString(2, username);
+            prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
         }
@@ -56,8 +61,10 @@ public class DBConnection {
 
     public static String getSalt(Connection con, String username) {
         try {
-            stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT salt FROM USERS WHERE userName=\"" + username + "\";");
+            String query = "SELECT salt FROM USERS WHERE userName=?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, username);
+            res = prepStmt.executeQuery();
             if(res.next()) {
                 String salt = res.getString("salt");
                 return salt;
@@ -71,8 +78,10 @@ public class DBConnection {
     public static boolean getLoggedIn(Connection con, String username) {
         boolean loggedIn = false;
         try {
-            stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT loggedIn FROM USERS WHERE userName=\"" + username + "\";");
+            String query = "SELECT loggedIn FROM USERS WHERE userName=?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, username);
+            res = prepStmt.executeQuery();
             res.next();
             int num = res.getInt("loggedIn");
             loggedIn = (num == 0 ? false : true);
@@ -92,8 +101,11 @@ public class DBConnection {
 
     public static void setAvatarID(Connection con, int userID, int index) {
         try {
-            stmt = con.createStatement();
-            stmt.executeUpdate("update USERS set avatarID=" + index + " where UserID=" + userID);
+            String query = "UPDATE USERS SET avatarID=? WHERE UserID=?";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, index);
+            prepStmt.setInt(2, userID);
+            prepStmt.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,8 +114,10 @@ public class DBConnection {
 
     public static ArrayList<String> getWords(Connection con, String category) {
         try {
-            stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT word FROM LIBRARY WHERE category=\"" + category + "\";");
+            String query = "SELECT word FROM LIBRARY WHERE category=?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, category);
+            res = prepStmt.executeQuery();
             ArrayList<String> wordList = new ArrayList<>();
             while(res.next()) {
                 wordList.add(res.getString("word"));
@@ -117,9 +131,12 @@ public class DBConnection {
     }
 
     public static int getUserID(Connection con, String username) {
+
         try {
-            stmt = con.createStatement();
-            res = stmt.executeQuery("SELECT UserID FROM USERS WHERE userName=\"" + username + "\";");
+            String query = "SELECT UserID FROM USERS WHERE userName=?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setString (1, username);
+            res = prepStmt.executeQuery();
             if (res.next()) {
                 return res.getInt("UserID");
             }
