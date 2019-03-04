@@ -76,12 +76,12 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    public static void fontChange(int size){
-        ObservableList<Node> childrenOfScene = gp.getChildren();
+    public static void fontChange(int size, Scenes s){
+        ObservableList<Node> childrenOfScene = s.getGp().getChildren();
         System.out.println(childrenOfScene);
         System.out.println(gp.getChildren());
 
-
+/*
         for (Node child : childrenOfScene) {
             if (child instanceof Button) {
                 Button b = (Button) child;
@@ -92,8 +92,7 @@ public abstract class Scenes {
                 l.setFont(Font.font("Courier", size));
             }
         }
-
-
+*/
     }
 
     public void errorFont(Label l){

@@ -34,7 +34,7 @@ public class UserInfo {
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery("SELECT avatarID FROM USERS WHERE userID=\"" + userID + "\";");
             if (res.next()) {
-                this.avatarID = res.getInt("avatarID");
+                avatarID = res.getInt("avatarID");
             }
         } catch(SQLException e) {
             e.printStackTrace();
