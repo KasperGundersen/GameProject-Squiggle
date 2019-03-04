@@ -259,7 +259,7 @@ public class SignUp extends Scenes {
     }
 
     private Image getAvatar(int i){
-        File file = new File("C:\\Users\\Zaim Imran\\Documents\\Git\\squiggle\\resources\\avatars\\" + i + ".jpg");
+        File file = new File("/../../resources/avatars/" + i + ".jpg");
         return new Image(file.toURI().toString());
     }
 
