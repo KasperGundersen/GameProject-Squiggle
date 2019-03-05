@@ -18,7 +18,7 @@ import static javafx.scene.control.SpinnerValueFactory.*;
 
 
 public class Options extends Scenes {
-    private static GridPane grid;
+    private GridPane grid;
 
 
     public Options(double WIDTH, double HEIGHT) {
@@ -26,7 +26,7 @@ public class Options extends Scenes {
         openOptions();
     }
 
-    public static void openOptions(){
+    public void openOptions(){
         Stage window = new Stage();
         window.setTitle("Options");
 
@@ -48,7 +48,6 @@ public class Options extends Scenes {
        Label fontSizeLabel = new Label("Font size");
        grid.add(fontSizeLabel, 0,2);
        Spinner fontSizeSpinner = new Spinner();
-       int fontSize;
        SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,15);
        fontSizeSpinner.setValueFactory(fontSizeFactory);
        grid.add(fontSizeSpinner,1,2);
@@ -66,18 +65,14 @@ public class Options extends Scenes {
            Paint fill = cp.getValue();
            BackgroundFill backgroundFill = new BackgroundFill(fill, CornerRadii.EMPTY, Insets.EMPTY);
            Background background = new Background(backgroundFill);
-           MainScene.mm.getGp().setBackground(background);
+
+           /*MainScene.mm.getGp().setBackground(background);
            MainScene.su.getGp().setBackground(background);
            MainScene.li.getGp().setBackground(background);
+           */
 
            int fontSizeChoosen = fontSizeFactory.getValue();
-
-           GridPane grid1 = MainScene.li.getGp();
-           System.out.println(grid1.getChildren());
-           fontChange(fontSizeChoosen, grid1);
-
-
-           window.close();
+//           //window.close();
         });
 
         grid.add(submitButton, 0,4, 2,1);
