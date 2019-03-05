@@ -191,4 +191,16 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+    public static void insertIntoDB(Connection con, String words) {
+        try {
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("INSERT INTO LIBRARY VALUE (default, \"" +  words + "\");");
+        } catch (SQLSyntaxErrorException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
