@@ -274,8 +274,9 @@ public class DBConnection {
             prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con);
         }
-        closeConnection(con);
     }
 
     public static ArrayList<String> getMessages() {
