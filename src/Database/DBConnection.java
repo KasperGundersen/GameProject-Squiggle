@@ -2,6 +2,7 @@
 package Database;
 
 import Components.UserInfo;
+import Scenes.Squiggle;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -202,6 +203,17 @@ public class DBConnection {
             prepStmt.setInt(4, 0);
             prepStmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void exitGame(Connection con) {
+        try {
+            String query = "DELETE FROM GAME WHERE userID = ?";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            prepStmt.executeUpdate();
+        } catch(SQLException e) {
             e.printStackTrace();
         }
     }
