@@ -127,7 +127,7 @@ public class MyPage extends Scenes{
     }
 
     // "fileLocation" is found at the top, and will reference the jpgs no matter the computer.
-    private Image getAvatar(int UserID){
+    public Image getAvatar(int UserID){
         File file =  new File(fileLocation + UserID + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
