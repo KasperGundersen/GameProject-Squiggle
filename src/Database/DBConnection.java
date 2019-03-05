@@ -200,10 +200,20 @@ public class DBConnection {
             prepStmt.setInt(2, 0);
             prepStmt.setInt(3, 0);
             prepStmt.setInt(4, 0);
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
 
+    public static void insertIntoDB(Connection con, String words) {
+        try {
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("INSERT INTO LIBRARY VALUE (default, \"" +  words + "\");");
+        } catch (SQLSyntaxErrorException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -4,12 +4,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -17,7 +15,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -42,7 +39,7 @@ public abstract class Scenes {
     }
 
     //Getters
-    public static GridPane getGp() {
+    static GridPane getGp() {
         return gp;
     }
 
@@ -50,16 +47,16 @@ public abstract class Scenes {
         return sc;
     }
 
-    public double getHEIGHT() {
+    double getHEIGHT() {
         return HEIGHT;
     }
 
-    public double getWIDTH() {
+    double getWIDTH() {
         return WIDTH;
     }
 
     //Standard GridPane formation
-    public GridPane createGridPane() {
+    private GridPane createGridPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
         // Position the pane at the center of the screen, both vertically and horizontally
@@ -82,7 +79,7 @@ public abstract class Scenes {
     }
 
     public static void fontChange(int size, Scenes s){
-        ObservableList<Node> childrenOfScene = s.getGp().getChildren();
+        ObservableList<Node> childrenOfScene = getGp().getChildren();
         System.out.println(childrenOfScene);
         System.out.println(gp.getChildren());
 
@@ -100,7 +97,7 @@ public abstract class Scenes {
 */
     }
 
-    public void errorFont(Label l){
+    void errorFont(Label l){
         l.setTextFill(Color.RED);
         l.setFont(Font.font(
                 "Arial",
@@ -109,13 +106,13 @@ public abstract class Scenes {
         ));
     }
 
-    public void styleSelectorButton(Button b){
+    void styleSelectorButton(Button b){
         b.setPrefHeight(35);
         b.setPrefWidth(25);
         b.setStyle(selectorButton());
     }
 
-    public int loopAvatar(int counter, int add, int min, int max){
+    int loopAvatar(int counter, int add, int min, int max){
         counter += add;
         if(counter < min){
             counter = max;
