@@ -59,7 +59,7 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try{
-            String query = "SELECT " + columnName + " FROM USERS WHERE " + columnName + "= ?;";
+            String query = "SELECT " + columnName + " FROM USERS WHERE " + columnName + "=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, input);
             res = prepStmt.executeQuery();
@@ -70,8 +70,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return false;
         }
+        return false;
     }
 
     // Makes a user show as logged in when logged in
@@ -109,8 +109,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return null;
         }
+        return null;
     }
 
     // For seing if a user is already logged in or not
@@ -131,8 +131,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return loggedIn;
         }
+        return loggedIn;
     }
 
     // General method for closing a connection, is to be used everytime getCon() is used
@@ -212,8 +212,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return null;
         }
+        return null;
     }
 
 
@@ -234,8 +234,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return 0;
         }
+        return 0;
     }
 
 
@@ -292,8 +292,9 @@ public class DBConnection {
             prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt);
         }
-        closeConnection(con, prepStmt);
     }
 
 
@@ -362,8 +363,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return null;
         }
+        return null;
     }
 
     public static String getUsername(int userId) {
@@ -384,8 +385,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return null;
         }
+        return null;
     }
 
 
@@ -408,8 +409,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return 0;
         }
+        return 0;
     }
 
 
@@ -429,8 +430,8 @@ public class DBConnection {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
-            return 0;
         }
+        return 0;
     }
 
     public static void updatePoints(int addPoints){
