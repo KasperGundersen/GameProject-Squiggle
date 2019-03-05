@@ -28,7 +28,7 @@ public class Squiggle extends Scenes{
     public Squiggle(double width, double height) {
         super(width, height);
         bp = new BorderPane();
-        setSc(new Scene(bp, width, height));
+        //setSc(new Scene(bp, width, height));
         addUIControls(getGp());
     }
     private double eraserSize;
