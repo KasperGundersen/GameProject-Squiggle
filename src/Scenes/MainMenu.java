@@ -93,7 +93,7 @@ class MainMenu extends Scenes{
         });
         livechatButton.setOnAction(e -> {
             MainScene.lc = new Livechat(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.mp.getSc());
+            MainScene.setScene(MainScene.lc.getSc());
         });
     }
 
