@@ -71,7 +71,7 @@ class MainMenu extends Scenes{
         GridPane.setValignment(myPageButton, VPos.CENTER);
 
         // My Page button
-        Button livechatButton = new Button("My page");
+        Button livechatButton = new Button("Live chat");
         livechatButton.setPrefHeight(prefHeight);
         livechatButton.setPrefWidth(100);
         gridPane.add(livechatButton, 0, 5, 2, 1);
