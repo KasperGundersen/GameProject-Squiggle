@@ -17,10 +17,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import javax.swing.*;
@@ -29,13 +26,19 @@ import java.awt.*;
 
 public class Squiggle extends Scenes{
 
+    private BorderPane bp;
+
     public Squiggle(double width, double height) {
         super(width, height);
-        addUIControls(super.getGp());
+        bp = new BorderPane();
+        setSc(new Scene(bp, width, height));
+        addUIControls(getGp());
     }
     private double eraserSize;
 
     private void addUIControls(GridPane gridPane){
+
+        gridPane.setGridLinesVisible(true);
         Image pencil = new Image("pencil.png");
         Image rubber = new Image("rubber.png");
 
