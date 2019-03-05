@@ -17,7 +17,7 @@ public class MainScene {
     public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
     public static Scenes mp = new MyPage(WIDTH, HEIGHT);
-    public static Scenes lc = new Livechat(WIDTH, HEIGHT);
+    public static Scenes lc = null;
 
 
     // User
