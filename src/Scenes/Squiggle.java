@@ -1,30 +1,21 @@
 package Scenes;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import javax.swing.*;
-import java.awt.*;
+import java.io.File;
 
 
 public class Squiggle extends Scenes{
@@ -36,8 +27,11 @@ public class Squiggle extends Scenes{
     private double eraserSize;
 
     private void addUIControls(GridPane gridPane){
-        Image pencil = new Image("pencil.png");
-        Image rubber = new Image("rubber.png");
+
+        File pencilFile = new File("resources/icons/pencil.png");
+        File rubberFile = new File("resources/icons/rubber.png");
+        Image pencil = new Image(pencilFile.toURI().toString());
+        Image rubber = new Image(rubberFile.toURI().toString());
 
         /*-----------Adding draw and erase buttons------*/
         ToggleButton draw = new ToggleButton("Draw");
@@ -69,7 +63,7 @@ public class Squiggle extends Scenes{
             tb.setCursor(Cursor.HAND);
         }
 
-        /*-------------Drawing Canvas-------------*/
+        /*-------------Drawing CanvasComponents-------------*/
         Canvas canvas = new Canvas(800, 580);
         gridPane.add(canvas, 1,1,5,5);
 
