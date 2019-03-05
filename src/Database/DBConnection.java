@@ -221,7 +221,16 @@ public class DBConnection {
 
     public static void insertIntoDB(Connection con, String words) {
         try {
+            String dropTable = ""
+                    + "DROP TABLE LIBRARY;";
+            String createTable = ""
+                    + "CREATE TABLE LIBRARY( "
+                    + "wordID INT(4) PRIMARY KEY AUTO_INCREMENT, "
+                    + "    word VARCHAR(30) "g
+                    + ");";
             Statement stmt = con.createStatement();
+            stmt.executeUpdate(dropTable);
+            stmt.executeUpdate(createTable);
             stmt.executeUpdate("INSERT INTO LIBRARY VALUE (default, \"" +  words + "\");");
         } catch (SQLSyntaxErrorException e) {
             e.printStackTrace();
