@@ -47,6 +47,10 @@ public abstract class Scenes {
         return sc;
     }
 
+    public void setSc(Scene sc) {
+        this.sc = sc;
+    }
+
     double getHEIGHT() {
         return HEIGHT;
     }
