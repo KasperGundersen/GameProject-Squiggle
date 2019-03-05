@@ -229,4 +229,20 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+    public static int getAmtPlayer(){
+        Connection con = getCon();
+        try {
+            String query = "SELECT COUNT(userID) FROM GAME;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("COUNT(userID)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(con);
+        return 0;
+    }
 }
