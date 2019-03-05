@@ -12,11 +12,11 @@ public class MainScene {
 
     private static Stage stage;
 
-    static Scenes li = new LogIn(WIDTH, HEIGHT);
-    static Scenes mm = new MainMenu(WIDTH, HEIGHT);
-    static Scenes sq = new Squiggle(WIDTH, HEIGHT);
-    static Scenes su = new SignUp(WIDTH, HEIGHT);
-    static Scenes mp = new MyPage(WIDTH, HEIGHT);
+    public static Scenes li = new LogIn(WIDTH, HEIGHT);
+    public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
+    public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
+    public static Scenes su = new SignUp(WIDTH, HEIGHT);
+    public static Scenes mp = new MyPage(WIDTH, HEIGHT);
     // User
     public static UserInfo user = new UserInfo();
     public static Toast toast = new Toast(stage, WIDTH, HEIGHT);

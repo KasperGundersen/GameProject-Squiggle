@@ -200,6 +200,7 @@ public class DBConnection {
             prepStmt.setInt(2, 0);
             prepStmt.setInt(3, 0);
             prepStmt.setInt(4, 0);
+            prepStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
