@@ -450,5 +450,23 @@ public class DBConnection {
         }
     }
 
-
+    // Fetches avatarID from database, allows game to show the users avatar inGame using UserInfo.avatarID variable
+    public static void updateAvatarID(int userID) {
+        Connection con = DBConnection.getCon();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            String query = "SELECT avatarID FROM USERS WHERE userID=?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, userID);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                UserInfo.setAvatarID(res.getInt("avatarID"));
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+    }
 }

@@ -42,25 +42,11 @@ public class UserInfo {
         return drawing;
     }
 
-    // Fetches avatarID from database, allows game to show the users avatar inGame using UserInfo.avatarID variable
-    public static void updateAvatarID(int userID) {
-        Connection con = DBConnection.getCon();
-        try {
-            Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT avatarID FROM USERS WHERE userID=\"" + userID + "\";");
-            if (res.next()) {
-                avatarID = res.getInt("avatarID");
-            }
-        } catch(SQLException e) {
-            e.printStackTrace();
-        }
-        DBConnection.closeConnection(con);
-    }
 
     // Method that runs on login, updates UserInfo.userID variable and fetches avatarID from given user
     public static void initializeUser(int userId) {
         userID = userId;
-        updateAvatarID(userId);
+        DBConnection.updateAvatarID(userId);
     }
 
     public static void setUserName(String newName) {
@@ -69,6 +55,10 @@ public class UserInfo {
 
     public static void setDrawing(boolean bool) {
         drawing = bool;
+    }
+
+    public static void setAvatarID(int newID) {
+        avatarID = newID;
     }
 
 
