@@ -182,7 +182,7 @@ public class DBConnection {
         Connection con = getCon();
         PreparedStatement prepStmt = null;
         try {
-            String query = "UPDATE USERS SET avatarID=? WHERE UserID=?";
+            String query = "UPDATE USERS SET avatarID=? WHERE userID=?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, index);
             prepStmt.setInt(2, userID);
@@ -223,12 +223,12 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
-            String query = "SELECT UserID FROM USERS WHERE userName=?;";
+            String query = "SELECT userID FROM USERS WHERE userName=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString (1, username);
             res = prepStmt.executeQuery();
             if (res.next()) {
-                return res.getInt("UserID");
+                return res.getInt("userID");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -347,7 +347,7 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
-            String query = "SELECT input FROM CHAT";
+            String query = "SELECT input, userID FROM CHAT";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
 
@@ -372,7 +372,7 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
-            String query = "SELECT userName FROM USERS WHERE UserID =?";
+            String query = "SELECT userName FROM USERS WHERE userID =?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, userId);
             res = prepStmt.executeQuery();
