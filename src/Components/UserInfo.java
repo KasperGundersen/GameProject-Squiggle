@@ -14,6 +14,7 @@ public class UserInfo {
     private static String colorHex;
     private static boolean soundOn;
     private static int avatarID;
+    private static boolean drawing;
 
     public UserInfo() {
         this.userName = null;
@@ -21,6 +22,7 @@ public class UserInfo {
         this.colorHex = null;
         this.soundOn = true;
         this.avatarID = 0;
+        this.drawing = false;
     }
 
     // getters
@@ -34,6 +36,10 @@ public class UserInfo {
 
     public static int getAvatarID() {
         return avatarID;
+    }
+
+    public static boolean getDrawing() {
+        return drawing;
     }
 
     // Fetches avatarID from database, allows game to show the users avatar inGame using UserInfo.avatarID variable
@@ -59,5 +65,9 @@ public class UserInfo {
 
     public static void setUserName(String newName) {
         userName = newName;
+    }
+
+    public static void setDrawing(boolean bool) {
+        drawing = bool;
     }
 }
