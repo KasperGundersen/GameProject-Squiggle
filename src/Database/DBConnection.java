@@ -248,7 +248,7 @@ public class DBConnection {
             String createTable = ""
                     + "CREATE TABLE LIBRARY( "
                     + "wordID INT(4) PRIMARY KEY AUTO_INCREMENT, "
-                    + "    word VARCHAR(30) "g
+                    + "    word VARCHAR(30) "
                     + ");";
             Statement stmt = con.createStatement();
             stmt.executeUpdate(dropTable);
