@@ -30,8 +30,9 @@ public class Livechat extends Scenes {
 
 
      private void addUiControls(GridPane grid) {
-        int PREFWIDTH = 300;
-        grid.setGridLinesVisible(true);
+        //int PREFWIDTH = 300;
+       // grid.setGridLinesVisible(true);
+         grid.setAlignment(Pos.TOP_CENTER);
 
         Label headerLabel = new Label("Livechat");
         headerLabel.setFont(Font.font(15));
@@ -42,11 +43,12 @@ public class Livechat extends Scenes {
 
         TextField inputText = new TextField();
         grid.add(inputText, 1,2,1,1);
-        inputText.setPrefWidth(PREFWIDTH);
+        inputText.setPrefWidth(100);
 
         Button submitButton = new Button("Submit");
         grid.add(submitButton, 1,3,1,1);
-        submitButton.setPrefWidth(PREFWIDTH);
+        GridPane.setHalignment(submitButton, HPos.CENTER);
+        submitButton.setPrefWidth(100);
         submitButton.setDefaultButton(true);
 
         Text chatText = new Text();
@@ -58,7 +60,6 @@ public class Livechat extends Scenes {
              showMessages(chatText, inputText);
              inputText.clear();
          });
-
      }
 
     private void showMessages(Text chatText, TextField inputText) {
@@ -73,6 +74,7 @@ public class Livechat extends Scenes {
                     sb.append("\n");
                 }
                 chatText.setText(sb.toString());
+                chatText.setFont(Font.font("Arial", ));
                 //inputText.clear();
             }
         };

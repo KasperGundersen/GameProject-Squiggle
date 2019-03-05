@@ -349,10 +349,12 @@ public class DBConnection {
             String query = "SELECT input FROM CHAT";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
+
             ArrayList<String> messages = new ArrayList<>();
             while (res.next()) {
                 if (!(res.getString("input").equals(""))) {
-                    messages.add(UserInfo.getUserName() + ": " + res.getString("input"));
+                    int userId = res.getInt("userID");
+                    messages.add(getUsername(userId) + ": " + res.getString("input"));
                 }
             }
             return messages;
@@ -364,10 +366,25 @@ public class DBConnection {
         }
     }
 
-   /* public static getUsername(int userId) {
-        Connection con
+    public static String getUsername(int userId) {
+        Connection con = getCon();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select username from USERS where UserID =" + userId + ";");
+            String output = "";
+            while (res.next()) {
+                output = res.getString("username");
+            }
+            res.close();
+            closeConnection(con);
+            return output;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(con);
+        return null;
     }
-    */
+
 
 
 
