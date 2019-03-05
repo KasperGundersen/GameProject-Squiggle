@@ -17,11 +17,12 @@ import java.sql.Connection;
 import static css.css.confirmButton;
 
 class ConfirmBox{
-
     private static boolean answer;
     private static final double WIDTH = 350, HEIGHT = 150;
 
     static boolean display(String title, String message){
+        Stage stage = new Stage();
+
         Label label = new Label();
         label.setText(message);
         label.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -32,6 +33,18 @@ class ConfirmBox{
 
         Button noButton = new Button("No");
         noButton.setStyle(confirmButton());
+
+        yesButton.setOnAction(e -> {
+            answer = true;
+            stage.close();
+            Connection con = DBConnection.getCon();
+            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            DBConnection.closeConnection(con);
+        });
+        noButton.setOnAction(e -> {
+            answer = false;
+            stage.close();
+        });
 
         HBox hbox = new HBox(10);
         hbox.getChildren().addAll(yesButton, noButton);
@@ -46,7 +59,6 @@ class ConfirmBox{
 
         Scene scene = new Scene(grid);
 
-        Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
         stage.setWidth(WIDTH);
@@ -55,17 +67,6 @@ class ConfirmBox{
         stage.setScene(scene);
         stage.showAndWait();
 
-        yesButton.setOnAction(e -> {
-            answer = true;
-            stage.close();
-            Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
-            DBConnection.closeConnection(con);
-        });
-        noButton.setOnAction(e -> {
-            answer = false;
-            stage.close();
-        });
         return answer;
     }
 }

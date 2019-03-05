@@ -19,8 +19,6 @@ import static javafx.scene.control.SpinnerValueFactory.*;
 
 public class Options extends Scenes {
     private GridPane grid;
-
-
     public Options(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         openOptions();
