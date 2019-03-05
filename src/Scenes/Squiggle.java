@@ -13,6 +13,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.io.File;
@@ -20,9 +22,13 @@ import java.io.File;
 
 public class Squiggle extends Scenes{
 
+    private BorderPane bp;
+
     public Squiggle(double width, double height) {
         super(width, height);
-        addUIControls(super.getGp());
+        bp = new BorderPane();
+        setSc(new Scene(bp, width, height));
+        addUIControls(getGp());
     }
     private double eraserSize;
 
@@ -32,6 +38,7 @@ public class Squiggle extends Scenes{
         File rubberFile = new File("resources/icons/rubber.png");
         Image pencil = new Image(pencilFile.toURI().toString());
         Image rubber = new Image(rubberFile.toURI().toString());
+        gridPane.setGridLinesVisible(true);
 
         /*-----------Adding draw and erase buttons------*/
         ToggleButton draw = new ToggleButton("Draw");
