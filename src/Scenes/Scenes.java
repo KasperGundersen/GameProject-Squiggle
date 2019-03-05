@@ -37,7 +37,7 @@ public abstract class Scenes {
     }
 
     //Getters
-    public static GridPane getGp() {
+    public GridPane getGp() {
         return gp;
     }
 
@@ -76,10 +76,10 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    public static void fontChange(int size){
-        ObservableList<Node> childrenOfScene = gp.getChildren();
-        System.out.println(childrenOfScene);
-        System.out.println(gp.getChildren());
+    public static void fontChange(int size, GridPane grid){
+        ObservableList<Node> childrenOfScene = grid.getChildren();
+        //System.out.println(childrenOfScene);
+        //System.out.println(getGp().getChildren());
 
 
         for (Node child : childrenOfScene) {

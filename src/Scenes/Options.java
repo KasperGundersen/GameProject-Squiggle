@@ -72,7 +72,7 @@ public class Options extends Scenes {
            */
 
            int fontSizeChoosen = fontSizeFactory.getValue();
-           fontChange(fontSizeChoosen);
+           //fontChange(fontSizeChoosen, super.getGp());
            //window.close();
         });
 
