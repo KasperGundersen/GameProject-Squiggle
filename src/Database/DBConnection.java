@@ -229,4 +229,43 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
+
+    //Livechat methods start
+    public static void insertMessage(String message) {
+        Connection con = getCon();
+        try {
+            String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt (1, UserInfo.getUserID());
+            prepStmt.setString (2, message);
+            prepStmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(con);
+    }
+
+    public static ArrayList<String> getMessages() {
+        Connection con = getCon();
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select input from CHAT");
+            ArrayList<String> messages = new ArrayList<>();
+            while (res.next()) {
+                if (!(res.getString("input").equals(""))) {
+                    messages.add(UserInfo.getUserName() + ": " + res.getString("input"));
+                }
+            }
+            closeConnection(con);
+            return messages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+
+    //Livechat methods end
 }

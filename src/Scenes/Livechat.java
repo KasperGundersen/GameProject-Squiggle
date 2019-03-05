@@ -1,5 +1,7 @@
 package Scenes;
 
+import Components.UserInfo;
+import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -11,7 +13,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Livechat extends Scenes {
+    Timer timer;
 
 
     public Livechat(double WIDTH, double HEIGHT) {
@@ -44,7 +52,31 @@ public class Livechat extends Scenes {
         Text chatText = new Text();
         grid.add(chatText,1,4,1,1);
 
+         submitButton.setOnAction(e -> {
+             String text = inputText.getText();
+             DBConnection.insertMessage(text);
+             showMessages(chatText, inputText);
+             inputText.clear();
+         });
 
      }
+
+    private void showMessages(Text chatText, TextField inputText) {
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                ArrayList<String> words = DBConnection.getMessages();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < words.size(); i++) {
+                    sb.append(words.get(i));
+                    sb.append("\n");
+                }
+                chatText.setText(sb.toString());
+                //inputText.clear();
+            }
+        };
+        timer.schedule(task, 0, 5000);
+    }
 
 }
