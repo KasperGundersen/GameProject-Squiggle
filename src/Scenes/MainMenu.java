@@ -83,6 +83,9 @@ public class MainMenu extends Scenes{
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e ->{
+            Connection con = DBConnection.getCon();
+            DBConnection.setDrawer(con);
+            DBConnection.closeConnection(con);
             MainScene.setScene(MainScene.sq.getSc());
         });
         logOutButton.setOnAction(e -> {

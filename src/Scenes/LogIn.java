@@ -21,16 +21,6 @@ public class LogIn extends Scenes {
     // Error message
     private static Label loginError;
 
-    // Error label
-    public static void visibleLoginError(boolean b){
-        loginError.setVisible(b);
-    }
-
-    public static void setTextLoginError(String newText) {
-        loginError.setText(newText);
-    }
-
-
     public LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUIControls(super.getGp());
@@ -120,17 +110,27 @@ public class LogIn extends Scenes {
         tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
 
         //ButtonAction
-        logInButton.setOnAction(e -> {
-            Authentication.logIn();
-            UserInfo.setUserName(getUserName());
-            Connection con = DBConnection.getCon();
-            UserInfo.initializeUser(DBConnection.getUserID(con, getUserName()));
-            DBConnection.closeConnection(con);
-        });
+        logInButton.setOnAction(e -> loginSystem());
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
+    }
+
+    protected static void loginSystem(){
+        Authentication.logIn();
+        UserInfo.setUserName(getUserName());
+        Connection con = DBConnection.getCon();
+        UserInfo.initializeUser(DBConnection.getUserID(con, getUserName()));
+        DBConnection.closeConnection(con);
+    }
+
+    public static void visibleLoginError(boolean b){
+        loginError.setVisible(b);
+    }
+
+    public static void setTextLoginError(String newText) {
+        loginError.setText(newText);
     }
 }

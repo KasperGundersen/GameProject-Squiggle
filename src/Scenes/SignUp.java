@@ -5,77 +5,35 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Tooltip;
 
-public class SignUp extends Scenes {
+import static css.css.toolTip;
 
-    //UI initialiser alt som man bruker som objectvariabler
+public class SignUp extends Scenes {
+    //UI initialize object variables
     private static TextField nameField;
     private static TextField emailField;
     private static PasswordField passwordField;
     private static PasswordField rePasswordField;
 
-    private static Label errorUsernMail;
+    private static Label errorUserAndMail;
     private static Label errorPassword;
     private static Label emptyUser;
     private static Label emptyMail;
     private static Label emptyPassword;
 
-    private Button submitButton;
-    private Button optionButton;
-    private Button backButton;
-
-    public static void visibleUserMail(boolean b){
-        errorUsernMail.setVisible(b);
-    }
-    public static void visiblePassword(boolean b){
-        errorPassword.setVisible(b);
-    }
-    public static void visibleEmptyUser(boolean b){
-        emptyUser.setVisible(b);
-    }
-    public static void visibleEmptyMail(boolean b){
-        emptyMail.setVisible(b);
-    }
-    public static void visibleEmptyPassword(boolean b){
-        emptyPassword.setVisible(b);
-    }
+    private static int avatarID = 1;
 
     //////////////////////////////////////////////////////////////////////////////
-    //construktør fra super
+    //constructur from super
     public SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         //Legg inn metoden som legger til ui
         addUIControls(super.getGp());
-    }
-
-    //gettere
-    public static String getName(){
-        if(nameField.getText().isEmpty()){
-            return null;
-        }
-        return nameField.getText();
-    }
-
-    public static String getMail(){
-        if(emailField.getText().isEmpty()){
-            return null;
-        }
-        return emailField.getText();
-    }
-
-    public static String getPassword(){
-        if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
-            return passwordField.getText();
-        }else {
-            return null;
-        }
     }
 
     // Adding UI to Grid
@@ -89,10 +47,10 @@ public class SignUp extends Scenes {
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
         //Add error Label
-        errorUsernMail = new Label("Username or email already taken");
-        gridPane.add(errorUsernMail,1,0,2,2);
-        errorUsernMail.setVisible(false);
-        super.errorFont(errorUsernMail);
+        errorUserAndMail = new Label("Username or email already taken");
+        gridPane.add(errorUserAndMail,1,0,2,2);
+        errorUserAndMail.setVisible(false);
+        super.errorFont(errorUserAndMail);
 
         // Add Name Label
         Label nameLabel = new Label("Username : ");
@@ -127,87 +85,180 @@ public class SignUp extends Scenes {
         emptyMail.setVisible(false);
         errorFont(emptyMail);
 
+        //////////////////////////////////////////
+
+        // Add Name Label
+        Label avatarLabel = new Label("Avatar : ");
+        gridPane.add(avatarLabel, 0,3);
+
+        //Add ImageVie to show avatar
+        ImageView avatarView = new ImageView(getAvatar(avatarID));
+        avatarView.setFitWidth(150);
+        avatarView.setFitHeight(150);
+        gridPane.add(avatarView, 1, 3, 1, 1);
+        GridPane.setHalignment(avatarView, HPos.CENTER);
+
+        //Add button to go left
+        Button leftButton = new Button("<");
+        gridPane.add(leftButton, 1,3);
+        GridPane.setHalignment(leftButton, HPos.CENTER);
+        GridPane.setMargin(leftButton, new Insets(0,120,0,0));
+        super.styleSelectorButton(leftButton);
+
+        //Add button to go right
+        Button rightButton = new Button(">");
+        gridPane.add(rightButton, 1,3);
+        GridPane.setHalignment(rightButton, HPos.CENTER);
+        GridPane.setMargin(rightButton, new Insets(0,0,0,120));
+        super.styleSelectorButton(rightButton);
+
         //Add error Label
         errorPassword = new Label("Password don't match");
-        gridPane.add(errorPassword,1,2,2,2);
-        GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
+        gridPane.add(errorPassword,1,3,2,1);
+        GridPane.setValignment(errorPassword, VPos.BOTTOM);
         errorPassword.setVisible(false);
         super.errorFont(errorPassword);
 
-        // Add Passfword Label
+        // Add Password Label
         Label passwordLabel = new Label("Password : ");
-        gridPane.add(passwordLabel, 0, 3);
+        gridPane.add(passwordLabel, 0, 4);
 
         // Add Password Field
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
-        gridPane.add(passwordField, 1, 3);
+        gridPane.add(passwordField, 1, 4);
 
         //Add empty Label
         emptyPassword = new Label("Fill in password");
-        gridPane.add(emptyPassword,2,3,2,1);
+        gridPane.add(emptyPassword,2,4,2,1);
         emptyPassword.setVisible(false);
         errorFont(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
-        gridPane.add(rePasswordLabel, 0, 4);
+        gridPane.add(rePasswordLabel, 0, 5);
 
         // Add RePassword Field
         rePasswordField = new PasswordField();
         rePasswordField.setPrefHeight(prefHeight);
         rePasswordField.setPromptText("re-enter password");
-        gridPane.add(rePasswordField, 1, 4);
+        gridPane.add(rePasswordField, 1, 5);
 
         // Add Submit Button
-        submitButton = new Button("Submit");
+        Button submitButton = new Button("Submit");
         submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
-        gridPane.add(submitButton, 0, 5, 2, 1);
+        gridPane.add(submitButton, 0, 6, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
 
         // Add option button
-        optionButton = new Button("Options");
-        gridPane.add(optionButton, 3, 6);
+        Button optionButton = new Button("Options");
+        gridPane.add(optionButton, 3, 7);
         GridPane.setHalignment(optionButton, HPos.LEFT);
         GridPane.setValignment(optionButton, VPos.BOTTOM);
+
         // Go back button
-        backButton = new Button("Go Back");
-        gridPane.add(backButton, 0, 6);
+        Button backButton = new Button("Go Back");
+        gridPane.add(backButton, 0, 7);
         GridPane.setHalignment(backButton, HPos.LEFT);
         GridPane.setValignment(backButton, VPos.BOTTOM);
 
-        // Tooltips
+        //////////////Tooltips//////////////////////////////////
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipName.setStyle(toolTip());
 
         final Tooltip tooltipEmail = new Tooltip();
         tooltipEmail.setText("Write your Email");
         emailField.setTooltip(tooltipEmail);
-        tooltipEmail.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipEmail.setStyle(toolTip());
 
         final Tooltip tooltipPasword = new Tooltip();
         tooltipPasword.setText("Write your password");
         passwordField.setTooltip(tooltipPasword);
-        tooltipPasword.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipPasword.setStyle(toolTip());
 
         final Tooltip tooltipRePassword = new Tooltip();
         tooltipRePassword.setText("Write your password one more time");
         rePasswordField.setTooltip(tooltipRePassword);
-        tooltipRePassword.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipRePassword.setStyle(toolTip());
 
-        // Button action
+        ///////Button action//////////////////////////////
         backButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.li.getSc());
         });
-        submitButton.setOnAction(e -> Authentication.submit());
-        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+
+        submitButton.setOnAction(e -> {
+            if(Authentication.submit()){
+                MainScene.setScene(MainScene.li.getSc());
+                String toastMsg = "Registration successful";
+                MainScene.toast.makeText(toastMsg,1000, 500, 500);
+            }
+        });
+
+        optionButton.setOnAction(e -> {
+            new Options(super.getWIDTH(), super.getHEIGHT());
+        });
+
+        rightButton.setOnAction(e -> {
+            avatarID = super.loopAvatar(avatarID,1, 1,4);
+            avatarView.setImage(super.getAvatar(avatarID));
+        });
+
+        leftButton.setOnAction(e -> {
+            avatarID = super.loopAvatar(avatarID, -1,1,4);
+            avatarView.setImage(super.getAvatar(avatarID));
+        });
+
     }
+
+
+    ///////////////////Dead-Methods////////////////////////////////////////
+    public static void visibleUserMail(boolean b){
+        errorUserAndMail.setVisible(b);
+    }
+    public static void visiblePassword(boolean b){
+        errorPassword.setVisible(b);
+    }
+    public static void visibleEmptyUser(boolean b){
+        emptyUser.setVisible(b);
+    }
+    public static void visibleEmptyMail(boolean b){
+        emptyMail.setVisible(b);
+    }
+    public static void visibleEmptyPassword(boolean b){
+        emptyPassword.setVisible(b);
+    }
+
+    //////////////////Getters///////////////////////////////////////////////
+    //gettere
+    public static String getName(){
+        if(nameField.getText().isEmpty()){
+            return null;
+        }
+        return nameField.getText();
+    }
+    public static String getMail(){
+        if(emailField.getText().isEmpty()){
+            return null;
+        }
+        return emailField.getText();
+    }
+    public static String getPassword(){
+        if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
+            return passwordField.getText();
+        }else {
+            return null;
+        }
+    }
+    public static int getAvatarID() {
+        return avatarID;
+    }
+
 }

@@ -13,22 +13,13 @@ import java.sql.Statement;
 
 public class Authentication {
 
-    public static void registerUser(Connection con, String userName, String hash, String salt, String userEmail, int avatarID) {
-        try {
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("INSERT INTO USERS VALUES (0, \"" + userName + "\", \"" + hash + "\", \"" + salt + "\", \"" + userEmail + "\", " + avatarID + ", 0)");
-        } catch (SQLSyntaxErrorException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static void submit(){
+    public static boolean submit(){
         Connection con = DBConnection.getCon();
         String username = SignUp.getName();
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
+        int avatarID = SignUp.getAvatarID();
         String hash;
         String salt;
 
@@ -71,12 +62,14 @@ public class Authentication {
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
             SignUp.visibleUserMail(true);
         }else if((username != null) && (mail != null) && (hash != null) && (salt != null)) {
-            registerUser(con, username, hash, salt, mail, 0);
-            MainScene.setScene(MainScene.li.getSc());
+            DBConnection.registerUser(con, username, hash, salt, mail, avatarID);
+            DBConnection.closeConnection(con);
+            return true;
         }else{
             SignUp.visibleUserMail(false);
         }
         DBConnection.closeConnection(con);
+        return false;
     }
 
     public static void logIn() {

@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
@@ -17,6 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
+
+import java.io.File;
+
+import static css.css.selectorButton;
 
 public abstract class Scenes {
 
@@ -76,12 +81,12 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    public static void fontChange(int size){
-        ObservableList<Node> childrenOfScene = gp.getChildren();
+    public static void fontChange(int size, Scenes s){
+        ObservableList<Node> childrenOfScene = s.getGp().getChildren();
         System.out.println(childrenOfScene);
         System.out.println(gp.getChildren());
 
-
+/*
         for (Node child : childrenOfScene) {
             if (child instanceof Button) {
                 Button b = (Button) child;
@@ -92,8 +97,7 @@ public abstract class Scenes {
                 l.setFont(Font.font("Courier", size));
             }
         }
-
-
+*/
     }
 
     public void errorFont(Label l){
@@ -103,5 +107,26 @@ public abstract class Scenes {
                 FontPosture.ITALIC,
                 Font.getDefault().getSize()
         ));
+    }
+
+    public void styleSelectorButton(Button b){
+        b.setPrefHeight(35);
+        b.setPrefWidth(25);
+        b.setStyle(selectorButton());
+    }
+
+    public int loopAvatar(int counter, int add, int min, int max){
+        counter += add;
+        if(counter < min){
+            counter = max;
+        }else if(counter > max){
+            counter = min;
+        }
+        return counter;
+    }
+
+    public Image getAvatar(int i){
+        File file = new File("resources/avatars/" + i + ".jpg");
+        return new Image(file.toURI().toString());
     }
 }
