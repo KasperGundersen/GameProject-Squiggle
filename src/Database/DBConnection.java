@@ -324,4 +324,37 @@ public class DBConnection {
     }
 
 
+    public static int getPoints(){
+        Connection con = getCon();
+        try {
+            String query = "SELECT points FROM GAME where userID = ?;";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("points");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(con);
+        return 0;
+    }
+
+    public static void updatePoints(int addPoints){
+        Connection con = getCon();
+        int oldPoints = getPoints();
+        int newPoints = oldPoints + addPoints;
+        try {
+            String query = "UPDATE GAME SET points = " + newPoints +"WHERE userID = ?";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            prepStmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        closeConnection(con);
+    }
+
+
 }
