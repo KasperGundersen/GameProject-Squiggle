@@ -368,21 +368,24 @@ public class DBConnection {
 
     public static String getUsername(int userId) {
         Connection con = getCon();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
         try {
-            Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("select username from USERS where UserID =" + userId + ";");
+            String query = "SELECT userName FROM USERS WHERE UserID =?";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, userId);
+            res = prepStmt.executeQuery();
             String output = "";
             while (res.next()) {
                 output = res.getString("username");
             }
-            res.close();
-            closeConnection(con);
             return output;
         }catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+            return null;
         }
-        closeConnection(con);
-        return null;
     }
 
 
@@ -392,26 +395,31 @@ public class DBConnection {
 
     public static int getAmtPlayer(){
         Connection con = getCon();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
         try {
             String query = "SELECT COUNT(userID) FROM GAME;";
-            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()) {
                 return res.getInt("COUNT(userID)");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+            return 0;
         }
-        closeConnection(con);
-        return 0;
     }
 
 
     public static int getPoints(){
         Connection con = getCon();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
         try {
             String query = "SELECT points FROM GAME where userID = ?;";
-            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
             res = prepStmt.executeQuery();
             if (res.next()) {
@@ -419,24 +427,27 @@ public class DBConnection {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+            return 0;
         }
-        closeConnection(con);
-        return 0;
     }
 
     public static void updatePoints(int addPoints){
         Connection con = getCon();
+        PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
         int newPoints = oldPoints + addPoints;
         try {
             String query = "UPDATE GAME SET points = " + newPoints +"WHERE userID = ?";
-            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt);
         }
-        closeConnection(con);
     }
 
 
