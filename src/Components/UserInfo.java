@@ -71,7 +71,5 @@ public class UserInfo {
         drawing = bool;
     }
 
-    public static void getUserName(int userId) {
 
-    }
 }
