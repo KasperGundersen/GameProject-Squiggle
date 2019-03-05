@@ -71,10 +71,10 @@ class MainMenu extends Scenes{
         GridPane.setValignment(myPageButton, VPos.CENTER);
 
         // My Page button
-        Button livechatButton = new Button("My page");
+        Button livechatButton = new Button("Live chat");
         livechatButton.setPrefHeight(prefHeight);
         livechatButton.setPrefWidth(100);
-        gridPane.add(livechatButton, 0, 4, 2, 1);
+        gridPane.add(livechatButton, 0, 5, 2, 1);
         GridPane.setHalignment(livechatButton, HPos.CENTER);
         GridPane.setValignment(livechatButton, VPos.CENTER);
 
@@ -91,7 +91,10 @@ class MainMenu extends Scenes{
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp.getSc());
         });
-        livechatButton.setOnAction(e -> MainScene.setScene(null));
+        livechatButton.setOnAction(e -> {
+            MainScene.lc = new Livechat(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.lc.getSc());
+        });
     }
 
     private void joinGameSystem(){
