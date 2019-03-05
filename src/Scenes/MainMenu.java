@@ -1,10 +1,10 @@
 package Scenes;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -14,23 +14,14 @@ import javafx.scene.text.FontWeight;
 import java.sql.Connection;
 
 
-public class MainMenu extends Scenes{
-    private GridPane gp;
-    private Scene sc;
-
-    public MainMenu(double width, double height) {
+class MainMenu extends Scenes{
+    MainMenu(double width, double height) {
         super(width, height);
-        addUIControls(super.getGp());
+        addUIControls(getGp());
     }
-
-    public Scene getScene() {
-        return sc;
-    }
-
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
-
         // Add Header
         Label headerLabel = new Label("Main Menu");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -65,10 +56,9 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(100);
-        gridPane.add(quitButton, 0, 4, 2, 1);
+        gridPane.add(quitButton, 0, 5, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
@@ -80,22 +70,20 @@ public class MainMenu extends Scenes{
         GridPane.setHalignment(myPageButton, HPos.CENTER);
         GridPane.setValignment(myPageButton, VPos.CENTER);
 
+        // My Page button
+        Button livechatButton = new Button("My page");
+        livechatButton.setPrefHeight(prefHeight);
+        livechatButton.setPrefWidth(100);
+        gridPane.add(livechatButton, 0, 4, 2, 1);
+        GridPane.setHalignment(livechatButton, HPos.CENTER);
+        GridPane.setValignment(livechatButton, VPos.CENTER);
+
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
-        joinGameButton.setOnAction(e ->{
-
-        });
-        logOutButton.setOnAction(e -> {
-            MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.li.getSc());
-            Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
-            DBConnection.closeConnection(con);
-
-        });
+        joinGameButton.setOnAction(e -> joinGameSystem());
+        logOutButton.setOnAction(e -> logOutSystem());
         quitButton.setOnAction(e -> {
-            Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
-            if(quit){
+            if (ConfirmBox.display("Do you want to quit?", "Sure you want to exit?")){
                 MainScene.closeStage();
             }
         });
@@ -103,6 +91,23 @@ public class MainMenu extends Scenes{
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp.getSc());
         });
+        livechatButton.setOnAction(e -> MainScene.setScene(null));
+    }
+
+    private void joinGameSystem(){
+        Connection con = DBConnection.getCon();
+        DBConnection.enterGame(con);
+        DBConnection.setDrawer(con);
+        DBConnection.closeConnection(con);
+        MainScene.setScene(MainScene.sq.getSc());
+    }
+
+    private void logOutSystem(){
+        MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
+        MainScene.setScene(MainScene.li.getSc());
+        Connection con = DBConnection.getCon();
+        DBConnection.setLoggedIn(con, UserInfo.getUserName(), 0);
+        DBConnection.closeConnection(con);
     }
 }
 

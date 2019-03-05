@@ -19,8 +19,6 @@ import static javafx.scene.control.SpinnerValueFactory.*;
 
 public class Options extends Scenes {
     private GridPane grid;
-
-
     public Options(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         openOptions();
@@ -72,8 +70,10 @@ public class Options extends Scenes {
            */
 
            int fontSizeChoosen = fontSizeFactory.getValue();
-           //fontChange(fontSizeChoosen, super.getGp());
-           //window.close();
+
+
+//           //window.close();
+
         });
 
         grid.add(submitButton, 0,4, 2,1);

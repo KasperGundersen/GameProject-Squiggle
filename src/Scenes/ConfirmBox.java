@@ -1,7 +1,6 @@
 package Scenes;
 
 import Database.DBConnection;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,59 +8,55 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
+import static css.css.confirmButton;
 
-public class ConfirmBox{
-
-    static boolean ansver;
-    private static GridPane grid;
-
+class ConfirmBox{
+    private static boolean answer;
     private static final double WIDTH = 350, HEIGHT = 150;
 
-    public static boolean display(String title, String message){
+    static boolean display(String title, String message){
         Stage stage = new Stage();
-
-        grid = new GridPane();
-        grid.setAlignment(Pos.TOP_CENTER);
-        grid.setPadding(new Insets(20, 20, 20, 20));
 
         Label label = new Label();
         label.setText(message);
         label.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 
-        // lager 2 knapper
-
+        //Create to users
         Button yesButton = new Button("Yes");
+        yesButton.setStyle(confirmButton());
+
         Button noButton = new Button("No");
-        yesButton.setStyle("-fx-font-size: 15pt;");
-        noButton.setStyle("-fx-font-size: 15pt;");
+        noButton.setStyle(confirmButton());
 
         yesButton.setOnAction(e -> {
-            ansver = true;
+            answer = true;
             stage.close();
             Connection con = DBConnection.getCon();
             DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
+            DBConnection.exitGame(con);
             DBConnection.closeConnection(con);
         });
         noButton.setOnAction(e -> {
-            ansver = false;
+            answer = false;
             stage.close();
         });
 
-        HBox layout = new HBox(10);
-        layout.getChildren().addAll(yesButton, noButton);
-        layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(20, 0,0,0));
+        HBox hbox = new HBox(10);
+        hbox.getChildren().addAll(yesButton, noButton);
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setPadding(new Insets(20, 0,0,0));
 
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.TOP_CENTER);
+        grid.setPadding(new Insets(20, 20, 20, 20));
         grid.add(label, 0,0,2,1);
-        grid.add(layout,0,1, 2, 2);
-
+        grid.add(hbox,0,1, 2, 2);
 
         Scene scene = new Scene(grid);
 
@@ -69,11 +64,10 @@ public class ConfirmBox{
         stage.setTitle(title);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
-
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
 
-        return ansver;
+        return answer;
     }
 }

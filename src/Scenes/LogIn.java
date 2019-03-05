@@ -1,12 +1,18 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.UserInfo;
+import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.sql.Connection;
+
+import static css.css.toolTip;
 
 public class LogIn extends Scenes {
 
@@ -17,38 +23,28 @@ public class LogIn extends Scenes {
     // Error message
     private static Label loginError;
 
-    // Error label
-    public static void visibleLoginError(boolean b){
-        loginError.setVisible(b);
-    }
-
-    public static void setTextLoginError(String newText) {
-        loginError.setText(newText);
-    }
-
-
-    public LogIn(double WIDTH, double HEIGHT) {
+    LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
-        addUIControls(super.getGp());
+        addUIControls(getGp());
     }
 
     public static String getUserName(){
-        if(nameField.getText().equals(null)){
-            throw new IllegalArgumentException("eow");
+        if(nameField.getText() == null){
+            return null;
         }
         return nameField.getText();
     }
 
     public static String getPassword(){
-        if(passwordField.getText().equals(null)){
-            throw new IllegalArgumentException("hilf");
+        if(passwordField.getText() == null){
+            return null;
         }
         return passwordField.getText();
     }
 
     private void addUIControls(GridPane gridPane) {
-
         double prefHeight = 40;
+
         // Add Header
         Label headerLabel = new Label("Login");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -93,7 +89,6 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(300);
         gridPane.add(regButton, 0, 5, 2, 1);
@@ -108,19 +103,35 @@ public class LogIn extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipName.setStyle(toolTip());
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
-        tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipPassword.setStyle(toolTip());
 
         //ButtonAction
+        logInButton.setOnAction(e -> loginSystem());
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
-        logInButton.setOnAction(e -> Authentication.logIn());
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
+    }
+
+    private static void loginSystem(){
+        Authentication.logIn();
+        UserInfo.setUserName(getUserName());
+        Connection con = DBConnection.getCon();
+        UserInfo.initializeUser(DBConnection.getUserID(con, getUserName()));
+        DBConnection.closeConnection(con);
+    }
+
+    public static void visibleLoginError(boolean b){
+        loginError.setVisible(b);
+    }
+
+    public static void setTextLoginError(String newText) {
+        loginError.setText(newText);
     }
 }
