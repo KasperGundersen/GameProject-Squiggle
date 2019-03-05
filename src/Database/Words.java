@@ -16,16 +16,14 @@ public class Words {
             FileReader readConnection = new FileReader(wordlist);
             BufferedReader readWordlist = new BufferedReader(readConnection);
             String listRead;
-            Connection con = DBConnection.getCon();
             String[] words;
             while((listRead = readWordlist.readLine())!= null){
                 words = listRead.split("-");
                 for(String s : words) {
-                    DBConnection.insertIntoDB(con,s.trim());
+                    DBConnection.insertIntoDB(s.trim());
                 }
             }
             readWordlist.close();
-            DBConnection.closeConnection(con);
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){

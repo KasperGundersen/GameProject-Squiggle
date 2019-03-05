@@ -37,10 +37,8 @@ class ConfirmBox{
         yesButton.setOnAction(e -> {
             answer = true;
             stage.close();
-            Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, LogIn.getUserName(), 0);
-            DBConnection.exitGame(con);
-            DBConnection.closeConnection(con);
+            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
+            DBConnection.exitGame();
         });
         noButton.setOnAction(e -> {
             answer = false;

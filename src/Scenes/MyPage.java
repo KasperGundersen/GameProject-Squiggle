@@ -118,9 +118,7 @@ public class MyPage extends Scenes{
                 displayNewPassword("Change password"); });
 
         buttonChoose.setOnAction(e -> {
-            Connection con = DBConnection.getCon();
-            DBConnection.setAvatarID(con, index, UserInfo.getUserID());
-            DBConnection.closeConnection(con);
+            DBConnection.setAvatarID(index, UserInfo.getUserID());
             Image chosenAvatar = chosenAvatar(index);
             avatarImage.setImage(chosenAvatar);
         });
