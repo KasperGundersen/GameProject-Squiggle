@@ -1,6 +1,8 @@
 /* This class has static methods so we wont have to make objects of this class to use its methods */
 package Database;
 
+import Components.UserInfo;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -14,9 +16,7 @@ public class DBConnection {
 
     // Standard JDBC components
     private static Connection con;
-    private static Statement stmt;
     private static ResultSet res;
-    private static ResultSetMetaData rsmd;
 
     // Use this whenever you want to connect to the database
     public static Connection getCon() {
@@ -31,6 +31,7 @@ public class DBConnection {
         return con;
     }
 
+    // Method that registers a user
     public static void registerUser(Connection con, String userName, String hash, String salt, String userEmail, int avatarID) {
         try {
             String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
@@ -64,6 +65,7 @@ public class DBConnection {
         return false;
     }
 
+    // Makes a user show as logged in when logged in
     public static void setLoggedIn(Connection con, String username, int loggedIn) {
         try {
             String query = "UPDATE USERS SET loggedIn=? WHERE userName=?;";
@@ -76,6 +78,7 @@ public class DBConnection {
         }
     }
 
+    // Gets salt, used for comparing passwords
     public static String getSalt(Connection con, String username) {
         try {
             String query = "SELECT salt FROM USERS WHERE userName=?;";
@@ -92,6 +95,7 @@ public class DBConnection {
         return null;
     }
 
+    // For seing if a user is already logged in or not
     public static boolean getLoggedIn(Connection con, String username) {
         boolean loggedIn = false;
         try {
@@ -108,6 +112,7 @@ public class DBConnection {
         return loggedIn;
     }
 
+    // General method for closing a connection, is to be used everytime getCnnection() is used
     public static void closeConnection(Connection con) {
         try {
             con.close();
@@ -116,6 +121,7 @@ public class DBConnection {
         }
     }
 
+    // Sets avatarID in the database, making the user have same avatarID on next LogIn
     public static void setAvatarID(Connection con, int userID, int index) {
         try {
             String query = "UPDATE USERS SET avatarID=? WHERE UserID=?";
@@ -147,6 +153,8 @@ public class DBConnection {
 
     }
 
+
+    // Fetches userID given username, used upon initialization of user, log in
     public static int getUserID(Connection con, String username) {
 
         try {
@@ -161,5 +169,26 @@ public class DBConnection {
             e.printStackTrace();
         }
         return 0;
+    }
+
+
+    // Method that runs on "Join Game", sets drawing to 1, if no one else is ingame
+    public static void setDrawer(Connection con) {
+        try {
+            String query = "SELECT userID FROM GAME WHERE drawing=1";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                UserInfo.setDrawing(false);
+            } else {
+                String query2 = "UPDATE GAME SET drawing=1 WHERE userID=?";
+                prepStmt = con.prepareStatement(query2);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.executeQuery();
+                UserInfo.setDrawing(true);
+            }
+        } catch(SQLException e ) {
+            e.printStackTrace();
+        }
     }
 }
