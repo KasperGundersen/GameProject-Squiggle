@@ -1,6 +1,8 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Toast;
+import com.sun.tools.javac.Main;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -250,8 +252,15 @@ public class SignUp extends Scenes {
         backButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.li.getSc());
+            String toastMsg = "Registration successful";
+            MainScene.toast.makeText(toastMsg,1000, 500, 500);
         });
-        submitButton.setOnAction(e -> Authentication.submit());
+        submitButton.setOnAction(e -> {
+            if(Authentication.submit()){
+                MainScene.setScene(MainScene.li.getSc());
+            }
+
+        });
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         rightButton.setOnAction(e -> loopAvatar(1, 4, 1));
         leftButton.setOnAction(e -> loopAvatar(1,4,-1));

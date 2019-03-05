@@ -24,7 +24,7 @@ public class Authentication {
         }
     }
 
-    public static void submit(){
+    public static boolean submit(){
         Connection con = DBConnection.getCon();
         String username = SignUp.getName();
         String mail = SignUp.getMail();
@@ -73,11 +73,13 @@ public class Authentication {
             SignUp.visibleUserMail(true);
         }else if((username != null) && (mail != null) && (hash != null) && (salt != null)) {
             registerUser(con, username, hash, salt, mail, avatarID);
-            MainScene.setScene(MainScene.li.getSc());
+            DBConnection.closeConnection(con);
+            return true;
         }else{
             SignUp.visibleUserMail(false);
         }
         DBConnection.closeConnection(con);
+        return false;
     }
 
     public static void logIn() {

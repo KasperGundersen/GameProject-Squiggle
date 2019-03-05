@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ public class MainScene {
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
     public static Scenes mp = new MyPage(WIDTH, HEIGHT);
 
+    public static Toast toast = new Toast(window, WIDTH, HEIGHT);
     // User
     public static UserInfo user = new UserInfo();
 
