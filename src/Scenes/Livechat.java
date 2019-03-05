@@ -74,7 +74,6 @@ public class Livechat extends Scenes {
                     sb.append("\n");
                 }
                 chatText.setText(sb.toString());
-                chatText.setFont(Font.font("Arial", ));
                 //inputText.clear();
             }
         };
