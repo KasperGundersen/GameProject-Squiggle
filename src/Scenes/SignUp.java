@@ -252,12 +252,12 @@ public class SignUp extends Scenes {
         backButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.li.getSc());
-            String toastMsg = "Registration successful";
-            MainScene.toast.makeText(toastMsg,1000, 500, 500);
         });
         submitButton.setOnAction(e -> {
             if(Authentication.submit()){
                 MainScene.setScene(MainScene.li.getSc());
+                String toastMsg = "Registration successful";
+                MainScene.toast.makeText(toastMsg,1000, 500, 500);
             }
 
         });
