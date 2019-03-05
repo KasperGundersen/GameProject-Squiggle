@@ -1,12 +1,8 @@
 package Components;
 
-import java.util.ArrayList;
+import Database.DBConnection;
+
 
 public class PointSystem {
-    private int players;
-    public ArrayList<Integer> points;
-
-    public PointSystem(int players){
-        this.points = new ArrayList<Integer>(players);
-    }
+    private int players = DBConnection.getAmtPlayer();
 }
