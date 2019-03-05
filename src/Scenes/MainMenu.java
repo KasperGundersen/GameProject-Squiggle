@@ -98,19 +98,15 @@ class MainMenu extends Scenes{
     }
 
     private void joinGameSystem(){
-        Connection con = DBConnection.getCon();
-        DBConnection.enterGame(con);
-        DBConnection.setDrawer(con);
-        DBConnection.closeConnection(con);
+        DBConnection.enterGame();
+        DBConnection.setDrawer();
         MainScene.setScene(MainScene.sq.getSc());
     }
 
     private void logOutSystem(){
         MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
         MainScene.setScene(MainScene.li.getSc());
-        Connection con = DBConnection.getCon();
-        DBConnection.setLoggedIn(con, UserInfo.getUserName(), 0);
-        DBConnection.closeConnection(con);
+        DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
     }
 }
 

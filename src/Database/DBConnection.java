@@ -33,7 +33,8 @@ public class DBConnection {
     }
 
     // Method that registers a user
-    public static void registerUser(Connection con, String userName, String hash, String salt, String userEmail, int avatarID) {
+    public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
+        Connection con = getCon();
         try {
             String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -48,10 +49,12 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 
     // This method looks for "input" in the given column in the database
-    public static boolean exists(Connection con, String columnName, String input) {
+    public static boolean exists(String columnName, String input) {
+        Connection con = getCon();
         try{
             String query = "SELECT " + columnName + " FROM USERS WHERE " + columnName + "= ?;";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -63,11 +66,13 @@ public class DBConnection {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
         return false;
     }
 
     // Makes a user show as logged in when logged in
-    public static void setLoggedIn(Connection con, String username, int loggedIn) {
+    public static void setLoggedIn(String username, int loggedIn) {
+        Connection con = getCon();
         try {
             String query = "UPDATE USERS SET loggedIn=? WHERE userName=?;";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -77,10 +82,12 @@ public class DBConnection {
         } catch(SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 
     // Gets salt, used for comparing passwords
-    public static String getSalt(Connection con, String username) {
+    public static String getSalt(String username) {
+        Connection con = getCon();
         try {
             String query = "SELECT salt FROM USERS WHERE userName=?;";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -93,12 +100,14 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
         return null;
     }
 
     // For seing if a user is already logged in or not
-    public static boolean getLoggedIn(Connection con, String username) {
+    public static boolean getLoggedIn(String username) {
         boolean loggedIn = false;
+        Connection con = getCon();
         try {
             String query = "SELECT loggedIn FROM USERS WHERE userName=?;";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -110,10 +119,11 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
         return loggedIn;
     }
 
-    // General method for closing a connection, is to be used everytime getCnnection() is used
+    // General method for closing a connection, is to be used everytime getCon() is used
     public static void closeConnection(Connection con) {
         try {
             con.close();
@@ -123,7 +133,8 @@ public class DBConnection {
     }
 
     // Sets avatarID in the database, making the user have same avatarID on next LogIn
-    public static void setAvatarID(Connection con, int userID, int index) {
+    public static void setAvatarID(int userID, int index) {
+        Connection con = getCon();
         try {
             String query = "UPDATE USERS SET avatarID=? WHERE UserID=?";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -134,9 +145,11 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 
-    public static ArrayList<String> getWords(Connection con, String category) {
+    public static ArrayList<String> getWords(String category) {
+        Connection con = getCon();
         try {
             String query = "SELECT word FROM LIBRARY WHERE category=?;";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -150,14 +163,15 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
         return null;
 
     }
 
 
     // Fetches userID given username, used upon initialization of user, log in
-    public static int getUserID(Connection con, String username) {
-
+    public static int getUserID(String username) {
+        Connection con = getCon();
         try {
             String query = "SELECT UserID FROM USERS WHERE userName=?;";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -169,12 +183,14 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
         return 0;
     }
 
 
     // Method that runs on "Join Game", sets drawing to 1, if no one else is ingame
-    public static void setDrawer(Connection con) {
+    public static void setDrawer() {
+        Connection con = getCon();
         try {
             String query = "SELECT * FROM GAME WHERE drawing=1";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -191,9 +207,11 @@ public class DBConnection {
         } catch(SQLException e ) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 
-    public static void enterGame(Connection con) {
+    public static void enterGame() {
+        Connection con = getCon();
         try {
             String query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -205,9 +223,11 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 
-    public static void exitGame(Connection con) {
+    public static void exitGame() {
+        Connection con = getCon();
         try {
             String query = "DELETE FROM GAME WHERE userID = ?";
             PreparedStatement prepStmt = con.prepareStatement(query);
@@ -216,10 +236,12 @@ public class DBConnection {
         } catch(SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 
 
-    public static void insertIntoDB(Connection con, String words) {
+    public static void insertIntoDB(String words) {
+        Connection con = getCon();
         try {
             String dropTable = ""
                     + "DROP TABLE LIBRARY;";
@@ -237,5 +259,6 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
     }
 }

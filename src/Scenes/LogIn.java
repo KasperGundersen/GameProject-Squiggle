@@ -122,9 +122,7 @@ public class LogIn extends Scenes {
     private static void loginSystem(){
         Authentication.logIn();
         UserInfo.setUserName(getUserName());
-        Connection con = DBConnection.getCon();
-        UserInfo.initializeUser(DBConnection.getUserID(con, getUserName()));
-        DBConnection.closeConnection(con);
+        UserInfo.initializeUser(DBConnection.getUserID(getUserName()));
     }
 
     public static void visibleLoginError(boolean b){
