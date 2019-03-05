@@ -31,6 +31,23 @@ public class DBConnection {
         return con;
     }
 
+    public static void registerUser(Connection con, String userName, String hash, String salt, String userEmail, int avatarID) {
+        try {
+            String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, userName);
+            prepStmt.setString(2, hash);
+            prepStmt.setString(3, salt);
+            prepStmt.setString(4, userEmail);
+            prepStmt.setInt(5, avatarID);
+            prepStmt.executeUpdate();
+        } catch (SQLSyntaxErrorException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     // This method looks for "input" in the given column in the database
     public static boolean exists(Connection con, String columnName, String input) {
         try{

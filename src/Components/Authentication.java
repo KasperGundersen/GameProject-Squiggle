@@ -13,16 +13,6 @@ import java.sql.Statement;
 
 public class Authentication {
 
-    public static void registerUser(Connection con, String userName, String hash, String salt, String userEmail, int avatarID) {
-        try {
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("INSERT INTO USERS VALUES (0, \"" + userName + "\", \"" + hash + "\", \"" + salt + "\", \"" + userEmail + "\", " + avatarID + ", 0)");
-        } catch (SQLSyntaxErrorException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static boolean submit(){
         Connection con = DBConnection.getCon();
@@ -72,7 +62,7 @@ public class Authentication {
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
             SignUp.visibleUserMail(true);
         }else if((username != null) && (mail != null) && (hash != null) && (salt != null)) {
-            registerUser(con, username, hash, salt, mail, avatarID);
+            DBConnection.registerUser(con, username, hash, salt, mail, avatarID);
             DBConnection.closeConnection(con);
             return true;
         }else{

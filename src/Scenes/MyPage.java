@@ -27,7 +27,7 @@ public class MyPage extends Scenes{
     private static Button buttonLobby;
     private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
-    private static String fileLocation = "..\\..\\resources\\avatars\\";
+    private static String fileLocation = "resources\\avatars\\";
 
 
     public MyPage(double WIDTH, double HEIGHT){
