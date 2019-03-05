@@ -289,6 +289,7 @@ public class DBConnection {
                     messages.add(UserInfo.getUserName() + ": " + res.getString("input"));
                 }
             }
+            closeConnection(con);
             return messages;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -297,6 +298,10 @@ public class DBConnection {
         return null;
     }
 
+   /* public static getUsername(int userId) {
+        Connection con
+    }
+    */
 
 
 
@@ -317,5 +322,6 @@ public class DBConnection {
         closeConnection(con);
         return 0;
     }
+
 
 }

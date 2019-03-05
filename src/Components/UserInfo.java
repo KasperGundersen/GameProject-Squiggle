@@ -70,4 +70,8 @@ public class UserInfo {
     public static void setDrawing(boolean bool) {
         drawing = bool;
     }
+
+    public static void getUserName(int userId) {
+
+    }
 }
