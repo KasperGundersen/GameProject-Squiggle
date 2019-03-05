@@ -37,26 +37,20 @@ public class Authentication {
 
         if(username == null){
             SignUp.visibleEmptyUser(true);
-            System.out.println("u");
         } else if(username != null) {
             SignUp.visibleEmptyUser(false);
-            System.out.println("e");
         }
 
         if(mail == null) {
             SignUp.visibleEmptyMail(true);
-            System.out.println("d");
         } else if(mail != null){
             SignUp.visibleEmptyMail(false);
-            System.out.println("c");
         }
 
         if(password == null){
             SignUp.visibleEmptyPassword(true);
-            System.out.println("a");
         } else if(password != null){
             SignUp.visibleEmptyPassword(false);
-            System.out.println("b");
         }
 
         if((DBConnection.exists("userName", username))||(DBConnection.exists("userMail", mail))) {
