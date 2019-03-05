@@ -54,12 +54,12 @@ public class Livechat extends Scenes {
         Text chatText = new Text();
         grid.add(chatText,1,4,1,1);
 
-         submitButton.setOnAction(e -> {
-             String text = inputText.getText();
-             DBConnection.insertMessage(text);
-             showMessages(chatText, inputText);
-             inputText.clear();
-         });
+        submitButton.setOnAction(e -> {
+            String text = inputText.getText();
+            DBConnection.insertMessage(text);
+            showMessages(chatText, inputText);
+            inputText.clear();
+        });
      }
 
     private void showMessages(Text chatText, TextField inputText) {
@@ -79,5 +79,4 @@ public class Livechat extends Scenes {
         };
         timer.schedule(task, 0, 5000);
     }
-
 }

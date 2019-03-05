@@ -12,6 +12,7 @@ public class MainScene {
 
     private static Stage stage;
 
+    // Scenes
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
     public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
     public static Scenes sq = new Squiggle(WIDTH, HEIGHT);

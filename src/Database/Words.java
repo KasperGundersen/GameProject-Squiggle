@@ -24,6 +24,7 @@ public class Words {
                 }
             }
             readWordlist.close();
+            readConnection.close();
         } catch (FileNotFoundException e){
             e.printStackTrace();
         } catch (IOException e){
