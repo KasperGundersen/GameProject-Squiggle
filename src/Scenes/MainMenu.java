@@ -74,7 +74,6 @@ class MainMenu extends Scenes{
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> logOutSystem());
-
         quitButton.setOnAction(e -> {
             if (ConfirmBox.display("Do you want to quit?", "Sure you want to exit?")){
                 MainScene.closeStage();
@@ -88,6 +87,7 @@ class MainMenu extends Scenes{
 
     private void joinGameSystem(){
         Connection con = DBConnection.getCon();
+        DBConnection.enterGame(con);
         DBConnection.setDrawer(con);
         DBConnection.closeConnection(con);
         MainScene.setScene(MainScene.sq.getSc());

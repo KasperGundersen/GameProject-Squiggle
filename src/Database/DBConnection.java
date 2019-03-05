@@ -175,7 +175,7 @@ public class DBConnection {
     // Method that runs on "Join Game", sets drawing to 1, if no one else is ingame
     public static void setDrawer(Connection con) {
         try {
-            String query = "SELECT userID FROM GAME WHERE drawing=1";
+            String query = "SELECT * FROM GAME WHERE drawing=1";
             PreparedStatement prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()) {
@@ -184,13 +184,28 @@ public class DBConnection {
                 String query2 = "UPDATE GAME SET drawing=1 WHERE userID=?";
                 prepStmt = con.prepareStatement(query2);
                 prepStmt.setInt(1, UserInfo.getUserID());
-                prepStmt.executeQuery();
+                prepStmt.executeUpdate();
                 UserInfo.setDrawing(true);
             }
         } catch(SQLException e ) {
             e.printStackTrace();
         }
     }
+
+    public static void enterGame(Connection con) {
+        try {
+            String query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
+            PreparedStatement prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            prepStmt.setInt(2, 0);
+            prepStmt.setInt(3, 0);
+            prepStmt.setInt(4, 0);
+            prepStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static void insertIntoDB(Connection con, String words) {
         try {
@@ -202,5 +217,4 @@ public class DBConnection {
             e.printStackTrace();
         }
     }
-
 }
