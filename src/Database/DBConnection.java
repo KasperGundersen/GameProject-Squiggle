@@ -289,11 +289,11 @@ public class DBConnection {
                     messages.add(UserInfo.getUserName() + ": " + res.getString("input"));
                 }
             }
-            closeConnection(con);
             return messages;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        closeConnection(con);
         return null;
     }
 

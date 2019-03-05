@@ -76,7 +76,7 @@ public class Livechat extends Scenes {
                 //inputText.clear();
             }
         };
-        timer.schedule(task, 0, 5000);
+        timer.schedule(task, 0, 1000);
     }
 
 }
