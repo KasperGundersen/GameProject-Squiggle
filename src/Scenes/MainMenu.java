@@ -5,7 +5,6 @@ import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -15,23 +14,14 @@ import javafx.scene.text.FontWeight;
 import java.sql.Connection;
 
 
-public class MainMenu extends Scenes{
-    private GridPane gp;
-    private Scene sc;
-
-    public MainMenu(double width, double height) {
+class MainMenu extends Scenes{
+    MainMenu(double width, double height) {
         super(width, height);
-        addUIControls(super.getGp());
+        addUIControls(getGp());
     }
-
-    public Scene getScene() {
-        return sc;
-    }
-
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
-
         // Add Header
         Label headerLabel = new Label("Main Menu");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -82,23 +72,11 @@ public class MainMenu extends Scenes{
 
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
-        joinGameButton.setOnAction(e ->{
-            Connection con = DBConnection.getCon();
-            DBConnection.setDrawer(con);
-            DBConnection.closeConnection(con);
-            MainScene.setScene(MainScene.sq.getSc());
-        });
-        logOutButton.setOnAction(e -> {
-            MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.li.getSc());
-            Connection con = DBConnection.getCon();
-            DBConnection.setLoggedIn(con, UserInfo.getUserName(), 0);
-            DBConnection.closeConnection(con);
+        joinGameButton.setOnAction(e -> joinGameSystem());
+        logOutButton.setOnAction(e -> logOutSystem());
 
-        });
         quitButton.setOnAction(e -> {
-            Boolean quit = ConfirmBox.display("Do you want to quit?", "Sure you want to exit?");
-            if(quit){
+            if (ConfirmBox.display("Do you want to quit?", "Sure you want to exit?")){
                 MainScene.closeStage();
             }
         });
@@ -106,6 +84,21 @@ public class MainMenu extends Scenes{
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp.getSc());
         });
+    }
+
+    private void joinGameSystem(){
+        Connection con = DBConnection.getCon();
+        DBConnection.setDrawer(con);
+        DBConnection.closeConnection(con);
+        MainScene.setScene(MainScene.sq.getSc());
+    }
+
+    private void logOutSystem(){
+        MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
+        MainScene.setScene(MainScene.li.getSc());
+        Connection con = DBConnection.getCon();
+        DBConnection.setLoggedIn(con, UserInfo.getUserName(), 0);
+        DBConnection.closeConnection(con);
     }
 }
 

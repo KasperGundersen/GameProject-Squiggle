@@ -5,48 +5,42 @@ import Components.UserInfo;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
-
 public class MainScene {
 
     private static final double HEIGHT = 600;
     private static final double WIDTH = 1000;
 
-    public static Stage window;
+    private static Stage stage;
 
-    public static Scenes li = new LogIn(WIDTH, HEIGHT);
-    public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
-    public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
-    public static Scenes su = new SignUp(WIDTH, HEIGHT);
-    public static Scenes mp = new MyPage(WIDTH, HEIGHT);
-
-    public static Toast toast = new Toast(window, WIDTH, HEIGHT);
+    static Scenes li = new LogIn(WIDTH, HEIGHT);
+    static Scenes mm = new MainMenu(WIDTH, HEIGHT);
+    static Scenes sq = new Squiggle(WIDTH, HEIGHT);
+    static Scenes su = new SignUp(WIDTH, HEIGHT);
+    static Scenes mp = new MyPage(WIDTH, HEIGHT);
     // User
     public static UserInfo user = new UserInfo();
+    public static Toast toast = new Toast(stage, WIDTH, HEIGHT);
 
     public static void setScene(Scene sc) {
-        window.setScene(sc);
+        stage.setScene(sc);
     }
 
     public void initialize(Stage stage) {
-        window = stage;
-        window.setTitle("Squiggle");
-        window.setOnCloseRequest(e -> {
+        MainScene.stage = stage;
+        MainScene.stage.setTitle("Squiggle");
+        MainScene.stage.setOnCloseRequest(e -> {
             e.consume();
             closeProgram();
         });
         setScene(li.getSc());
-        window.show();
+        MainScene.stage.show();
     }
-
     private void closeProgram(){
-        Boolean answer = ConfirmBox.display("Warning!", "Sure you want to exit?");
-        if(answer){
-            window.close();
+        if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
+            stage.close();
         }
     }
-
-    public static void closeStage() {
-        window.close();
+    static void closeStage() {
+        stage.close();
     }
 }

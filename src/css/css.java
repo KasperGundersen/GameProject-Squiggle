@@ -12,4 +12,8 @@ public class css {
     public static String toolTip(){
         return "-fx-background-color: cornflowerblue;";
     }
+
+    public static String confirmButton(){
+        return "-fx-font-size: 15pt;";
+    }
 }

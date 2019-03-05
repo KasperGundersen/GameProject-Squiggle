@@ -12,6 +12,8 @@ import javafx.scene.text.FontWeight;
 
 import java.sql.Connection;
 
+import static css.css.toolTip;
+
 public class LogIn extends Scenes {
 
     // Fields
@@ -21,28 +23,28 @@ public class LogIn extends Scenes {
     // Error message
     private static Label loginError;
 
-    public LogIn(double WIDTH, double HEIGHT) {
+    LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
-        addUIControls(super.getGp());
+        addUIControls(getGp());
     }
 
     public static String getUserName(){
-        if(nameField.getText().equals(null)){
-            throw new IllegalArgumentException("eow");
+        if(nameField.getText() == null){
+            return null;
         }
         return nameField.getText();
     }
 
     public static String getPassword(){
-        if(passwordField.getText().equals(null)){
-            throw new IllegalArgumentException("hilf");
+        if(passwordField.getText() == null){
+            return null;
         }
         return passwordField.getText();
     }
 
     private void addUIControls(GridPane gridPane) {
-
         double prefHeight = 40;
+
         // Add Header
         Label headerLabel = new Label("Login");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -87,7 +89,6 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(300);
         gridPane.add(regButton, 0, 5, 2, 1);
@@ -102,12 +103,12 @@ public class LogIn extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipName.setStyle(toolTip());
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
-        tooltipPassword.setStyle("-fx-background-color: cornflowerblue;");
+        tooltipPassword.setStyle(toolTip());
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());
@@ -118,7 +119,7 @@ public class LogIn extends Scenes {
         });
     }
 
-    protected static void loginSystem(){
+    private static void loginSystem(){
         Authentication.logIn();
         UserInfo.setUserName(getUserName());
         Connection con = DBConnection.getCon();

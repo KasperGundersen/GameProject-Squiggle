@@ -1,6 +1,7 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Toast;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
@@ -29,11 +30,11 @@ public class SignUp extends Scenes {
     private static int avatarID = 1;
 
     //////////////////////////////////////////////////////////////////////////////
-    //constructur from super
-    public SignUp(double WIDTH, double HEIGHT) {
+    //constructor from super
+    SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
-        //Legg inn metoden som legger til ui
-        addUIControls(super.getGp());
+        //UI method adds nodes to the pane
+        addUIControls(getGp());
     }
 
     // Adding UI to Grid
@@ -178,10 +179,10 @@ public class SignUp extends Scenes {
         emailField.setTooltip(tooltipEmail);
         tooltipEmail.setStyle(toolTip());
 
-        final Tooltip tooltipPasword = new Tooltip();
-        tooltipPasword.setText("Write your password");
-        passwordField.setTooltip(tooltipPasword);
-        tooltipPasword.setStyle(toolTip());
+        final Tooltip tooltipPassword = new Tooltip();
+        tooltipPassword.setText("Write your password");
+        passwordField.setTooltip(tooltipPassword);
+        tooltipPassword.setStyle(toolTip());
 
         final Tooltip tooltipRePassword = new Tooltip();
         tooltipRePassword.setText("Write your password one more time");
@@ -198,13 +199,11 @@ public class SignUp extends Scenes {
             if(Authentication.submit()){
                 MainScene.setScene(MainScene.li.getSc());
                 String toastMsg = "Registration successful";
-                MainScene.toast.makeText(toastMsg,1000, 500, 500);
+                Toast.makeText(toastMsg,1000, 500, 500);
             }
         });
 
-        optionButton.setOnAction(e -> {
-            new Options(super.getWIDTH(), super.getHEIGHT());
-        });
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
 
         rightButton.setOnAction(e -> {
             avatarID = super.loopAvatar(avatarID,1, 1,4);
@@ -217,8 +216,6 @@ public class SignUp extends Scenes {
         });
 
     }
-
-
     ///////////////////Dead-Methods////////////////////////////////////////
     public static void visibleUserMail(boolean b){
         errorUserAndMail.setVisible(b);
@@ -237,7 +234,6 @@ public class SignUp extends Scenes {
     }
 
     //////////////////Getters///////////////////////////////////////////////
-    //gettere
     public static String getName(){
         if(nameField.getText().isEmpty()){
             return null;
@@ -260,5 +256,4 @@ public class SignUp extends Scenes {
     public static int getAvatarID() {
         return avatarID;
     }
-
 }
