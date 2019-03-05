@@ -19,6 +19,7 @@ public class Authentication {
         String username = SignUp.getName();
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
+        int avatarID = SignUp.getAvatarID();
         String hash;
         String salt;
 
@@ -61,7 +62,7 @@ public class Authentication {
         if((DBConnection.exists(con,"userName", username))||(DBConnection.exists(con,"userMail", mail))) {
             SignUp.visibleUserMail(true);
         }else if((username != null) && (mail != null) && (hash != null) && (salt != null)) {
-            DBConnection.registerUser(con, username, hash, salt, mail, 0);
+            DBConnection.registerUser(con, username, hash, salt, mail, avatarID);
             MainScene.setScene(MainScene.li.getSc());
         }else{
             SignUp.visibleUserMail(false);

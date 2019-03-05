@@ -35,10 +35,12 @@ public class SignUp extends Scenes {
     private Button submitButton;
     private Button optionButton;
     private Button backButton;
-    private Button buttonLeft;
-    private Button buttonRight;
+    private Button leftButton;
+    private Button rightButton;
 
-    private int index = 0;
+    private ImageView avatarView;
+
+    private static int avatarID = 1;
 
     public static void visibleUserMail(boolean b){
         errorUsernMail.setVisible(b);
@@ -85,6 +87,10 @@ public class SignUp extends Scenes {
         }else {
             return null;
         }
+    }
+
+    public static int getAvatarID() {
+        return avatarID;
     }
 
     // Adding UI to Grid
@@ -137,12 +143,38 @@ public class SignUp extends Scenes {
         emptyMail.setVisible(false);
         errorFont(emptyMail);
 
+        //////////////////////////////////////////
+
+        // Add Name Label
+        Label avatarLabel = new Label("Avatar : ");
+        gridPane.add(avatarLabel, 0,3);
+
+        avatarView = new ImageView(getAvatar(avatarID));
+        avatarView.setFitWidth(150);
+        avatarView.setFitHeight(150);
+        gridPane.add(avatarView, 1, 3, 1, 1);
+        GridPane.setHalignment(avatarView, HPos.CENTER);
+
+        leftButton = new Button("<");
+        gridPane.add(leftButton, 1,3);
+        GridPane.setHalignment(leftButton, HPos.CENTER);
+        GridPane.setMargin(leftButton, new Insets(0,120,0,0));
+
+        rightButton = new Button(">");
+        gridPane.add(rightButton, 1,3);
+        GridPane.setHalignment(rightButton, HPos.CENTER);
+        GridPane.setMargin(rightButton, new Insets(0,0,0,120));
+
+        styleButton(leftButton);
+        styleButton(rightButton);
+
+        ///////////////////////////////////////
 
 
         //Add error Label
         errorPassword = new Label("Password don't match");
-        gridPane.add(errorPassword,1,3,2,2);
-        GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
+        gridPane.add(errorPassword,1,3,2,1);
+        GridPane.setValignment(errorPassword, VPos.BOTTOM);
         errorPassword.setVisible(false);
         super.errorFont(errorPassword);
 
@@ -221,17 +253,33 @@ public class SignUp extends Scenes {
         });
         submitButton.setOnAction(e -> Authentication.submit());
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+        rightButton.setOnAction(e -> loopAvatar(1, 4, 1));
+        leftButton.setOnAction(e -> loopAvatar(1,4,-1));
 
     }
 
-    private Image[] getAllAvatars(){
-        Image[] images = new Image[4];
-        File file;
-        for(int i = 1; i < 5; i++){
-            file = new File("..\\..\\resources\\avatars\\" + i + ".jpg");
-            Image image = new Image(file.toURI().toString());
-            images[i-1] = image;
+    private Image getAvatar(int i){
+        File file = new File("resources\\avatars\\" + i + ".jpg");
+        return new Image(file.toURI().toString());
+    }
+
+    private void loopAvatar(int min, int max, int add){
+        avatarID += add;
+        if(avatarID < min){
+            avatarID = max;
+        }else if(avatarID > max){
+            avatarID = min;
         }
-        return images;
+        avatarView.setImage(getAvatar(avatarID));
+    }
+
+    private void styleButton(Button b){
+        b.setPrefHeight(35);
+        b.setPrefWidth(25);
+        b.setStyle("-fx-background-color: rgba(255, 255, 255 ,0); " +
+                "-fx-font-weight: bold ; " +
+                "-fx-font-size: 2em; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-family: ariel;");
     }
 }
