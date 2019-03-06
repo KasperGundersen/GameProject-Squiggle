@@ -84,7 +84,20 @@ public class JUnit_test {
         int test = DBConnection.getUserID(userName);
         int expResult = 1;
         assertEquals(expResult, test);
-
     }
 
+    @Test
+    public void getUserNameTest() throws Exception {
+        int userId = 1;
+        String test = DBConnection.getUsername(userId);
+        String expResult = "admin";
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void getAmtPlayersTest() throws Exception {
+        int test = DBConnection.getAmtPlayer();
+        int expResult = 0;
+        assertEquals(expResult, test);
+    }
 }
