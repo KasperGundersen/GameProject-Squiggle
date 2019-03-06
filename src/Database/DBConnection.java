@@ -49,7 +49,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -87,7 +87,7 @@ public class DBConnection {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -160,22 +160,6 @@ public class DBConnection {
         }
     }
 
-    public static void closeConnection(Connection con, Statement stmt) {
-        try {
-            if (stmt != null) {
-                stmt.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     // Sets avatarID in the database, making the user have same avatarID on next LogIn
     public static void setAvatarID(int userID, int index) {
@@ -190,7 +174,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -278,7 +262,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -293,7 +277,7 @@ public class DBConnection {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -321,7 +305,7 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -338,7 +322,7 @@ public class DBConnection {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
@@ -447,7 +431,7 @@ public class DBConnection {
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt);
+            closeConnection(con, prepStmt, null);
         }
     }
 
