@@ -1,6 +1,8 @@
 package Scenes;
 
+import Components.UserInfo;
 import Scenes.Scenes;
+import com.mysql.cj.log.Log;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -66,7 +68,12 @@ public class Options extends Scenes {
            //Background background = new Background(backgroundFill);
 
            int fontSizeChoosen = fontSizeFactory.getValue();
-           fontChange(fontSizeChoosen);
+           UserInfo.setFontSize(fontSizeChoosen);
+           LogIn.fontChange(fontSizeChoosen, LogIn.getNodes());
+           MainMenu.fontChange(fontSizeChoosen, MainMenu.getNodes());
+           SignUp.fontChange(fontSizeChoosen, SignUp.getNodes());
+
+
 
           //window.close();
 

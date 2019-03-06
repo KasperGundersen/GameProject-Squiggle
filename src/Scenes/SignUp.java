@@ -2,9 +2,11 @@ package Scenes;
 
 import Components.Authentication;
 import Components.Toast;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -27,6 +29,8 @@ public class SignUp extends Scenes {
     private static Label emptyMail;
     private static Label emptyPassword;
 
+    private static GridPane gridPane;
+
     private static int avatarID = 1;
 
     //////////////////////////////////////////////////////////////////////////////
@@ -39,6 +43,7 @@ public class SignUp extends Scenes {
 
     // Adding UI to Grid
     private void addUIControls(GridPane gridPane) {
+        this.gridPane = gridPane;
         double prefHeight = 40;
         // Add Header
         Label headerLabel = new Label("Sign Up");
@@ -214,7 +219,6 @@ public class SignUp extends Scenes {
             avatarID = super.loopAvatar(avatarID, -1,1,4);
             avatarView.setImage(super.getAvatar(avatarID));
         });
-
     }
     ///////////////////Dead-Methods////////////////////////////////////////
     public static void visibleUserMail(boolean b){
@@ -255,5 +259,9 @@ public class SignUp extends Scenes {
     }
     public static int getAvatarID() {
         return avatarID;
+    }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
     }
 }

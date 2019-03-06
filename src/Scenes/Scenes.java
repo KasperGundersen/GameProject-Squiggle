@@ -84,18 +84,13 @@ public abstract class Scenes {
         ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
+
+
         return gridPane;
     }
 
-    public static ObservableList<Node> getNodes() {
-        ObservableList<Node> nodes = children;
-        return nodes;
-    }
-
-    public static void fontChange(int size){
-        ObservableList<Node> childrenOfScene = children;
-
-        for (Node child : childrenOfScene) {
+    public static void fontChange(int size, ObservableList<Node> nodes) {
+        for (Node child : nodes) {
             if (child instanceof Button) {
                 Button b = (Button) child;
                 b.setFont(Font.font("Courier", size));
