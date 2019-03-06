@@ -2,7 +2,6 @@
 package Database;
 
 import Components.UserInfo;
-import Scenes.Squiggle;
 
 import java.sql.*;
 import java.util.ArrayList;
