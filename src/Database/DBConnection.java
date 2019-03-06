@@ -453,4 +453,24 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
     }
+
+
+    public static int getAmtCorrect(){
+        Connection con = getCon();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            String query = "SELECT SUM(correctGuess) FROM GAME;";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("SUM(correctGuess)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return 0;
+    }
 }
