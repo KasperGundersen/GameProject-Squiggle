@@ -24,7 +24,7 @@ public class UserInfo {
         this.soundOn = true;
         this.avatarID = 0;
         this.drawing = false;
-        this.fontSize = 16;
+        //this.fontSize = 16;
     }
 
     // getters
@@ -44,13 +44,6 @@ public class UserInfo {
         return drawing;
     }
 
-    public static int getFontSize() {
-        return fontSize;
-    }
-
-    public static void setFontSize(int fontSize) {
-        UserInfo.fontSize = fontSize;
-    }
 
     // Method that runs on login, updates UserInfo.userID variable and fetches avatarID from given user
     public static void initializeUser(int userId) {
