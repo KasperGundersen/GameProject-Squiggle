@@ -96,6 +96,8 @@ class MainMenu extends Scenes{
             MainScene.lc = new Livechat(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.lc.getSc());
         });
+
+        setChildren(gridPane.getChildren());
     }
 
     private void joinGameSystem(){

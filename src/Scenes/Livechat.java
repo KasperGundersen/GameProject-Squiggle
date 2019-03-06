@@ -60,7 +60,8 @@ public class Livechat extends Scenes {
             showMessages(chatText, inputText);
             inputText.clear();
         });
-     }
+        setChildren(grid.getChildren());
+    }
 
     private void showMessages(Text chatText, TextField inputText) {
         timer = new Timer();

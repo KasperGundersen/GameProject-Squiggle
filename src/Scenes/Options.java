@@ -61,18 +61,14 @@ public class Options extends Scenes {
 
        submitButton.setOnAction(e -> {
            Paint fill = cp.getValue();
-           BackgroundFill backgroundFill = new BackgroundFill(fill, CornerRadii.EMPTY, Insets.EMPTY);
-           Background background = new Background(backgroundFill);
-
-           /*MainScene.mm.getGp().setBackground(background);
-           MainScene.su.getGp().setBackground(background);
-           MainScene.li.getGp().setBackground(background);
-           */
+           String colour = Integer.toHexString(cp.getValue().hashCode());
+           //BackgroundFill backgroundFill = new BackgroundFill(fill, CornerRadii.EMPTY, Insets.EMPTY);
+           //Background background = new Background(backgroundFill);
 
            int fontSizeChoosen = fontSizeFactory.getValue();
+           fontChange(fontSizeChoosen);
 
-
-//           //window.close();
+          //window.close();
 
         });
 

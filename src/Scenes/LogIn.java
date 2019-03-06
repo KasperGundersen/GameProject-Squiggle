@@ -3,8 +3,10 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -22,6 +24,9 @@ public class LogIn extends Scenes {
 
     // Error message
     private static Label loginError;
+
+    private static ObservableList<Node> children;
+
 
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -117,6 +122,7 @@ public class LogIn extends Scenes {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
+        setChildren(gridPane.getChildren());
     }
 
     private static void loginSystem(){
@@ -132,4 +138,7 @@ public class LogIn extends Scenes {
     public static void setTextLoginError(String newText) {
         loginError.setText(newText);
     }
+
+
+
 }

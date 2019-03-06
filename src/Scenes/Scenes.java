@@ -25,6 +25,7 @@ public abstract class Scenes {
     //Object variables
     private static GridPane gp;
     private Scene sc;
+    private static ObservableList<Node> children;
 
     // Dimensions
     private final double WIDTH;
@@ -49,6 +50,10 @@ public abstract class Scenes {
 
     public void setSc(Scene sc) {
         this.sc = sc;
+    }
+
+    public void setChildren(ObservableList<Node> newValue) {
+        this.children = newValue;
     }
 
     double getHEIGHT() {
@@ -82,14 +87,14 @@ public abstract class Scenes {
         return gridPane;
     }
 
+    public static ObservableList<Node> getNodes() {
+        ObservableList<Node> nodes = children;
+        return nodes;
+    }
 
-    public static void fontChange(int size, GridPane grid){
-        ObservableList<Node> childrenOfScene = grid.getChildren();
-        //System.out.println(childrenOfScene);
-        //System.out.println(getGp().getChildren());
+    public static void fontChange(int size){
+        ObservableList<Node> childrenOfScene = children;
 
-
-/*
         for (Node child : childrenOfScene) {
             if (child instanceof Button) {
                 Button b = (Button) child;
@@ -100,7 +105,7 @@ public abstract class Scenes {
                 l.setFont(Font.font("Courier", size));
             }
         }
-*/
+
     }
 
     void errorFont(Label l){
@@ -132,4 +137,6 @@ public abstract class Scenes {
         File file = new File("resources/avatars/" + i + ".jpg");
         return new Image(file.toURI().toString());
     }
+
+
 }

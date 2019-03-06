@@ -15,6 +15,7 @@ public class UserInfo {
     private static boolean soundOn;
     private static int avatarID;
     private static boolean drawing;
+    private static int fontSize;
 
     public UserInfo() {
         this.userName = null;
@@ -23,6 +24,7 @@ public class UserInfo {
         this.soundOn = true;
         this.avatarID = 0;
         this.drawing = false;
+        //this.fontSize = 16;
     }
 
     // getters
@@ -60,6 +62,8 @@ public class UserInfo {
     public static void setAvatarID(int newID) {
         avatarID = newID;
     }
+
+
 
 
 }
