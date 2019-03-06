@@ -24,7 +24,7 @@ public class UserInfo {
         this.soundOn = true;
         this.avatarID = 0;
         this.drawing = false;
-        //this.fontSize = 16;
+        this.fontSize = 16;
     }
 
     // getters
@@ -63,7 +63,11 @@ public class UserInfo {
         avatarID = newID;
     }
 
+    public static void setFontSize(int fontSize) {
+        UserInfo.fontSize = fontSize;
+    }
 
-
-
+    public static int getFontSize() {
+        return fontSize;
+    }
 }

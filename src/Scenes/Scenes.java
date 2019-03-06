@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.UserInfo;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -8,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -15,6 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -87,15 +90,14 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    public static ObservableList<Node> getNodes() {
-        ObservableList<Node> nodes = children;
-        return nodes;
-    }
+    public static void fontChange(int size, ObservableList<Node> children){
+        if(size == 0) {
+            size = 15; //default font size
+        } else {
+            size = UserInfo.getFontSize();
+        }
 
-    public static void fontChange(int size){
-        ObservableList<Node> childrenOfScene = children;
-
-        for (Node child : childrenOfScene) {
+        for (Node child : children) {
             if (child instanceof Button) {
                 Button b = (Button) child;
                 b.setFont(Font.font("Courier", size));
@@ -103,6 +105,10 @@ public abstract class Scenes {
             if (child instanceof Label) {
                 Label l = (Label) child;
                 l.setFont(Font.font("Courier", size));
+            }
+            if (child instanceof Text) {
+                Text t = (Text) child;
+                t.setFont(Font.font("Courier", size));
             }
         }
 

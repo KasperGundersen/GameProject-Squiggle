@@ -1,6 +1,8 @@
 package Scenes;
 
+import Components.UserInfo;
 import Scenes.Scenes;
+import com.sun.tools.javac.Main;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -46,7 +48,12 @@ public class Options extends Scenes {
        Label fontSizeLabel = new Label("Font size");
        grid.add(fontSizeLabel, 0,2);
        Spinner fontSizeSpinner = new Spinner();
-       SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,15);
+       int fontSize = UserInfo.getFontSize();
+       if (fontSize == 0) {
+           fontSize = 16; //Default value
+       }
+
+       SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,fontSize);
        fontSizeSpinner.setValueFactory(fontSizeFactory);
        grid.add(fontSizeSpinner,1,2);
 
@@ -60,15 +67,15 @@ public class Options extends Scenes {
        submitButton.setPrefWidth(100);
 
        submitButton.setOnAction(e -> {
-           Paint fill = cp.getValue();
-           String colour = Integer.toHexString(cp.getValue().hashCode());
-           //BackgroundFill backgroundFill = new BackgroundFill(fill, CornerRadii.EMPTY, Insets.EMPTY);
-           //Background background = new Background(backgroundFill);
 
            int fontSizeChoosen = fontSizeFactory.getValue();
-           fontChange(fontSizeChoosen);
+           UserInfo.setFontSize(fontSizeChoosen);
 
-          //window.close();
+           LogIn.fontChange(UserInfo.getFontSize(), LogIn.getNodes());
+           MainMenu.fontChange(UserInfo.getFontSize(), MainMenu.getNodes());
+           SignUp.fontChange(UserInfo.getFontSize(), SignUp.getNodes());
+
+            window.close();
 
         });
 
@@ -83,8 +90,4 @@ public class Options extends Scenes {
         window.show();
     }
 
-    private static void changeBackground(GridPane grid, Color colour) {
-       // String colourChosen = Color.valueOf(colour);
-        grid.setStyle("-fx-background-color: " + colour);
-    }
 }

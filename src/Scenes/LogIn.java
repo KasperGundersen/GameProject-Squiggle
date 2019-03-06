@@ -25,7 +25,9 @@ public class LogIn extends Scenes {
     // Error message
     private static Label loginError;
 
-    private static ObservableList<Node> children;
+    //Change by Max:
+    private static GridPane gridPane;
+
 
 
     LogIn(double WIDTH, double HEIGHT) {
@@ -49,6 +51,8 @@ public class LogIn extends Scenes {
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
+        //Changes by Max:
+        this.gridPane = gridPane;
 
         // Add Header
         Label headerLabel = new Label("Login");
@@ -122,7 +126,8 @@ public class LogIn extends Scenes {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
-        setChildren(gridPane.getChildren());
+
+        fontChange(UserInfo.getFontSize(), getNodes());
     }
 
     private static void loginSystem(){
@@ -139,6 +144,7 @@ public class LogIn extends Scenes {
         loginError.setText(newText);
     }
 
-
-
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
+    }
 }

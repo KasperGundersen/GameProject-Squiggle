@@ -3,9 +3,11 @@ package Scenes;
 import Components.UserInfo;
 import Database.DBConnection;
 import com.sun.tools.javac.Main;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -16,12 +18,15 @@ import java.sql.Connection;
 
 
 class MainMenu extends Scenes{
+    private static GridPane gridPane;
+
     MainMenu(double width, double height) {
         super(width, height);
         addUIControls(getGp());
     }
 
     private void addUIControls(GridPane gridPane) {
+        this.gridPane = gridPane;
         double prefHeight = 40;
         // Add Header
         Label headerLabel = new Label("Main Menu");
@@ -97,7 +102,8 @@ class MainMenu extends Scenes{
             MainScene.setScene(MainScene.lc.getSc());
         });
 
-        setChildren(gridPane.getChildren());
+        //Need to update font everytime
+        fontChange(UserInfo.getFontSize(), getNodes());
     }
 
     private void joinGameSystem(){
@@ -111,5 +117,11 @@ class MainMenu extends Scenes{
         MainScene.setScene(MainScene.li.getSc());
         DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
     }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
+    }
+
+
 }
 
