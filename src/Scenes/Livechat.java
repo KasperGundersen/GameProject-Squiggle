@@ -23,7 +23,7 @@ import java.util.TimerTask;
 public class Livechat extends Scenes {
     Timer timer;
     private static GridPane gridPane;
-
+    private static Button backButton;
 
     public Livechat(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -61,6 +61,18 @@ public class Livechat extends Scenes {
             inputText.clear();
         });
         fontChange(UserInfo.getFontSize(), getNodes());
+
+         // Go back button
+         backButton = new Button("Go Back");
+         gridPane.add(backButton, 0, 7);
+         GridPane.setHalignment(backButton, HPos.LEFT);
+         GridPane.setValignment(backButton, VPos.BOTTOM);
+
+         ///////Button action//////////////////////////////
+         backButton.setOnAction(e -> {
+             MainScene.mm = new MainMenu(super.getWIDTH(), super.getHEIGHT());
+             MainScene.setScene(MainScene.mm.getSc());
+         });
     }
 
     private void showMessages(Text chatText, TextField inputText) {
