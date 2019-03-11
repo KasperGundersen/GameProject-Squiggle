@@ -140,17 +140,9 @@ public class DBConnection {
             if (res != null) {
                 res.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             if (stmt != null) {
                 stmt.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             if (con != null) {
                 con.close();
             }
