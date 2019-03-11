@@ -15,6 +15,7 @@ public class UserInfo {
     private static boolean soundOn;
     private static int avatarID;
     private static boolean drawing;
+    private static String userEmail;
 
     public UserInfo() {
         this.userName = null;
@@ -23,6 +24,7 @@ public class UserInfo {
         this.soundOn = true;
         this.avatarID = 0;
         this.drawing = false;
+        this.userEmail = null;
     }
 
     // getters
@@ -42,11 +44,15 @@ public class UserInfo {
         return drawing;
     }
 
+    public static String getUserEmail() {
+        return userEmail;
+    }
 
     // Method that runs on login, updates UserInfo.userID variable and fetches avatarID from given user
     public static void initializeUser(int userId) {
         userID = userId;
         DBConnection.updateAvatarID(userId);
+        userEmail = DBConnection.getUserEmail(userId);
     }
 
     public static void setUserName(String newName) {

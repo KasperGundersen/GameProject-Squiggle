@@ -372,6 +372,28 @@ public class DBConnection {
         return null;
     }
 
+    public static String getUserEmail(int userId) {
+        Connection con = getCon();
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            String query = "SELECT userMail FROM USERS WHERE userID=?";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, userId);
+            res = prepStmt.executeQuery();
+            String output = "";
+            if (res.next()) {
+                output = res.getString("userMail");
+            }
+            return output;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
+    }
+
 
 
 

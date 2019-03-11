@@ -206,12 +206,12 @@ public class SignUp extends Scenes {
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
 
         rightButton.setOnAction(e -> {
-            avatarID = super.loopAvatar(avatarID,1, 1,4);
+            avatarID = super.loopAvatar(avatarID,1, 1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
 
         leftButton.setOnAction(e -> {
-            avatarID = super.loopAvatar(avatarID, -1,1,4);
+            avatarID = super.loopAvatar(avatarID, -1,1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
 

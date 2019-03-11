@@ -26,6 +26,8 @@ public abstract class Scenes {
     private static GridPane gp;
     private Scene sc;
 
+    private final int max = new File("resources/avatars/").listFiles().length - 1;
+
     // Dimensions
     private final double WIDTH;
     private final double HEIGHT;
@@ -57,6 +59,10 @@ public abstract class Scenes {
 
     double getWIDTH() {
         return WIDTH;
+    }
+
+    public int getMax() {
+        return max;
     }
 
     //Standard GridPane formation
