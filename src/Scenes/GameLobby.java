@@ -1,0 +1,23 @@
+package Scenes;
+
+import Components.CanvasComponents;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+
+public class GameLobby extends Scenes{
+
+    private BorderPane bp;
+
+
+    public GameLobby(double WIDTH, double HEIGHT) {
+        super(WIDTH, HEIGHT);
+        bp = new BorderPane();
+        setSc(new Scene(bp, WIDTH, HEIGHT));
+        addUIControls(bp);
+    }
+
+    private void addUIControls(BorderPane borderPane){
+        borderPane.setBottom(CanvasComponents.addDrawingUI());
+    }
+
+}

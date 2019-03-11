@@ -3,6 +3,7 @@ package Scenes;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 public class MainScene {
@@ -18,6 +19,7 @@ public class MainScene {
     public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
     public static Scenes mp = new MyPage(WIDTH, HEIGHT);
+    public static Scenes gl = new GameLobby(WIDTH, HEIGHT);
     public static Scenes lc = null;
 
 
@@ -37,7 +39,7 @@ public class MainScene {
             e.consume();
             closeProgram();
         });
-        setScene(li.getSc());
+        setScene(gl.getSc());
         MainScene.stage.show();
     }
     private void closeProgram(){
