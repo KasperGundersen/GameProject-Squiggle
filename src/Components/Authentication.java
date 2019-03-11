@@ -15,7 +15,6 @@ public class Authentication {
 
 
     public static boolean submit(){
-        Connection con = DBConnection.getCon();
         String username = SignUp.getName();
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
