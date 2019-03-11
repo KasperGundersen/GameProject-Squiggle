@@ -39,11 +39,19 @@ class MainMenu extends Scenes{
         GridPane.setHalignment(joinGameButton, HPos.CENTER);
         GridPane.setValignment(joinGameButton, VPos.CENTER);
 
+        // My Page button
+        Button myPageButton = new Button("My page");
+        myPageButton.setPrefHeight(prefHeight);
+        myPageButton.setPrefWidth(100);
+        gridPane.add(myPageButton, 0, 2, 2, 1);
+        GridPane.setHalignment(myPageButton, HPos.CENTER);
+        GridPane.setValignment(myPageButton, VPos.CENTER);
+
         // Options button
         Button optionButton = new Button("Options");
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(100);
-        gridPane.add(optionButton, 0,2, 2, 1);
+        gridPane.add(optionButton, 0,3, 2, 1);
         GridPane.setHalignment(optionButton, HPos.CENTER);
         GridPane.setValignment(optionButton, VPos.CENTER);
 
@@ -51,7 +59,7 @@ class MainMenu extends Scenes{
         Button logOutButton = new Button("Log Out");
         logOutButton.setPrefHeight(prefHeight);
         logOutButton.setPrefWidth(100);
-        gridPane.add(logOutButton, 0,3, 2, 1);
+        gridPane.add(logOutButton, 0,4, 2, 1);
         GridPane.setHalignment(logOutButton, HPos.CENTER);
         GridPane.setValignment(logOutButton, VPos.CENTER);
 
@@ -63,19 +71,11 @@ class MainMenu extends Scenes{
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
-        // My Page button
-        Button myPageButton = new Button("My page");
-        myPageButton.setPrefHeight(prefHeight);
-        myPageButton.setPrefWidth(100);
-        gridPane.add(myPageButton, 0, 4, 2, 1);
-        GridPane.setHalignment(myPageButton, HPos.CENTER);
-        GridPane.setValignment(myPageButton, VPos.CENTER);
-
-        // My Page button
+        // Livechat button
         Button livechatButton = new Button("Live chat");
         livechatButton.setPrefHeight(prefHeight);
         livechatButton.setPrefWidth(100);
-        gridPane.add(livechatButton, 0, 5, 2, 1);
+        gridPane.add(livechatButton, 0, 6, 2, 1);
         GridPane.setHalignment(livechatButton, HPos.CENTER);
         GridPane.setValignment(livechatButton, VPos.CENTER);
 
