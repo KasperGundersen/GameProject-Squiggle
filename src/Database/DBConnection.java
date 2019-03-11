@@ -15,24 +15,6 @@ public class DBConnection {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
 
-    // Standard JDBC components
-    // private static Connection con;
-
-    // Use this whenever you want to connect to the database
-    /*
-    public static Connection getCon() {
-        try{
-            Class.forName(driver);
-            con = DriverManager.getConnection(dBUrl);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return con;
-    }
-    */
-
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
         Connection con = null;
