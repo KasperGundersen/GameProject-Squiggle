@@ -2,10 +2,12 @@ package Components;
 
 import Database.DBConnection;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.scene.paint.Color;
 
 public class UserInfo {
     // Information about user - gets updated once a user logs in
@@ -16,6 +18,7 @@ public class UserInfo {
     private static int avatarID;
     private static boolean drawing;
     private static int fontSize;
+    private static Color color;
 
     public UserInfo() {
         this.userName = null;
@@ -25,6 +28,7 @@ public class UserInfo {
         this.avatarID = 0;
         this.drawing = false;
         this.fontSize = 16;
+        this.color = new Color(1,1,1,1);
     }
 
     // getters
@@ -69,5 +73,13 @@ public class UserInfo {
 
     public static int getFontSize() {
         return fontSize;
+    }
+
+    public static Color getColor() {
+        return color;
+    }
+
+    public static void setColor(Color color) {
+        UserInfo.color = color;
     }
 }

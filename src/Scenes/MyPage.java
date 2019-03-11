@@ -31,6 +31,9 @@ public class MyPage extends Scenes{
     private static String fileLocation = "resources/avatars/";
     private static Button backButton;
 
+    //Change by max
+    private static GridPane gridPane;
+
 
     public MyPage(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
@@ -43,7 +46,7 @@ public class MyPage extends Scenes{
     }
 
     private void addUIControls(GridPane gridPane) throws Exception{
-
+        this.gridPane = gridPane;
         Label header = new Label("My Page");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 42));
         gridPane.add(header, 1, 0, 1, 1);
@@ -136,6 +139,8 @@ public class MyPage extends Scenes{
             Image chosenAvatar = chosenAvatar(index);
             avatarImage.setImage(chosenAvatar);
         });
+
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     // "fileLocation" is found at the top, and will reference the jpgs no matter the computer.
@@ -199,5 +204,9 @@ public class MyPage extends Scenes{
         Scene scene = new Scene(grid, 300, 300);
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    public static GridPane getGrid() {
+        return gridPane;
     }
 }

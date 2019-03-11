@@ -61,6 +61,7 @@ public class Livechat extends Scenes {
             inputText.clear();
         });
         fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(gridPane, UserInfo.getColor());
 
          // Go back button
          backButton = new Button("Go Back");

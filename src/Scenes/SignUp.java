@@ -223,7 +223,7 @@ public class SignUp extends Scenes {
         });
 
         fontChange(UserInfo.getFontSize(), getNodes());
-
+        changeBackground(getGrid(), UserInfo.getColor());
     }
     ///////////////////Dead-Methods////////////////////////////////////////
     public static void visibleUserMail(boolean b){
@@ -268,5 +268,10 @@ public class SignUp extends Scenes {
 
     public static ObservableList<Node> getNodes() {
         return gridPane.getChildren();
+    }
+
+    //Must make an own method to get the GridPane dedicated to each scene
+    public static GridPane getGrid() {
+        return gridPane;
     }
 }

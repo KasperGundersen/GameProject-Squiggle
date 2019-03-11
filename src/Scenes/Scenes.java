@@ -43,7 +43,7 @@ public abstract class Scenes {
     }
 
     //Getters
-    public static GridPane getGp() {
+    public GridPane getGp() {
         return gp;
     }
 
@@ -111,7 +111,15 @@ public abstract class Scenes {
                 t.setFont(Font.font("Courier", size));
             }
         }
+    }
 
+    public static void changeBackground(GridPane gridPane, Color color) {
+        if (color == null) {
+            color = new Color(1,1,1,1.0);
+        }
+        String print = color.toString();
+        String formatert = print.replace("0x", "");
+        gridPane.setStyle("-fx-background-color:#" + formatert + ";");
     }
 
     void errorFont(Label l){

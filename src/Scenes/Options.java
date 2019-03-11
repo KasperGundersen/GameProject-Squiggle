@@ -16,6 +16,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.net.UnknownServiceException;
+
 import static javafx.scene.control.SpinnerValueFactory.*;
 
 
@@ -32,7 +34,6 @@ public class Options extends Scenes {
 
        grid = new GridPane();
        grid.setAlignment(Pos.TOP_CENTER);
-       grid.setGridLinesVisible(true);
 
        Label optionsLabel = new Label("Options");
        optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
@@ -43,6 +44,7 @@ public class Options extends Scenes {
        grid.add(backgroundColourLabel, 0,1);
        ColorPicker cp = new ColorPicker();
        cp.setMinWidth(150);
+       cp.setValue(UserInfo.getColor());
        grid.add(cp,1,1);
 
        Label fontSizeLabel = new Label("Font size");
@@ -69,13 +71,23 @@ public class Options extends Scenes {
        submitButton.setOnAction(e -> {
 
            int fontSizeChoosen = fontSizeFactory.getValue();
+           Color colorChoosen = cp.getValue();
            UserInfo.setFontSize(fontSizeChoosen);
+           UserInfo.setColor(colorChoosen);
+
+           fontChange(UserInfo.getFontSize(), grid.getChildren());
 
            LogIn.fontChange(UserInfo.getFontSize(), LogIn.getNodes());
            MainMenu.fontChange(UserInfo.getFontSize(), MainMenu.getNodes());
            SignUp.fontChange(UserInfo.getFontSize(), SignUp.getNodes());
 
-            window.close();
+           System.out.println(cp.getValue());
+
+           LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
+           MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
+           SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
+
+           window.close();
 
         });
 
@@ -83,6 +95,8 @@ public class Options extends Scenes {
        GridPane.setHalignment(submitButton, HPos.CENTER);
        GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
+       fontChange(UserInfo.getFontSize(), grid.getChildren());
+       changeBackground(grid, UserInfo.getColor());
 
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);

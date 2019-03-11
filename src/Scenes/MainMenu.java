@@ -108,6 +108,7 @@ class MainMenu extends Scenes{
 
         //Need to update font everytime
         fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private void joinGameSystem(){
@@ -126,6 +127,9 @@ class MainMenu extends Scenes{
         return gridPane.getChildren();
     }
 
+    public static GridPane getGrid() {
+        return gridPane;
+    }
 
 }
 

@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -27,8 +28,6 @@ public class LogIn extends Scenes {
 
     //Change by Max:
     private static GridPane gridPane;
-
-
 
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -128,6 +127,7 @@ public class LogIn extends Scenes {
         });
 
         fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private static void loginSystem(){
@@ -147,4 +147,9 @@ public class LogIn extends Scenes {
     public static ObservableList<Node> getNodes() {
         return gridPane.getChildren();
     }
+
+    public static GridPane getGrid() {
+        return gridPane;
+    }
+
 }
