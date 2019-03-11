@@ -3,6 +3,7 @@ package Scenes;
 import Components.UserInfo;
 import Database.DBConnection;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,110 +29,106 @@ public class MyPage extends Scenes{
     private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
+    private int avatarID = UserInfo.getAvatarID();
 
 
     public MyPage(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
-        try {
-            addUIControls(super.getGp());
-        }catch(Exception e){
-
-        }
-
+        addUIControls(getGp());
     }
 
-    private void addUIControls(GridPane gridPane) throws Exception{
+    private void addUIControls(GridPane gridPane){
 
+        // Header label
         Label header = new Label("My Page");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 42));
-        gridPane.add(header, 1, 0, 1, 1);
+        gridPane.add(header, 0, 0, 10, 1);
         gridPane.setHalignment(header, HPos.LEFT);
 
+        // Name label
         Label nameLabel = new Label("Name: ");
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(nameLabel, 0, 1, 1, 1);
         gridPane.setHalignment(nameLabel, HPos.LEFT);
 
+        // Email label
         Label emailLabel = new Label("Email: ");
         emailLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(emailLabel, 0, 2, 1, 1);
         gridPane.setHalignment(emailLabel, HPos.LEFT);
 
-       Image avatar = getAvatar(1);
-       ImageView avatarImage = new ImageView(avatar);
-       gridPane.add(avatarImage, 4, 1, 1, 3);
-       avatarImage.setFitHeight(150);
-       avatarImage.setFitWidth(150);
-       gridPane.setHalignment(avatarImage, HPos.CENTER);
+        // Current avatar
+        Image avatar = getAvatar(1);
+        ImageView avatarImage = new ImageView(avatar);
+        gridPane.add(avatarImage, 4, 1, 1, 3);
+        avatarImage.setFitHeight(150);
+        avatarImage.setFitWidth(150);
+        gridPane.setHalignment(avatarImage, HPos.CENTER);
+
+        // Avatar selection
+        //Add ImageView to show avatar
+        ImageView avatarView = new ImageView(getAvatar(avatarID));
+        avatarView.setFitWidth(150);
+        avatarView.setFitHeight(150);
+        gridPane.add(avatarView, 1, 3, 1, 1);
+        GridPane.setHalignment(avatarView, HPos.CENTER);
+
+        //Add button to go left
+        Button leftButton = new Button("<");
+        gridPane.add(leftButton, 1,3);
+        GridPane.setHalignment(leftButton, HPos.CENTER);
+        GridPane.setMargin(leftButton, new Insets(0,120,0,0));
+        super.styleSelectorButton(leftButton);
+
+        //Add button to go right
+        Button rightButton = new Button(">");
+        gridPane.add(rightButton, 1,3);
+        GridPane.setHalignment(rightButton, HPos.CENTER);
+        GridPane.setMargin(rightButton, new Insets(0,0,0,120));
+        super.styleSelectorButton(rightButton);
+
+        // Update curent avatar button
+        buttonChoose = new Button("Choose avatar");
+        buttonChoose.setPrefHeight(40);
+        buttonChoose.setPrefWidth(100);
+        gridPane.add(buttonChoose, 1, 6, 1, 1);
+        gridPane.setHalignment(buttonChoose, HPos.CENTER);
 
 
-       Image[] images = getAllAvatars();
-       chooseAvatar = new ImageView(images[index]);
-       gridPane.add(chooseAvatar, 1, 3, 1, 3);
-       GridPane.setHalignment(chooseAvatar, HPos.CENTER);
+        // Change password Button
+        buttonChangePassword = new Button("Change password");
+        buttonChangePassword.setPrefHeight(40);
+        buttonChangePassword.setPrefWidth(150);
+        gridPane.add(buttonChangePassword, 0, 3, 1, 1);
+        gridPane.setHalignment(buttonChangePassword, HPos.LEFT);
 
-
-       buttonRight = new Button("Go right");
-       buttonRight.setOnAction(e -> {
-           if (index < 3 && index >= 0) {
-               index++;
-               chooseAvatar.setImage(images[index]);
-           } else {
-           }
-       });
-       gridPane.add(buttonRight, 2, 5, 1, 1);
-       gridPane.setHalignment(buttonRight, HPos.LEFT);
-
-       buttonLeft = new Button("Go left");
-       buttonLeft.setOnAction(e -> {
-           if (index > 0 && index <= 3) {
-               index--;
-               chooseAvatar.setImage(images[index]);
-           } else { }
-       });
-       gridPane.add(buttonLeft, 0, 5, 1, 1);
-       gridPane.setHalignment(buttonLeft, HPos.RIGHT);
-
-
-            buttonChoose = new Button("Choose avatar");
-            buttonChoose.setPrefHeight(40);
-            buttonChoose.setPrefWidth(100);
-            gridPane.add(buttonChoose, 1, 6, 1, 1);
-            gridPane.setHalignment(buttonChoose, HPos.CENTER);
-
-
-
-            buttonLobby = new Button("Lobby");
-            buttonLobby.setPrefHeight(40);
-            buttonLobby.setPrefWidth(50);
-            gridPane.add(buttonLobby, 7, 0, 1, 1);
-            gridPane.setHalignment(buttonLobby, HPos.CENTER);
-
-            buttonChangePassword = new Button("Change password");
-            buttonChangePassword.setPrefHeight(40);
-            buttonChangePassword.setPrefWidth(150);
-            gridPane.add(buttonChangePassword, 0, 3, 1, 1);
-            gridPane.setHalignment(buttonChangePassword, HPos.LEFT);
-
-            buttonChangePassword.setOnAction(e -> {
-
-                displayNewPassword("Change password"); });
-
+        // Button action
+        buttonChangePassword.setOnAction(e -> {
+            displayNewPassword("Change password"); });
         buttonChoose.setOnAction(e -> {
-            DBConnection.setAvatarID(index, UserInfo.getUserID());
-            Image chosenAvatar = chosenAvatar(index);
+            DBConnection.setAvatarID(avatarID, UserInfo.getUserID());
+            Image chosenAvatar = chosenAvatar(avatarID);
             avatarImage.setImage(chosenAvatar);
         });
-    }
 
-    // "fileLocation" is found at the top, and will reference the jpgs no matter the computer.
+        rightButton.setOnAction(e -> {
+            avatarID = super.loopAvatar(avatarID,1, 1,4);
+            avatarView.setImage(super.getAvatar(avatarID));
+        });
+
+        leftButton.setOnAction(e -> {
+            avatarID = super.loopAvatar(avatarID, -1,1,4);
+            avatarView.setImage(super.getAvatar(avatarID));
+        });
+    }
+    // Methods that interact with images in resources
     public Image getAvatar(int UserID){
         File file =  new File(fileLocation + UserInfo.getAvatarID() + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
-    private Image chosenAvatar(int index){
+    private Image chosenAvatar(avatarID){
         File file = new File(fileLocation + (index+1) + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
@@ -148,6 +145,7 @@ public class MyPage extends Scenes{
         return images;
     }
 
+    // Method for creating new password - new popup window
     private void displayNewPassword(String title){
         Stage window = new Stage();
 
