@@ -80,6 +80,13 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
+        logInButton.setStyle("-fx-background-color: #9BFFA0; -fx-border-color: #000000; -fx-border-width: 3px; -fx-font-size: 20px;");
+
+        /*
+        logInButton.setStyle("");
+        logInButton.setStyle("-fx-text-fill: #ff0009;");
+        */
+
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
         logInButton.setPrefWidth(100);

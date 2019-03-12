@@ -3,11 +3,14 @@ package Database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class HikariCP {
+
     private static HikariDataSource ds;
+
     static{
 
         HikariConfig config = new HikariConfig();
@@ -18,6 +21,7 @@ public class HikariCP {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setPoolName("Squiggle Pool");
 
         ds = new HikariDataSource(config);
     }
