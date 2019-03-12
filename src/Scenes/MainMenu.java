@@ -33,6 +33,7 @@ class MainMenu extends Scenes{
         // Add Header
         Label headerLabel = new Label("Main Menu");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        headerLabel.setStyle("-fx-font-size: 40px;");
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));

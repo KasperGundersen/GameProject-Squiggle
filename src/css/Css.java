@@ -1,6 +1,8 @@
 package css;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class Css {
     public static String selectorButton(){
@@ -22,5 +24,12 @@ public class Css {
     public static void setStyle(Button button) {
         button.setStyle("-fx-background-color: #ff94a9;" +
                 "-fx-border-color: #ffda94; -fx-border-width: 3px;");
+    }
+
+    public static void setStyle(TextField field) {
+        field.setStyle("-fx-background-color: #bfffc9;" +
+                "-fx-border-color: #ffda94;" +
+                "-fx-border-width: 3px;");
+
     }
 }

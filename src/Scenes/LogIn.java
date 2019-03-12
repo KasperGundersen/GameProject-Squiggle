@@ -54,6 +54,7 @@ public class LogIn extends Scenes {
         // Add Header
         Label headerLabel = new Label("Login");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        headerLabel.setStyle("-fx-font-size: 40px;");
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
@@ -70,7 +71,7 @@ public class LogIn extends Scenes {
 
         // Add Name Text Field
         nameField = new TextField();
-        nameField.setStyle("-fx-background-color: #ff94a9;");
+        Css.setStyle(nameField);
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
@@ -81,6 +82,7 @@ public class LogIn extends Scenes {
 
         // Add Password Field
         passwordField = new PasswordField();
+        Css.setStyle(passwordField);
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
