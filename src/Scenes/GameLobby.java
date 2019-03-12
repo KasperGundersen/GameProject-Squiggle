@@ -1,15 +1,16 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
 
-import static Components.CanvasComponents.*;
+import static Components.GameLobbyComponents.CanvasComponents.*;
+import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
 
 public class GameLobby extends Scenes{
 
     private BorderPane bp;
-
 
     public GameLobby(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -21,6 +22,7 @@ public class GameLobby extends Scenes{
     private void addUIControls(BorderPane borderPane){
         borderPane.setBottom(addDrawingUI());
         borderPane.setCenter(addCanvasUI());
+        borderPane.setRight(liveChatUI());
     }
 
 }

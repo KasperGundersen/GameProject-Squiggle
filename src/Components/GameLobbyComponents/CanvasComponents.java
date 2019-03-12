@@ -1,4 +1,4 @@
-package Components;
+package Components.GameLobbyComponents;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,7 +26,7 @@ public class CanvasComponents {
     private static Canvas canvas;
     private static GraphicsContext gc;
 
-    private static int eraserSize;
+    private static int eraserSize = 5;
     private static double WIDTH = 600, HEIGHT = 450;
 
 
@@ -140,14 +140,6 @@ public class CanvasComponents {
             }
         });
         return hb;
-    }
-    //-----------Right-----------//
-
-    public static VBox liveChatUI(){
-        VBox vb = new VBox();
-        Text lc = new Text();
-
-        return vb;
     }
 
 
