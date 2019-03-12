@@ -30,7 +30,6 @@ public class MyPage extends Scenes{
     private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
-    private static Button backButton;
 
     //Change by max
     private static GridPane gridPane;
@@ -41,7 +40,7 @@ public class MyPage extends Scenes{
         addUIControls(getGp());
     }
 
-    private void addUIControls(GridPane gridPane) throws Exception{
+    private void addUIControls(GridPane gridPane){
         this.gridPane = gridPane;
 
 
@@ -137,9 +136,6 @@ public class MyPage extends Scenes{
             DBConnection.setAvatarID(UserInfo.getUserID(), avatarID);
         });
 
-        changeBackground(getGrid(), UserInfo.getColor());
-    }
-
         rightButton.setOnAction(e -> {
             avatarID = super.loopAvatar(avatarID,1, 1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
@@ -153,6 +149,7 @@ public class MyPage extends Scenes{
         backButton.setOnAction(e -> {
             MainScene.setScene(MainScene.mm.getSc());
         });
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     // Methods that interact with images in resources
