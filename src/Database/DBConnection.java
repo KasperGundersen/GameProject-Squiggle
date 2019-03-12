@@ -234,6 +234,7 @@ public class DBConnection {
         }
     }
 
+    // Puts user in GAME table, where all users in a game are
     public static void enterGame() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -253,6 +254,7 @@ public class DBConnection {
         }
     }
 
+    // Removes user from GAME table when user quits or game is over
     public static void exitGame() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -341,7 +343,9 @@ public class DBConnection {
         }
         return null;
     }
+    //Livechat methods end
 
+    // Get username given userID
     public static String getUsername(int userId) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -388,11 +392,7 @@ public class DBConnection {
         return null;
     }
 
-
-
-
-    //Livechat methods end
-
+    // Gets number of players in a game
     public static int getAmtPlayer(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -413,7 +413,7 @@ public class DBConnection {
         return 0;
     }
 
-
+    // Gets the amount of points user has
     public static int getPoints(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -435,6 +435,7 @@ public class DBConnection {
         return 0;
     }
 
+    // Updates the amount of points this user has
     public static void updatePoints(int addPoints){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -474,7 +475,8 @@ public class DBConnection {
         }
     }
 
-    public static ArrayList<Player> getAvatarID() {
+    // returns a list of Players (all the people in GAME). A player has ID, name, avatarId and points
+    public static ArrayList<Player> getPlayers() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -500,7 +502,7 @@ public class DBConnection {
         return null;
     }
 
-
+    // Gets the number of people who has guessed correctly
     public static int getAmtCorrect(){
         Connection con = null;
         PreparedStatement prepStmt = null;
