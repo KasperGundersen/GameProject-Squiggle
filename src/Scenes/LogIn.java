@@ -88,7 +88,7 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        logInButton.setStyle("-fx-background-color: #9BFFA0; -fx-border-color: #000000; -fx-border-width: 3px; -fx-font-size: 20px;");
+        logInButton.setStyle("toolTip() -fx-border-color: #000000; -fx-border-width: 3px; -fx-font-size: 20px;");
 
         /*
         logInButton.setStyle("");
