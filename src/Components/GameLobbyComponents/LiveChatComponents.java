@@ -14,23 +14,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LiveChatComponents {
-    private static Timer timer;
+    private static ScrollPane sp;
     //-----------Right-----------//
     public static VBox liveChatUI(){
         VBox vb = new VBox();
-        ScrollPane sp = new ScrollPane();
+        sp = new ScrollPane();
         Text lc = new Text();
         sp.setContent(lc);
         sp.setFitToWidth(true);
         sp.setFitToHeight(true);
-        sp.setPrefHeight(100);
 
         TextField tf = new TextField();
         Button btn = new Button("enter");
+        btn.setDefaultButton(true);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);
         vb.getChildren().addAll(sp,hb);
         vb.setAlignment(Pos.BOTTOM_CENTER);
+        showMessages(lc, tf);
 
         btn.setOnAction(e -> {
             String text = tf.getText();
@@ -43,7 +44,7 @@ public class LiveChatComponents {
     }
 
     private static void showMessages(Text chatText, TextField inputText) {
-        timer = new Timer();
+        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -54,7 +55,7 @@ public class LiveChatComponents {
                     sb.append("\n");
                 }
                 chatText.setText(sb.toString());
-                //inputText.clear();
+                sp.setVvalue(1.0);
             }
         };
         timer.schedule(task, 0, 5000);
