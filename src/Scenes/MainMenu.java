@@ -123,7 +123,7 @@ class MainMenu extends Scenes{
     private void joinGameSystem(){
         DBConnection.enterGame();
         DBConnection.setDrawer();
-        MainScene.setScene(MainScene.sq.getSc());
+        MainScene.setScene(MainScene.gl.getSc());
     }
 
     private void logOutSystem(){

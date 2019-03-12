@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
@@ -44,7 +45,7 @@ public class MainScene {
     }
     private void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
-            Livechat.turnOfTimer();
+            LiveChatComponents.turnOfTimer();
             stage.close();
         }
     }
