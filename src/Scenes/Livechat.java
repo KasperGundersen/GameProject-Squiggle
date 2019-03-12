@@ -9,6 +9,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -24,6 +25,7 @@ public class Livechat extends Scenes {
     Timer timer;
     private static GridPane gridPane;
     private static Button backButton;
+    private static ScrollPane scroll;
 
     public Livechat(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -51,7 +53,13 @@ public class Livechat extends Scenes {
         submitButton.setPrefWidth(100);
         submitButton.setDefaultButton(true);
 
+         scroll = new ScrollPane();
+
         Text chatText = new Text();
+        gridPane.add(scroll,1,4,1,1);
+        scroll.setContent(chatText);
+
+
         gridPane.add(chatText,1,4,1,1);
 
         submitButton.setOnAction(e -> {
@@ -88,7 +96,8 @@ public class Livechat extends Scenes {
                     sb.append("\n");
                 }
                 chatText.setText(sb.toString());
-                //inputText.clear();
+                scroll.setVvalue(1.0);
+
             }
         };
         timer.schedule(task, 0, 5000);
