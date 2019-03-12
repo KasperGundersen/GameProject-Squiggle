@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.UserInfo;
 import Database.DBConnection;
+import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -67,6 +68,7 @@ public class MyPage extends Scenes{
 
         // Change password Button
         buttonChangePassword = new Button("Change password");
+        Css.setStyle(buttonChangePassword);
         buttonChangePassword.setPrefHeight(40);
         buttonChangePassword.setPrefWidth(150);
         gridPane.add(buttonChangePassword, 0, 1, 2, 1);
@@ -112,6 +114,7 @@ public class MyPage extends Scenes{
 
         // Update current avatar button
         buttonChoose = new Button("Choose avatar");
+        Css.setStyle(buttonChoose);
         buttonChoose.setPrefHeight(40);
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 0, 5, 4, 1);
@@ -119,6 +122,7 @@ public class MyPage extends Scenes{
 
         // Back button
         backButton = new Button("Back");
+        Css.setStyle(backButton);
         backButton.setPrefHeight(40);
         backButton.setPrefWidth(80);
         gridPane.add(backButton, 0, 5);
