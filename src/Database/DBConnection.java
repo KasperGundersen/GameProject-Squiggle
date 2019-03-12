@@ -1,6 +1,7 @@
 /* This class has static methods so we wont have to make objects of this class to use its methods */
 package Database;
 
+import Components.Player;
 import Components.UserInfo;
 import javafx.scene.text.HitInfo;
 
@@ -471,6 +472,33 @@ public class DBConnection {
         } finally {
             closeConnection(con, prepStmt, res);
         }
+    }
+
+    public static Player[] getAvatarID() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Player> players = new ArrayList<Player>();
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT userName, userID, avatarID, points FROM GAME JOIN USERS USING(userID);";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                int userID = res.getInt("userID");
+                String userName = res.getString("userName");
+                int avatarID = res.getInt("AvatarID");
+                double points = res.getDouble("points");
+                players.add(new Player(userName, userID, avatarID, points));
+                }
+            }
+            return players;
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
     }
 
 
