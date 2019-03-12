@@ -14,7 +14,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LiveChatComponents {
-    private static Timer timer;
+    private static Timer timer = null;
     private static ScrollPane sp;
 
     //-----------Right-----------//
@@ -38,7 +38,7 @@ public class LiveChatComponents {
         btn.setOnAction(e -> {
             String text = tf.getText();
             DBConnection.insertMessage(text);
-            showMessages(lc, tf);
+            //showMessages(lc, tf);
             tf.clear();
         });
 
@@ -66,9 +66,7 @@ public class LiveChatComponents {
 
     public static void turnOfTimer() {
         if (timer != null) {
-            System.out.println("FACK");
             timer.cancel();
-            timer = null;
         }
     }
 }

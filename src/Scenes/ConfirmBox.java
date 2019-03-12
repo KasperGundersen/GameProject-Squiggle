@@ -36,7 +36,7 @@ class ConfirmBox{
 
         yesButton.setOnAction(e -> {
             answer = true;
-            Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
+            //Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
             stage.close();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();

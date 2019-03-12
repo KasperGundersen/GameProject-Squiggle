@@ -20,7 +20,7 @@ public class MainScene {
     public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
     public static Scenes mp = new MyPage(WIDTH, HEIGHT);
-    public static Scenes gl = new GameLobby(WIDTH, HEIGHT);
+    public static Scenes gl = null;
     public static Scenes lc = null;
 
 
