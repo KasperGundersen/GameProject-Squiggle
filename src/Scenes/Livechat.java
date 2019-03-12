@@ -68,8 +68,7 @@ public class Livechat extends Scenes {
             showMessages(chatText, inputText);
             inputText.clear();
         });
-        fontChange(UserInfo.getFontSize(), getNodes());
-        changeBackground(gridPane, UserInfo.getColor());
+        ;
 
          // Go back button
          backButton = new Button("Go Back");
@@ -82,6 +81,9 @@ public class Livechat extends Scenes {
              MainScene.mm = new MainMenu(super.getWIDTH(), super.getHEIGHT());
              MainScene.setScene(MainScene.mm.getSc());
          });
+
+         fontChange(UserInfo.getFontSize(), getNodes());
+         changeBackground(gridPane, UserInfo.getColor());
     }
 
     private void showMessages(Text chatText, TextField inputText) {

@@ -30,7 +30,7 @@ public class UserInfo {
         this.avatarID = 0;
         this.drawing = false;
         this.fontSize = 16;
-        this.color = new Color(1,1,1,1);
+        this.color = Color.web("0xffe6b3");
 
         this.userEmail = null;
     }

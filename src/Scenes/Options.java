@@ -52,7 +52,7 @@ public class Options extends Scenes {
        Spinner fontSizeSpinner = new Spinner();
        int fontSize = UserInfo.getFontSize();
        if (fontSize == 0) {
-           fontSize = 16; //Default value
+           fontSize = 12; //Default value
        }
 
        SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,fontSize);
