@@ -16,6 +16,7 @@ import java.util.TimerTask;
 public class LiveChatComponents {
     private static Timer timer;
     private static ScrollPane sp;
+
     //-----------Right-----------//
     public static VBox liveChatUI(){
         VBox vb = new VBox();
@@ -46,6 +47,7 @@ public class LiveChatComponents {
 
     private static void showMessages(Text chatText, TextField inputText) {
         timer = new Timer();
+        System.out.println("Timer kjører");
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -64,7 +66,9 @@ public class LiveChatComponents {
 
     public static void turnOfTimer() {
         if (timer != null) {
+            System.out.println("FACK");
             timer.cancel();
+            timer = null;
         }
     }
 }

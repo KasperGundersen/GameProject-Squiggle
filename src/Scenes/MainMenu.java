@@ -110,10 +110,11 @@ class MainMenu extends Scenes{
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp.getSc());
         });
-        livechatButton.setOnAction(e -> {
+        /*livechatButton.setOnAction(e -> {
             MainScene.lc = new Livechat(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.lc.getSc());
         });
+        */
 
         //Need to update font everytime
         fontChange(UserInfo.getFontSize(), getNodes());
