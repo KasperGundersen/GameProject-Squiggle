@@ -474,7 +474,7 @@ public class DBConnection {
         }
     }
 
-    public static Player[] getAvatarID() {
+    public static ArrayList<Player> getAvatarID() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -490,7 +490,6 @@ public class DBConnection {
                 int avatarID = res.getInt("AvatarID");
                 double points = res.getDouble("points");
                 players.add(new Player(userName, userID, avatarID, points));
-                }
             }
             return players;
         } catch(SQLException e) {
