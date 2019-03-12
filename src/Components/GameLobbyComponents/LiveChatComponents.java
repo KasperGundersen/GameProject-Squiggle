@@ -60,7 +60,7 @@ public class LiveChatComponents {
                 sp.setVvalue(1.0);
             }
         };
-        timer.schedule(task, 0, 5000);
+        timer.schedule(task, 0, +5000);
     }
 
     public static void turnOfTimer() {
