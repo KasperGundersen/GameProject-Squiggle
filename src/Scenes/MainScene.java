@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ public class MainScene {
     public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
     public static Scenes su = new SignUp(WIDTH, HEIGHT);
     public static Scenes mp = new MyPage(WIDTH, HEIGHT);
-    public static Scenes gl = new GameLobby(WIDTH, HEIGHT);
+    public static Scenes gl = null;
     public static Scenes lc = null;
 
 
@@ -44,7 +45,7 @@ public class MainScene {
     }
     private void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
-            Livechat.turnOfTimer();
+            Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
             stage.close();
         }
     }

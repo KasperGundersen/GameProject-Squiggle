@@ -14,7 +14,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LiveChatComponents {
+    private static Timer timer = null;
     private static ScrollPane sp;
+
     //-----------Right-----------//
     public static VBox liveChatUI(){
         VBox vb = new VBox();
@@ -36,7 +38,7 @@ public class LiveChatComponents {
         btn.setOnAction(e -> {
             String text = tf.getText();
             DBConnection.insertMessage(text);
-            showMessages(lc, tf);
+            //showMessages(lc, tf);
             tf.clear();
         });
 
@@ -44,7 +46,8 @@ public class LiveChatComponents {
     }
 
     private static void showMessages(Text chatText, TextField inputText) {
-        Timer timer = new Timer();
+        timer = new Timer();
+        System.out.println("Timer kjører");
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -59,5 +62,11 @@ public class LiveChatComponents {
             }
         };
         timer.schedule(task, 0, 5000);
+    }
+
+    public static void turnOfTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }
