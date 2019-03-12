@@ -8,7 +8,7 @@ public class Css {
     public static String selectorButton(){
         return "-fx-background-color: rgba(255, 255, 255 ,0); " +
                 "-fx-font-weight: bold ; " +
-                "-fx-font-size: 2em; " +
+                "-fx-font-size: 7em; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-family: ariel;";
     }

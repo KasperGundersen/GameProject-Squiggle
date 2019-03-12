@@ -14,8 +14,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
-public final class Toast
-{
+public final class Toast{
     private static double WIDTH, HEIGHT;
     private static Stage s;
 
@@ -24,8 +23,7 @@ public final class Toast
         this.HEIGHT = HEIGHT;
         s = stage;
     }
-    public static void makeText(String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay)
-    {
+    public static void makeText(String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay)    {
         Stage toastStage=new Stage();
         toastStage.initOwner(s);
         toastStage.setResizable(false);
@@ -56,16 +54,12 @@ public final class Toast
         KeyFrame fadeInKey1 = new KeyFrame(Duration.millis(fadeInDelay),
                 new KeyValue (toastStage.getScene().getRoot().opacityProperty(), 1));
         fadeInTimeline.getKeyFrames().add(fadeInKey1);
-        fadeInTimeline.setOnFinished((ae) ->
-        {
+        fadeInTimeline.setOnFinished((ae) ->{
             new Thread(() -> {
-                try
-                {
+                try{
                     Thread.sleep(toastDelay);
                 }
-                catch (InterruptedException e)
-                {
-                    // TODO Auto-generated catch block
+                catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 Timeline fadeOutTimeline = new Timeline();

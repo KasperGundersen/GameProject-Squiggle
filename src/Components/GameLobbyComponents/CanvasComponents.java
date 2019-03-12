@@ -12,6 +12,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -27,7 +28,7 @@ public class CanvasComponents {
     private static GraphicsContext gc;
 
     private static int eraserSize = 5;
-    private static double WIDTH = 600, HEIGHT = 450;
+    private static int WIDTH = 600, HEIGHT = 450;
 
 
     //-----------Bottom-----------//
@@ -111,7 +112,6 @@ public class CanvasComponents {
         hb.getChildren().add(canvas);
         //////////////////////////////////////////////
         canvas.setOnMousePressed(e-> {
-            System.out.println("help");
             if (draw.isSelected()) {
                 gc.setStroke(cp.getValue());
                 gc.beginPath();
@@ -142,5 +142,8 @@ public class CanvasComponents {
         return hb;
     }
 
-
+    public static void uploadImage(){
+        WritableImage wim = new WritableImage(WIDTH, HEIGHT);
+        canvas.snapshot(null, wim);
+    }
 }
