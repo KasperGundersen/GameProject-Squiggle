@@ -39,7 +39,7 @@ public class MainScene {
             e.consume();
             closeProgram();
         });
-        setScene(gl.getSc());
+        setScene(li.getSc());
         MainScene.stage.show();
     }
     private void closeProgram(){
