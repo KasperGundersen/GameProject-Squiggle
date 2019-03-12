@@ -19,6 +19,8 @@ public class UserInfo {
     private static boolean drawing;
     private static int fontSize;
     private static Color color;
+    private static String userEmail;
+
 
     public UserInfo() {
         this.userName = null;
@@ -29,6 +31,8 @@ public class UserInfo {
         this.drawing = false;
         this.fontSize = 16;
         this.color = new Color(1,1,1,1);
+
+        this.userEmail = null;
     }
 
     // getters
@@ -48,11 +52,15 @@ public class UserInfo {
         return drawing;
     }
 
+    public static String getUserEmail() {
+        return userEmail;
+    }
 
     // Method that runs on login, updates UserInfo.userID variable and fetches avatarID from given user
     public static void initializeUser(int userId) {
         userID = userId;
         DBConnection.updateAvatarID(userId);
+        userEmail = DBConnection.getUserEmail(userId);
     }
 
     public static void setUserName(String newName) {

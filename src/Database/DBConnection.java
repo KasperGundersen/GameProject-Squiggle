@@ -2,7 +2,7 @@
 package Database;
 
 import Components.UserInfo;
-import Scenes.Squiggle;
+import javafx.scene.text.HitInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,27 +15,12 @@ public class DBConnection {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
 
-    // Standard JDBC components
-    private static Connection con;
-
-    // Use this whenever you want to connect to the database
-    public static Connection getCon() {
-        try{
-            Class.forName(driver);
-            con = DriverManager.getConnection(dBUrl);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return con;
-    }
-
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, userName);
@@ -55,10 +40,11 @@ public class DBConnection {
 
     // This method looks for "input" in the given column in the database
     public static boolean exists(String columnName, String input) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try{
+            con = HikariCP.getCon();
             String query = "SELECT " + columnName + " FROM USERS WHERE " + columnName + "=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, input);
@@ -76,9 +62,10 @@ public class DBConnection {
 
     // Makes a user show as logged in when logged in
     public static void setLoggedIn(String username, int loggedIn) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String query = "UPDATE USERS SET loggedIn=? WHERE userName=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt (1, loggedIn);
@@ -93,10 +80,11 @@ public class DBConnection {
 
     // Gets salt, used for comparing passwords
     public static String getSalt(String username) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT salt FROM USERS WHERE userName=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, username);
@@ -116,10 +104,11 @@ public class DBConnection {
     // For seing if a user is already logged in or not
     public static boolean getLoggedIn(String username) {
         boolean loggedIn = false;
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT loggedIn FROM USERS WHERE userName=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, username);
@@ -141,17 +130,9 @@ public class DBConnection {
             if (res != null) {
                 res.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             if (stmt != null) {
                 stmt.close();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             if (con != null) {
                 con.close();
             }
@@ -163,9 +144,10 @@ public class DBConnection {
 
     // Sets avatarID in the database, making the user have same avatarID on next LogIn
     public static void setAvatarID(int userID, int index) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String query = "UPDATE USERS SET avatarID=? WHERE userID=?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, index);
@@ -179,10 +161,11 @@ public class DBConnection {
     }
 
     public static ArrayList<String> getWords(String category) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT word FROM LIBRARY WHERE category=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, category);
@@ -203,10 +186,11 @@ public class DBConnection {
 
     // Fetches userID given username, used upon initialization of user, log in
     public static int getUserID(String username) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT userID FROM USERS WHERE userName=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString (1, username);
@@ -225,10 +209,11 @@ public class DBConnection {
 
     // Method that runs on "Join Game", sets drawing to 1, if no one else is ingame
     public static void setDrawer() {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT * FROM GAME WHERE drawing=1";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
@@ -249,9 +234,10 @@ public class DBConnection {
     }
 
     public static void enterGame() {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
@@ -267,9 +253,10 @@ public class DBConnection {
     }
 
     public static void exitGame() {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String query = "DELETE FROM GAME WHERE userID = ?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
@@ -283,9 +270,10 @@ public class DBConnection {
 
 
     public static void insertIntoDB(String words) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String dropTable = ""
                     + "DROP TABLE LIBRARY;";
             String createTable = ""
@@ -311,9 +299,10 @@ public class DBConnection {
 
     //Livechat methods start
     public static void insertMessage(String message) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         try {
+            con = HikariCP.getCon();
             String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt (1, UserInfo.getUserID());
@@ -327,10 +316,11 @@ public class DBConnection {
     }
 
     public static ArrayList<String> getMessages() {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT input, userID FROM CHAT";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
@@ -352,10 +342,11 @@ public class DBConnection {
     }
 
     public static String getUsername(int userId) {
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT userName FROM USERS WHERE userID =?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, userId);
@@ -373,16 +364,40 @@ public class DBConnection {
         return null;
     }
 
+    public static String getUserEmail(int userId) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT userMail FROM USERS WHERE userID=?";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, userId);
+            res = prepStmt.executeQuery();
+            String output = "";
+            if (res.next()) {
+                output = res.getString("userMail");
+            }
+            return output;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
+    }
+
 
 
 
     //Livechat methods end
 
     public static int getAmtPlayer(){
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT COUNT(userID) FROM GAME;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
@@ -399,10 +414,11 @@ public class DBConnection {
 
 
     public static int getPoints(){
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT points FROM GAME where userID = ?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
@@ -419,11 +435,12 @@ public class DBConnection {
     }
 
     public static void updatePoints(int addPoints){
-        Connection con = getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
         int newPoints = oldPoints + addPoints;
         try {
+            con = HikariCP.getCon();
             String query = "UPDATE GAME SET points = " + newPoints +"WHERE userID = ?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
@@ -437,10 +454,11 @@ public class DBConnection {
 
     // Fetches avatarID from database, allows game to show the users avatar inGame using UserInfo.avatarID variable
     public static void updateAvatarID(int userID) {
-        Connection con = DBConnection.getCon();
+        Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
+            con = HikariCP.getCon();
             String query = "SELECT avatarID FROM USERS WHERE userID=?;";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, userID);
@@ -454,4 +472,26 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
     }
+
+
+    public static int getAmtCorrect(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT SUM(correctGuess) FROM GAME;";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("SUM(correctGuess)");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return 0;
+    }
+
 }

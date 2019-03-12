@@ -99,7 +99,7 @@ public class SignUp extends Scenes {
         Label avatarLabel = new Label("Avatar : ");
         gridPane.add(avatarLabel, 0,3);
 
-        //Add ImageVie to show avatar
+        //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
         avatarView.setFitWidth(150);
         avatarView.setFitHeight(150);
@@ -213,12 +213,12 @@ public class SignUp extends Scenes {
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
 
         rightButton.setOnAction(e -> {
-            avatarID = super.loopAvatar(avatarID,1, 1,4);
+            avatarID = super.loopAvatar(avatarID,1, 1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
 
         leftButton.setOnAction(e -> {
-            avatarID = super.loopAvatar(avatarID, -1,1,4);
+            avatarID = super.loopAvatar(avatarID, -1,1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
 
