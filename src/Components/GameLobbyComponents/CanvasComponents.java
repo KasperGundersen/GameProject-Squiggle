@@ -111,7 +111,6 @@ public class CanvasComponents {
         hb.getChildren().add(canvas);
         //////////////////////////////////////////////
         canvas.setOnMousePressed(e-> {
-            System.out.println("help");
             if (draw.isSelected()) {
                 gc.setStroke(cp.getValue());
                 gc.beginPath();
