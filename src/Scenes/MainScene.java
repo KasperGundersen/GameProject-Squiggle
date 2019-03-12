@@ -45,7 +45,7 @@ public class MainScene {
     }
     private void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
-            LiveChatComponents.turnOfTimer();
+            Livechat.turnOfTimer();
             stage.close();
         }
     }

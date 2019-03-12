@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Database.DBConnection;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,6 +36,7 @@ class ConfirmBox{
 
         yesButton.setOnAction(e -> {
             answer = true;
+            LiveChatComponents.turnOfTimer();
             stage.close();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();
