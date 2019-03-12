@@ -1,11 +1,14 @@
 package Components.GameLobbyComponents;
 
+import Database.DBConnection;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -18,7 +21,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CanvasComponents {
     private static ToggleButton draw;
@@ -142,8 +150,33 @@ public class CanvasComponents {
         return hb;
     }
 
+    //////////// Here begins code that deals with uploading canvas to DB ///////////////
+    // The main upload method
     public static void uploadImage(){
-        WritableImage wim = new WritableImage(WIDTH, HEIGHT);
-        canvas.snapshot(null, wim);
+        WritableImage wim = canvasSnapshot(canvas);
+        byte[] blob = imageToByte(wim);
+        DBConnection.uploadImage(blob);
     }
+
+    // Method that snapshots the canvas and returns WritableImage
+    public static WritableImage canvasSnapshot(Canvas canvas) {
+        WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
+        SnapshotParameters spa = new SnapshotParameters();
+        return canvas.snapshot(spa, writableImage);
+    }
+
+    // Method that turns image into byte[], this is then uploaded as blob
+    public static byte[] imageToByte(WritableImage image) {
+        BufferedImage bufferimage = SwingFXUtils.fromFXImage(image, null);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        try {
+            ImageIO.write(bufferimage, "jpg", output );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte [] data = output.toByteArray();
+        return data;
+    }
+
+    // Needs method for getting blob and converting back to image
 }

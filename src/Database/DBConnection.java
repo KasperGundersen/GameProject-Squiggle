@@ -3,8 +3,10 @@ package Database;
 
 import Components.Player;
 import Components.UserInfo;
+import javafx.scene.image.WritableImage;
 import javafx.scene.text.HitInfo;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -523,4 +525,22 @@ public class DBConnection {
         return 0;
     }
 
+    // Uploads image to database
+    public static void uploadImage(byte[] blob) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "INSERT INTO DRAW VALUES (?, ?, ?)";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, 1);
+            prepStmt.setString(2, "insertWord");
+            prepStmt.setBlob(3, new SerialBlob(blob));
+            prepStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
 }
