@@ -3,6 +3,7 @@ package Scenes;
 import Components.UserInfo;
 import Database.DBConnection;
 import com.sun.tools.javac.Main;
+import css.Css;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -28,58 +29,66 @@ class MainMenu extends Scenes{
     private void addUIControls(GridPane gridPane) {
         this.gridPane = gridPane;
         double prefHeight = 40;
+        double prefWidth = 200;
         // Add Header
         Label headerLabel = new Label("Main Menu");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        headerLabel.setStyle("-fx-font-size: 40px;");
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
         // Join game button
         Button joinGameButton = new Button("Join Game");
+        Css.setStyle(joinGameButton);
         joinGameButton.setPrefHeight(prefHeight);
         joinGameButton.setDefaultButton(true);
-        joinGameButton.setPrefWidth(100);
+        joinGameButton.setPrefWidth(prefWidth);
         gridPane.add(joinGameButton, 0, 1, 2, 1);
         GridPane.setHalignment(joinGameButton, HPos.CENTER);
         GridPane.setValignment(joinGameButton, VPos.CENTER);
 
         // My Page button
         Button myPageButton = new Button("My page");
+        Css.setStyle(myPageButton);
         myPageButton.setPrefHeight(prefHeight);
-        myPageButton.setPrefWidth(100);
+        myPageButton.setPrefWidth(prefWidth);
         gridPane.add(myPageButton, 0, 2, 2, 1);
         GridPane.setHalignment(myPageButton, HPos.CENTER);
         GridPane.setValignment(myPageButton, VPos.CENTER);
 
         // Options button
         Button optionButton = new Button("Options");
+        Css.setStyle(optionButton);
         optionButton.setPrefHeight(prefHeight);
-        optionButton.setPrefWidth(100);
+        optionButton.setPrefWidth(prefWidth);
         gridPane.add(optionButton, 0,3, 2, 1);
         GridPane.setHalignment(optionButton, HPos.CENTER);
         GridPane.setValignment(optionButton, VPos.CENTER);
 
         // Log Out button
         Button logOutButton = new Button("Log Out");
+        Css.setStyle(logOutButton);
         logOutButton.setPrefHeight(prefHeight);
-        logOutButton.setPrefWidth(100);
+        logOutButton.setPrefWidth(prefWidth);
         gridPane.add(logOutButton, 0,4, 2, 1);
         GridPane.setHalignment(logOutButton, HPos.CENTER);
         GridPane.setValignment(logOutButton, VPos.CENTER);
 
         // Quit button
         Button quitButton = new Button("Quit");
+        Css.setStyle(quitButton);
         quitButton.setPrefHeight(prefHeight);
-        quitButton.setPrefWidth(100);
+        quitButton.setPrefWidth(prefWidth);
         gridPane.add(quitButton, 0, 5, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
         // Livechat button
         Button livechatButton = new Button("Live chat");
+        Css.setStyle(livechatButton);
         livechatButton.setPrefHeight(prefHeight);
-        livechatButton.setPrefWidth(100);
+        livechatButton.setPrefWidth(prefWidth);
         gridPane.add(livechatButton, 0, 6, 2, 1);
         GridPane.setHalignment(livechatButton, HPos.CENTER);
         GridPane.setValignment(livechatButton, VPos.CENTER);
@@ -122,6 +131,7 @@ class MainMenu extends Scenes{
         MainScene.setScene(MainScene.li.getSc());
         DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
     }
+
 
     public static ObservableList<Node> getNodes() {
         return gridPane.getChildren();

@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -21,7 +20,7 @@ import javafx.scene.text.Text;
 
 import java.io.File;
 
-import static css.css.selectorButton;
+import static css.Css.selectorButton;
 
 public abstract class Scenes {
 
@@ -43,6 +42,7 @@ public abstract class Scenes {
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
     }
+
 
     //Getters
     public GridPane getGp() {

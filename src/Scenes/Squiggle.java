@@ -101,37 +101,6 @@ public class Squiggle extends Scenes{
 
         eraserSize = 5;
 
-        canvas.setOnMousePressed(e-> {
-            if (draw.isSelected()) {
-                gc.setStroke(cp.getValue());
-                gc.beginPath();
-                gc.lineTo(e.getX(), e.getY());
-
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-            }
-        });
-
-        canvas.setOnMouseDragged(e-> {
-            if (draw.isSelected()) {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() -1 , eraserSize,eraserSize);
-            }
-        });
-
-        canvas.setOnMouseReleased(e-> {
-            if(draw.isSelected()){
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-                gc.closePath();
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-            }
-        });
-
         /*---------Changing Cursors------------*/
         draw.setOnAction(e->{
             canvas.setCursor(new ImageCursor(pencil));
