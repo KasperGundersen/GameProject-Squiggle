@@ -1,8 +1,10 @@
 package Scenes;
 
-import Components.CanvasComponents;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+
+
+import static Components.CanvasComponents.*;
 
 public class GameLobby extends Scenes{
 
@@ -17,7 +19,8 @@ public class GameLobby extends Scenes{
     }
 
     private void addUIControls(BorderPane borderPane){
-        borderPane.setBottom(CanvasComponents.addDrawingUI());
+        borderPane.setBottom(addDrawingUI());
+        borderPane.setCenter(addCanvasUI());
     }
 
 }
