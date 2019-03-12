@@ -47,7 +47,6 @@ public class LiveChatComponents {
 
     private static void showMessages(Text chatText, TextField inputText) {
         timer = new Timer();
-        System.out.println("Timer kjører");
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
