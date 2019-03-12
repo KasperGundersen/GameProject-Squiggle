@@ -13,8 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import static css.css.confirmButton;
+import static css.Css.confirmButton;
 
 class ConfirmBox{
     private static boolean answer;

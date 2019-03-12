@@ -3,19 +3,17 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
+import css.Css;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.sql.Connection;
-
-import static css.css.toolTip;
+import static css.Css.toolTip;
 
 public class LogIn extends Scenes {
 
@@ -72,6 +70,7 @@ public class LogIn extends Scenes {
 
         // Add Name Text Field
         nameField = new TextField();
+        nameField.setStyle("-fx-background-color: #ff94a9;");
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
@@ -88,13 +87,7 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        logInButton.setStyle("toolTip() -fx-border-color: #000000; -fx-border-width: 3px; -fx-font-size: 20px;");
-
-        /*
-        logInButton.setStyle("");
-        logInButton.setStyle("-fx-text-fill: #ff0009;");
-        */
-
+        Css.setStyle(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
         logInButton.setPrefWidth(100);
@@ -104,6 +97,7 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
+        Css.setStyle(regButton);
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(300);
         gridPane.add(regButton, 0, 5, 2, 1);
@@ -112,6 +106,7 @@ public class LogIn extends Scenes {
 
         // Add option button
         Button optionButton = new Button("Options");
+        Css.setStyle(optionButton);
         gridPane.add(optionButton, 4, 14);
 
         // Tooltips

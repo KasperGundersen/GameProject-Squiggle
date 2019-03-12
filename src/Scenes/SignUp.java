@@ -3,7 +3,6 @@ package Scenes;
 import Components.Authentication;
 import Components.Toast;
 import Components.UserInfo;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -16,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Tooltip;
 
-import static css.css.toolTip;
+import static css.Css.toolTip;
 
 public class SignUp extends Scenes {
     //UI initialize object variables
