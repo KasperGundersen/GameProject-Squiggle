@@ -2,9 +2,13 @@ package Scenes;
 
 import Components.Authentication;
 import Components.Toast;
+import Components.UserInfo;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -29,6 +33,8 @@ public class SignUp extends Scenes {
 
     private static int avatarID = 1;
 
+    private static GridPane gridPane;
+
     //////////////////////////////////////////////////////////////////////////////
     //constructor from super
     SignUp(double WIDTH, double HEIGHT) {
@@ -39,6 +45,7 @@ public class SignUp extends Scenes {
 
     // Adding UI to Grid
     private void addUIControls(GridPane gridPane) {
+        this.gridPane = gridPane;
         double prefHeight = 40;
         // Add Header
         Label headerLabel = new Label("Sign Up");
@@ -215,6 +222,8 @@ public class SignUp extends Scenes {
             avatarView.setImage(super.getAvatar(avatarID));
         });
 
+        fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
     ///////////////////Dead-Methods////////////////////////////////////////
     public static void visibleUserMail(boolean b){
@@ -255,5 +264,14 @@ public class SignUp extends Scenes {
     }
     public static int getAvatarID() {
         return avatarID;
+    }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
+    }
+
+    //Must make an own method to get the GridPane dedicated to each scene
+    public static GridPane getGrid() {
+        return gridPane;
     }
 }

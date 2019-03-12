@@ -30,6 +30,10 @@ public class MyPage extends Scenes{
     private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
+    private static Button backButton;
+
+    //Change by max
+    private static GridPane gridPane;
     private int avatarID = UserInfo.getAvatarID();
 
     public MyPage(double WIDTH, double HEIGHT){
@@ -37,7 +41,9 @@ public class MyPage extends Scenes{
         addUIControls(getGp());
     }
 
-    private void addUIControls(GridPane gridPane){
+    private void addUIControls(GridPane gridPane) throws Exception{
+        this.gridPane = gridPane;
+
 
         // Header label
         Label header = new Label("My Page");
@@ -75,6 +81,7 @@ public class MyPage extends Scenes{
         avatarImage.setFitHeight(150);
         avatarImage.setFitWidth(150);
         gridPane.setHalignment(avatarImage, HPos.CENTER);
+
 
         // Avatar selection
         // Select new avatar label
@@ -129,6 +136,9 @@ public class MyPage extends Scenes{
             UserInfo.setAvatarID(avatarID);
             DBConnection.setAvatarID(UserInfo.getUserID(), avatarID);
         });
+
+        changeBackground(getGrid(), UserInfo.getColor());
+    }
 
         rightButton.setOnAction(e -> {
             avatarID = super.loopAvatar(avatarID,1, 1,getMax());
@@ -201,5 +211,9 @@ public class MyPage extends Scenes{
         Scene scene = new Scene(grid, 300, 300);
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    public static GridPane getGrid() {
+        return gridPane;
     }
 }

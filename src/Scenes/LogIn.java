@@ -3,10 +3,13 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -22,6 +25,9 @@ public class LogIn extends Scenes {
 
     // Error message
     private static Label loginError;
+
+    //Change by Max:
+    private static GridPane gridPane;
 
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -44,6 +50,8 @@ public class LogIn extends Scenes {
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
+        //Changes by Max:
+        this.gridPane = gridPane;
 
         // Add Header
         Label headerLabel = new Label("Login");
@@ -124,6 +132,9 @@ public class LogIn extends Scenes {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
+
+        fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private static void loginSystem(){
@@ -139,4 +150,13 @@ public class LogIn extends Scenes {
     public static void setTextLoginError(String newText) {
         loginError.setText(newText);
     }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
+    }
+
+    public static GridPane getGrid() {
+        return gridPane;
+    }
+
 }

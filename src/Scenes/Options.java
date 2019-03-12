@@ -1,6 +1,8 @@
 package Scenes;
 
+import Components.UserInfo;
 import Scenes.Scenes;
+import com.sun.tools.javac.Main;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.net.UnknownServiceException;
 
 import static javafx.scene.control.SpinnerValueFactory.*;
 
@@ -30,7 +34,6 @@ public class Options extends Scenes {
 
        grid = new GridPane();
        grid.setAlignment(Pos.TOP_CENTER);
-       grid.setGridLinesVisible(true);
 
        Label optionsLabel = new Label("Options");
        optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
@@ -41,12 +44,18 @@ public class Options extends Scenes {
        grid.add(backgroundColourLabel, 0,1);
        ColorPicker cp = new ColorPicker();
        cp.setMinWidth(150);
+       cp.setValue(UserInfo.getColor());
        grid.add(cp,1,1);
 
        Label fontSizeLabel = new Label("Font size");
        grid.add(fontSizeLabel, 0,2);
        Spinner fontSizeSpinner = new Spinner();
-       SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,15);
+       int fontSize = UserInfo.getFontSize();
+       if (fontSize == 0) {
+           fontSize = 16; //Default value
+       }
+
+       SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,fontSize);
        fontSizeSpinner.setValueFactory(fontSizeFactory);
        grid.add(fontSizeSpinner,1,2);
 
@@ -60,19 +69,25 @@ public class Options extends Scenes {
        submitButton.setPrefWidth(100);
 
        submitButton.setOnAction(e -> {
-           Paint fill = cp.getValue();
-           BackgroundFill backgroundFill = new BackgroundFill(fill, CornerRadii.EMPTY, Insets.EMPTY);
-           Background background = new Background(backgroundFill);
-
-           /*MainScene.mm.getGp().setBackground(background);
-           MainScene.su.getGp().setBackground(background);
-           MainScene.li.getGp().setBackground(background);
-           */
 
            int fontSizeChoosen = fontSizeFactory.getValue();
+           Color colorChoosen = cp.getValue();
+           UserInfo.setFontSize(fontSizeChoosen);
+           UserInfo.setColor(colorChoosen);
 
+           fontChange(UserInfo.getFontSize(), grid.getChildren());
 
-//           //window.close();
+           LogIn.fontChange(UserInfo.getFontSize(), LogIn.getNodes());
+           MainMenu.fontChange(UserInfo.getFontSize(), MainMenu.getNodes());
+           SignUp.fontChange(UserInfo.getFontSize(), SignUp.getNodes());
+
+           System.out.println(cp.getValue());
+
+           LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
+           MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
+           SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
+
+           window.close();
 
         });
 
@@ -80,6 +95,8 @@ public class Options extends Scenes {
        GridPane.setHalignment(submitButton, HPos.CENTER);
        GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
+       fontChange(UserInfo.getFontSize(), grid.getChildren());
+       changeBackground(grid, UserInfo.getColor());
 
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);
@@ -87,8 +104,4 @@ public class Options extends Scenes {
         window.show();
     }
 
-    private static void changeBackground(GridPane grid, Color colour) {
-       // String colourChosen = Color.valueOf(colour);
-        grid.setStyle("-fx-background-color: " + colour);
-    }
 }

@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.UserInfo;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -8,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -15,6 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -25,6 +28,7 @@ public abstract class Scenes {
     //Object variables
     private static GridPane gp;
     private Scene sc;
+    private static ObservableList<Node> children;
 
     private final int max = new File("resources/avatars/").listFiles().length - 1;
 
@@ -41,7 +45,7 @@ public abstract class Scenes {
     }
 
     //Getters
-    public static GridPane getGp() {
+    public GridPane getGp() {
         return gp;
     }
 
@@ -51,6 +55,10 @@ public abstract class Scenes {
 
     public void setSc(Scene sc) {
         this.sc = sc;
+    }
+
+    public void setChildren(ObservableList<Node> newValue) {
+        this.children = newValue;
     }
 
     double getHEIGHT() {
@@ -88,15 +96,14 @@ public abstract class Scenes {
         return gridPane;
     }
 
+    public static void fontChange(int size, ObservableList<Node> children){
+        if(size == 0) {
+            size = 15; //default font size
+        } else {
+            size = UserInfo.getFontSize();
+        }
 
-    public static void fontChange(int size, GridPane grid){
-        ObservableList<Node> childrenOfScene = grid.getChildren();
-        //System.out.println(childrenOfScene);
-        //System.out.println(getGp().getChildren());
-
-
-/*
-        for (Node child : childrenOfScene) {
+        for (Node child : children) {
             if (child instanceof Button) {
                 Button b = (Button) child;
                 b.setFont(Font.font("Courier", size));
@@ -105,8 +112,20 @@ public abstract class Scenes {
                 Label l = (Label) child;
                 l.setFont(Font.font("Courier", size));
             }
+            if (child instanceof Text) {
+                Text t = (Text) child;
+                t.setFont(Font.font("Courier", size));
+            }
         }
-*/
+    }
+
+    public static void changeBackground(GridPane gridPane, Color color) {
+        if (color == null) {
+            color = new Color(1,1,1,1.0);
+        }
+        String print = color.toString();
+        String formatert = print.replace("0x", "");
+        gridPane.setStyle("-fx-background-color:#" + formatert + ";");
     }
 
     void errorFont(Label l){
@@ -138,4 +157,6 @@ public abstract class Scenes {
         File file = new File("resources/avatars/" + i + ".jpg");
         return new Image(file.toURI().toString());
     }
+
+
 }

@@ -2,9 +2,11 @@ package Scenes;
 
 import Components.UserInfo;
 import Database.DBConnection;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -20,39 +22,37 @@ import java.util.TimerTask;
 
 public class Livechat extends Scenes {
     Timer timer;
-
+    private static GridPane gridPane;
+    private static Button backButton;
 
     public Livechat(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUiControls(getGp());
     }
 
-
-
-     private void addUiControls(GridPane grid) {
-        //int PREFWIDTH = 300;
-       // grid.setGridLinesVisible(true);
-         grid.setAlignment(Pos.TOP_CENTER);
+     private void addUiControls(GridPane gridPane) {
+        this.gridPane = gridPane;
+        gridPane.setAlignment(Pos.TOP_CENTER);
 
         Label headerLabel = new Label("Livechat");
         headerLabel.setFont(Font.font(15));
-        grid.add(headerLabel, 1,1,1,1);
+        gridPane.add(headerLabel, 1,1,1,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setValignment(headerLabel, VPos.CENTER);
 
 
         TextField inputText = new TextField();
-        grid.add(inputText, 1,2,1,1);
+        gridPane.add(inputText, 1,2,1,1);
         inputText.setPrefWidth(100);
 
         Button submitButton = new Button("Submit");
-        grid.add(submitButton, 1,3,1,1);
+        gridPane.add(submitButton, 1,3,1,1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         submitButton.setPrefWidth(100);
         submitButton.setDefaultButton(true);
 
         Text chatText = new Text();
-        grid.add(chatText,1,4,1,1);
+        gridPane.add(chatText,1,4,1,1);
 
         submitButton.setOnAction(e -> {
             String text = inputText.getText();
@@ -60,7 +60,21 @@ public class Livechat extends Scenes {
             showMessages(chatText, inputText);
             inputText.clear();
         });
-     }
+        fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(gridPane, UserInfo.getColor());
+
+         // Go back button
+         backButton = new Button("Go Back");
+         gridPane.add(backButton, 0, 7);
+         GridPane.setHalignment(backButton, HPos.LEFT);
+         GridPane.setValignment(backButton, VPos.BOTTOM);
+
+         ///////Button action//////////////////////////////
+         backButton.setOnAction(e -> {
+             MainScene.mm = new MainMenu(super.getWIDTH(), super.getHEIGHT());
+             MainScene.setScene(MainScene.mm.getSc());
+         });
+    }
 
     private void showMessages(Text chatText, TextField inputText) {
         timer = new Timer();
@@ -78,5 +92,9 @@ public class Livechat extends Scenes {
             }
         };
         timer.schedule(task, 0, 5000);
+    }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
     }
 }
