@@ -97,7 +97,7 @@ public abstract class Scenes {
 
     public static void fontChange(int size, ObservableList<Node> children){
         if(size == 0) {
-            size = 15; //default font size
+            size = 12; //default font size
         } else {
             size = UserInfo.getFontSize();
         }
@@ -120,7 +120,7 @@ public abstract class Scenes {
 
     public static void changeBackground(GridPane gridPane, Color color) {
         if (color == null) {
-            color = new Color(1,1,1,1.0);
+            color = Color.web("0xffe6b3");
         }
         String print = color.toString();
         String formatert = print.replace("0x", "");
