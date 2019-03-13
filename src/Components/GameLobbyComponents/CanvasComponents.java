@@ -169,15 +169,15 @@ public class CanvasComponents {
         return hb;
     }
 
-    private static void timer(){
+    public static void timer(){
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                updateImage();
+                setImage();
             }
         };
-        timer.schedule(task, 0, +5000);
+        timer.schedule(task, 0, +2000);
     }
 
     public static void turnOfTimer() {
