@@ -1,29 +1,27 @@
-package Components;
+package Components.GameLobbyComponents;
 
+import Components.Player;
 import Database.DBConnection;
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class AvatarListView extends Application {
-    private ArrayList<Player> players = DBConnection.getPlayers();
-    private int amtPlayers = players.size();
+public class AvatarComponents {
+    private static ArrayList<Player> players;
+    private static int amtPlayers;
 
-
-    @Override
-    public void start(Stage stage){
-        Image[] listOfImages = fillListOfImage();
+    public static VBox addAvatarUI(){
+        VBox vb = new VBox();
+        players = DBConnection.getPlayers();
+        amtPlayers = players.size();
+       // Image[] listOfImages = fillListOfImage();
         ListView<String> listView = new ListView<String>();
         ObservableList<String> nameAndPoints = usernamesAndPoints();
         listView.setItems(nameAndPoints);
@@ -49,15 +47,10 @@ public class AvatarListView extends Application {
                 }
             }
         });
-        VBox box = new VBox(listView);
-        box.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(box, 400, 400);
-        stage.setScene(scene);
-        stage.show();
+        vb.getChildren().add(listView);
+        return vb;
     }
-
-
-    public ObservableList<String> usernamesAndPoints(){
+    public static ObservableList<String> usernamesAndPoints(){
         ObservableList<String> list = FXCollections.observableArrayList();
         for(int i = 0; i<amtPlayers; i++){
             list.add(players.get(i).getUsername() + ": " + players.get(i).getPoints());
@@ -66,7 +59,7 @@ public class AvatarListView extends Application {
         return null;
     }
 
-    public Image[] fillListOfImage(){
+    public static Image[] fillListOfImage(){
         Image[] list = new Image[players.size()]  ;
         for(int i = 0; i<amtPlayers;i++ ){
             list[i] = getAvatar(players.get(i).getAvatarID());
@@ -76,7 +69,7 @@ public class AvatarListView extends Application {
     }
 
 
-    public Image getAvatar(int i){
+    public static Image getAvatar(int i){
         File file = new File("resources/avatars/" + i + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
