@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.GameLobbyComponents.GameLogicComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import com.sun.tools.javac.Main;
@@ -124,6 +125,7 @@ class MainMenu extends Scenes{
     private void joinGameSystem(){
         DBConnection.enterGame();
         DBConnection.setDrawer();
+        GameLogicComponents.setPrivileges();
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
         MainScene.setScene(MainScene.gl.getSc());
     }
