@@ -125,8 +125,8 @@ class MainMenu extends Scenes{
     private void joinGameSystem(){
         DBConnection.enterGame();
         DBConnection.setDrawer();
-        GameLogicComponents.setPrivileges();
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
+        GameLogicComponents.setPrivileges();
         MainScene.setScene(MainScene.gl.getSc());
     }
 
