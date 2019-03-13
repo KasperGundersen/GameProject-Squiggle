@@ -25,8 +25,8 @@ public class AvatarListView extends Application {
     public void start(Stage stage){
         Image[] listOfImages = fillListOfImage();
         ListView<String> listView = new ListView<String>();
-        ObservableList<String> usersNames = fillUsernames();
-        listView.setItems(usersNames);
+        ObservableList<String> nameAndPoints = usernamesAndPoints();
+        listView.setItems(nameAndPoints);
 
         listView.setCellFactory(param -> new ListCell<String>(){
             private ImageView imageView = new ImageView();
@@ -40,6 +40,8 @@ public class AvatarListView extends Application {
                     for(int i = 0; i<amtPlayers; i++){
                         if(userName.equals(players.get(i).getUsername())){
                             imageView.setImage(listOfImages[i]);
+                            imageView.setFitHeight(50);
+                            imageView.setFitWidth(50);
                         }
                         setText(players.get(i).getUsername());
                         setGraphic(imageView);
@@ -55,11 +57,11 @@ public class AvatarListView extends Application {
     }
 
 
-    public ObservableList<String> fillUsernames(){
-        ObservableList<String> names = FXCollections.observableArrayList();
+    public ObservableList<String> usernamesAndPoints(){
+        ObservableList<String> list = FXCollections.observableArrayList();
         for(int i = 0; i<amtPlayers; i++){
-            names.add(players.get(i).getUsername());
-            return names;
+            list.add(players.get(i).getUsername() + ": " + players.get(i).getPoints());
+            return list;
         }
         return null;
     }
