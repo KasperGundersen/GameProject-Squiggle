@@ -2,12 +2,16 @@ package Components.GameLobbyComponents;
 
 import Components.Player;
 import Database.DBConnection;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.Test;
 
@@ -15,12 +19,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 public class AvatarComponents {
     private static ArrayList<Player> players;
     private static int amtPlayers;
     private static ListView<String> listView = new ListView<String>();
     public static Timer timer3;
+    public static ObservableList data = FXCollections.observableArrayList();
+
 
 
     public static VBox addAvatarUI() {
@@ -30,12 +37,9 @@ public class AvatarComponents {
         // Image[] listOfImages = fillListOfImage();
 
 
-
-        ObservableList data = FXCollections.observableArrayList();
         for (int i = 0; i < amtPlayers; i++) {
-            data.add("");
+            data.add(players.get(i).getUsername());
         }
-
 
         listView.setItems(data);
 
@@ -50,12 +54,12 @@ public class AvatarComponents {
                     setGraphic(null);
                 } else {
                     for (int i = 0; i < amtPlayers; i++) {
-                        // if(userName.equals(players.get(i).getUsername())){
+                        if(userName.equals(players.get(i).getUsername())){
                         iv.setImage(getAvatar(players.get(i).getAvatarID()));
                         iv.setFitHeight(50);
                         iv.setFitWidth(50);
-                        // }
-                        setText(players.get(i).getUsername() + ", score: " + players.get(i).getPoints());
+                        }
+                        setText(userName + ", score: " + players.get(i).getPoints());
                         setGraphic(iv);
                     }
                 }
@@ -79,7 +83,7 @@ public class AvatarComponents {
             @Override
             public void run() {
                 players = DBConnection.getPlayers();
-                listView.refresh();
+                updateData();
             }
         };
         timer3.schedule(task, 0, +5000);
@@ -89,6 +93,51 @@ public class AvatarComponents {
         if (timer3 != null) {
             timer3.cancel();
         }
+    }
+
+    /*
+    public static void updateData() {
+        data.removeAll();
+        for (int i = 0; i < players.size(); i++) {
+            data.add(players.get(i).getUsername());
+        }
+        listView.refresh();
+    }
+    */
+
+    private static void updateData() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    data = FXCollections.observableArrayList();
+                                    for (int i = 0; i < players.size(); i++) {
+                                        data.add(players.get(i).getUsername());
+                                    }
+                                    listView = new ListView<String>();
+                                    listView.setItems(data);
+                                    listView.refresh();
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
     }
 }
 
