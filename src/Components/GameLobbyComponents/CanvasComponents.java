@@ -243,14 +243,4 @@ public class CanvasComponents {
             e.printStackTrace();
         }
     }
-
-    public static void swapCanvas(boolean b){
-        if (b){
-            canvas.toFront();
-        } else{
-            imv.toFront();
-        }
-        canvas.setVisible(b);
-        imv.setVisible(!b);
-    }
 }
