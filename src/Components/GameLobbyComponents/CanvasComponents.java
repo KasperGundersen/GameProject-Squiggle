@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -134,34 +135,36 @@ public class CanvasComponents {
         hb.getChildren().addAll(canvas);
         uploadImage();
         //////////////////////////////////////////////
-        canvas.setOnMousePressed(e-> {
-            if (draw.isSelected()) {
-                gc.setStroke(cp.getValue());
-                gc.beginPath();
-                gc.lineTo(e.getX(), e.getY());
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-            }
-        });
-        canvas.setOnMouseDragged(e-> {
-            if (draw.isSelected()) {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
+        if (UserInfo.getDrawing()) {
+            canvas.setOnMousePressed(e -> {
+                if (draw.isSelected()) {
+                    gc.setStroke(cp.getValue());
+                    gc.beginPath();
+                    gc.lineTo(e.getX(), e.getY());
+                } else if (erase.isSelected()) {
+                    gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
+                }
+            });
+            canvas.setOnMouseDragged(e -> {
+                if (draw.isSelected()) {
+                    gc.lineTo(e.getX(), e.getY());
+                    gc.stroke();
 
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() -1 , eraserSize,eraserSize);
-            }
-        });
-        canvas.setOnMouseReleased(e-> {
-            if(draw.isSelected()){
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-                gc.closePath();
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-            }
-            updateImage();
-        });
+                } else if (erase.isSelected()) {
+                    gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
+                }
+            });
+            canvas.setOnMouseReleased(e -> {
+                if (draw.isSelected()) {
+                    gc.lineTo(e.getX(), e.getY());
+                    gc.stroke();
+                    gc.closePath();
+                } else if (erase.isSelected()) {
+                    gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
+                }
+                updateImage();
+            });
+        }
         return hb;
     }
 
