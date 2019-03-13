@@ -41,6 +41,7 @@ public class CanvasComponents {
 
     private static int WIDTH = 600, HEIGHT = 450;
     private static Timer timer;
+    private static Timer timer2;
     private static Color color = Color.rgb(244,244,244);
 
     //-----------Bottom-----------//
@@ -174,19 +175,19 @@ public class CanvasComponents {
 
     ///////// TEST: Updating image with timer in stead of release stroke
     public static void timer2(){
-        timer = new Timer();
+        timer2 = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 updateImage();
             }
         };
-        timer.schedule(task, 0, +10000);
+        timer2.schedule(task, 0, +10000);
     }
 
     public static void turnOfTimer2() {
-        if (timer != null) {
-            timer.cancel();
+        if (timer2 != null) {
+            timer2.cancel();
         }
     }
 

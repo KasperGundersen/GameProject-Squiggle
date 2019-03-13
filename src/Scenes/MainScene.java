@@ -47,6 +47,7 @@ public class MainScene {
             Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
             Components.GameLobbyComponents.CanvasComponents.turnOfTimer();
             Components.GameLobbyComponents.CanvasComponents.turnOfTimer2(); // May be removed
+            Components.GameLobbyComponents.AvatarComponents.turnOfTimer3();
             stage.close();
         }
     }

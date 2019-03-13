@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.UserInfo;
 import Database.DBConnection;
@@ -116,6 +117,7 @@ public class MainMenu extends Scenes{
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
         GameLogicComponents.setPrivileges();
         MainScene.setScene(MainScene.gl.getSc());
+        AvatarComponents.timer3();
     }
 
     private void logOutSystem(){
