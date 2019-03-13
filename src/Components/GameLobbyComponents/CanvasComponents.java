@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -102,6 +103,9 @@ public class CanvasComponents {
         lineWidth1.setOnAction(e->{
             gc.setLineWidth(1);
             eraserSize = 5;
+            canvas.toFront();
+            canvas.setVisible(true);
+            imv.setVisible(false);
         });
         lineWidth2.setOnAction(e->{
             gc.setLineWidth(4);
@@ -130,8 +134,11 @@ public class CanvasComponents {
         gc = canvas.getGraphicsContext2D();
         canvas.setCursor(Cursor.CROSSHAIR);
         imv = new ImageView();
-
-        hb.getChildren().addAll(canvas, imv);
+        imv.setFitWidth(WIDTH);
+        imv.setFitHeight(HEIGHT);
+        StackPane sp = new StackPane();
+        sp.getChildren().addAll(canvas, imv);
+        hb.getChildren().addAll(sp);
         uploadImage();
         //////////////////////////////////////////////
         canvas.setOnMousePressed(e-> {
@@ -242,4 +249,13 @@ public class CanvasComponents {
         }
     }
 
+    public static void swapCanvas(boolean b){
+        if (b){
+            imv.toFront();
+        } else{
+            canvas.toFront();
+        }
+        imv.setVisible(b);
+        canvas.setVisible(!b);
+    }
 }
