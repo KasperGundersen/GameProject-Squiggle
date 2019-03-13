@@ -134,8 +134,8 @@ public class LogIn extends Scenes {
         changeBackground(getGrid(), UserInfo.getColor());
     }
 
-    private static void loginSystem(){
-        Authentication.logIn();
+    private void loginSystem(){
+        Authentication.logIn(getWIDTH(), getHEIGHT());
         UserInfo.setUserName(getUserName());
         UserInfo.initializeUser(DBConnection.getUserID(getUserName()));
     }

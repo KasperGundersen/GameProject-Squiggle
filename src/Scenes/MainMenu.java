@@ -20,10 +20,10 @@ import javafx.scene.text.FontWeight;
 import java.sql.Connection;
 
 
-class MainMenu extends Scenes{
+public class MainMenu extends Scenes{
     private static GridPane gridPane;
 
-    MainMenu(double width, double height) {
+    public MainMenu(double width, double height) {
         super(width, height);
         addUIControls(getGp());
     }

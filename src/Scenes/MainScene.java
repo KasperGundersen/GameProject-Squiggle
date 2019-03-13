@@ -16,10 +16,9 @@ public class MainScene {
 
     // Scenes
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
-    public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
-    public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
-    public static Scenes su = new SignUp(WIDTH, HEIGHT);
-    public static Scenes mp = new MyPage(WIDTH, HEIGHT);
+    public static Scenes mm = null;
+    public static Scenes su = null;
+    public static Scenes mp = null;
     public static Scenes gl = null;
     public static Scenes lc = null;
 

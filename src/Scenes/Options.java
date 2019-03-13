@@ -76,7 +76,6 @@ public class Options extends Scenes {
            UserInfo.setColor(colorChoosen);
 
            fontChange(UserInfo.getFontSize(), grid.getChildren());
-
            LogIn.fontChange(UserInfo.getFontSize(), LogIn.getNodes());
            MainMenu.fontChange(UserInfo.getFontSize(), MainMenu.getNodes());
            SignUp.fontChange(UserInfo.getFontSize(), SignUp.getNodes());
