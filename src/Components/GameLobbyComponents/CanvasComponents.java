@@ -51,6 +51,7 @@ public class CanvasComponents {
     private static int eraserSize = 5;
     private static int WIDTH = 600, HEIGHT = 450;
     private static Timer timer;
+    private static Color color = Color.rgb(244,244,244);
 
     //-----------Bottom-----------//
     public static HBox addDrawingUI() {
@@ -128,40 +129,33 @@ public class CanvasComponents {
         hb.setAlignment(Pos.CENTER);
         canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.rgb(244,244,244));
+        gc.setFill(color);
         gc.fillRect(0,0,WIDTH, HEIGHT);
         gc.setFill(Color.AQUA);
-        gc.rect(0,0,WIDTH, HEIGHT);
+        gc.setLineWidth(4);
+        gc.strokeRect(0,0,WIDTH, HEIGHT);
         hb.getChildren().addAll(canvas);
         uploadImage();
         //////////////////////////////////////////////
         if (UserInfo.getDrawing()) {
+
             canvas.setOnMousePressed(e -> {
                 if (draw.isSelected()) {
                     gc.setStroke(cp.getValue());
-                    gc.beginPath();
-                    gc.lineTo(e.getX(), e.getY());
                 } else if (erase.isSelected()) {
-                    gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
+                    gc.setStroke(color);
                 }
+                gc.beginPath();
+                gc.lineTo(e.getX(), e.getY());
             });
             canvas.setOnMouseDragged(e -> {
-                if (draw.isSelected()) {
-                    gc.lineTo(e.getX(), e.getY());
-                    gc.stroke();
-
-                } else if (erase.isSelected()) {
-                    gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-                }
+                gc.lineTo(e.getX(), e.getY());
+                gc.stroke();
             });
             canvas.setOnMouseReleased(e -> {
-                if (draw.isSelected()) {
-                    gc.lineTo(e.getX(), e.getY());
-                    gc.stroke();
-                    gc.closePath();
-                } else if (erase.isSelected()) {
-                    gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-                }
+                gc.lineTo(e.getX(), e.getY());
+                gc.stroke();
+                gc.closePath();
                 updateImage();
             });
         }
