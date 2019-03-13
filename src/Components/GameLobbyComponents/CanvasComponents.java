@@ -76,14 +76,15 @@ public class CanvasComponents {
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
         //////////////////////////////////
+
         File pencilFile = new File("resources/icons/pencil.png");
         Image pencil = new Image(pencilFile.toURI().toString());
         File rubberFile = new File("resources/icons/rubber.png");
         Image rubber = new Image(rubberFile.toURI().toString());
         ImageCursor penCur = new ImageCursor(pencil, 40, pencil.getHeight()-40);
         ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
+
         //
-        canvas.setCursor(penCur);
         gc.setLineWidth(1);
         cp.setValue(Color.BLACK);
         //
@@ -177,7 +178,9 @@ public class CanvasComponents {
         DBConnection.uploadImage(blob, "insertWord");
     }
 
+
     private static void updateImage(){
+
         Task<Void> t = new Task<>() {
             @Override
             protected Void call() throws Exception {
