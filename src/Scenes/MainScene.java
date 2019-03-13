@@ -46,6 +46,7 @@ public class MainScene {
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
             Components.GameLobbyComponents.CanvasComponents.turnOfTimer();
+            Components.GameLobbyComponents.CanvasComponents.turnOfTimer2(); // May be removed
             stage.close();
         }
     }

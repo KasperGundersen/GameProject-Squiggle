@@ -3,6 +3,7 @@ package Components.GameLobbyComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 public class CanvasComponents {
     private static ToggleButton draw;
@@ -161,10 +163,28 @@ public class CanvasComponents {
                 setImage();
             }
         };
-        timer.schedule(task, 0, +5000);
+        timer.schedule(task, 0, +1000); // was originaly 5000
     }
 
     public static void turnOfTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    ///////// TEST: Updating image with timer in stead of release stroke
+    public static void timer2(){
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updateImage();
+            }
+        };
+        timer.schedule(task, 0, +1000);
+    }
+
+    public static void turnOfTimer2() {
         if (timer != null) {
             timer.cancel();
         }
@@ -178,7 +198,7 @@ public class CanvasComponents {
         DBConnection.uploadImage(blob, "insertWord");
     }
 
-
+    /*
     private static void updateImage(){
 
         Task<Void> t = new Task<>() {
@@ -196,6 +216,40 @@ public class CanvasComponents {
         th.setDaemon(true);
         th.start();
     }
+    */
+
+    // Method that uploads an updated version of drawing to DB
+    private static void updateImage() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    WritableImage wim = canvasSnapshot(canvas);
+                                    byte[] blob = imageToByte(wim);
+                                    DBConnection.updateImage(blob);
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
+    }
+
 
     // Method that snapshots the canvas and returns WritableImage
     private static WritableImage canvasSnapshot(Canvas canvas) {
