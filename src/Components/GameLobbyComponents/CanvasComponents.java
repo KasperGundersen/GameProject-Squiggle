@@ -35,8 +35,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,6 +44,7 @@ public class CanvasComponents {
     private static ColorPicker cp;
     private static Canvas canvas;
     private static GraphicsContext gc;
+    private static ImageView imv;
 
     private static int eraserSize = 5;
     private static int WIDTH = 600, HEIGHT = 450;
@@ -82,7 +81,6 @@ public class CanvasComponents {
         cp = new ColorPicker();
         cp.setValue(Color.BLACK);
         cp.setOnAction(e-> cp.setValue(cp.getValue()));
-
 
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
         hb.setMargin(hb.getChildren().get(1),new Insets(0,0,0,10));
@@ -131,7 +129,9 @@ public class CanvasComponents {
         canvas.setStyle("-fx-background-color: #495");
         gc = canvas.getGraphicsContext2D();
         canvas.setCursor(Cursor.CROSSHAIR);
-        hb.getChildren().add(canvas);
+        imv = new ImageView();
+
+        hb.getChildren().addAll(canvas, imv);
         uploadImage();
         //////////////////////////////////////////////
         canvas.setOnMousePressed(e-> {
@@ -162,7 +162,6 @@ public class CanvasComponents {
                 gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
             }
         });
-
         return hb;
     }
 
@@ -235,7 +234,7 @@ public class CanvasComponents {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());
             if(bi != null){
               Image img = SwingFXUtils.toFXImage(bi, null);
-              gc.drawImage(img, WIDTH, HEIGHT);
+              imv.setImage(img);
               System.out.println("its drawn");
             }
         }catch (IOException e){

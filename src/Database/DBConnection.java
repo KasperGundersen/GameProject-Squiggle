@@ -570,7 +570,7 @@ public class DBConnection {
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()){
-                return res.getBinaryStream("drawing");
+                return res.getBlob("drawing").getBinaryStream();
             }
         } catch (SQLException e) {
             e.printStackTrace();
