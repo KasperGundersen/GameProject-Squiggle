@@ -64,7 +64,6 @@ public class AvatarComponents {
                     }
                 }
             }
-
         });
         vb.getChildren().add(listView);
         return vb;

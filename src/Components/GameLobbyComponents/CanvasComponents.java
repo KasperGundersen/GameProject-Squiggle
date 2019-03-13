@@ -277,8 +277,8 @@ public class CanvasComponents {
         try {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());
             if(bi != null){
-              Image img = SwingFXUtils.toFXImage(bi, null);
-              gc.drawImage(img, 0,0);
+                Image img = SwingFXUtils.toFXImage(bi, null);
+                gc.drawImage(img, 0,0);
             }
         }catch (IOException e){
             e.printStackTrace();
