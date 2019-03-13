@@ -526,16 +526,31 @@ public class DBConnection {
     }
 
     // Uploads image to database
-    public static void uploadImage(byte[] blob) {
+    public static void uploadImage(byte[] blob, String word) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO DRAW VALUES (?, ?, ?)";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?)";
             prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, 1);
-            prepStmt.setString(2, "insertWord");
-            prepStmt.setBlob(3, new SerialBlob(blob));
+            prepStmt.setString(1, word);
+            prepStmt.setBlob(2, new SerialBlob(blob));
+            prepStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
+    public static void updateImage(byte[] blob){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "UPDATE DRAW SET drawing = ? ORDER BY gameID DESC LIMIT 1;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setBlob(1, new SerialBlob(blob));
             prepStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

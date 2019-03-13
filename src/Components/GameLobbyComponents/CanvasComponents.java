@@ -1,6 +1,14 @@
 package Components.GameLobbyComponents;
 
 import Database.DBConnection;
+import javafx.application.Platform;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,6 +35,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CanvasComponents {
     private static ToggleButton draw;
@@ -37,7 +48,7 @@ public class CanvasComponents {
 
     private static int eraserSize = 5;
     private static int WIDTH = 600, HEIGHT = 450;
-
+    private static Timer timer;
 
     //-----------Bottom-----------//
     public static HBox addDrawingUI() {
@@ -118,13 +129,13 @@ public class CanvasComponents {
         gc = canvas.getGraphicsContext2D();
         canvas.setCursor(Cursor.CROSSHAIR);
         hb.getChildren().add(canvas);
+        uploadImage();
         //////////////////////////////////////////////
         canvas.setOnMousePressed(e-> {
             if (draw.isSelected()) {
                 gc.setStroke(cp.getValue());
                 gc.beginPath();
                 gc.lineTo(e.getX(), e.getY());
-
             }else if(erase.isSelected()){
                 gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
             }
@@ -146,27 +157,64 @@ public class CanvasComponents {
             }else if(erase.isSelected()){
                 gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
             }
+            Task<Void> t = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    Platform.runLater(() -> {
+                        uploadImage();
+                        System.out.println("update");
+                    });
+                    return null;
+                }
+            };
+            Thread th = new Thread(t);
+            th.setDaemon(true);
+            th.start();
         });
+
         return hb;
+    }
+
+    private static void timer(){
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updateImage();
+            }
+        };
+        timer.schedule(task, 0, +5000);
+    }
+
+    public static void turnOfTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 
     //////////// Here begins code that deals with uploading canvas to DB ///////////////
     // The main upload method
-    public static void uploadImage(){
+    private static void uploadImage(){
         WritableImage wim = canvasSnapshot(canvas);
         byte[] blob = imageToByte(wim);
-        DBConnection.uploadImage(blob);
+        DBConnection.uploadImage(blob, "insertWord");
+    }
+
+    private static void updateImage(){
+        WritableImage wim = canvasSnapshot(canvas);
+        byte[] blob = imageToByte(wim);
+        DBConnection.updateImage(blob);
     }
 
     // Method that snapshots the canvas and returns WritableImage
-    public static WritableImage canvasSnapshot(Canvas canvas) {
+    private static WritableImage canvasSnapshot(Canvas canvas) {
         WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
         SnapshotParameters spa = new SnapshotParameters();
         return canvas.snapshot(spa, writableImage);
     }
 
     // Method that turns image into byte[], this is then uploaded as blob
-    public static byte[] imageToByte(WritableImage image) {
+    private static byte[] imageToByte(WritableImage image) {
         BufferedImage bufferimage = SwingFXUtils.fromFXImage(image, null);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         try {
@@ -174,9 +222,10 @@ public class CanvasComponents {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        byte [] data = output.toByteArray();
-        return data;
+        return output.toByteArray();
     }
 
     // Needs method for getting blob and converting back to image
+
+
 }

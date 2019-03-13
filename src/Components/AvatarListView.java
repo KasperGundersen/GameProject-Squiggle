@@ -9,7 +9,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class AvatarListView {
-    private ArrayList<Player> players = DBConnection.getAvatarID();
+    private ArrayList<Player> players = null;//DBConnection.getAvatarID();
     private int amtPlayers = players.size();
     private Image[] listOfImages = new Image[players.size()];
    // private ListView<> listView;
