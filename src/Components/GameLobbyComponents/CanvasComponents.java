@@ -115,7 +115,6 @@ public class CanvasComponents {
         lineWidth4.setOnAction(e->{
             gc.setLineWidth(10);
             eraserSize = 20;
-            setImage();
         });
         return hb;
     }
@@ -127,15 +126,12 @@ public class CanvasComponents {
 
         hb.setAlignment(Pos.CENTER);
         canvas = new Canvas(WIDTH, HEIGHT);
-        canvas.setStyle("-fx-background-color: #495");
         gc = canvas.getGraphicsContext2D();
-        canvas.setCursor(Cursor.CROSSHAIR);
-        imv = new ImageView();
-        imv.setFitWidth(WIDTH);
-        imv.setFitHeight(HEIGHT);
-        StackPane sp = new StackPane();
-        sp.getChildren().addAll(canvas, imv);
-        hb.getChildren().addAll(sp);
+        gc.setFill(Color.rgb(244,244,244));
+        gc.fillRect(0,0,WIDTH, HEIGHT);
+        gc.setFill(Color.AQUA);
+        gc.rect(0,0,WIDTH, HEIGHT);
+        hb.getChildren().addAll(canvas);
         uploadImage();
         //////////////////////////////////////////////
         canvas.setOnMousePressed(e-> {
@@ -161,10 +157,10 @@ public class CanvasComponents {
                 gc.lineTo(e.getX(), e.getY());
                 gc.stroke();
                 gc.closePath();
-                updateImage();
             }else if(erase.isSelected()){
                 gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
             }
+            updateImage();
         });
         return hb;
     }
@@ -177,7 +173,7 @@ public class CanvasComponents {
                 setImage();
             }
         };
-        timer.schedule(task, 0, +2000);
+        timer.schedule(task, 0, +5000);
     }
 
     public static void turnOfTimer() {
@@ -237,7 +233,7 @@ public class CanvasComponents {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());
             if(bi != null){
               Image img = SwingFXUtils.toFXImage(bi, null);
-              imv.setImage(img);
+              gc.drawImage(img, 0,0);
             }
         }catch (IOException e){
             e.printStackTrace();
