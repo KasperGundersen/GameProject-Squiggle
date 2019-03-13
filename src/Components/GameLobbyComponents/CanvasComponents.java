@@ -23,6 +23,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -82,6 +83,7 @@ public class CanvasComponents {
         cp.setValue(Color.BLACK);
         cp.setOnAction(e-> cp.setValue(cp.getValue()));
 
+
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
         hb.setMargin(hb.getChildren().get(1),new Insets(0,0,0,10));
         hb.setStyle("-fx-background-color: #999");
@@ -114,6 +116,7 @@ public class CanvasComponents {
         lineWidth4.setOnAction(e->{
             gc.setLineWidth(10);
             eraserSize = 20;
+            setImage();
         });
         return hb;
     }
@@ -154,22 +157,10 @@ public class CanvasComponents {
                 gc.lineTo(e.getX(), e.getY());
                 gc.stroke();
                 gc.closePath();
+                updateImage();
             }else if(erase.isSelected()){
                 gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
             }
-            Task<Void> t = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    Platform.runLater(() -> {
-                        uploadImage();
-                        System.out.println("update");
-                    });
-                    return null;
-                }
-            };
-            Thread th = new Thread(t);
-            th.setDaemon(true);
-            th.start();
         });
 
         return hb;
@@ -201,9 +192,21 @@ public class CanvasComponents {
     }
 
     private static void updateImage(){
-        WritableImage wim = canvasSnapshot(canvas);
-        byte[] blob = imageToByte(wim);
-        DBConnection.updateImage(blob);
+        Task<Void> t = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Platform.runLater(() -> {
+                    WritableImage wim = canvasSnapshot(canvas);
+                    byte[] blob = imageToByte(wim);
+                    DBConnection.updateImage(blob);
+                    System.out.println("check");
+                });
+                return null;
+            }
+        };
+        Thread th = new Thread(t);
+        th.setDaemon(true);
+        th.start();
     }
 
     // Method that snapshots the canvas and returns WritableImage
@@ -227,5 +230,17 @@ public class CanvasComponents {
 
     // Needs method for getting blob and converting back to image
 
+    private static void setImage(){
+        try {
+            BufferedImage bi = ImageIO.read(DBConnection.getImage());
+            if(bi != null){
+              Image img = SwingFXUtils.toFXImage(bi, null);
+              gc.drawImage(img, WIDTH, HEIGHT);
+              System.out.println("its drawn");
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
 }

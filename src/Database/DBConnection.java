@@ -7,6 +7,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.text.HitInfo;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -557,5 +558,25 @@ public class DBConnection {
         } finally {
             closeConnection(con, prepStmt, null);
         }
+    }
+
+    public static InputStream getImage(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT drawing FROM DRAW ORDER BY gameID DESC LIMIT 1;";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()){
+                return res.getBinaryStream("drawing");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
     }
 }
