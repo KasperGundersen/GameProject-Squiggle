@@ -103,9 +103,6 @@ public class CanvasComponents {
         lineWidth1.setOnAction(e->{
             gc.setLineWidth(1);
             eraserSize = 5;
-            canvas.toFront();
-            canvas.setVisible(true);
-            imv.setVisible(false);
         });
         lineWidth2.setOnAction(e->{
             gc.setLineWidth(4);
