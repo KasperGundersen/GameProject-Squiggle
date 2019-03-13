@@ -3,6 +3,7 @@ package Scenes;
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.UserInfo;
 import Database.DBConnection;
+import Database.HikariCP;
 import com.sun.tools.javac.Main;
 import css.Css;
 import javafx.collections.ObservableList;
@@ -85,14 +86,6 @@ class MainMenu extends Scenes{
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
-        // Livechat button
-        Button livechatButton = new Button("Live chat");
-        Css.setStyle(livechatButton);
-        livechatButton.setPrefHeight(prefHeight);
-        livechatButton.setPrefWidth(prefWidth);
-        gridPane.add(livechatButton, 0, 6, 2, 1);
-        GridPane.setHalignment(livechatButton, HPos.CENTER);
-        GridPane.setValignment(livechatButton, VPos.CENTER);
 
         //Button action
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
@@ -111,11 +104,6 @@ class MainMenu extends Scenes{
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp.getSc());
         });
-        /*livechatButton.setOnAction(e -> {
-            MainScene.lc = new Livechat(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.lc.getSc());
-        });
-        */
 
         //Need to update font everytime
         fontChange(UserInfo.getFontSize(), getNodes());
