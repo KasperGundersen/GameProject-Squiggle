@@ -149,7 +149,7 @@ public class CanvasComponents {
                 gc.lineTo(e.getX(), e.getY());
                 gc.stroke();
                 gc.closePath();
-                updateImage();
+                // updateImage();
             });
         }
         return hb;
@@ -163,7 +163,7 @@ public class CanvasComponents {
                 setImage();
             }
         };
-        timer.schedule(task, 0, +1000); // was originaly 5000
+        timer.schedule(task, 0, +5000); // was originaly 5000
     }
 
     public static void turnOfTimer() {
@@ -181,7 +181,7 @@ public class CanvasComponents {
                 updateImage();
             }
         };
-        timer.schedule(task, 0, +1000);
+        timer.schedule(task, 0, +5000);
     }
 
     public static void turnOfTimer2() {
