@@ -186,7 +186,7 @@ public class MyPage extends Scenes{
         }
         return images;
     }
-// ///////////////////NEW PASSWORD POPUP ///////////////////////////////////
+    // ///////////////////NEW PASSWORD POPUP ///////////////////////////////////
     // Method for creating new password - new popup window
     private void displayNewPassword(String title){
         Stage window = new Stage();

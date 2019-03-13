@@ -32,70 +32,70 @@ public class Options extends Scenes {
         Stage window = new Stage();
         window.setTitle("Options");
 
-       grid = new GridPane();
-       grid.setAlignment(Pos.TOP_CENTER);
+        grid = new GridPane();
+        grid.setAlignment(Pos.TOP_CENTER);
 
-       Label optionsLabel = new Label("Options");
-       optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
-       optionsLabel.setPadding(new Insets(10,10,10,10));
-       grid.add(optionsLabel, 0,0);
+        Label optionsLabel = new Label("Options");
+        optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
+        optionsLabel.setPadding(new Insets(10,10,10,10));
+        grid.add(optionsLabel, 0,0);
 
-       Label backgroundColourLabel = new Label("Background colour");
-       grid.add(backgroundColourLabel, 0,1);
-       ColorPicker cp = new ColorPicker();
-       cp.setMinWidth(150);
-       cp.setValue(UserInfo.getColor());
-       grid.add(cp,1,1);
+        Label backgroundColourLabel = new Label("Background colour");
+        grid.add(backgroundColourLabel, 0,1);
+        ColorPicker cp = new ColorPicker();
+        cp.setMinWidth(150);
+        cp.setValue(UserInfo.getColor());
+        grid.add(cp,1,1);
 
-       Label fontSizeLabel = new Label("Font size");
-       grid.add(fontSizeLabel, 0,2);
-       Spinner fontSizeSpinner = new Spinner();
-       int fontSize = UserInfo.getFontSize();
-       if (fontSize == 0) {
-           fontSize = 12; //Default value
-       }
+        Label fontSizeLabel = new Label("Font size");
+        grid.add(fontSizeLabel, 0,2);
+        Spinner fontSizeSpinner = new Spinner();
+        int fontSize = UserInfo.getFontSize();
+        if (fontSize == 0) {
+            fontSize = 12; //Default value
+        }
 
-       SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,fontSize);
-       fontSizeSpinner.setValueFactory(fontSizeFactory);
-       grid.add(fontSizeSpinner,1,2);
+        SpinnerValueFactory<Integer> fontSizeFactory = new IntegerSpinnerValueFactory(10,25,fontSize);
+        fontSizeSpinner.setValueFactory(fontSizeFactory);
+        grid.add(fontSizeSpinner,1,2);
 
-       Label musicLabel = new Label("Music");
-       grid.add(musicLabel, 0,3);
-       CheckBox musicCheckBox = new CheckBox();
-       grid.add(musicCheckBox, 1,3);
+        Label musicLabel = new Label("Music");
+        grid.add(musicLabel, 0,3);
+        CheckBox musicCheckBox = new CheckBox();
+        grid.add(musicCheckBox, 1,3);
 
 
-       Button submitButton = new Button("Submit");
-       submitButton.setPrefWidth(100);
+        Button submitButton = new Button("Submit");
+        submitButton.setPrefWidth(100);
 
-       submitButton.setOnAction(e -> {
+        submitButton.setOnAction(e -> {
 
-           int fontSizeChoosen = fontSizeFactory.getValue();
-           Color colorChoosen = cp.getValue();
-           UserInfo.setFontSize(fontSizeChoosen);
-           UserInfo.setColor(colorChoosen);
+            int fontSizeChoosen = fontSizeFactory.getValue();
+            Color colorChoosen = cp.getValue();
+            UserInfo.setFontSize(fontSizeChoosen);
+            UserInfo.setColor(colorChoosen);
 
-           fontChange(UserInfo.getFontSize(), grid.getChildren());
-           LogIn.fontChange(UserInfo.getFontSize(), LogIn.getNodes());
-           MainMenu.fontChange(UserInfo.getFontSize(), MainMenu.getNodes());
-           SignUp.fontChange(UserInfo.getFontSize(), SignUp.getNodes());
+            fontChange(UserInfo.getFontSize(), grid.getChildren());
+            LogIn.fontChange(UserInfo.getFontSize(), LogIn.getNodes());
+            MainMenu.fontChange(UserInfo.getFontSize(), MainMenu.getNodes());
+            SignUp.fontChange(UserInfo.getFontSize(), SignUp.getNodes());
 
-           System.out.println(cp.getValue());
+            System.out.println(cp.getValue());
 
-           LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
-           MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
-           SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
+            LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
+            MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
+            SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
 
-           window.close();
+            window.close();
 
         });
 
         grid.add(submitButton, 0,4, 2,1);
-       GridPane.setHalignment(submitButton, HPos.CENTER);
-       GridPane.setMargin(submitButton, new Insets(20,0,20,0));
+        GridPane.setHalignment(submitButton, HPos.CENTER);
+        GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
-       fontChange(UserInfo.getFontSize(), grid.getChildren());
-       changeBackground(grid, UserInfo.getColor());
+        fontChange(UserInfo.getFontSize(), grid.getChildren());
+        changeBackground(grid, UserInfo.getColor());
 
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);

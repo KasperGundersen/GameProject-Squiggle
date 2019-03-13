@@ -112,23 +112,23 @@ public class Squiggle extends Scenes{
 
         /*------------Changing line width-----------*/
         lineWidt1.setOnAction(e->{
-                gc.setLineWidth(1);
-                eraserSize = 5;
+            gc.setLineWidth(1);
+            eraserSize = 5;
         });
 
         lineWidth2.setOnAction(e->{
-                gc.setLineWidth(4);
-                eraserSize = 10;
+            gc.setLineWidth(4);
+            eraserSize = 10;
         });
 
         lineWidth3.setOnAction(e->{
-                gc.setLineWidth(6);
-                eraserSize = 15;
+            gc.setLineWidth(6);
+            eraserSize = 15;
         });
 
         lineWidth4.setOnAction(e->{
-                gc.setLineWidth(10);
-                eraserSize = 20;
+            gc.setLineWidth(10);
+            eraserSize = 20;
         });
     }
 }
