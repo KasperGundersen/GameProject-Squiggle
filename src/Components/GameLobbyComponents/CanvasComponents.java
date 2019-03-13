@@ -146,6 +146,7 @@ public class CanvasComponents {
                 gc.lineTo(e.getX(), e.getY());
                 gc.stroke();
                 gc.closePath();
+                updateImage();
             });
         }
         return hb;
@@ -156,11 +157,7 @@ public class CanvasComponents {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (UserInfo.getDrawing()) {
-                    updateImage();
-                }else {
-                    setImage();
-                }
+                setImage();
             }
         };
         timer.schedule(task, 0, +5000);
@@ -181,20 +178,20 @@ public class CanvasComponents {
     }
 
     private static void updateImage(){
-//        Task<Void> t = new Task<>() {
-//            @Override
-//            protected Void call() throws Exception {
-//                Platform.runLater(() -> {
+        Task<Void> t = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Platform.runLater(() -> {
                     WritableImage wim = canvasSnapshot(canvas);
                     byte[] blob = imageToByte(wim);
                     DBConnection.updateImage(blob);
-//                });
-//                return null;
-//            }
-//        };
-//        Thread th = new Thread(t);
-//        th.setDaemon(true);
-//        th.start();
+                });
+                return null;
+            }
+        };
+        Thread th = new Thread(t);
+        th.setDaemon(true);
+        th.start();
     }
 
     // Method that snapshots the canvas and returns WritableImage
