@@ -128,6 +128,7 @@ class MainMenu extends Scenes{
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
         GameLogicComponents.setPrivileges();
         MainScene.setScene(MainScene.gl.getSc());
+        System.out.println(UserInfo.getDrawing());
     }
 
     private void logOutSystem(){
