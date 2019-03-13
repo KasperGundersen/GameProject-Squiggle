@@ -88,8 +88,6 @@ public class CanvasComponents {
         ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
 
         //
-        gc.setLineWidth(1);
-        cp.setValue(Color.BLACK);
         //
 
         cp.setOnAction(e-> {
@@ -130,6 +128,7 @@ public class CanvasComponents {
         gc.setFill(Color.AQUA);
         gc.setLineWidth(4);
         gc.strokeRect(0,0,WIDTH, HEIGHT);
+        gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
         uploadImage();
         //////////////////////////////////////////////
