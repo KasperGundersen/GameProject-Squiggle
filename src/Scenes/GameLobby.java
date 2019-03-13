@@ -10,7 +10,7 @@ import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
 
 public class GameLobby extends Scenes{
 
-    private BorderPane bp;
+    public static BorderPane bp;
 
     public GameLobby(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -20,7 +20,6 @@ public class GameLobby extends Scenes{
     }
 
     private void addUIControls(BorderPane borderPane){
-        borderPane.setBottom(addDrawingUI());
         borderPane.setCenter(addCanvasUI());
         borderPane.setRight(liveChatUI());
     }
