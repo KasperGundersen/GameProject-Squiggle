@@ -3,16 +3,8 @@ package Components.GameLobbyComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -27,10 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -48,7 +37,6 @@ public class CanvasComponents {
     private static GraphicsContext gc;
     public static ImageView imv;
 
-    private static int eraserSize = 5;
     private static int WIDTH = 600, HEIGHT = 450;
     private static Timer timer;
     private static Color color = Color.rgb(244,244,244);
@@ -82,11 +70,8 @@ public class CanvasComponents {
         tgLineWidth.selectToggle(lineWidth1);
 
         cp = new ColorPicker();
-        cp.setValue(Color.BLACK);
-        cp.setOnAction(e-> cp.setValue(cp.getValue()));
 
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
-        hb.setMargin(hb.getChildren().get(1),new Insets(0,0,0,10));
         hb.setStyle("-fx-background-color: #999");
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
@@ -95,28 +80,35 @@ public class CanvasComponents {
         Image pencil = new Image(pencilFile.toURI().toString());
         File rubberFile = new File("resources/icons/rubber.png");
         Image rubber = new Image(rubberFile.toURI().toString());
+        ImageCursor penCur = new ImageCursor(pencil, 40, pencil.getHeight()-40);
+        ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
+        //
+        canvas.setCursor(penCur);
+        gc.setLineWidth(1);
+        cp.setValue(Color.BLACK);
+        //
 
+        cp.setOnAction(e-> {
+            cp.setValue(cp.getValue());
+        });
         draw.setOnAction(e->{
-            canvas.setCursor(new ImageCursor(pencil));
+            canvas.setCursor( penCur);
         });
         erase.setOnAction(e->{
-            canvas.setCursor(new ImageCursor(rubber));
+            canvas.setCursor(rubCur);
+            gc.setStroke(color);
         });
         lineWidth1.setOnAction(e->{
             gc.setLineWidth(1);
-            eraserSize = 5;
         });
         lineWidth2.setOnAction(e->{
             gc.setLineWidth(4);
-            eraserSize = 10;
         });
         lineWidth3.setOnAction(e->{
             gc.setLineWidth(6);
-            eraserSize = 15;
         });
         lineWidth4.setOnAction(e->{
             gc.setLineWidth(10);
-            eraserSize = 20;
         });
         return hb;
     }
@@ -142,8 +134,6 @@ public class CanvasComponents {
             canvas.setOnMousePressed(e -> {
                 if (draw.isSelected()) {
                     gc.setStroke(cp.getValue());
-                } else if (erase.isSelected()) {
-                    gc.setStroke(color);
                 }
                 gc.beginPath();
                 gc.lineTo(e.getX(), e.getY());
