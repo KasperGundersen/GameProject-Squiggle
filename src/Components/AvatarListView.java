@@ -17,7 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class AvatarListView extends Application {
-    private ArrayList<Player> players = DBConnection.getAvatarID();
+    private ArrayList<Player> players = DBConnection.getPlayers();
     private int amtPlayers = players.size();
 
 
