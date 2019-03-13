@@ -205,7 +205,6 @@ public class CanvasComponents {
                     WritableImage wim = canvasSnapshot(canvas);
                     byte[] blob = imageToByte(wim);
                     DBConnection.updateImage(blob);
-                    System.out.println("check");
                 });
                 return null;
             }
@@ -242,7 +241,6 @@ public class CanvasComponents {
             if(bi != null){
               Image img = SwingFXUtils.toFXImage(bi, null);
               imv.setImage(img);
-              System.out.println("its drawn");
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -251,11 +249,11 @@ public class CanvasComponents {
 
     public static void swapCanvas(boolean b){
         if (b){
-            imv.toFront();
-        } else{
             canvas.toFront();
+        } else{
+            imv.toFront();
         }
-        imv.setVisible(b);
-        canvas.setVisible(!b);
+        canvas.setVisible(b);
+        imv.setVisible(!b);
     }
 }
