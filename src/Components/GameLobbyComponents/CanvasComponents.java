@@ -43,9 +43,9 @@ public class CanvasComponents {
     private static ToggleButton draw;
     private static ToggleButton erase;
     private static ColorPicker cp;
-    private static Canvas canvas;
+    public static Canvas canvas;
     private static GraphicsContext gc;
-    private static ImageView imv;
+    public static ImageView imv;
 
     private static int eraserSize = 5;
     private static int WIDTH = 600, HEIGHT = 450;
