@@ -2,6 +2,7 @@ package Components.GameLobbyComponents;
 
 import Components.Player;
 import Database.DBConnection;
+import Scenes.GameLobby;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,9 +23,7 @@ import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 public class AvatarComponents {
-    private static ArrayList<Player> players;
-    private static int amtPlayers;
-    private static ListView<String> listView = new ListView<String>();
+    // private static ListView<String> listView = new ListView<String>();
     public static Timer timer3;
     public static ObservableList data = FXCollections.observableArrayList();
 
@@ -32,8 +31,9 @@ public class AvatarComponents {
 
     public static VBox addAvatarUI() {
         VBox vb = new VBox();
-        players = DBConnection.getPlayers();
-        amtPlayers = players.size();
+        ListView<String> listView = new ListView<String>();
+        ArrayList<Player> players = DBConnection.getPlayers();
+        int amtPlayers = players.size();
         // Image[] listOfImages = fillListOfImage();
 
 
@@ -81,7 +81,6 @@ public class AvatarComponents {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                players = DBConnection.getPlayers();
                 updateData();
             }
         };
@@ -117,13 +116,14 @@ public class AvatarComponents {
                             @Override
                             public void run() {
                                 try{
-                                    data = FXCollections.observableArrayList();
-                                    for (int i = 0; i < players.size(); i++) {
-                                        data.add(players.get(i).getUsername());
-                                    }
-                                    listView = new ListView<String>();
-                                    listView.setItems(data);
-                                    listView.refresh();
+                                    // data = FXCollections.observableArrayList();
+                                    //for (int i = 0; i < players.size(); i++) {
+                                    //    data.add(players.get(i).getUsername());
+                                    // }
+                                    // listView = new ListView<String>();
+                                    // listView.setItems(data);
+                                    // listView.refresh();
+                                    GameLobby.bp.setLeft(addAvatarUI());
                                 }finally{
                                     latch.countDown();
                                 }
