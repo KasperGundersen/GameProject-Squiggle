@@ -2,9 +2,12 @@ package Scenes;
 
 import Components.Authentication;
 import Components.Toast;
+import Components.UserInfo;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -12,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Tooltip;
 
-import static css.css.toolTip;
+import static css.Css.toolTip;
 
 public class SignUp extends Scenes {
     //UI initialize object variables
@@ -29,6 +32,8 @@ public class SignUp extends Scenes {
 
     private static int avatarID = 1;
 
+    private static GridPane gridPane;
+
     //////////////////////////////////////////////////////////////////////////////
     //constructor from super
     SignUp(double WIDTH, double HEIGHT) {
@@ -39,6 +44,7 @@ public class SignUp extends Scenes {
 
     // Adding UI to Grid
     private void addUIControls(GridPane gridPane) {
+        this.gridPane = gridPane;
         double prefHeight = 40;
         // Add Header
         Label headerLabel = new Label("Sign Up");
@@ -92,7 +98,7 @@ public class SignUp extends Scenes {
         Label avatarLabel = new Label("Avatar : ");
         gridPane.add(avatarLabel, 0,3);
 
-        //Add ImageVie to show avatar
+        //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
         avatarView.setFitWidth(150);
         avatarView.setFitHeight(150);
@@ -197,6 +203,7 @@ public class SignUp extends Scenes {
 
         submitButton.setOnAction(e -> {
             if(Authentication.submit()){
+                MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
                 MainScene.setScene(MainScene.li.getSc());
                 String toastMsg = "Registration successful";
                 Toast.makeText(toastMsg,1000, 500, 500);
@@ -206,15 +213,17 @@ public class SignUp extends Scenes {
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
 
         rightButton.setOnAction(e -> {
-            avatarID = super.loopAvatar(avatarID,1, 1,4);
+            avatarID = super.loopAvatar(avatarID,1, 1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
 
         leftButton.setOnAction(e -> {
-            avatarID = super.loopAvatar(avatarID, -1,1,4);
+            avatarID = super.loopAvatar(avatarID, -1,1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
 
+        fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
     ///////////////////Dead-Methods////////////////////////////////////////
     public static void visibleUserMail(boolean b){
@@ -255,5 +264,14 @@ public class SignUp extends Scenes {
     }
     public static int getAvatarID() {
         return avatarID;
+    }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
+    }
+
+    //Must make an own method to get the GridPane dedicated to each scene
+    public static GridPane getGrid() {
+        return gridPane;
     }
 }

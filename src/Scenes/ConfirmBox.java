@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Database.DBConnection;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,8 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.sql.Connection;
-import static css.css.confirmButton;
+import static css.Css.confirmButton;
 
 class ConfirmBox{
     private static boolean answer;
@@ -36,6 +36,7 @@ class ConfirmBox{
 
         yesButton.setOnAction(e -> {
             answer = true;
+            //Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
             stage.close();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();

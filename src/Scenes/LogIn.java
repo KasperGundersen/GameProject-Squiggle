@@ -3,16 +3,17 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
+import css.Css;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.sql.Connection;
-
-import static css.css.toolTip;
+import static css.Css.toolTip;
 
 public class LogIn extends Scenes {
 
@@ -22,6 +23,9 @@ public class LogIn extends Scenes {
 
     // Error message
     private static Label loginError;
+
+    //Change by Max:
+    private static GridPane gridPane;
 
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -44,10 +48,13 @@ public class LogIn extends Scenes {
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
+        //Changes by Max:
+        this.gridPane = gridPane;
 
         // Add Header
         Label headerLabel = new Label("Login");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        headerLabel.setStyle("-fx-font-size: 40px;");
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
@@ -64,6 +71,7 @@ public class LogIn extends Scenes {
 
         // Add Name Text Field
         nameField = new TextField();
+        Css.setStyle(nameField);
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
@@ -74,12 +82,14 @@ public class LogIn extends Scenes {
 
         // Add Password Field
         passwordField = new PasswordField();
+        Css.setStyle(passwordField);
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
 
         // Add Login Button
         Button logInButton = new Button("Login");
+        Css.setStyle(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
         logInButton.setPrefWidth(100);
@@ -89,6 +99,7 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
+        Css.setStyle(regButton);
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(300);
         gridPane.add(regButton, 0, 5, 2, 1);
@@ -97,6 +108,7 @@ public class LogIn extends Scenes {
 
         // Add option button
         Button optionButton = new Button("Options");
+        Css.setStyle(optionButton);
         gridPane.add(optionButton, 4, 14);
 
         // Tooltips
@@ -117,10 +129,13 @@ public class LogIn extends Scenes {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
+
+        fontChange(UserInfo.getFontSize(), getNodes());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
-    private static void loginSystem(){
-        Authentication.logIn();
+    private void loginSystem(){
+        Authentication.logIn(getWIDTH(), getHEIGHT());
         UserInfo.setUserName(getUserName());
         UserInfo.initializeUser(DBConnection.getUserID(getUserName()));
     }
@@ -132,4 +147,13 @@ public class LogIn extends Scenes {
     public static void setTextLoginError(String newText) {
         loginError.setText(newText);
     }
+
+    public static ObservableList<Node> getNodes() {
+        return gridPane.getChildren();
+    }
+
+    public static GridPane getGrid() {
+        return gridPane;
+    }
+
 }

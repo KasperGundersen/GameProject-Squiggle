@@ -1,8 +1,10 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 public class MainScene {
@@ -12,12 +14,13 @@ public class MainScene {
 
     private static Stage stage;
 
+    // Scenes
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
-    public static Scenes mm = new MainMenu(WIDTH, HEIGHT);
-    public static Scenes sq = new Squiggle(WIDTH, HEIGHT);
-    public static Scenes su = new SignUp(WIDTH, HEIGHT);
-    public static Scenes mp = new MyPage(WIDTH, HEIGHT);
-    public static Scenes lc = new Livechat(WIDTH, HEIGHT);
+    public static Scenes mm = null;
+    public static Scenes su = null;
+    public static Scenes mp = null;
+    public static Scenes gl = null;
+    public static Scenes lc = null;
 
 
     // User
@@ -41,6 +44,10 @@ public class MainScene {
     }
     private void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
+            Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
+            Components.GameLobbyComponents.CanvasComponents.turnOfTimer();
+            Components.GameLobbyComponents.CanvasComponents.turnOfTimer2(); // May be removed
+            Components.GameLobbyComponents.AvatarComponents.turnOfTimer3();
             stage.close();
         }
     }

@@ -28,7 +28,7 @@ public class Squiggle extends Scenes{
     public Squiggle(double width, double height) {
         super(width, height);
         bp = new BorderPane();
-        setSc(new Scene(bp, width, height));
+        //setSc(new Scene(bp, width, height));
         addUIControls(getGp());
     }
     private double eraserSize;
@@ -104,37 +104,6 @@ public class Squiggle extends Scenes{
 
         eraserSize = 5;
 
-        canvas.setOnMousePressed(e-> {
-            if (draw.isSelected()) {
-                gc.setStroke(cp.getValue());
-                gc.beginPath();
-                gc.lineTo(e.getX(), e.getY());
-
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-            }
-        });
-
-        canvas.setOnMouseDragged(e-> {
-            if (draw.isSelected()) {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() -1 , eraserSize,eraserSize);
-            }
-        });
-
-        canvas.setOnMouseReleased(e-> {
-            if(draw.isSelected()){
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-                gc.closePath();
-            }else if(erase.isSelected()){
-                gc.clearRect(e.getX() - 1, e.getY() - 1, eraserSize, eraserSize);
-            }
-        });
-
         /*---------Changing Cursors------------*/
         draw.setOnAction(e->{
             canvas.setCursor(new ImageCursor(pencil));
@@ -146,23 +115,23 @@ public class Squiggle extends Scenes{
 
         /*------------Changing line width-----------*/
         lineWidt1.setOnAction(e->{
-                gc.setLineWidth(1);
-                eraserSize = 5;
+            gc.setLineWidth(1);
+            eraserSize = 5;
         });
 
         lineWidth2.setOnAction(e->{
-                gc.setLineWidth(4);
-                eraserSize = 10;
+            gc.setLineWidth(4);
+            eraserSize = 10;
         });
 
         lineWidth3.setOnAction(e->{
-                gc.setLineWidth(6);
-                eraserSize = 15;
+            gc.setLineWidth(6);
+            eraserSize = 15;
         });
 
         lineWidth4.setOnAction(e->{
-                gc.setLineWidth(10);
-                eraserSize = 20;
+            gc.setLineWidth(10);
+            eraserSize = 20;
         });
     }
 }

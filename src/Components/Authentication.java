@@ -1,9 +1,7 @@
 package Components;
 
 import Database.DBConnection;
-import Scenes.MainScene;
-import Scenes.SignUp;
-import Scenes.LogIn;
+import Scenes.*;
 
 import javax.security.auth.login.LoginContext;
 import java.sql.Connection;
@@ -15,7 +13,6 @@ public class Authentication {
 
 
     public static boolean submit(){
-        Connection con = DBConnection.getCon();
         String username = SignUp.getName();
         String mail = SignUp.getMail();
         String password = SignUp.getPassword();
@@ -64,7 +61,7 @@ public class Authentication {
         return false;
     }
 
-    public static void logIn() {
+    public static void logIn(double WIDTH, double HEIGHT) {
         String username = LogIn.getUserName();
         String password = LogIn.getPassword();
         //Getting salt from db using username
@@ -77,7 +74,7 @@ public class Authentication {
         //Check if
         if((DBConnection.exists("userName", username))&&(DBConnection.exists("password", hash))) {
             if (!DBConnection.getLoggedIn(username)) {
-                SignUp.visibleEmptyPassword(false);
+                MainScene.mm = new MainMenu(WIDTH, HEIGHT);
                 MainScene.setScene(MainScene.mm.getSc());
                 DBConnection.setLoggedIn(username, 1);
             } else {
