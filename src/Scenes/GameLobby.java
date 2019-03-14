@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import static Components.GameLobbyComponents.AvatarComponents.addAvatarUI;
 import static Components.GameLobbyComponents.CanvasComponents.*;
 import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
+import static Components.GameLobbyComponents.TimerComponent.addTimerUI;
 
 public class GameLobby extends Scenes{
 
@@ -25,6 +26,7 @@ public class GameLobby extends Scenes{
         borderPane.setCenter(addCanvasUI());
         borderPane.setRight(liveChatUI());
         borderPane.setLeft(addAvatarUI());
+        borderPane.setTop(addTimerUI());
     }
 
 }
