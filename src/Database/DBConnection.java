@@ -10,6 +10,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DBConnection {
 
@@ -575,6 +576,37 @@ public class DBConnection {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
+    }
+
+    public static String getRandomWord(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int wordCount = 0;
+        String word = null;
+        Random random = new Random();
+        try{
+            con = HikariCP.getCon();
+            String countQuery = "SELECT COUNT(*) FROM LIBRARY;";
+            prepStmt = con.prepareStatement(countQuery);
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                wordCount = res.getInt(1);
+            }
+            int next = random.nextInt(wordCount);
+            String wordQuery = "SELECT word FROM LIBRARY WHERE wordID = " + next + ";";
+            prepStmt = con.prepareStatement(wordQuery);
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                word = res.getString(1);
+            }
+            return word;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
             closeConnection(con, prepStmt, res);
         }
         return null;

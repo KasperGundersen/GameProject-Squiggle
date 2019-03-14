@@ -28,10 +28,11 @@ public class AvatarComponents {
     public static ListView<String> listView;
     public static ArrayList<Player> players;
     public static Timer timer3;
-    public static ObservableList data = FXCollections.observableArrayList();
+    public static ObservableList data;
 
     public static VBox addAvatarUI() {
         VBox vb = new VBox();
+        data = FXCollections.observableArrayList();
         listView = new ListView<>();
         setIntoLV();
         listView.setItems(data);
@@ -66,9 +67,7 @@ public class AvatarComponents {
     private static void setIntoLV(){
         players = DBConnection.getPlayers();
         for(Player p : players) {
-            if(exists(p.getUsername())) {
                 data.add(p.getUsername());
-            }
         }
         listView.setCellFactory(param -> new ListCell<>() {
             private ImageView iv = new ImageView();
@@ -106,10 +105,8 @@ public class AvatarComponents {
                             @Override
                             public void run() {
                                 try{
-                                    players = DBConnection.getPlayers();
+                                    listView.getItems().clear();
                                     setIntoLV();
-                                    listView.refresh();
-                                    System.out.println(players.toString());
                                 }finally{
                                     latch.countDown();
                                 }
@@ -123,15 +120,6 @@ public class AvatarComponents {
             }
         };
         service.start();
-    }
-
-    private static boolean exists(String s){
-        for (Object o : data){
-            if(o.equals(s)){
-                return false;
-            }
-        }
-        return true;
     }
 }
 

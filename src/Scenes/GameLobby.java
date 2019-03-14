@@ -10,6 +10,7 @@ import static Components.GameLobbyComponents.AvatarComponents.addAvatarUI;
 import static Components.GameLobbyComponents.CanvasComponents.*;
 import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
 import static Components.GameLobbyComponents.TimerComponent.addTimerUI;
+import static Components.GameLobbyComponents.WordComponents.addWordUI;
 
 public class GameLobby extends Scenes{
 
@@ -27,6 +28,7 @@ public class GameLobby extends Scenes{
         borderPane.setRight(liveChatUI());
         borderPane.setLeft(addAvatarUI());
         borderPane.setTop(addTimerUI());
+        borderPane.setTop(addWordUI());
     }
 
 }
