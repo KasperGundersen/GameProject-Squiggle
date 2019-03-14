@@ -1,12 +1,15 @@
 package Components.GameLobbyComponents;
 
 import Database.DBConnection;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
@@ -20,6 +23,10 @@ public class LiveChatComponents {
     //-----------Right-----------//
     public static VBox liveChatUI(){
         VBox vb = new VBox();
+        Label livechatLabel = new Label("Live chat:");
+        livechatLabel.setFont(new Font(20));
+        livechatLabel.setPadding(new Insets(0,130, 0, 0));
+        //livechatLabel.setAlignment(Pos.TOP_LEFT);
         sp = new ScrollPane();
         Text lc = new Text();
         sp.setContent(lc);
@@ -31,7 +38,7 @@ public class LiveChatComponents {
         btn.setDefaultButton(true);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);
-        vb.getChildren().addAll(sp,hb);
+        vb.getChildren().addAll(livechatLabel, sp,hb);
         vb.setAlignment(Pos.BOTTOM_CENTER);
         showMessages(lc, tf);
 

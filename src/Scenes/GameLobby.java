@@ -4,12 +4,14 @@ import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 
 import static Components.GameLobbyComponents.AvatarComponents.addAvatarUI;
 import static Components.GameLobbyComponents.CanvasComponents.*;
 import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
 import static Components.GameLobbyComponents.TimerComponent.addTimerUI;
+import static Components.GameLobbyComponents.WordComponents.addWordUI;
 
 public class GameLobby extends Scenes{
 
@@ -26,7 +28,11 @@ public class GameLobby extends Scenes{
         borderPane.setCenter(addCanvasUI());
         borderPane.setRight(liveChatUI());
         borderPane.setLeft(addAvatarUI());
-        borderPane.setTop(addTimerUI());
+        HBox hb = new HBox();
+        hb.setSpacing(30);
+        hb.getChildren().addAll(addTimerUI(), addWordUI());
+        borderPane.setTop(hb);
+        // borderPane.setTop(addWordUI());
     }
 
 }
