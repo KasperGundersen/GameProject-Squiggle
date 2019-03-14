@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
@@ -72,7 +73,7 @@ public class Squiggle extends Scenes{
 
         /*-------------Drawing CanvasComponents-------------*/
         Canvas canvas = new Canvas(800, 580);
-        gridPane.add(canvas, 1,1,5,5);
+        bp.setCenter(canvas);
 
         ColorPicker cp = new ColorPicker();
         cp.setValue(Color.BLACK);
@@ -88,13 +89,16 @@ public class Squiggle extends Scenes{
         });
 
         /*---------Grouping buttons together in a box----------*/
-        VBox buttons = new VBox(10);
+        VBox buttons = new VBox(8);
         buttons.getChildren().addAll(draw, erase, cp, lineWidt1, lineWidth2, lineWidth3, lineWidth4);
         buttons.setPadding(new Insets(5));
         buttons.setStyle("-fx-background-color: #999");
         buttons.setPrefWidth(60);
+        //This doesnt work for some reason
+        buttons.setPrefHeight(60);
 
-        gridPane.add(buttons, 0,0);
+        bp.setLeft(buttons);
+
 
         /*-----------Drawing Logic------------*/
 
