@@ -4,12 +4,14 @@ import Components.Player;
 import Database.DBConnection;
 import Scenes.GameLobby;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -23,60 +25,28 @@ import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 public class AvatarComponents {
-    // private static ListView<String> listView = new ListView<String>();
+    public static ListView<String> listView;
+    public static ArrayList<Player> players;
     public static Timer timer3;
     public static ObservableList data = FXCollections.observableArrayList();
 
-
-
     public static VBox addAvatarUI() {
         VBox vb = new VBox();
-        ListView<String> listView = new ListView<String>();
-        ArrayList<Player> players = DBConnection.getPlayers();
-        int amtPlayers = players.size();
-        // Image[] listOfImages = fillListOfImage();
-
-
-        for (int i = 0; i < amtPlayers; i++) {
-            data.add(players.get(i).getUsername());
-        }
-
+        listView = new ListView<>();
+        setIntoLV();
         listView.setItems(data);
-
-        listView.setCellFactory(param -> new ListCell<String>() {
-            private ImageView iv = new ImageView();
-
-            @Override
-            public void updateItem(String userName, boolean empty) {
-                super.updateItem(userName, empty);
-                if (empty) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    for (int i = 0; i < amtPlayers; i++) {
-                        if(userName.equals(players.get(i).getUsername())){
-                        iv.setImage(getAvatar(players.get(i).getAvatarID()));
-                        iv.setFitHeight(50);
-                        iv.setFitWidth(50);
-                        }
-                        setText(userName + ", score: " + players.get(i).getPoints());
-                        setGraphic(iv);
-                    }
-                }
-            }
-        });
         vb.getChildren().add(listView);
+        timer3();
         return vb;
     }
 
-    public static Image getAvatar ( int i){
+    private static Image getAvatar ( int i){
         File file = new File("resources/avatars/" + i + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
-
-    public static void timer3(){
+    private static void timer3(){
         timer3 = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -93,15 +63,35 @@ public class AvatarComponents {
         }
     }
 
-    /*
-    public static void updateData() {
-        data.removeAll();
-        for (int i = 0; i < players.size(); i++) {
-            data.add(players.get(i).getUsername());
+    private static void setIntoLV(){
+        players = DBConnection.getPlayers();
+        for(Player p : players) {
+            if(exists(p.getUsername())) {
+                data.add(p.getUsername());
+            }
         }
-        listView.refresh();
+        listView.setCellFactory(param -> new ListCell<>() {
+            private ImageView iv = new ImageView();
+            @Override
+            public void updateItem(String userName, boolean empty) {
+                super.updateItem(userName, empty);
+                if (empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    for(Player p : players){
+                        if(userName.equals(p.getUsername())){
+                            iv.setImage(getAvatar(p.getAvatarID()));
+                            iv.setFitHeight(50);
+                            iv.setFitWidth(50);
+                        }
+                        setText(userName + ", score: " + p.getPoints());
+                        setGraphic(iv);
+                    }
+                }
+            }
+        });
     }
-    */
 
     private static void updateData() {
         Service<Void> service = new Service<Void>() {
@@ -116,14 +106,10 @@ public class AvatarComponents {
                             @Override
                             public void run() {
                                 try{
-                                    // data = FXCollections.observableArrayList();
-                                    //for (int i = 0; i < players.size(); i++) {
-                                    //    data.add(players.get(i).getUsername());
-                                    // }
-                                    // listView = new ListView<String>();
-                                    // listView.setItems(data);
-                                    // listView.refresh();
-                                    GameLobby.bp.setLeft(addAvatarUI());
+                                    players = DBConnection.getPlayers();
+                                    setIntoLV();
+                                    listView.refresh();
+                                    System.out.println(players.toString());
                                 }finally{
                                     latch.countDown();
                                 }
@@ -137,6 +123,15 @@ public class AvatarComponents {
             }
         };
         service.start();
+    }
+
+    private static boolean exists(String s){
+        for (Object o : data){
+            if(o.equals(s)){
+                return false;
+            }
+        }
+        return true;
     }
 }
 
