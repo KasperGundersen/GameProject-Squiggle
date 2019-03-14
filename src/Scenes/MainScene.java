@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class MainScene {
 
     private static final double HEIGHT = 600;
@@ -46,8 +48,9 @@ public class MainScene {
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
             Components.GameLobbyComponents.CanvasComponents.turnOfTimer();
-            Components.GameLobbyComponents.CanvasComponents.turnOfTimer2(); // May be removed
+            Components.GameLobbyComponents.CanvasComponents.turnOfTimer2();
             Components.GameLobbyComponents.AvatarComponents.turnOfTimer3();
+            Components.GameLobbyComponents.TimerComponent.turnOffTimer4();
             stage.close();
         }
     }

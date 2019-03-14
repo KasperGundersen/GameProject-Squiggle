@@ -7,6 +7,7 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +23,7 @@ public class TimerComponent {
         timeRemaining = 80;
         VBox vb = new VBox();
         countDown = new Label("Remaining time: " + timeRemaining);
+        countDown.setFont(new Font(20));
         vb.getChildren().add(countDown);
         timer4();
         return vb;
