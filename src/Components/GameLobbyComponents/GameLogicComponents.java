@@ -22,4 +22,8 @@ public class GameLogicComponents {
             CanvasComponents.timer();
         }
     }
+
+    public static void showWord(){
+        boolean drawing = UserInfo.getDrawing();
+    }
 }
