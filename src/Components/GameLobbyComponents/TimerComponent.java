@@ -47,8 +47,8 @@ public class TimerComponent {
                     setTimerText(true);
                 } else {
                     CanvasComponents.turnOfTimer2(); // Turns off timer that updates image.
-                    GameLogicComponents.reset();
                     turnOffTimer4(); // turns off countdown timer
+                    reset();
                 }
             }
         };
@@ -97,5 +97,34 @@ public class TimerComponent {
 
     public static void setTimeReimaing(int newTime) {
         timeRemaining = newTime;
+    }
+
+    private static void reset() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    GameLogicComponents.reset();
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
     }
 }
