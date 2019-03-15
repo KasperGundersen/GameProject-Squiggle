@@ -30,7 +30,7 @@ public class GameLogicComponents {
 
 
         //Update userInfo for drawer();
-
+        setPrivileges();
         //New canvas
         GameLobby.bp.setCenter(CanvasComponents.addCanvasUI());
         //New word
