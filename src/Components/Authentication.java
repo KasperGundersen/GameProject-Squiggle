@@ -54,6 +54,7 @@ public class Authentication {
             SignUp.visibleUserMail(true);
         }else if((username != null) && (mail != null) && (hash != null) && (salt != null)) {
             DBConnection.registerUser(username, hash, salt, mail, avatarID);
+            Email.sendEmail(mail);
             return true;
         }else{
             SignUp.visibleUserMail(false);

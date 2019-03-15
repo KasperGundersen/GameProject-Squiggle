@@ -1,6 +1,7 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Email;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.collections.ObservableList;
@@ -204,7 +205,7 @@ public class SignUp extends Scenes {
         submitButton.setOnAction(e -> {
             if(Authentication.submit()){
                 MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-                MainScene.setScene(MainScene.li.getSc());
+                MainScene.setScene(MainScene.li.getSc());;
                 String toastMsg = "Registration successful";
                 Toast.makeText(toastMsg,1000, 500, 500);
             }
