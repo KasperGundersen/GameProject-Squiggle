@@ -11,24 +11,21 @@ import java.awt.*;
 
 public class WordComponents {
 
-    private static String randomWord;
-
     public static HBox addWordUI(){
         HBox hb = new HBox();
-        showWord();
-        Label word = new Label("Word: " + randomWord);
-        word.setFont(new Font(28));
+        Label word = new Label("Word: " + showWord());
+        word.setFont(new Font(20));
         hb.getChildren().add(word);
         return hb;
     }
 
-    public static void showWord(){
+    private static String showWord(){
         boolean drawing = UserInfo.getDrawing();
         String word = DBConnection.getRandomWord();
         if(drawing){
-            randomWord = word;
+            return word;
         }else{
-            randomWord = word.replaceAll("[a-zA-Z]", "_ ");
+            return word.replaceAll("[a-zA-Z]", "_ ");
         }
     }
 }

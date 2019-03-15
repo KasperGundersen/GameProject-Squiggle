@@ -7,6 +7,7 @@ import Scenes.GameLobby;
 import static Components.GameLobbyComponents.CanvasComponents.*;
 
 public class GameLogicComponents {
+
     public static void setPrivileges() {
         boolean drawing = UserInfo.getDrawing();
         swapCanvas(drawing);
@@ -22,5 +23,14 @@ public class GameLogicComponents {
             turnOfTimer2(); // might be removed
             timer();
         }
+    }
+
+    public static void reset(){
+        //DBConnection.setNewDrawer();
+        //Update userInfo for drawer();
+        //New canvas
+        //New word
+        //New chat
+        //new Timer
     }
 }

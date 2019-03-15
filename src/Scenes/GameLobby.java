@@ -28,11 +28,14 @@ public class GameLobby extends Scenes{
         borderPane.setCenter(addCanvasUI());
         borderPane.setRight(liveChatUI());
         borderPane.setLeft(addAvatarUI());
+        setTop();
+    }
+
+    public static void setTop(){
         HBox hb = new HBox();
-        hb.setSpacing(30);
+        hb.setSpacing(60);
         hb.getChildren().addAll(addTimerUI(), addWordUI());
-        borderPane.setTop(hb);
-        // borderPane.setTop(addWordUI());
+        bp.setTop(hb);
     }
 
 }

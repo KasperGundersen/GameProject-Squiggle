@@ -1,6 +1,7 @@
 package Components.GameLobbyComponents;
 
 import Database.DBConnection;
+import Scenes.GameLobby;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
+
 
 public class TimerComponent {
 
@@ -40,10 +42,8 @@ public class TimerComponent {
             @Override
             public void run() {
                 if (timeRemaining > 80) {
-                    timeRemaining--;
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
-                    timeRemaining--;
                     setTimerText(true);
                 } else {
                     turnOffTimer4(); // turns off countdown timer
@@ -73,6 +73,7 @@ public class TimerComponent {
                             @Override
                             public void run() {
                                 try{
+                                    timeRemaining--;
                                     if (gameStarted) {
                                         countDown.setText("Remaining time: " + timeRemaining);
                                     } else {
