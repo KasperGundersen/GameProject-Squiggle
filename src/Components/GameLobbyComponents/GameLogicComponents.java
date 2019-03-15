@@ -16,6 +16,7 @@ public class GameLogicComponents {
             GameLobby.bp.setBottom(addDrawingUI());
             CanvasComponents.turnOfTimer();
             CanvasComponents.timer2(); // might be removed
+
         } else{
             GameLobby.bp.setBottom(null);
             CanvasComponents.turnOfTimer2(); // might be removed

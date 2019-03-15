@@ -37,7 +37,6 @@ public class CanvasComponents {
     private static ColorPicker cp;
     public static Canvas canvas;
     private static GraphicsContext gc;
-    public static ImageView imv;
 
     private static int WIDTH = 600, HEIGHT = 450;
     private static Timer timer;
@@ -130,7 +129,11 @@ public class CanvasComponents {
         gc.strokeRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
-        uploadImage();
+        if(UserInfo.getDrawing()) {
+            uploadImage();
+        }else{
+            updateImage();
+        }
         //////////////////////////////////////////////
         if (UserInfo.getDrawing()) {
 
