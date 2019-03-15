@@ -46,8 +46,9 @@ public class TimerComponent {
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
                 } else {
-                    turnOffTimer4(); // turns off countdown timer
                     CanvasComponents.turnOfTimer2(); // Turns off timer that updates image.
+                    GameLogicComponents.reset();
+                    turnOffTimer4(); // turns off countdown timer
                 }
             }
         };

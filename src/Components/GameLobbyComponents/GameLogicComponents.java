@@ -29,6 +29,7 @@ public class GameLogicComponents {
         //DBConnection.setNewDrawer();
         //Update userInfo for drawer();
         //New canvas
+
         //New word
         //New chat
         //new Timer
