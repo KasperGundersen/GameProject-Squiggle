@@ -9,6 +9,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
@@ -20,7 +21,11 @@ public class TimerComponent {
     private static int timeRemaining;
 
     public static VBox addTimerUI() {
-        timeRemaining = 80;
+        Date time = DBConnection.getDrawTimer();
+        Date currentTime = new Date();
+        long diff = time.getTime() - currentTime.getTime();
+        timeRemaining = (int) diff / 1000;
+
         VBox vb = new VBox();
         countDown = new Label("Remaining time: " + timeRemaining);
         countDown.setFont(new Font(20));
@@ -34,11 +39,15 @@ public class TimerComponent {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (timeRemaining > 0) {
+                if (timeRemaining > 80) {
                     timeRemaining--;
-                    setTimerText();
+                    setTimerText(false);
+                } else if (timeRemaining > 0) {
+                    timeRemaining--;
+                    setTimerText(true);
                 } else {
-                    turnOffTimer4();
+                    turnOffTimer4(); // turns off countdown timer
+                    CanvasComponents.turnOfTimer2(); // Turns off timer that updates image.
                 }
             }
         };
@@ -51,7 +60,7 @@ public class TimerComponent {
         }
     }
 
-    private static void setTimerText() {
+    private static void setTimerText(boolean gameStarted) {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -64,7 +73,11 @@ public class TimerComponent {
                             @Override
                             public void run() {
                                 try{
-                                    countDown.setText("Remaining time: " + timeRemaining);
+                                    if (gameStarted) {
+                                        countDown.setText("Remaining time: " + timeRemaining);
+                                    } else {
+                                        countDown.setText("Game starts in: " + (timeRemaining - 80));
+                                    }
                                 }finally{
                                     latch.countDown();
                                 }

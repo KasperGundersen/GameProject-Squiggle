@@ -172,7 +172,10 @@ public class CanvasComponents {
         }
     }
 
-    ///////// TEST: Updating image with timer in stead of release stroke
+
+    //////////// Here begins code that deals with uploading canvas to DB ///////////////
+
+    // Updating image with timer in stead of release stroke
     public static void timer2(){
         timer2 = new Timer();
         TimerTask task = new TimerTask() {
@@ -184,39 +187,19 @@ public class CanvasComponents {
         timer2.schedule(task, 0, +5000);
     }
 
+    // Method for turning off timer, used when time has run out
     public static void turnOfTimer2() {
         if (timer2 != null) {
             timer2.cancel();
         }
     }
 
-    //////////// Here begins code that deals with uploading canvas to DB ///////////////
     // The main upload method
     private static void uploadImage(){
         WritableImage wim = canvasSnapshot(canvas);
         byte[] blob = imageToByte(wim);
         DBConnection.uploadImage(blob, "insertWord");
     }
-
-    /*
-    private static void updateImage(){
-
-        Task<Void> t = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                Platform.runLater(() -> {
-                    WritableImage wim = canvasSnapshot(canvas);
-                    byte[] blob = imageToByte(wim);
-                    DBConnection.updateImage(blob);
-                });
-                return null;
-            }
-        };
-        Thread th = new Thread(t);
-        th.setDaemon(true);
-        th.start();
-    }
-    */
 
     // Method that uploads an updated version of drawing to DB
     private static void updateImage() {
@@ -250,7 +233,6 @@ public class CanvasComponents {
         service.start();
     }
 
-
     // Method that snapshots the canvas and returns WritableImage
     private static WritableImage canvasSnapshot(Canvas canvas) {
         WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
@@ -271,7 +253,6 @@ public class CanvasComponents {
     }
 
     // Needs method for getting blob and converting back to image
-
     private static void setImage(){
         try {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());

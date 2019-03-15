@@ -9,7 +9,10 @@ import javafx.scene.text.HitInfo;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.InputStream;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class DBConnection {
@@ -533,7 +536,7 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?)";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
@@ -607,6 +610,39 @@ public class DBConnection {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
+    }
+
+    public static Date getDrawTimer() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        Date date = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT timer FROM DRAW ORDER BY gameID DESC LIMIT 1";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                Date time = res.getTime("timer");
+                Date date1 = res.getDate("timer");
+                Calendar cal1 = Calendar.getInstance();
+                cal1.setTime(date1);
+                Calendar cal2 = Calendar.getInstance();
+                cal2.setTime(time);
+
+                cal1.set(Calendar.HOUR_OF_DAY, cal2.get(Calendar.HOUR_OF_DAY));
+                cal1.set(Calendar.MINUTE, cal2.get(Calendar.MINUTE));
+                cal1.set(Calendar.SECOND, cal2.get(Calendar.SECOND));
+                date = cal1.getTime();
+            }
+
+            return date;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             closeConnection(con, prepStmt, res);
         }
         return null;
