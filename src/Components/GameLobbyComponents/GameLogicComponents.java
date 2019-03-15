@@ -32,12 +32,11 @@ public class GameLogicComponents {
         //Update userInfo for drawer();
 
         //New canvas
-        GameLobby.bp.setCenter(CanvasComponents.addDrawingUI());
+        GameLobby.bp.setCenter(CanvasComponents.addCanvasUI());
         //New word
         GameLobby.setTop();
         //New chat
         GameLobby.bp.setRight(LiveChatComponents.liveChatUI());
         //new Timer
-        TimerComponent.setTimeReimaing(140);
     }
 }
