@@ -27,7 +27,10 @@ public class GameLogicComponents {
 
     public static void reset(){
         //DBConnection.setNewDrawer();
+
+
         //Update userInfo for drawer();
+
         //New canvas
         GameLobby.bp.setCenter(CanvasComponents.addDrawingUI());
         //New word
@@ -35,5 +38,6 @@ public class GameLogicComponents {
         //New chat
         GameLobby.bp.setRight(LiveChatComponents.liveChatUI());
         //new Timer
+        TimerComponent.setTimeReimaing(140);
     }
 }
