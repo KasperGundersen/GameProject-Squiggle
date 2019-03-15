@@ -19,10 +19,16 @@ import javafx.scene.layout.VBox;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AvatarComponents {
     public static ListView<String> listView;
@@ -181,4 +187,17 @@ public class AvatarComponents {
     }
 
     */
+        class rip{
+            public static void main(String[] args) {
+                Date d = new Date(2019, 3,14,16,13,22);
+                Date d1 = new Date(2019, 3,14,15,13,22);
 
+
+                System.out.println(d.getYear() - d1.getYear());
+                System.out.println(d.getMonth() - d1.getMonth());
+                System.out.println(d.getDate() - d1.getDate());
+                System.out.println(d.getHours() - d1.getHours());
+                System.out.println(d.getMinutes() - d1.getMinutes());
+                System.out.println(d.getSeconds() - d1.getSeconds());
+            }
+        }
