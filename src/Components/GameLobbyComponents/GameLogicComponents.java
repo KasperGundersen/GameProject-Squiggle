@@ -29,9 +29,11 @@ public class GameLogicComponents {
         //DBConnection.setNewDrawer();
         //Update userInfo for drawer();
         //New canvas
-
+        GameLobby.bp.setCenter(CanvasComponents.addDrawingUI());
         //New word
+        GameLobby.setTop();
         //New chat
+        GameLobby.bp.setRight(LiveChatComponents.liveChatUI());
         //new Timer
     }
 }
