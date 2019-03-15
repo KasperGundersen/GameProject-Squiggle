@@ -27,11 +27,21 @@ public class GameLogicComponents {
 
     public static void reset(){
         //DBConnection.setNewDrawer();
+
+
         //Update userInfo for drawer();
+
+
+
         //New canvas
 
         //New word
+
+
         //New chat
+
+
         //new Timer
+        TimerComponent.setTimeReimaing(140);
     }
 }

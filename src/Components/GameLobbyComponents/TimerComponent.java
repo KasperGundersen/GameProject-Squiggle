@@ -94,4 +94,8 @@ public class TimerComponent {
         };
         service.start();
     }
+
+    public static void setTimeReimaing(int newTime) {
+        timeRemaining = newTime;
+    }
 }
