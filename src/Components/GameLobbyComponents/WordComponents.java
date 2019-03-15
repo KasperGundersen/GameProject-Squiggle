@@ -17,7 +17,7 @@ public class WordComponents {
         HBox hb = new HBox();
         showWord();
         Label word = new Label("Word: " + randomWord);
-        word.setFont(new Font(20));
+        word.setFont(new Font(28));
         hb.getChildren().add(word);
         return hb;
     }
@@ -28,7 +28,7 @@ public class WordComponents {
         if(drawing){
             randomWord = word;
         }else{
-            randomWord = word.replaceAll("[a-zA-Z]", "_");
+            randomWord = word.replaceAll("[a-zA-Z]", "_ ");
         }
     }
 }

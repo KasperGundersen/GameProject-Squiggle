@@ -584,29 +584,42 @@ public class DBConnection {
         return null;
     }
 
+    public static void setRandomWord(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String wordQuery = "SELECT word FROM LIBRARY ORDER BY RAND() LIMIT 1;";
+            prepStmt = con.prepareStatement(wordQuery);
+            res = prepStmt.executeQuery();
+            String word = null;
+            if(res.next()){
+                word = res.getString(1);
+            }
+            wordQuery = "UPDATE DRAW SET word = ? ORDER BY gameID DESC LIMIT 1";
+            prepStmt = con.prepareStatement(wordQuery);
+            prepStmt.setString(1, word);
+            prepStmt.executeUpdate();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+    }
+
     public static String getRandomWord(){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
-        int wordCount = 0;
-        String word = null;
-        Random random = new Random();
         try{
             con = HikariCP.getCon();
-            String countQuery = "SELECT COUNT(*) FROM LIBRARY;";
-            prepStmt = con.prepareStatement(countQuery);
-            res = prepStmt.executeQuery();
-            if(res.next()){
-                wordCount = res.getInt(1);
-            }
-            int next = random.nextInt(wordCount);
-            String wordQuery = "SELECT word FROM LIBRARY WHERE wordID = " + next + ";";
+            String wordQuery = "SELECT word FROM DRAW ORDER BY gameID DESC LIMIT 1;";
             prepStmt = con.prepareStatement(wordQuery);
             res = prepStmt.executeQuery();
             if(res.next()){
-                word = res.getString(1);
+                return res.getString(1);
             }
-            return word;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {

@@ -72,6 +72,7 @@ public class CanvasComponents {
         tgLineWidth.selectToggle(lineWidth1);
 
         cp = new ColorPicker();
+        cp.setValue(Color.BLACK);
 
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
         hb.setStyle("-fx-background-color: #999");
@@ -131,6 +132,7 @@ public class CanvasComponents {
         hb.getChildren().addAll(canvas);
         if(UserInfo.getDrawing()) {
             uploadImage();
+            DBConnection.setRandomWord();
         }else{
             updateImage();
         }
@@ -198,14 +200,14 @@ public class CanvasComponents {
     }
 
     // The main upload method
-    private static void uploadImage(){
+    public static void uploadImage(){
         WritableImage wim = canvasSnapshot(canvas);
         byte[] blob = imageToByte(wim);
         DBConnection.uploadImage(blob, "insertWord");
     }
 
     // Method that uploads an updated version of drawing to DB
-    private static void updateImage() {
+    public static void updateImage() {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
