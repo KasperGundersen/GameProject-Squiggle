@@ -18,6 +18,11 @@ import javafx.scene.control.Tooltip;
 
 import static css.Css.toolTip;
 
+/**
+ * Signup Scene where user can register
+ *
+ * @author zuimran
+ */
 public class SignUp extends Scenes {
     //UI initialize object variables
     private static TextField nameField;
@@ -36,14 +41,22 @@ public class SignUp extends Scenes {
     private static GridPane gridPane;
 
     //////////////////////////////////////////////////////////////////////////////
-    //constructor from super
+
+    /**
+     * Constructor for the signup scene
+     * @param WIDTH     Width of the scene, double
+     * @param HEIGHT    Height of the scene, double
+     */
     SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         //UI method adds nodes to the pane
         addUIControls(getGp());
     }
 
-    // Adding UI to Grid
+    /**
+     * Adds all the UI to the scene, buttons, labels etc.
+     * @param gridPane  Gridpane that the signup UI is to be added to
+     */
     private void addUIControls(GridPane gridPane) {
         this.gridPane = gridPane;
         double prefHeight = 40;
@@ -227,35 +240,81 @@ public class SignUp extends Scenes {
         changeBackground(getGrid(), UserInfo.getColor());
     }
     ///////////////////Dead-Methods////////////////////////////////////////
+
+    /**
+     * Sets email error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
     public static void visibleUserMail(boolean b){
         errorUserAndMail.setVisible(b);
     }
+
+    /**
+     * Sets password error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
     public static void visiblePassword(boolean b){
         errorPassword.setVisible(b);
     }
+
+    /**
+     * Sets empty username error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
     public static void visibleEmptyUser(boolean b){
         emptyUser.setVisible(b);
     }
+
+    /**
+     * Sets empty email error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
     public static void visibleEmptyMail(boolean b){
         emptyMail.setVisible(b);
     }
+
+    /**
+     * Sets empty password error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
     public static void visibleEmptyPassword(boolean b){
         emptyPassword.setVisible(b);
     }
 
     //////////////////Getters///////////////////////////////////////////////
+
+    /**
+     * Gets username from userName TextField
+     *
+     * @see TextField
+     * @return String value of the textfield's content
+     */
     public static String getName(){
         if(nameField.getText().isEmpty()){
             return null;
         }
         return nameField.getText();
     }
+
+    /**
+     * Gets email from email TextField
+     *
+     * @see TextField
+     * @return String value of the textfield's content
+     */
     public static String getMail(){
         if(emailField.getText().isEmpty()){
             return null;
         }
         return emailField.getText();
     }
+
+    /**
+     * Gets password from password TextField
+     *
+     * @see TextField
+     * @return String value of the textfield's content
+     */
     public static String getPassword(){
         if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
             return passwordField.getText();
@@ -263,15 +322,32 @@ public class SignUp extends Scenes {
             return null;
         }
     }
+
+    /**
+     * Gets avatarID depending on what avatar user Selected
+     *
+     * @see ImageView
+     * @return int value of the image ID
+     */
     public static int getAvatarID() {
         return avatarID;
     }
 
+    /**
+     * Method that returns the current scene's nodes
+     * @return nodes of the current scene
+     */
     public static ObservableList<Node> getNodes() {
         return gridPane.getChildren();
     }
 
     //Must make an own method to get the GridPane dedicated to each scene
+
+    /**
+     * Gets gridpane of current Scene
+     * @see GridPane
+     * @return  GridPane of the current scene
+     */
     public static GridPane getGrid() {
         return gridPane;
     }
