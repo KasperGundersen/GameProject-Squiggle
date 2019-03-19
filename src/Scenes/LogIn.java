@@ -131,7 +131,7 @@ public class LogIn extends Scenes {
         });
 
         fontChange(UserInfo.getFontSize(), getNodes());
-        //changeBackground(getGrid(), UserInfo.getColor());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private void loginSystem(){

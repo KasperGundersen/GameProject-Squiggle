@@ -108,7 +108,7 @@ public class MainMenu extends Scenes{
 
         //Need to update font everytime
         fontChange(UserInfo.getFontSize(), getNodes());
-        //changeBackground(getGrid(), UserInfo.getColor());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private void joinGameSystem(){

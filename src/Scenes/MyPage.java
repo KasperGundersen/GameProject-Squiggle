@@ -166,7 +166,7 @@ public class MyPage extends Scenes{
         backButton.setOnAction(e -> {
             MainScene.setScene(MainScene.mm.getSc());
         });
-        //changeBackground(getGrid(), UserInfo.getColor());
+        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     // Methods that interact with images in resources

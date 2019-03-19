@@ -7,8 +7,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 
-import java.io.File;
-
 import static Components.GameLobbyComponents.AvatarComponents.addAvatarUI;
 import static Components.GameLobbyComponents.CanvasComponents.*;
 import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
@@ -31,8 +29,6 @@ public class GameLobby extends Scenes{
         borderPane.setRight(liveChatUI());
         borderPane.setLeft(addAvatarUI());
         setTop();
-        File file = new File("resources/SquiggleTheme.png");
-        borderPane.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
     }
 
     public static void setTop(){

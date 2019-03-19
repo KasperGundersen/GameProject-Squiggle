@@ -11,12 +11,13 @@ import java.util.ArrayList;
 public class Words {
 
     public static void main(String[] args) {
-        String wordlist = "C:\\Users\\bruker\\Documents\\squiggle\\src\\Database\\wordlist.txt";
+        String wordlist = "C:\\Users\\Zaim Imran\\Documents\\Git\\squiggle\\src\\Database\\wordlist.txt";
         try {
             FileReader readConnection = new FileReader(wordlist);
             BufferedReader readWordlist = new BufferedReader(readConnection);
             String listRead;
             String[] words;
+            DBConnection.createLib();
             while((listRead = readWordlist.readLine())!= null){
                 words = listRead.split("-");
                 for(String s : words) {

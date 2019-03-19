@@ -1,8 +1,5 @@
 package Components;
 
-import Scenes.LogIn;
-import Scenes.SignUp;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -11,6 +8,11 @@ import java.util.Properties;
 public class Email {
     private static final String username = "calfskingames@gmail.com";
     private static final String password = "admin123admin";
+
+    public static void main(String[] args) {
+        sendEmail("max.torre.schau@gmail.com");
+    }
+
 
     public static void sendEmail(String to) {
         String host = "smtp.gmail.com";
@@ -41,12 +43,7 @@ public class Email {
             message.setSubject("Welcome to Calfskin Games");
 
             //Setting the message of the email
-            message.setText("Hello. You are now registered.\n" +
-                            "username: " +
-                            SignUp.getName() + "\n" +
-                            ".Best regards" + "\n" +
-                            "Calfskin Games"
-                    );
+            message.setText("Hello. You are now registred");
 
             //Sending the messaage
             Transport transport = session.getTransport("smtp");

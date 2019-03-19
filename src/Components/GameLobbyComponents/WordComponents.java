@@ -10,7 +10,6 @@ import javafx.scene.text.Font;
 import java.awt.*;
 
 public class WordComponents {
-    private static String word = generateWord();
 
     public static HBox addWordUI(){
         HBox hb = new HBox();
@@ -20,35 +19,13 @@ public class WordComponents {
         return hb;
     }
 
-    public static String getWord(){
-        return word;
-    }
-
-    public static String generateWord(){
-        return DBConnection.getRandomWord();
-    }
-
-    public static String showWord(){
-        String line = "___  ";
-        String space = "   ";
-        String result ="";
+    private static String showWord(){
         boolean drawing = UserInfo.getDrawing();
-        String word = getWord();
+        String word = DBConnection.getRandomWord();
         if(drawing){
             return word;
         }else{
-            int letters = word.length();
-            for(int i = 0; i < word.length(); i++){
-                char letter = word.charAt(i);
-                if(letter != ' '){
-                    result += line;
-                }else{
-                    result += space;
-                }
-
-            }
-            return result;
-           // return word.replaceAll("[a-zA-Z]", "_ ");
+            return word.replaceAll("[a-zA-Z]", "_ ");
         }
     }
 }

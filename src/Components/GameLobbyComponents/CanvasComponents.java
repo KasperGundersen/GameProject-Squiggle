@@ -1,6 +1,5 @@
 package Components.GameLobbyComponents;
 
-import Components.Threads.UploadThread;
 import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
@@ -135,7 +134,7 @@ public class CanvasComponents {
             uploadImage();
             DBConnection.setRandomWord();
         }else{
-            UploadThread.updateImage();
+            updateImage();
         }
         //////////////////////////////////////////////
         if (UserInfo.getDrawing()) {
@@ -161,8 +160,44 @@ public class CanvasComponents {
         return hb;
     }
 
+    public static void timer(){
+        timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                setImage();
+            }
+        };
+        timer.schedule(task, 0, +5000); // was originaly 5000
+    }
+
+    public static void turnOfTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
 
     //////////// Here begins code that deals with uploading canvas to DB ///////////////
+
+    // Updating image with timer in stead of release stroke
+    public static void timer2(){
+        timer2 = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                updateImage();
+            }
+        };
+        timer2.schedule(task, 0, +5000);
+    }
+
+    // Method for turning off timer, used when time has run out
+    public static void turnOfTimer2() {
+        if (timer2 != null) {
+            timer2.cancel();
+        }
+    }
 
     // The main upload method
     public static void uploadImage(){
@@ -171,15 +206,47 @@ public class CanvasComponents {
         DBConnection.uploadImage(blob, "insertWord");
     }
 
+    // Method that uploads an updated version of drawing to DB
+    public static void updateImage() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    WritableImage wim = canvasSnapshot(canvas);
+                                    byte[] blob = imageToByte(wim);
+                                    DBConnection.updateImage(blob);
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
+    }
+
     // Method that snapshots the canvas and returns WritableImage
-    public static WritableImage canvasSnapshot(Canvas canvas) {
+    private static WritableImage canvasSnapshot(Canvas canvas) {
         WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
         SnapshotParameters spa = new SnapshotParameters();
         return canvas.snapshot(spa, writableImage);
     }
 
     // Method that turns image into byte[], this is then uploaded as blob
-    public static byte[] imageToByte(WritableImage image) {
+    private static byte[] imageToByte(WritableImage image) {
         BufferedImage bufferimage = SwingFXUtils.fromFXImage(image, null);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         try {
@@ -191,7 +258,7 @@ public class CanvasComponents {
     }
 
     // Needs method for getting blob and converting back to image
-    public static void setImage(){
+    private static void setImage(){
         try {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());
             if(bi != null){

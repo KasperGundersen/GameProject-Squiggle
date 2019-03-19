@@ -1,9 +1,13 @@
 package Scenes;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class MainScene {
 
@@ -43,10 +47,10 @@ public class MainScene {
     private void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
-            Components.Threads.Timers.turnOffTimer();
-            Components.Threads.Timers.turnOffTimer2();
-            Components.Threads.Timers.turnOffTimer3();
-            Components.Threads.Timers.turnOffTimer4();
+            Components.GameLobbyComponents.CanvasComponents.turnOfTimer();
+            Components.GameLobbyComponents.CanvasComponents.turnOfTimer2();
+            Components.GameLobbyComponents.AvatarComponents.turnOfTimer3();
+            Components.GameLobbyComponents.TimerComponent.turnOffTimer4();
             stage.close();
         }
     }

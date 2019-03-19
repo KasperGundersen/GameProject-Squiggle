@@ -1,7 +1,6 @@
 /* This class has static methods so we wont have to make objects of this class to use its methods */
 package Database;
 
-import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
 import Components.UserInfo;
 import javafx.scene.image.WritableImage;
@@ -23,7 +22,6 @@ public class DBConnection {
     private static final String password = "xaXIMlNC";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
-
 
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
@@ -281,7 +279,7 @@ public class DBConnection {
     }
 
 
-    public static void insertIntoDB(String words) {
+    public static void createLib() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
@@ -289,14 +287,29 @@ public class DBConnection {
             String dropTable = ""
                     + "DROP TABLE LIBRARY;";
             String createTable = ""
-                    + "CREATE TABLE LIBRARY("
-                    + "word VARCHAR(30)"
+                    + "CREATE TABLE LIBRARY( "
+                    + "wordID INT(4) PRIMARY KEY AUTO_INCREMENT, "
+                    + "    word VARCHAR(30) "
                     + ");";
             prepStmt = con.prepareStatement(dropTable);
             prepStmt.executeUpdate();
             prepStmt = con.prepareStatement(createTable);
             prepStmt.executeUpdate();
-            String insert = "INSERT INTO LIBRARY VALUE (\"" +  words + "\");";
+        } catch (SQLSyntaxErrorException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
+    public static void insertIntoDB(String words) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+            String insert = "INSERT INTO LIBRARY VALUE (default, \"" +  words + "\");";
             prepStmt = con.prepareStatement(insert);
             prepStmt.executeUpdate();
         } catch (SQLSyntaxErrorException e) {
@@ -314,20 +327,11 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            if (!(LiveChatComponents.checkWord(message))) {
-                String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
-                prepStmt = con.prepareStatement(query);
-                prepStmt.setInt (1, UserInfo.getUserID());
-                prepStmt.setString (2, message);
-                prepStmt.executeUpdate();
-            } else {
-                String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
-                String username = getUsername(UserInfo.getUserID());
-                prepStmt = con.prepareStatement(query);
-                prepStmt.setInt (1, 0);
-                prepStmt.setString (2, username + " guessed correctly!");
-                prepStmt.executeUpdate();
-            }
+            String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt (1, UserInfo.getUserID());
+            prepStmt.setString (2, message);
+            prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
@@ -360,60 +364,6 @@ public class DBConnection {
         }
         return null;
     }
-
-    public static ArrayList<String> getNewMessages() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            int highestID = getHighestChatID();
-            int tempHighestChatID = UserInfo.getTempHighestChatID();
-            String query = "SELECT input, userID FROM CHAT where ChatID > " + tempHighestChatID + " and ChatID <= " + highestID + ";";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-
-            ArrayList<String> messages = new ArrayList<>();
-            while (res.next()) {
-                if (!(res.getString("input").equals("")) && !(LiveChatComponents.checkWord(res.getString("input")))) {
-                    int userId = res.getInt("userID");
-                    messages.add(getUsername(userId) + ": " + res.getString("input"));
-                }
-            }
-            UserInfo.setTempHighestChatID(getHighestChatID());
-            return messages;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }
-
-    public static int getHighestChatID() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        int result = -1;
-        try {
-            con = HikariCP.getCon();
-            String query = "select max(ChatID) from CHAT";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-            while (res.next()) {
-                result = res.getInt("max(ChatID)");
-            }
-            return result;
-        }catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt,res);
-        }
-        return -1;
-
-
-    }
-
     //Livechat methods end
 
     // Get username given userID
@@ -654,8 +604,16 @@ public class DBConnection {
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String wordQuery = "UPDATE DRAW SET word=(SELECT word FROM LIBRARY ORDER BY rand() LIMIT 1 ) ORDER BY gameiD DESC LIMIT 1";
+            String wordQuery = "SELECT word FROM LIBRARY ORDER BY RAND() LIMIT 1;";
             prepStmt = con.prepareStatement(wordQuery);
+            res = prepStmt.executeQuery();
+            String word = null;
+            if(res.next()){
+                word = res.getString(1);
+            }
+            wordQuery = "UPDATE DRAW SET word = ? ORDER BY gameID DESC LIMIT 1";
+            prepStmt = con.prepareStatement(wordQuery);
+            prepStmt.setString(1, word);
             prepStmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
