@@ -288,15 +288,14 @@ public class DBConnection {
             String dropTable = ""
                     + "DROP TABLE LIBRARY;";
             String createTable = ""
-                    + "CREATE TABLE LIBRARY( "
-                    + "wordID INT(4) PRIMARY KEY AUTO_INCREMENT, "
-                    + "    word VARCHAR(30) "
+                    + "CREATE TABLE LIBRARY("
+                    + "word VARCHAR(30)"
                     + ");";
             prepStmt = con.prepareStatement(dropTable);
             prepStmt.executeUpdate();
             prepStmt = con.prepareStatement(createTable);
             prepStmt.executeUpdate();
-            String insert = "INSERT INTO LIBRARY VALUE (default, \"" +  words + "\");";
+            String insert = "INSERT INTO LIBRARY VALUE (\"" +  words + "\");";
             prepStmt = con.prepareStatement(insert);
             prepStmt.executeUpdate();
         } catch (SQLSyntaxErrorException e) {
