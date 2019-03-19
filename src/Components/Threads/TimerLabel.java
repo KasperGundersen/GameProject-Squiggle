@@ -1,21 +1,17 @@
 package Components.Threads;
 
-import Components.GameLobbyComponents.CanvasComponents;
-import Database.DBConnection;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.image.WritableImage;
 
 import java.util.concurrent.CountDownLatch;
 
-import static Components.GameLobbyComponents.CanvasComponents.canvasSnapshot;
+import static Components.GameLobbyComponents.TimerComponent.countDown;
+import static Components.GameLobbyComponents.TimerComponent.timeRemaining;
 
-public class UploadThread {
+public class TimerLabel {
 
-
-    // Method that uploads an updated version of drawing to DB
-    public static void updateImage() {
+    public static void setTimerText(boolean gameStarted) {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -28,9 +24,12 @@ public class UploadThread {
                             @Override
                             public void run() {
                                 try{
-                                    WritableImage wim = canvasSnapshot(CanvasComponents.canvas);
-                                    byte[] blob = CanvasComponents.imageToByte(wim);
-                                    DBConnection.updateImage(blob);
+                                    timeRemaining--;
+                                    if (gameStarted) {
+                                        countDown.setText("Remaining time: " + timeRemaining);
+                                    } else {
+                                        countDown.setText("Game starts in: " + (timeRemaining - 80));
+                                    }
                                 }finally{
                                     latch.countDown();
                                 }

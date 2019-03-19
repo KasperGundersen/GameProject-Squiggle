@@ -22,6 +22,10 @@ import java.io.File;
 
 import static css.Css.selectorButton;
 
+/**
+ * Abstract class Scenes acts as parent for all the scenes
+ * @author ziumran, nikolard
+ */
 public abstract class Scenes {
 
     //Object variables

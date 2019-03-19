@@ -1,7 +1,7 @@
 package Components.GameLobbyComponents;
 
+import Components.Threads.Timers;
 import Components.UserInfo;
-import Database.DBConnection;
 import Scenes.GameLobby;
 
 import static Components.GameLobbyComponents.CanvasComponents.*;
@@ -16,12 +16,12 @@ public class GameLogicComponents {
     public static void swapCanvas(boolean b) {
         if (b) {
             GameLobby.bp.setBottom(addDrawingUI());
-            turnOfTimer();
-            timer2(); // might be removed
+            Timers.turnOffTimer();
+            Timers.timer2(); // might be removed
         } else {
             GameLobby.bp.setBottom(null);
-            turnOfTimer2(); // might be removed
-            timer();
+            Timers.turnOffTimer2(); // might be removed
+            Timers.timer();
         }
     }
 

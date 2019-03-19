@@ -1,6 +1,7 @@
 package Components.GameLobbyComponents;
 
 import Components.Player;
+import Components.Threads.Timers;
 import Database.DBConnection;
 import Scenes.GameLobby;
 import javafx.application.Platform;
@@ -23,17 +24,16 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import static Components.Threads.Timers.timer3;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AvatarComponents {
     public static ListView<String> listView;
     public static ArrayList<Player> players;
-    public static Timer timer3;
     public static ObservableList data;
 
     public static VBox addAvatarUI() {
@@ -43,7 +43,7 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        timer3();
+        Timers.timer3();
         return vb;
     }
 
@@ -53,22 +53,7 @@ public class AvatarComponents {
         return image;
     }
 
-    private static void timer3(){
-        timer3 = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                updateData();
-            }
-        };
-        timer3.schedule(task, 0, +5000);
-    }
 
-    public static void turnOfTimer3() {
-        if (timer3 != null) {
-            timer3.cancel();
-        }
-    }
 
     private static void setIntoLV(){
         players = DBConnection.getPlayers();
@@ -98,7 +83,7 @@ public class AvatarComponents {
         });
     }
 
-    private static void updateData() {
+    public static void updateData() {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
