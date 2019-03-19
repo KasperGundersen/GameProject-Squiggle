@@ -28,6 +28,7 @@ public class WordComponents {
     public static String showWord(){
         String line = "___  ";
         String space = "   ";
+        String period = ".";
         String result ="";
         boolean drawing = UserInfo.getDrawing();
         String word = getWord();
@@ -36,8 +37,10 @@ public class WordComponents {
         }else{
             for(int i = 0; i < word.length(); i++){
                 char letter = word.charAt(i);
-                if(letter != ' '){
+                if(letter != ' ') {
                     result += line;
+                }else if(letter == '.'){
+                    result += period;
                 }else{
                     result += space;
                 }
