@@ -58,6 +58,12 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
+            if(checkWord(text)){
+
+                lc.setText("Correct word");
+            }else{
+                System.out.println("Wrong word");
+            }
             DBConnection.insertMessage(text);
             //showMessages(lc, tf);
             tf.clear();
@@ -93,6 +99,7 @@ public class LiveChatComponents {
                     sb.append("\n");
                 }
                 chatText.setText(sb.toString());
+
             }
         };
         timer.schedule(task, 0, +5000);
@@ -107,7 +114,7 @@ public class LiveChatComponents {
         }
     }
 
-    public boolean checkWord(String word) {
+    public static boolean checkWord(String word) {
         boolean correct = false;
         if(word.equals(WordComponents.getWord())){
             correct = true;
