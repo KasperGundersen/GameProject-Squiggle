@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.UserInfo;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
@@ -22,6 +24,7 @@ import java.io.File;
 import java.net.URL;
 
 import static css.Css.selectorButton;
+import static javafx.scene.media.AudioClip.INDEFINITE;
 
 /**
  * Abstract class Scenes acts as parent for all the scenes
@@ -98,8 +101,23 @@ public abstract class Scenes {
         File file = new File("resources/SquiggleTheme.png");
         gridPane.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
 
+        final Task music = new Task() {
+            @Override
+            protected Object call() throws Exception {
+                int s = INDEFINITE;
+                AudioClip audio = new AudioClip(getClass().getResource("resources/music/music.wav").toExternalForm());
+                audio.setVolume(0.5f);
+                audio.setCycleCount(s);
+                audio.play();
+                return null;
+            }
+        };
+        Thread thread = new Thread(music);
+        thread.start();
+
         return gridPane;
     }
+
 
     public static void fontChange(int size, ObservableList<Node> children){
         if(size == 0) {
