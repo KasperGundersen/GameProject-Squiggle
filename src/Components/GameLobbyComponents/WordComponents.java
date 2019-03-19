@@ -14,7 +14,7 @@ public class WordComponents {
 
     public static HBox addWordUI(){
         HBox hb = new HBox();
-        Label word = new Label("Word: " + getWord());
+        Label word = new Label("Word: " + showWord());
         word.setFont(new Font(20));
         hb.getChildren().add(word);
         return hb;
@@ -28,7 +28,7 @@ public class WordComponents {
         return DBConnection.getRandomWord();
     }
 
-    public String showWord(){
+    public static String showWord(){
         String line = "___";
         String space = "   ";
         String result ="";
@@ -45,6 +45,7 @@ public class WordComponents {
                 }else{
                     result += space;
                 }
+
             }
             return result;
            // return word.replaceAll("[a-zA-Z]", "_ ");
