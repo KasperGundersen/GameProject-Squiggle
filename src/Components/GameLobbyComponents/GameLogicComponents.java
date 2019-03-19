@@ -27,8 +27,6 @@ public class GameLogicComponents {
 
     public static void reset(){
         //DBConnection.setNewDrawer();
-
-
         //Update userInfo for drawer();
         setPrivileges();
         //New canvas
