@@ -109,7 +109,7 @@ public class LiveChatComponents {
         }
     }
 
-    public boolean checkWord(String word) {
+    public static boolean checkWord(String word) {
         boolean correct = false;
         if(word.equals(WordComponents.getWord())){
             correct = true;

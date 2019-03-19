@@ -1,6 +1,7 @@
 /* This class has static methods so we wont have to make objects of this class to use its methods */
 package Database;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
 import Components.UserInfo;
 import javafx.scene.image.WritableImage;
@@ -365,7 +366,7 @@ public class DBConnection {
 
             ArrayList<String> messages = new ArrayList<>();
             while (res.next()) {
-                if (!(res.getString("input").equals(""))) {
+                if (!(res.getString("input").equals("")) && !(LiveChatComponents.checkWord(res.getString("input")))) {
                     int userId = res.getInt("userID");
                     messages.add(getUsername(userId) + ": " + res.getString("input"));
                 }
