@@ -72,6 +72,11 @@ public class LiveChatComponents {
         return vb;
     }
 
+    public static void addCorrectMessage(int userID) {
+        String username = DBConnection.getUsername(userID);
+        messages.add(username + " guessed correctly!");
+    }
+
     /**
      * Shows the messages written in the chat.
      * Gets the messages from methods in DBConnection
@@ -83,6 +88,7 @@ public class LiveChatComponents {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                //Endre til StringBuilder slik at vi ikke lagrer dobbelt
                 ArrayList<String> newMessages = DBConnection.getNewMessages();
                 if (newMessages == null) {
                     return;
@@ -94,10 +100,6 @@ public class LiveChatComponents {
                     sb.append("\n");
                 }
                 sp.setVvalue(1.0);
-                for (int i = 0; i < messages.size(); i++) {
-                    sb.append(messages.get(i));
-                    sb.append("\n");
-                }
                 chatText.setText(sb.toString());
 
             }
