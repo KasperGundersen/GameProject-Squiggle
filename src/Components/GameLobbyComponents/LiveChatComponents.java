@@ -17,12 +17,24 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+/**
+ * The LiveChatComponents class includes the different methods
+ * and JavaFX code in order to implement the livechat.
+ *
+ * @author maxto
+ */
+
 public class LiveChatComponents {
     private static Timer timer = null;
     private static ScrollPane sp;
     private static ArrayList<String> messages = new ArrayList<>();
 
     //-----------Right-----------//
+
+    /**
+     * Implements the layout of the livechat in the gamelobby
+     */
     public static VBox liveChatUI(){
         VBox vb = new VBox();
         Label livechatLabel = new Label("Live chat:");
@@ -54,6 +66,12 @@ public class LiveChatComponents {
         return vb;
     }
 
+    /**
+     * Shows the messages written in the chat.
+     * Gets the messages from methods in DBConnection
+     * @param chatText Text-object which displays the messages
+     * @param inputText
+     */
     private static void showMessages(Text chatText, TextField inputText) {
         timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -69,7 +87,6 @@ public class LiveChatComponents {
                     sb.append(messages.get(i));
                     sb.append("\n");
                 }
-                chatText.setText(sb.toString());
                 sp.setVvalue(1.0);
                 for (int i = 0; i < messages.size(); i++) {
                     sb.append(messages.get(i));
@@ -81,6 +98,9 @@ public class LiveChatComponents {
         timer.schedule(task, 0, +5000);
     }
 
+    /**
+     * Turns of the timer when called
+     */
     public static void turnOfTimer() {
         if (timer != null) {
             timer.cancel();

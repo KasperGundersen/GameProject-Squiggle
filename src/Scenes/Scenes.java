@@ -10,15 +10,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.net.URL;
 
 import static css.Css.selectorButton;
 
@@ -93,6 +94,10 @@ public abstract class Scenes {
         ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
+        //gridPane.setStyle("-fx-background-image: url('https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQxsasGQIwQNwjek3F1nSwlfx60g6XpOggnxw5dyQrtCL_0x8IW')");
+        File file = new File("resources/SquiggleTheme.png");
+        gridPane.setStyle("-fx-background-image: url(" + file.toURI().toString() + ")");
+
         return gridPane;
     }
 
@@ -119,7 +124,7 @@ public abstract class Scenes {
         }
     }
 
-    public static void changeBackground(GridPane gridPane, Color color) {
+    /*public static void changeBackground(GridPane gridPane, Color color) {
         if (color == null) {
             color = Color.web("0xffe6b3");
         }
@@ -127,6 +132,7 @@ public abstract class Scenes {
         String formatert = print.replace("0x", "");
         gridPane.setStyle("-fx-background-color:#" + formatert + ";");
     }
+    */
 
     void errorFont(Label l){
         l.setTextFill(Color.RED);

@@ -237,7 +237,7 @@ public class SignUp extends Scenes {
         });
 
         fontChange(UserInfo.getFontSize(), getNodes());
-        changeBackground(getGrid(), UserInfo.getColor());
+        //changeBackground(getGrid(), UserInfo.getColor());
     }
     ///////////////////Dead-Methods////////////////////////////////////////
 
