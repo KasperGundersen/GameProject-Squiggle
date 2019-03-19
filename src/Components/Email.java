@@ -9,11 +9,6 @@ public class Email {
     private static final String username = "calfskingames@gmail.com";
     private static final String password = "admin123admin";
 
-    public static void main(String[] args) {
-        sendEmail("max.torre.schau@gmail.com");
-    }
-
-
     public static void sendEmail(String to) {
         String host = "smtp.gmail.com";
 

@@ -23,6 +23,7 @@ public class DBConnection {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
 
+
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
         Connection con = null;
@@ -350,6 +351,60 @@ public class DBConnection {
         }
         return null;
     }
+
+    public static ArrayList<String> getNewMessages() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            int highestID = getHighestChatID();
+            int tempHighestChatID = UserInfo.getTempHighestChatID();
+            String query = "SELECT input, userID FROM CHAT where ChatID > " + tempHighestChatID + " and ChatID <= " + highestID + ";";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+
+            ArrayList<String> messages = new ArrayList<>();
+            while (res.next()) {
+                if (!(res.getString("input").equals(""))) {
+                    int userId = res.getInt("userID");
+                    messages.add(getUsername(userId) + ": " + res.getString("input"));
+                }
+            }
+            UserInfo.setTempHighestChatID(getHighestChatID());
+            return messages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
+    }
+
+    public static int getHighestChatID() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int result = -1;
+        try {
+            con = HikariCP.getCon();
+            String query = "select max(ChatID) from CHAT";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                result = res.getInt("max(ChatID)");
+            }
+            return result;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt,res);
+        }
+        return -1;
+
+
+    }
+
     //Livechat methods end
 
     // Get username given userID

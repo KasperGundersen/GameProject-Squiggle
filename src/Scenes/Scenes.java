@@ -31,7 +31,6 @@ public abstract class Scenes {
     //Object variables
     private static GridPane gp;
     private Scene sc;
-    private static ObservableList<Node> children;
 
     private final int max = new File("resources/avatars/").listFiles().length - 1;
 
@@ -61,9 +60,6 @@ public abstract class Scenes {
         this.sc = sc;
     }
 
-    public void setChildren(ObservableList<Node> newValue) {
-        this.children = newValue;
-    }
 
     double getHEIGHT() {
         return HEIGHT;

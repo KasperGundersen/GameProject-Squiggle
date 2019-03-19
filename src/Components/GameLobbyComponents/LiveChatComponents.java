@@ -1,6 +1,7 @@
 package Components.GameLobbyComponents;
 
 import Database.DBConnection;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,6 +20,7 @@ import java.util.TimerTask;
 public class LiveChatComponents {
     private static Timer timer = null;
     private static ScrollPane sp;
+    private static ArrayList<String> messages = new ArrayList<>();
 
     //-----------Right-----------//
     public static VBox liveChatUI(){
@@ -57,14 +59,23 @@ public class LiveChatComponents {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                ArrayList<String> words = DBConnection.getMessages();
+                ArrayList<String> newMessages = DBConnection.getNewMessages();
+                if (newMessages == null) {
+                    return;
+                }
+                messages.addAll(newMessages);
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < words.size(); i++) {
-                    sb.append(words.get(i));
+                for (int i = 0; i < messages.size(); i++) {
+                    sb.append(messages.get(i));
                     sb.append("\n");
                 }
                 chatText.setText(sb.toString());
                 sp.setVvalue(1.0);
+                for (int i = 0; i < messages.size(); i++) {
+                    sb.append(messages.get(i));
+                    sb.append("\n");
+                }
+                chatText.setText(sb.toString());
             }
         };
         timer.schedule(task, 0, +5000);
