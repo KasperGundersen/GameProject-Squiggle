@@ -59,11 +59,6 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
-            if(checkWord(text)){
-                addCorrectMessage(UserInfo.getUserID());
-            }else{
-                System.out.println("Wrong word");
-            }
             DBConnection.insertMessage(text);
             //showMessages(lc, tf);
             tf.clear();
@@ -72,10 +67,14 @@ public class LiveChatComponents {
         return vb;
     }
 
-    public static void addCorrectMessage(int userID) {
+    /*public static void addCorrectMessage(int userID) {
         String username = DBConnection.getUsername(userID);
         messages.add(username + " guessed correctly!");
     }
+
+    public static String correctAnswerGuessed(int id) {
+        return DBConnection.getUsername(id);
+    }*/
 
     /**
      * Shows the messages written in the chat.

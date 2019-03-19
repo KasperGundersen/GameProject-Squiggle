@@ -314,11 +314,20 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setInt (1, UserInfo.getUserID());
-            prepStmt.setString (2, message);
-            prepStmt.executeUpdate();
+            if (!(LiveChatComponents.checkWord(message))) {
+                String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt (1, UserInfo.getUserID());
+                prepStmt.setString (2, message);
+                prepStmt.executeUpdate();
+            } else {
+                String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
+                String username = getUsername(UserInfo.getUserID());
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt (1, 0);
+                prepStmt.setString (2, username + " guessed correctly!");
+                prepStmt.executeUpdate();
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
