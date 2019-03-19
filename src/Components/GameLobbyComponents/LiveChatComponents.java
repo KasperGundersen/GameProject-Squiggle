@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -59,8 +60,7 @@ public class LiveChatComponents {
         btn.setOnAction(e -> {
             String text = tf.getText();
             if(checkWord(text)){
-
-                lc.setText("Correct word");
+                addCorrectMessage(UserInfo.getUserID());
             }else{
                 System.out.println("Wrong word");
             }
