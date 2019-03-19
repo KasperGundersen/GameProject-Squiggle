@@ -10,28 +10,35 @@ import javafx.scene.text.Font;
 import java.awt.*;
 
 public class WordComponents {
-    private String word;
-
+    private static String word = generateWord();
 
     public static HBox addWordUI(){
         HBox hb = new HBox();
-        Label word = new Label("Word: " + showWord());
+        Label word = new Label("Word: " + getWord());
         word.setFont(new Font(20));
         hb.getChildren().add(word);
         return hb;
     }
 
-    private static String showWord(){
-        String line = "__";
-        String space = " ";
+    public static String getWord(){
+        return word;
+    }
+
+    public static String generateWord(){
+        return DBConnection.getRandomWord();
+    }
+
+    public String showWord(){
+        String line = "___";
+        String space = "   ";
         String result ="";
         boolean drawing = UserInfo.getDrawing();
-        String word = DBConnection.getRandomWord();
+        String word = getWord();
         if(drawing){
             return word;
         }else{
             int letters = word.length();
-            for(int i = 0; i < word.length();i++){
+            for(int i = 0; i < word.length(); i++){
                 char letter = word.charAt(i);
                 if(letter != ' '){
                     result += line;
