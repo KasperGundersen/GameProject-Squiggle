@@ -29,7 +29,7 @@ public class WordComponents {
     }
 
     public static String showWord(){
-        String line = "___";
+        String line = "___  ";
         String space = "   ";
         String result ="";
         boolean drawing = UserInfo.getDrawing();
