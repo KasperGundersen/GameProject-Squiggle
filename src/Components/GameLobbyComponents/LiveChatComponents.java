@@ -108,4 +108,12 @@ public class LiveChatComponents {
             timer.cancel();
         }
     }
+
+    public boolean checkWord(String word) {
+        boolean correct = false;
+        if(word.equals(WordComponents.getWord())){
+            correct = true;
+        }else{ }
+        return correct;
+    }
 }
