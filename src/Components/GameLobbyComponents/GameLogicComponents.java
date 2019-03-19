@@ -26,7 +26,7 @@ public class GameLogicComponents {
     }
 
     public static void reset(){
-        //DBConnection.setNewDrawer();
+        DBConnection.setNewDrawer();
 
 
         //Update userInfo for drawer();

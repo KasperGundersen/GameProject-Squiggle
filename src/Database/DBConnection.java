@@ -241,6 +241,20 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
     }
+    public static void setNewDrawer() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "UPDATE GAME SET drawing=2 WHERE drawing=1";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        } catch(SQLException e ) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
 
     // Puts user in GAME table, where all users in a game are
     public static void enterGame() {
