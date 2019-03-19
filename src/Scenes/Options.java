@@ -21,12 +21,26 @@ import java.net.UnknownServiceException;
 import static javafx.scene.control.SpinnerValueFactory.*;
 
 
+/**
+ * Options class which gives the user different options in the game
+ * @author maxto
+ */
 public class Options extends Scenes {
     private GridPane grid;
+
+    /**
+     * Creates the Options object, inherited from Scenes
+     * @param WIDTH the width of the scene
+     * @param HEIGHT the height of the scene
+     */
     public Options(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         openOptions();
     }
+
+    /**
+     * Creates the layout of the Options scene
+     */
 
     public void openOptions(){
         Stage window = new Stage();
@@ -82,9 +96,9 @@ public class Options extends Scenes {
 
             System.out.println(cp.getValue());
 
-            LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
-            MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
-            SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
+            //LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
+            //MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
+            //SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
 
             window.close();
 
@@ -95,7 +109,7 @@ public class Options extends Scenes {
         GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
         fontChange(UserInfo.getFontSize(), grid.getChildren());
-        changeBackground(grid, UserInfo.getColor());
+        //changeBackground(grid, UserInfo.getColor());
 
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);

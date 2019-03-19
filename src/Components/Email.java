@@ -1,5 +1,8 @@
 package Components;
 
+import Scenes.LogIn;
+import Scenes.SignUp;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -38,7 +41,12 @@ public class Email {
             message.setSubject("Welcome to Calfskin Games");
 
             //Setting the message of the email
-            message.setText("Hello. You are now registred");
+            message.setText("Hello. You are now registered.\n" +
+                            "username: " +
+                            SignUp.getName() + "\n" +
+                            ".Best regards" + "\n" +
+                            "Calfskin Games"
+                    );
 
             //Sending the messaage
             Transport transport = session.getTransport("smtp");
