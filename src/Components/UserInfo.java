@@ -20,6 +20,7 @@ public class UserInfo {
     private static int fontSize;
     private static Color color;
     private static String userEmail;
+    private static int tempHighestChatID;
 
 
     public UserInfo() {
@@ -89,5 +90,13 @@ public class UserInfo {
 
     public static void setColor(Color color) {
         UserInfo.color = color;
+    }
+
+    public static int getTempHighestChatID() {
+        return tempHighestChatID;
+    }
+
+    public static void setTempHighestChatID(int tempHighestChatID) {
+        UserInfo.tempHighestChatID = tempHighestChatID;
     }
 }

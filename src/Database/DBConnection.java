@@ -1,6 +1,7 @@
 /* This class has static methods so we wont have to make objects of this class to use its methods */
 package Database;
 
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
 import Components.UserInfo;
 import javafx.scene.image.WritableImage;
@@ -327,11 +328,20 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setInt (1, UserInfo.getUserID());
-            prepStmt.setString (2, message);
-            prepStmt.executeUpdate();
+            if (!(LiveChatComponents.checkWord(message))) {
+                String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt (1, UserInfo.getUserID());
+                prepStmt.setString (2, message);
+                prepStmt.executeUpdate();
+            } else {
+                String query = "INSERT INTO CHAT VALUE (default, ?, ?);";
+                String username = getUsername(UserInfo.getUserID());
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt (1, 0);
+                prepStmt.setString (2, username + " guessed correctly!");
+                prepStmt.executeUpdate();
+            }
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
@@ -363,6 +373,61 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
         return null;
+    }
+
+    public static ArrayList<String> getNewMessages() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            int highestID = getHighestChatID();
+            int tempHighestChatID = UserInfo.getTempHighestChatID();
+            String query = "SELECT input, userID FROM CHAT where ChatID > " + tempHighestChatID + " and ChatID <= " + highestID + ";";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+
+            ArrayList<String> messages = new ArrayList<>();
+            while (res.next()) {
+                if (!(res.getString("input").equals("")) && !(LiveChatComponents.checkWord(res.getString("input")))) {
+                    int userId = res.getInt("userID");
+                    if (userId == 0) {
+                        messages.add(res.getString("input"));
+                    } else {
+                        messages.add(getUsername(userId) + ": " + res.getString("input"));
+                    }
+                }
+            }
+            UserInfo.setTempHighestChatID(getHighestChatID());
+            return messages;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
+    }
+
+    public static int getHighestChatID() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int result = -1;
+        try {
+            con = HikariCP.getCon();
+            String query = "select max(ChatID) from CHAT";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            while (res.next()) {
+                result = res.getInt("max(ChatID)");
+            }
+            return result;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt,res);
+        }
+        return -1;
     }
     //Livechat methods end
 
