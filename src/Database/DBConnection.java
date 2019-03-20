@@ -403,7 +403,7 @@ public class DBConnection {
         return null;
     }
 
-    public static ArrayList<String> getNewMessages() {
+ /*   public static ArrayList<String> getNewMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -434,6 +434,41 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
         return null;
+    }*/
+
+    public static StringBuilder getNewMessages2() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            int highestID = getHighestChatID();
+            int tempHighestChatID = UserInfo.getTempHighestChatID();
+            String query = "SELECT input, userID FROM CHAT where ChatID > " + tempHighestChatID + " and ChatID <= " + highestID + ";";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+
+            StringBuilder sb = new StringBuilder();
+            while (res.next()) {
+                if (!(res.getString("input").equals("")) && !(LiveChatComponents.checkWord(res.getString("input")))) {
+                    int userId = res.getInt("userID");
+                    if (userId == 0) {
+                        sb.append(res.getString("input"));
+                        sb.append("\n");
+                    } else {
+                        sb.append(getUsername(userId) + ": " + res.getString("input"));
+                        sb.append("\n");
+                    }
+                }
+            }
+            UserInfo.setTempHighestChatID(getHighestChatID());
+            return sb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return null;
     }
 
     public static int getHighestChatID() {
@@ -457,6 +492,26 @@ public class DBConnection {
         }
         return -1;
     }
+
+    public static boolean deleteMessages() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "delete from CHAT";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+            return true;
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+    }
+
+
     //Livechat methods end
 
     // Get username given userID

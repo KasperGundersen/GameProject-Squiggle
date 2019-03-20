@@ -29,7 +29,8 @@ import java.util.TimerTask;
 public class LiveChatComponents {
     private static Timer timer = null;
     private static ScrollPane sp;
-    private static ArrayList<String> messages = new ArrayList<>();
+    //private static ArrayList<String> messages = new ArrayList<>();
+    private static StringBuilder messages = new StringBuilder();
 
     //-----------Right-----------//
 
@@ -55,7 +56,7 @@ public class LiveChatComponents {
         hb.getChildren().addAll(tf,btn);
         vb.getChildren().addAll(livechatLabel, sp,hb);
         vb.setAlignment(Pos.BOTTOM_CENTER);
-        showMessages(lc, tf);
+        showMessages(lc);
 
         btn.setOnAction(e -> {
             String text = tf.getText();
@@ -82,13 +83,13 @@ public class LiveChatComponents {
      * @param chatText Text-object which displays the messages
      * @param inputText
      */
-    private static void showMessages(Text chatText, TextField inputText) {
+    private static void showMessages(Text chatText) {
         timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 //Endre til StringBuilder slik at vi ikke lagrer dobbelt
-                ArrayList<String> newMessages = DBConnection.getNewMessages();
+                /*ArrayList<String> newMessages = DBConnection.getNewMessages();
                 if (newMessages == null) {
                     return;
                 }
@@ -98,9 +99,13 @@ public class LiveChatComponents {
                     sb.append(messages.get(i));
                     sb.append("\n");
                 }
-                sp.setVvalue(1.0);
-                chatText.setText(sb.toString());
+                */
+                StringBuilder newMessages = DBConnection.getNewMessages2();
+                messages.append(newMessages);
 
+
+                chatText.setText(messages.toString());
+                sp.setVvalue(1.0);
             }
         };
         timer.schedule(task, 0, +5000);
@@ -115,11 +120,23 @@ public class LiveChatComponents {
         }
     }
 
+    /**
+     * Method whichs checks if guessed word is correct
+     * @param word the word guessed
+     * @return true or false depending on the answer
+     */
     public static boolean checkWord(String word) {
         boolean correct = false;
         if(word.equals(WordComponents.getWord())){
             correct = true;
         }else{ }
         return correct;
+    }
+
+    /**
+     * Method that cleans the chat. Used when the game is reset
+     */
+    public static void cleanChat() {
+        messages.setLength(0);
     }
 }
