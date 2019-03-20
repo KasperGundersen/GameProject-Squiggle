@@ -246,7 +246,7 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
-            con = HikariCP.getCon();g
+            con = HikariCP.getCon();
             String query = "";
             if(UserInfo.getDrawing()) {
                 query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
