@@ -247,8 +247,7 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET drawing=2 WHERE drawing=1 AND userID = ?;";
-            prepStmt.setInt(1, UserInfo.getUserID());
+            String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
             prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
             String query2 = "SELECT * FROM GAME WHERE drawing=1;";
