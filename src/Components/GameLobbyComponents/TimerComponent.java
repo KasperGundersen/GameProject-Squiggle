@@ -15,12 +15,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
+import static Components.Threads.Timers.timer4;
+import static Components.Threads.Timers.turnOfTimer2;
+
 
 public class TimerComponent {
 
-    public static Timer timer4;
     private static Label countDown;
-    private static int timeRemaining;
+    public static int timeRemaining;
 
     public static VBox addTimerUI() {
         Date time = DBConnection.getDrawTimer();
@@ -36,32 +38,7 @@ public class TimerComponent {
         return vb;
     }
 
-    public static void timer4(){
-        timer4 = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                if (timeRemaining > 80) {
-                    setTimerText(false);
-                } else if (timeRemaining > 0) {
-                    setTimerText(true);
-                } else {
-                    CanvasComponents.turnOfTimer2(); // Turns off timer that updates image.
-                    turnOffTimer4(); // turns off countdown timer
-                    reset();
-                }
-            }
-        };
-        timer4.schedule(task, 0, +1000);
-    }
-
-    public static void turnOffTimer4() {
-        if (timer4 != null) {
-            timer4.cancel();
-        }
-    }
-
-    private static void setTimerText(boolean gameStarted) {
+    public static void setTimerText(boolean gameStarted) {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -99,7 +76,7 @@ public class TimerComponent {
         timeRemaining = newTime;
     }
 
-    private static void reset() {
+    public static void reset() {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {

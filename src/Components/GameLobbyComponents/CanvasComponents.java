@@ -154,50 +154,13 @@ public class CanvasComponents {
                 gc.lineTo(e.getX(), e.getY());
                 gc.stroke();
                 gc.closePath();
-                // updateImage();
             });
         }
         return hb;
     }
 
-    public static void timer(){
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                setImage();
-            }
-        };
-        timer.schedule(task, 0, +5000); // was originaly 5000
-    }
-
-    public static void turnOfTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-    }
-
 
     //////////// Here begins code that deals with uploading canvas to DB ///////////////
-
-    // Updating image with timer in stead of release stroke
-    public static void timer2(){
-        timer2 = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                updateImage();
-            }
-        };
-        timer2.schedule(task, 0, +5000);
-    }
-
-    // Method for turning off timer, used when time has run out
-    public static void turnOfTimer2() {
-        if (timer2 != null) {
-            timer2.cancel();
-        }
-    }
 
     // The main upload method
     public static void uploadImage(){
@@ -258,7 +221,7 @@ public class CanvasComponents {
     }
 
     // Needs method for getting blob and converting back to image
-    private static void setImage(){
+    public static void setImage(){
         try {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());
             if(bi != null){
