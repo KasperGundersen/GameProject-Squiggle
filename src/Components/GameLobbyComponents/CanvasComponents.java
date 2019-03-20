@@ -165,8 +165,9 @@ public class CanvasComponents {
     // The main upload method
     public static void uploadImage(){
         WritableImage wim = canvasSnapshot(canvas);
-        byte[] blob = imageToByte(wim);
-        DBConnection.uploadImage(blob, "insertWord");
+        new Thread(()->{
+            DBConnection.updateImage(imageToByte(wim));
+        }).start();
     }
 
     // Method that uploads an updated version of drawing to DB
@@ -184,8 +185,9 @@ public class CanvasComponents {
                             public void run() {
                                 try{
                                     WritableImage wim = canvasSnapshot(canvas);
-                                    byte[] blob = imageToByte(wim);
-                                    DBConnection.updateImage(blob);
+                                    new Thread(()->{
+                                        DBConnection.updateImage(imageToByte(wim));
+                                    }).start();
                                 }finally{
                                     latch.countDown();
                                 }
@@ -221,12 +223,12 @@ public class CanvasComponents {
     }
 
     // Needs method for getting blob and converting back to image
-    public static void setImage(){
+    public static void setImage() {
         try {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());
-            if(bi != null){
+            if (bi != null) {
                 Image img = SwingFXUtils.toFXImage(bi, null);
-                gc.drawImage(img, 0,0);
+                gc.drawImage(img, 0, 0);
             }
         }catch (IOException e){
             e.printStackTrace();
