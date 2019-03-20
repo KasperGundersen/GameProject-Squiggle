@@ -184,8 +184,9 @@ public class CanvasComponents {
                             public void run() {
                                 try{
                                     WritableImage wim = canvasSnapshot(canvas);
-                                    byte[] blob = imageToByte(wim);
-                                    DBConnection.updateImage(blob);
+                                    new Thread(()->{
+                                        DBConnection.updateImage(imageToByte(wim));
+                                    }).start();
                                 }finally{
                                     latch.countDown();
                                 }

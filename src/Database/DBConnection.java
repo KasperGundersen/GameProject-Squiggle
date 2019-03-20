@@ -247,12 +247,11 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "";
             if(UserInfo.getDrawing()) {
-                query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
+                String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
             }
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
             String query2 = "SELECT * FROM GAME WHERE drawing=1;";
             prepStmt = con.prepareStatement(query2);
             res = prepStmt.executeQuery();
