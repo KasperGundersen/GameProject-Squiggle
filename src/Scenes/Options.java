@@ -82,9 +82,9 @@ public class Options extends Scenes {
 
             System.out.println(cp.getValue());
 
-            LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
-            MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
-            SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
+            //LogIn.changeBackground(LogIn.getGrid(), UserInfo.getColor());
+            //MainMenu.changeBackground(MainMenu.getGrid(), UserInfo.getColor());
+            //SignUp.changeBackground(SignUp.getGrid(), UserInfo.getColor());
 
             window.close();
 
@@ -95,7 +95,7 @@ public class Options extends Scenes {
         GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
         fontChange(UserInfo.getFontSize(), grid.getChildren());
-        changeBackground(grid, UserInfo.getColor());
+        //changeBackground(grid, UserInfo.getColor());
 
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);
