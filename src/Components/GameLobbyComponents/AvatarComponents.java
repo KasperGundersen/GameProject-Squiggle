@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
-import static Components.Threads.Timers.timer3;
-
-
 public class AvatarComponents {
     public static ListView<String> listView;
     public static ArrayList<Player> players;
@@ -35,7 +32,7 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        timer3();
+        // timer3();
         return vb;
     }
 

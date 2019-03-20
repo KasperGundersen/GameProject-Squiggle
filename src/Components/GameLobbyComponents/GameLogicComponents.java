@@ -27,6 +27,7 @@ public class GameLogicComponents {
     }
 
     public static void reset(){
+
         DBConnection.setNewDrawer();
 
         UserInfo.setDrawing(DBConnection.isDrawing());
@@ -38,8 +39,8 @@ public class GameLogicComponents {
         GameLobby.bp.setCenter(CanvasComponents.addCanvasUI());
         //New word
         GameLobby.setTop();
-        //New chat or maybe just empty the chat???
+        // New chat or maybe just empty the chat???
         // GameLobby.bp.setRight(LiveChatComponents.liveChatUI());
-        //new Timer
+        // new Timer
     }
 }

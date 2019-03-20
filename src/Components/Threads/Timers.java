@@ -34,6 +34,7 @@ public class Timers {
     public static void turnOffTimer() {
         if (timer != null) {
             timer.cancel();
+            timer.purge();
         }
     }
 
@@ -45,6 +46,7 @@ public class Timers {
             public void run() {
                 System.out.println("2");
                 updateImage();
+                updateData();
             }
         };
         timer2.schedule(task, 0, +5000);
@@ -54,16 +56,17 @@ public class Timers {
     public static void turnOfTimer2() {
         if (timer2 != null) {
             timer2.cancel();
+            timer2.purge();
         }
     }
 
+    /*
     public static void timer3(){
         timer3 = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 System.out.println("3");
-                updateData();
             }
         };
         timer3.schedule(task, 0, +5000);
@@ -74,6 +77,7 @@ public class Timers {
             timer3.cancel();
         }
     }
+    */
 
     public static void timer4(){
         timer4 = new Timer();
@@ -98,6 +102,7 @@ public class Timers {
     public static void turnOffTimer4() {
         if (timer4 != null) {
             timer4.cancel();
+            timer4.purge();
         }
     }
 }
