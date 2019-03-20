@@ -244,15 +244,26 @@ public class DBConnection {
     public static void setNewDrawer() {
         Connection con = null;
         PreparedStatement prepStmt = null;
+        ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET drawing=2 WHERE drawing=1";
+            String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
             prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
+            String query2 = "SELECT * FROM GAME WHERE drawing=1;";
+            prepStmt = con.prepareStatement(query2);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                UserInfo.setDrawing(false);
+            } else {
+                String query3 = "UPDATE GAME SET drawing=1 WHERE drawing=0 LIMIT 1;";
+                prepStmt = con.prepareStatement(query3);
+                prepStmt.executeUpdate();
+            }
         } catch(SQLException e ) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt, null);
+            closeConnection(con, prepStmt, res);
         }
     }
 
@@ -752,5 +763,30 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
         return null;
+    }
+
+    public static boolean isDrawing() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT drawing FROM GAME WHERE userID=?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                int drawing = res.getInt("drawing");
+                if (drawing == 0 || drawing == 2) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return false;
     }
 }
