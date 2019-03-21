@@ -5,12 +5,23 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+
+/**
+ * Email class for sending confirm email to registered users
+ *
+ * @author maxto
+ */
+
 public class Email {
+    //Information needed in order to connect to the email
     private static final String username = "calfskingames@gmail.com";
     private static final String password = "admin123admin";
 
 
-
+    /**
+     * Method which sends registration email to the user
+     * @param to the email which will receive the registration complete-mail
+     */
     public static void sendEmail(String to) {
         String host = "smtp.gmail.com";
 
@@ -40,6 +51,8 @@ public class Email {
             message.setSubject("Welcome to Calfskin Games");
 
             //Setting the message of the email
+
+            //ADD the username the user registered with
             message.setText("Hello. You are now registred");
 
             //Sending the messaage

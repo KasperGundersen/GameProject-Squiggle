@@ -14,6 +14,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
+
 public final class Toast{
     private static double WIDTH, HEIGHT;
     private static Stage s;

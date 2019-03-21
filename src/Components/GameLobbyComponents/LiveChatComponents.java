@@ -29,7 +29,6 @@ import java.util.TimerTask;
 public class LiveChatComponents {
     private static Timer timer = null;
     private static ScrollPane sp;
-    //private static ArrayList<String> messages = new ArrayList<>();
     private static StringBuilder messages = new StringBuilder();
 
     //-----------Right-----------//
@@ -68,15 +67,6 @@ public class LiveChatComponents {
         return vb;
     }
 
-    /*public static void addCorrectMessage(int userID) {
-        String username = DBConnection.getUsername(userID);
-        messages.add(username + " guessed correctly!");
-    }
-
-    public static String correctAnswerGuessed(int id) {
-        return DBConnection.getUsername(id);
-    }*/
-
     /**
      * Shows the messages written in the chat.
      * Gets the messages from methods in DBConnection
@@ -87,21 +77,8 @@ public class LiveChatComponents {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                //Endre til StringBuilder slik at vi ikke lagrer dobbelt
-                /*ArrayList<String> newMessages = DBConnection.getNewMessages();
-                if (newMessages == null) {
-                    return;
-                }
-                messages.addAll(newMessages);
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < messages.size(); i++) {
-                    sb.append(messages.get(i));
-                    sb.append("\n");
-                }
-                */
                 StringBuilder newMessages = DBConnection.getNewMessages2();
                 messages.append(newMessages);
-
 
                 chatText.setText(messages.toString());
                 sp.setVvalue(1.0);
@@ -120,7 +97,7 @@ public class LiveChatComponents {
     }
 
     /**
-     * Method whichs checks if guessed word is correct
+     * Method that checks if guessed word is correct
      * @param word the word guessed
      * @return true or false depending on the answer
      */
