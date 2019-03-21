@@ -24,7 +24,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("1");
                 setImage();
             }
         };
@@ -43,7 +42,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("2");
                 updateImage();
             }
         };
@@ -62,7 +60,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("3");
                 updateData();
             }
         };
@@ -80,7 +77,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("4");
                 if (timeRemaining > 80) {
                     setTimerText(false);
                 } else if (timeRemaining > 0) {

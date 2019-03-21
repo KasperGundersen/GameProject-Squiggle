@@ -81,7 +81,6 @@ public class LiveChatComponents {
      * Shows the messages written in the chat.
      * Gets the messages from methods in DBConnection
      * @param chatText Text-object which displays the messages
-     * @param inputText
      */
     private static void showMessages(Text chatText) {
         timer = new Timer();

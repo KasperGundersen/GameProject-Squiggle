@@ -22,12 +22,20 @@ import java.util.concurrent.CountDownLatch;
 
 import static Components.Threads.Timers.timer3;
 
-
+/**
+ * Class that adds the Avatar ListView
+ */
 public class AvatarComponents {
     public static ListView<String> listView;
     public static ArrayList<Player> players;
     public static ObservableList data;
 
+    /**
+     * Adds all the UI, shows list of online players
+     *
+     * @see ListView
+     * @return VBox VerticalBox filled with players
+     */
     public static VBox addAvatarUI() {
         VBox vb = new VBox();
         data = FXCollections.observableArrayList();
@@ -39,12 +47,21 @@ public class AvatarComponents {
         return vb;
     }
 
+    /**
+     * Method for fetching correct avatar image
+     * @param i Image ID in the resources folder
+     * @return Image avatar Image
+     */
     private static Image getAvatar ( int i){
         File file = new File("resources/avatars/" + i + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
+    /**
+     * Inserts Players into the ListView
+     *
+     */
     private static void setIntoLV(){
         players = DBConnection.getPlayers();
         for(Player p : players) {
@@ -73,6 +90,11 @@ public class AvatarComponents {
         });
     }
 
+    /**
+     * Updates the ObservableList with new Players that might have joined
+     *
+     * @see ObservableList
+     */
     public static void updateData() {
         Service<Void> service = new Service<Void>() {
             @Override
