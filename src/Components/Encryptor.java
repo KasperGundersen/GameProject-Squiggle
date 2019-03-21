@@ -7,6 +7,14 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 public class Encryptor {
+
+    /**
+     * Encryption used for the password, method is used for both making and verifying an encrypted password.
+     * @param password String password that the user har entered
+     * @param saltest String hex values for the salt
+     * @return String combination of both "hash|salt", uses splitters to get either
+     */
+
     public static String Encryptor(String password, String saltest) {
         try {
             // Select the message digest for the hash computation -> SHA-256
@@ -33,22 +41,40 @@ public class Encryptor {
         }
         return null;
     }
-    private static String buildHexString(byte[] bs) {
+
+    /**
+     * Byte-to-Hex converter
+     * @param bytes is an array of byte
+     * @return String bytes in hex
+     */
+    private static String buildHexString(byte[] bytes) {
         StringBuilder sb = new StringBuilder();
-        for (byte b : bs) {
+        for (byte b : bytes) {
             //Convert from byte to hex
             sb.append(String.format("%02x", b));
         }
         return sb.toString();
     }
-    private static byte[] buildBytes(String s) {
-        byte[] b = new byte[s.length() / 2];
-        for (int i = 0; i < s.length(); i+=2) {
-            int v = Integer.parseInt(s.substring(i, i + 2), 16);
+
+    /**
+     * Hex-to-byte converter
+     * @param hex input to get an byte array
+     * @return byte[] converted from hex
+     */
+    private static byte[] buildBytes(String hex) {
+        byte[] b = new byte[hex.length() / 2];
+        for (int i = 0; i < hex.length(); i+=2) {
+            int v = Integer.parseInt(hex.substring(i, i + 2), 16);
             b[i/2] = (byte) v;
         }
         return b;
     }
+
+    /**
+     * Used to get the hash string from the Encryptore function
+     * @param s the output from Encryptor
+     * @return String hash
+     */
     //Splitt string from Encryptior to Hash using the splitter
     public static String getHash(String s){
         int index = s.indexOf('|');
@@ -57,6 +83,11 @@ public class Encryptor {
         }
         return s.substring(0, index);
     }
+    /**
+     * Used to get the salt string from the Encryptore function
+     * @param s the output from Encryptor
+     * @return String salt
+     */
     //Splitt string from Encryptior to Salt using the splitter
     public static String getSalt(String s){
         int index = s.indexOf('|');

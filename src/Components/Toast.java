@@ -14,16 +14,35 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 
+/**
+ * Toast display is displayed as information for a couple of seconds
+ */
 
 public final class Toast{
     private static double WIDTH, HEIGHT;
     private static Stage s;
 
+    /**
+     * Constructor making i
+     * @param stage reference to the stage where the toast will be displayed
+     * @param WIDTH the width of the stage
+     * @param HEIGHT the height of the stage
+     * The width and height parameters are used to translate the toast to the correct position
+     */
     public  Toast(Stage stage, double WIDTH, double HEIGHT){
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         s = stage;
     }
+
+
+    /**
+     * Used for displaying the toast with a specified text
+     * @param toastMsg String that will be displayed in the toast
+     * @param toastDelay Int value of the total time it will be displayed
+     * @param fadeInDelay Int value of fade in delay
+     * @param fadeOutDelay Int value of fade out delay
+     */
     public static void makeText(String toastMsg, int toastDelay, int fadeInDelay, int fadeOutDelay)    {
         Stage toastStage=new Stage();
         toastStage.initOwner(s);
