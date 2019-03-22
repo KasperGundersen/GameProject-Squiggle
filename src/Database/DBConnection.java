@@ -766,7 +766,7 @@ public class DBConnection {
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            closeConnection(con, prepStmt, null);
+            closeConnection(con, prepStmt, res);
         }
     }
 
@@ -835,7 +835,7 @@ public class DBConnection {
             res = prepStmt.executeQuery();
             if (res.next()) {
                 int drawing = res.getInt("drawing");
-                if (drawing == 0 || drawing == 2) {
+                if (drawing != 1) {
                     return false;
                 }
             }
