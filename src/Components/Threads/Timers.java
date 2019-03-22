@@ -62,7 +62,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                updateData();
             }
         };
         timer3.schedule(task, 0, +10000);
@@ -79,6 +78,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                updateData();
                 if (timeRemaining > 80) {
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
