@@ -37,7 +37,6 @@ public class CanvasComponents {
     private static ColorPicker cp;
     public static Canvas canvas;
     private static GraphicsContext gc;
-    public static Image img;
 
     private static int WIDTH = 600, HEIGHT = 450;
     private static Timer timer;
@@ -243,20 +242,18 @@ public class CanvasComponents {
      * Converts blob back to image, paints this at canvas
      */
     public static void setImage(){
-        blobToImage();
-        gc.drawImage(img, 0,0);
+        try {
+            BufferedImage bi = ImageIO.read(DBConnection.getImage());
+            if(bi != null){
+                Image img = SwingFXUtils.toFXImage(bi, null);
+                gc.drawImage(img, 0,0);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void blobToImage(){
-        new Thread(()->{
-            try {
-                BufferedImage bi = ImageIO.read(DBConnection.getImage());
-                if(bi != null){
-                    img = SwingFXUtils.toFXImage(bi, null);
-                }
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-        }).start();
+
     }
 }

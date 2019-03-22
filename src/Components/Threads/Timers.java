@@ -15,8 +15,8 @@ public class Timers {
 
     private static Timer timer;
     private static Timer timer2;
-    private static Timer timer3;
     private static Timer timer4;
+    private static volatile Thread thread;
 
 
     public static void timer(){
@@ -25,14 +25,19 @@ public class Timers {
             @Override
             public void run() {
                 System.out.println("Downloads and displays image from DB - Timer1");
-
-                setImage();
+                new Thread(() -> {
+                    thread = Thread.currentThread();
+                    setImage();
+                }).start();
             }
         };
         timer.schedule(task, 0, +7000); // was originaly 5000
     }
 
     public static void turnOffTimer() {
+        if (thread != null) {
+            thread.interrupt();
+        }
         if (timer != null) {
             timer.cancel();
             timer.purge();
