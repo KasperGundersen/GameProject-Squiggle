@@ -8,6 +8,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.text.HitInfo;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -729,18 +730,26 @@ public class DBConnection {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
+        InputStream input = null;
         try{
             con = HikariCP.getCon();
             String query = "SELECT drawing FROM DRAW ORDER BY gameID DESC LIMIT 1;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()){
-                return res.getBlob("drawing").getBinaryStream();
+                input = res.getBlob("drawing").getBinaryStream();
+                return input;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
+            try {
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         return null;
     }

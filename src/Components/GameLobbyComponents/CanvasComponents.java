@@ -79,24 +79,26 @@ public class CanvasComponents {
         cp.setValue(Color.BLACK);
 
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
-        hb.setStyle("-fx-background-color: #999");
+        // hb.setStyle("-fx-background-color: #999");
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
         //////////////////////////////////
 
+        /*
         File pencilFile = new File("resources/icons/pencil.png");
         Image pencil = new Image(pencilFile.toURI().toString());
         File rubberFile = new File("resources/icons/rubber.png");
         Image rubber = new Image(rubberFile.toURI().toString());
         ImageCursor penCur = new ImageCursor(pencil, 40, pencil.getHeight()-40);
         ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
-
+        */
         //
         //
 
         cp.setOnAction(e-> {
             cp.setValue(cp.getValue());
         });
+        /*
         draw.setOnAction(e->{
             canvas.setCursor( penCur);
         });
@@ -104,6 +106,7 @@ public class CanvasComponents {
             canvas.setCursor(rubCur);
             gc.setStroke(color);
         });
+        */
         lineWidth1.setOnAction(e->{
             gc.setLineWidth(1);
         });

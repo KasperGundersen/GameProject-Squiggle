@@ -1,6 +1,6 @@
 package Components.Threads;
 
-import Components.GameLobbyComponents.TimerComponent;
+import Components.GameLobbyComponents.GameLogicComponents;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,7 +27,7 @@ public class Timers {
                 setImage();
             }
         };
-        timer.schedule(task, 0, +5000); // was originaly 5000
+        timer.schedule(task, 0, +7000); // was originaly 5000
     }
 
     public static void turnOffTimer() {
@@ -44,21 +44,19 @@ public class Timers {
             @Override
             public void run() {
                 updateImage();
-                updateData();
             }
         };
         timer2.schedule(task, 0, +5000);
     }
 
     // Method for turning off timer, used when time has run out
-    public static void turnOfTimer2() {
+    public static void turnOffTimer2() {
         if (timer2 != null) {
             timer2.cancel();
             timer2.purge();
         }
     }
 
-    /*
     public static void timer3(){
         timer3 = new Timer();
         TimerTask task = new TimerTask() {
@@ -67,15 +65,14 @@ public class Timers {
                 updateData();
             }
         };
-        timer3.schedule(task, 0, +5000);
+        timer3.schedule(task, 0, +10000);
     }
 
-    public static void turnOfTimer3() {
+    public static void turnOffTimer3() {
         if (timer3 != null) {
             timer3.cancel();
         }
     }
-    */
 
     public static void timer4(){
         timer4 = new Timer();
@@ -87,9 +84,9 @@ public class Timers {
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
                 } else {
-                    turnOfTimer2(); // Turns off timer that updates image.
+                    turnOffTimer2(); // Turns off timer that updates image.
                     turnOffTimer4(); // turns off countdown timer
-                    TimerComponent.reset();
+                    GameLogicComponents.reset();
                 }
             }
         };

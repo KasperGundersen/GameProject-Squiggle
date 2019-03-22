@@ -16,7 +16,6 @@ import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 import static Components.Threads.Timers.timer4;
-import static Components.Threads.Timers.turnOfTimer2;
 
 /**
  * Class that holds the timer UI
@@ -92,35 +91,4 @@ public class TimerComponent {
         timeRemaining = newTime;
     }
 
-    /**
-     * The reset method, runs the actual reset method, but in a service thread
-     */
-    public static void reset() {
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    GameLogicComponents.reset();
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
-    }
 }
