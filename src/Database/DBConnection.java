@@ -435,7 +435,7 @@ public class DBConnection {
         return null;
     }*/
 
-    public static StringBuilder getNewMessages2() {
+    public static StringBuilder getNewMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
