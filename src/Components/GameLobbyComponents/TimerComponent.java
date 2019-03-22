@@ -18,12 +18,19 @@ import java.util.concurrent.CountDownLatch;
 import static Components.Threads.Timers.timer4;
 import static Components.Threads.Timers.turnOfTimer2;
 
-
+/**
+ * Class that holds the timer UI
+ * Where time remaining is synched across computers and displayed
+ */
 public class TimerComponent {
 
     private static Label countDown;
     public static int timeRemaining;
 
+    /**
+     * Adds the UI for timer, labels and countdown
+     * @return VBox VerticalBox with the needed
+     */
     public static VBox addTimerUI() {
         Date time = DBConnection.getDrawTimer();
         Date currentTime = new Date();
@@ -38,6 +45,11 @@ public class TimerComponent {
         return vb;
     }
 
+    /**
+     * Sets the text for countdown label
+     * @see Label
+     * @param gameStarted boolean game started or not
+     */
     public static void setTimerText(boolean gameStarted) {
         Service<Void> service = new Service<Void>() {
             @Override
@@ -72,10 +84,17 @@ public class TimerComponent {
         service.start();
     }
 
+    /**
+     * Methods that sets the time remaining
+     * @param newTime int seconds that are to be new time remaing
+     */
     public static void setTimeReimaing(int newTime) {
         timeRemaining = newTime;
     }
 
+    /**
+     * The reset method, runs the actual reset method, but in a service thread
+     */
     public static void reset() {
         Service<Void> service = new Service<Void>() {
             @Override

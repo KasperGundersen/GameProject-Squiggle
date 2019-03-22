@@ -64,7 +64,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("3");
+                updateData();
             }
         };
         timer3.schedule(task, 0, +5000);
