@@ -95,6 +95,7 @@ public class LiveChatComponents {
     public static void turnOfTimer() {
         if (timer != null) {
             timer.cancel();
+            timer.purge();
         }
     }
 
