@@ -24,6 +24,8 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Downloads and displays image from DB");
+
                 setImage();
             }
         };
@@ -43,6 +45,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Uploads new version of drawing to DB");
                 updateImage();
             }
         };
@@ -57,6 +60,7 @@ public class Timers {
         }
     }
 
+    /*
     public static void timer3(){
         timer3 = new Timer();
         TimerTask task = new TimerTask() {
@@ -72,12 +76,14 @@ public class Timers {
             timer3.cancel();
         }
     }
+    */
 
     public static void timer4(){
         timer4 = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Updates playerList");
                 updateData();
                 if (timeRemaining > 80) {
                     setTimerText(false);
