@@ -760,21 +760,13 @@ public class DBConnection {
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String wordQuery = "SELECT word FROM LIBRARY ORDER BY RAND() LIMIT 1;";
+            String wordQuery = "UPDATE DRAW SET word = (SELECT word FROM LIBRARY ORDER BY RAND() LIMIT 1) ORDER BY gameID DESC LIMIT 1;";
             prepStmt = con.prepareStatement(wordQuery);
-            res = prepStmt.executeQuery();
-            String word = null;
-            if(res.next()){
-                word = res.getString(1);
-            }
-            wordQuery = "UPDATE DRAW SET word = ? ORDER BY gameID DESC LIMIT 1";
-            prepStmt = con.prepareStatement(wordQuery);
-            prepStmt.setString(1, word);
             prepStmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
-            closeConnection(con, prepStmt, res);
+            closeConnection(con, prepStmt, null);
         }
     }
 
