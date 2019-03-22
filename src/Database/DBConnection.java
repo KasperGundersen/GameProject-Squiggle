@@ -835,11 +835,9 @@ public class DBConnection {
             res = prepStmt.executeQuery();
             if (res.next()) {
                 int drawing = res.getInt("drawing");
-                if (drawing != 1) {
-                    return false;
-                }
+                return drawing == 1;
             }
-            return true;
+            return false;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
