@@ -24,7 +24,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Downloads and displays image from DB");
+                System.out.println("Downloads and displays image from DB - Timer1");
 
                 setImage();
             }
@@ -36,6 +36,7 @@ public class Timers {
         if (timer != null) {
             timer.cancel();
             timer.purge();
+            System.out.println("Actually closed Timer 1");
         }
     }
 
@@ -45,7 +46,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Uploads new version of drawing to DB");
+                System.out.println("Uploads new version of drawing to DB - Timer 2");
                 updateImage();
             }
         };
@@ -57,6 +58,7 @@ public class Timers {
         if (timer2 != null) {
             timer2.cancel();
             timer2.purge();
+            System.out.println("Actually turned off timer 2");
         }
     }
 

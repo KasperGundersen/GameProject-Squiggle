@@ -24,10 +24,12 @@ public class GameLogicComponents {
         boolean drawing = UserInfo.getDrawing();
         if (drawing) {
             GameLobby.bp.setBottom(addDrawingUI());
+            System.out.println("Tries to turn off timer 1");
             turnOffTimer();
             timer2(); // might be removed
         } else {
             GameLobby.bp.setBottom(null);
+            System.out.println("Tries to turn off timer 2");
             turnOffTimer2(); // might be removed
             timer();
         }
