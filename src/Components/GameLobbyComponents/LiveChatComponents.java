@@ -77,8 +77,10 @@ public class LiveChatComponents {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                StringBuilder newMessages = DBConnection.getNewMessages2();
-                messages.append(newMessages);
+                new Thread(()->{
+                    StringBuilder newMessages = DBConnection.getNewMessages();
+                    messages.append(newMessages);
+                }).start();
 
                 chatText.setText(messages.toString());
                 sp.setVvalue(1.0);
