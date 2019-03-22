@@ -92,9 +92,10 @@ public class LiveChatComponents {
     /**
      * Turns of the timer when called
      */
-    public static void turnOfTimer() {
+    public static void turnOffLiveChatTimer() {
         if (timer != null) {
             timer.cancel();
+            timer.purge();
         }
     }
 
