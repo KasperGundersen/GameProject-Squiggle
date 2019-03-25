@@ -27,11 +27,11 @@ public class GameLogicComponents {
             GameLobby.bp.setBottom(addDrawingUI());
             System.out.println("Tries to turn off timer 1");
             turnOffTimer();
-           timer2(); // might be removed
+            timer2();
         } else {
             GameLobby.bp.setBottom(null);
             System.out.println("Tries to turn off timer 2");
-            turnOffTimer2(); // might be removed
+            turnOffTimer2();
             timer();
         }
     }
