@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
@@ -26,7 +27,7 @@ public class GameLogicComponents {
             GameLobby.bp.setBottom(addDrawingUI());
             System.out.println("Tries to turn off timer 1");
             turnOffTimer();
-            timer2(); // might be removed
+           timer2(); // might be removed
         } else {
             GameLobby.bp.setBottom(null);
             System.out.println("Tries to turn off timer 2");
@@ -38,6 +39,10 @@ public class GameLogicComponents {
     /**
      * Reset method, sets new drawer, clears livechat and updates privileges
      */
+<<<<<<< src/Components/GameLobbyComponents/GameLogicComponents.java
+    public static void reset(){
+        
+=======
     public static void reset() {
         Service<Void> service = new Service<Void>() {
             @Override
@@ -51,20 +56,21 @@ public class GameLogicComponents {
                             @Override
                             public void run() {
                                 try{
+                                    if (UserInfo.getDrawing()) {
+                                        PointSystem.setPointsDrawer(UserInfo.getUserID());
+                                    }
                                     DBConnection.setNewDrawer();
                                     DBConnection.deleteMessages();
+                                    UserInfo.setGuessedCorrectly(false);
+                                    DBConnection.resetCorrectGuesses();
                                     LiveChatComponents.cleanChat();
                                     UserInfo.setDrawing(DBConnection.isDrawing());
-
                                     //Update userInfo for drawer();
                                     setPrivileges();
                                     //New canvas
                                     GameLobby.bp.setCenter(CanvasComponents.addCanvasUI());
                                     //New word and timer resets
                                     GameLobby.setTop();
-                                    // New chat or maybe just empty the chat???
-                                    // GameLobby.bp.setRight(LiveChatComponents.liveChatUI());
-                                    // new Timer
                                 }finally{
                                     latch.countDown();
                                 }
@@ -78,5 +84,6 @@ public class GameLogicComponents {
             }
         };
         service.start();
+>>>>>>> src/Components/GameLobbyComponents/GameLogicComponents.java
     }
 }

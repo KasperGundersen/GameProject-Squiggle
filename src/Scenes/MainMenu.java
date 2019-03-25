@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import Database.HikariCP;
@@ -117,6 +118,8 @@ public class MainMenu extends Scenes{
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
         GameLogicComponents.setPrivileges();
         MainScene.setScene(MainScene.gl.getSc());
+        DBConnection.deleteMessages();
+        LiveChatComponents.cleanChat();
     }
 
     private void logOutSystem(){

@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
@@ -30,6 +31,7 @@ public class LiveChatComponents {
     private static Timer timerLive = null;
     private static ScrollPane sp;
     private static StringBuilder messages = new StringBuilder();
+    private static TextField tf;
 
     //-----------Right-----------//
 
@@ -48,7 +50,7 @@ public class LiveChatComponents {
         sp.setFitToWidth(true);
         sp.setFitToHeight(true);
 
-        TextField tf = new TextField();
+        tf = new TextField();
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
         HBox hb = new HBox();
@@ -59,12 +61,20 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
-            DBConnection.insertMessage(text);
-            //showMessages(lc, tf);
-            tf.clear();
-        });
 
+            if (!(UserInfo.getGuessedCorrectly())) { //If player has not answered correctly yet
+                insertMessages(text);
+            }
+            if (UserInfo.getGuessedCorrectly() && !(checkWord(text))) { //If user wants to write something more but has corrected correct
+                insertMessages(text);
+            }
+        });
         return vb;
+    }
+
+    private static void insertMessages(String text) {
+        DBConnection.insertMessage(text);
+        tf.clear();
     }
 
     /**
@@ -89,6 +99,7 @@ public class LiveChatComponents {
         timerLive.schedule(task, 0, +5000);
     }
 
+
     /**
      * Turns of the timer when called
      */
@@ -106,10 +117,17 @@ public class LiveChatComponents {
      */
     public static boolean checkWord(String word) {
         boolean correct = false;
-        if(word.equals(WordComponents.getWord())){
+        if(word.equalsIgnoreCase(WordComponents.getWord())){
+            UserInfo.setGuessedCorrectly(true);
             correct = true;
-        }else{ }
-        return correct;
+            if(!(UserInfo.getDrawing())) {
+                PointSystem.setPointsGuesser(UserInfo.getUserID());
+                DBConnection.setCorrectGuess(UserInfo.getUserID());
+            }
+            return correct;
+        }else{
+            return correct;
+        }
     }
 
     /**

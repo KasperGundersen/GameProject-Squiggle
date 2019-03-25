@@ -581,6 +581,22 @@ public class DBConnection {
         return 0;
     }
 
+    public static void resetCorrectGuesses(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "update GAME set correctGuess = 0 where correctGuess > 0";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
+    }
+
     // Gets the amount of points user has
     public static int getPoints(){
         Connection con = null;
@@ -588,9 +604,28 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "SELECT points FROM GAME where userID = ?;";
+            String query = "SELECT points FROM GAME where userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("points");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return 0;
+    }
+
+    public static int getPointsByUserID(int userID){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT points FROM GAME where userID =" + userID;
+            prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()) {
                 return res.getInt("points");
@@ -604,16 +639,15 @@ public class DBConnection {
     }
 
     // Updates the amount of points this user has
-    public static void updatePoints(int addPoints){
+    public static void updatePoints(int addPoints, int userID){
         Connection con = null;
         PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + newPoints +"WHERE userID = ?";
+            String query = "UPDATE GAME SET points = " + addPoints +" WHERE userID =" + userID;
             prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -670,6 +704,22 @@ public class DBConnection {
         return null;
     }
 
+    public static void setCorrectGuess(int userID){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "update GAME set correctGuess = 1 where userID=" + userID;
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate(query);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
+    }
+
     // Gets the number of people who has guessed correctly
     public static int getAmtCorrect(){
         Connection con = null;
@@ -680,15 +730,17 @@ public class DBConnection {
             String query = "SELECT SUM(correctGuess) FROM GAME;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
+            int result = 0;
             if (res.next()) {
-                return res.getInt("SUM(correctGuess)");
+                result = res.getInt("SUM(correctGuess)");
             }
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         } finally {
             closeConnection(con, prepStmt, res);
         }
-        return 0;
     }
 
     // Uploads image to database

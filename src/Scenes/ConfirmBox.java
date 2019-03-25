@@ -36,7 +36,7 @@ class ConfirmBox{
 
         yesButton.setOnAction(e -> {
             answer = true;
-            Components.Threads.Timers.turnOffTimer();
+            //Components.Threads.Timers.turnOffTimer();
             stage.close();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();
