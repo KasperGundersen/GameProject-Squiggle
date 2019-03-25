@@ -106,12 +106,14 @@ public class LiveChatComponents {
         boolean correct = false;
         if(word.equals(WordComponents.getWord())){
             correct = true;
-            DBConnection.setCorrectGuess(UserInfo.getUserID());
+
             if(UserInfo.getDrawing()){
                 PointSystem.setPointsDrawer();
             }else{
+                DBConnection.setCorrectGuess(UserInfo.getUserID());
                 PointSystem.setPointsGuesser();
             }
+
 
             return correct;
         }else{
