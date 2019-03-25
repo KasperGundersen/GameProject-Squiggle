@@ -41,7 +41,6 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        // timer3();
         return vb;
     }
 
