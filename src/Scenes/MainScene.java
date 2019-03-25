@@ -45,7 +45,6 @@ public class MainScene {
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
             Components.Threads.Timers.turnOffTimer();
             Components.Threads.Timers.turnOffTimer2();
-            // Components.Threads.Timers.turnOffTimer3();
             Components.Threads.Timers.turnOffTimer4();
             stage.close();
         }
