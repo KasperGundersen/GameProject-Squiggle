@@ -104,7 +104,7 @@ public class LiveChatComponents {
      */
     public static boolean checkWord(String word) {
         boolean correct = false;
-        if(word.equals(WordComponents.getWord())){
+        if(word.equalsIgnoreCase(WordComponents.getWord())){
             correct = true;
 
             if(UserInfo.getDrawing()){
@@ -113,8 +113,6 @@ public class LiveChatComponents {
                 PointSystem.setPointsGuesser();
                 DBConnection.setCorrectGuess(UserInfo.getUserID());
             }
-
-
             return correct;
         }else{
             return correct;
