@@ -799,6 +799,28 @@ public class DBConnection {
         return null;
     }
 
+    public static boolean drawersLeft() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String wordQuery = "SELECT COUNT(*) FROM GAME WHERE drawing = 0";
+            prepStmt = con.prepareStatement(wordQuery);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return true;
+            } else {
+                return false;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return false;
+    }
+
     public static void setRandomWord(){
         Connection con = null;
         PreparedStatement prepStmt = null;

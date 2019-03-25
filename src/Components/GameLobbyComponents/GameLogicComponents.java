@@ -1,6 +1,7 @@
 package Components.GameLobbyComponents;
 
 import Components.PointSystem;
+import Components.Threads.Timers;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
@@ -40,6 +41,11 @@ public class GameLogicComponents {
      * Reset method, sets new drawer, clears livechat and updates privileges
      */
     public static void reset() {
+        if (!(DBConnection.drawersLeft())) {
+            Timers.turnOffTimer();
+
+        }
+
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
