@@ -731,15 +731,17 @@ public class DBConnection {
             String query = "SELECT SUM(correctGuess) FROM GAME;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
+            int result = 0;
             if (res.next()) {
-                return res.getInt("SUM(correctGuess)");
+                result = res.getInt("SUM(correctGuess)");
             }
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         } finally {
             closeConnection(con, prepStmt, res);
         }
-        return 0;
     }
 
     // Uploads image to database
