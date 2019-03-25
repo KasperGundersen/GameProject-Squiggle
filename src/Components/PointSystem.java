@@ -30,7 +30,8 @@ public class PointSystem {
 
     public static void setPointsDrawer(){
         int amtCorrect = DBConnection.getAmtCorrect();
-        int newPoints = amtCorrect*50;
+        int points = DBConnection.getPoints();
+        int newPoints = points + (amtCorrect*50);
         DBConnection.updatePoints(newPoints);
     }
 }

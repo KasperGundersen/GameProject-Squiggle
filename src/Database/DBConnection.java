@@ -582,6 +582,23 @@ public class DBConnection {
         return 0;
     }
 
+    public static void resetCorrectGuesses(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "update GAME set correctGuess = 0 where correctGuess <> 0";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
+    }
+
     // Gets the amount of points user has
     public static int getPoints(){
         Connection con = null;

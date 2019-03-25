@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
@@ -40,9 +41,11 @@ public class GameLogicComponents {
      * Method that resets the round, sets new drawer and clears canvas
      */
     public static void reset(){
+        PointSystem.setPointsDrawer();
         DBConnection.setNewDrawer();
         DBConnection.deleteMessages();
         UserInfo.setGuessedCorrectly(false);
+        DBConnection.resetCorrectGuesses();
         LiveChatComponents.cleanChat();
         UserInfo.setDrawing(DBConnection.isDrawing());
 
