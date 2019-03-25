@@ -41,7 +41,9 @@ public class GameLogicComponents {
      * Method that resets the round, sets new drawer and clears canvas
      */
     public static void reset(){
-        PointSystem.setPointsDrawer();
+        if (UserInfo.getDrawing()) {
+            PointSystem.setPointsDrawer(UserInfo.getUserID());
+        }
         DBConnection.setNewDrawer();
         DBConnection.deleteMessages();
         UserInfo.setGuessedCorrectly(false);

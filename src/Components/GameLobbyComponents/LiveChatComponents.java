@@ -117,8 +117,8 @@ public class LiveChatComponents {
         if(word.equalsIgnoreCase(WordComponents.getWord())){
             UserInfo.setGuessedCorrectly(true);
             correct = true;
-            if(!(UserInfo.getDrawing())){
-                PointSystem.setPointsGuesser();
+            if(!(UserInfo.getDrawing())) {
+                PointSystem.setPointsGuesser(UserInfo.getUserID());
                 DBConnection.setCorrectGuess(UserInfo.getUserID());
             }
             return correct;

@@ -640,14 +640,14 @@ public class DBConnection {
     }
 
     // Updates the amount of points this user has
-    public static void updatePoints(int addPoints){
+    public static void updatePoints(int addPoints, int userID){
         Connection con = null;
         PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + addPoints +" WHERE userID =" + UserInfo.getUserID();
+            String query = "UPDATE GAME SET points = " + addPoints +" WHERE userID =" + userID;
             prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch(SQLException e) {
