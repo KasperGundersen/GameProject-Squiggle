@@ -4,26 +4,16 @@ package Database;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
 import Components.UserInfo;
-import javafx.scene.image.WritableImage;
-import javafx.scene.text.HitInfo;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
 public class DBConnection {
-
-    // All information needed to connect to the database
-    private static final String username = "zuimran";
-    private static final String password = "xaXIMlNC";
-    private static final String driver = "com.mysql.cj.jdbc.Driver";
-    private static final String dBUrl = "jdbc:mysql://mysql.stud.idi.ntnu.no:3306/" + username + "?user=" + username + "&password=" + password;
 
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
@@ -248,6 +238,9 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
+            String startQuery = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(startQuery);
+            prepStmt.executeUpdate();
             if(UserInfo.getDrawing()) {
                 String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
                 prepStmt = con.prepareStatement(query);
@@ -263,6 +256,9 @@ public class DBConnection {
                 prepStmt = con.prepareStatement(query3);
                 prepStmt.executeUpdate();
             }
+            String commitQuery = "COMMIT;";
+            prepStmt = con.prepareStatement(commitQuery);
+            prepStmt.executeUpdate();
         } catch(SQLException e ) {
             e.printStackTrace();
         } finally {
@@ -312,10 +308,8 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String dropTable = ""
-                    + "DROP TABLE LIBRARY;";
-            String createTable = ""
-                    + "CREATE TABLE LIBRARY( "
+            String dropTable = "" + "DROP TABLE LIBRARY;";
+            String createTable = "" + "CREATE TABLE LIBRARY( "
                     + "wordID INT(4) PRIMARY KEY AUTO_INCREMENT, "
                     + "    word VARCHAR(30) "
                     + ");";
