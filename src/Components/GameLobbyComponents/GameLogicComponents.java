@@ -28,7 +28,7 @@ public class GameLogicComponents {
         if (b) {
             GameLobby.bp.setBottom(addDrawingUI());
             turnOffTimer();
-            timer2(); // might be removed
+           timer2(); // might be removed
         } else {
             GameLobby.bp.setBottom(null);
             turnOfTimer2(); // might be removed

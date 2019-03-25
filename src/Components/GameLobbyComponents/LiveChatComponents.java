@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import javafx.application.Platform;
@@ -105,8 +106,17 @@ public class LiveChatComponents {
         boolean correct = false;
         if(word.equals(WordComponents.getWord())){
             correct = true;
-        }else{ }
-        return correct;
+            DBConnection.setCorrectGuess(UserInfo.getUserID());
+            if(UserInfo.getDrawing()){
+                PointSystem.setPointsDrawer();
+            }else{
+                PointSystem.setPointsGuesser();
+            }
+
+            return correct;
+        }else{
+            return correct;
+        }
     }
 
     /**

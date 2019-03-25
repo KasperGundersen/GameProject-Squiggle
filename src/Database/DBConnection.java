@@ -612,7 +612,7 @@ public class DBConnection {
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + newPoints +"WHERE userID = ?";
+            String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID = ?";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.executeUpdate();
@@ -669,6 +669,22 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
         return null;
+    }
+
+    public static void setCorrectGuess(int userID){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "update GAME set correctGuess = 1 where userID=" + userID;
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate(query);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
     }
 
     // Gets the number of people who has guessed correctly

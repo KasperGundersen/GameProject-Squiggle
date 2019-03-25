@@ -11,7 +11,7 @@ public class PointSystem {
 
     //1,2,3 get points, and everybody who guess correct.
     // input is round result, then the DB is updated with new totScore
-    public static void pointPlayer(){
+    public static void setPointsGuesser(){
         int amtCorrect = DBConnection.getAmtCorrect();
         int newPoints;
 
@@ -26,10 +26,10 @@ public class PointSystem {
         }
         DBConnection.updatePoints(newPoints);
     }
-    public static void pointsDrawer(){
+
+    public static void setPointsDrawer(){
         int amtCorrect = DBConnection.getAmtCorrect();
         int newPoints = amtCorrect*50;
         DBConnection.updatePoints(newPoints);
     }
-
 }

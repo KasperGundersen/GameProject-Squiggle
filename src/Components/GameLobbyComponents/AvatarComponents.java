@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
-import static Components.Threads.Timers.timer3;
+//import static Components.Threads.Timers.timer3;
 
 /**
  * Class that adds the Avatar ListView
@@ -43,7 +43,7 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        timer3();
+        //timer3();
         return vb;
     }
 
@@ -82,7 +82,7 @@ public class AvatarComponents {
                             iv.setFitHeight(50);
                             iv.setFitWidth(50);
                         }
-                        setText(userName + ", score: " + p.getPoints());
+                        setText(userName + ", score: " + DBConnection.getPoints());
                         setGraphic(iv);
                     }
                 }
