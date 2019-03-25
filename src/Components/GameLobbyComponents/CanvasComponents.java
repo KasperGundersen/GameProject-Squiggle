@@ -79,7 +79,6 @@ public class CanvasComponents {
         cp.setValue(Color.BLACK);
 
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
-        // hb.setStyle("-fx-background-color: #999");
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
         //////////////////////////////////
