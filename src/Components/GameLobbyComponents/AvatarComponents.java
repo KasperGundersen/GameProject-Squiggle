@@ -21,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
-import static Components.Threads.Timers.timer3;
-
 /**
  * Class that adds the Avatar ListView
  */
@@ -44,7 +42,6 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        timer3();
         return vb;
     }
 

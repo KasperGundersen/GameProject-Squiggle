@@ -8,6 +8,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.text.HitInfo;
 
 import javax.sql.rowset.serial.SerialBlob;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -247,12 +248,11 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "";
             if(UserInfo.getDrawing()) {
-                query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
+                String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
             }
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
             String query2 = "SELECT * FROM GAME WHERE drawing=1;";
             prepStmt = con.prepareStatement(query2);
             res = prepStmt.executeQuery();
@@ -306,7 +306,6 @@ public class DBConnection {
             closeConnection(con, prepStmt, null);
         }
     }
-
 
     public static void createLib() {
         Connection con = null;
@@ -436,7 +435,7 @@ public class DBConnection {
         return null;
     }*/
 
-    public static StringBuilder getNewMessages2() {
+    public static StringBuilder getNewMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -782,18 +781,26 @@ public class DBConnection {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
+        InputStream input = null;
         try{
             con = HikariCP.getCon();
             String query = "SELECT drawing FROM DRAW ORDER BY gameID DESC LIMIT 1;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()){
-                return res.getBlob("drawing").getBinaryStream();
+                input = res.getBlob("drawing").getBinaryStream();
+                return input;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
+            try {
+                input.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         return null;
     }
@@ -804,16 +811,8 @@ public class DBConnection {
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String wordQuery = "SELECT word FROM LIBRARY ORDER BY RAND() LIMIT 1;";
+            String wordQuery = "UPDATE DRAW SET word = (SELECT word FROM LIBRARY ORDER BY RAND() LIMIT 1) ORDER BY gameID DESC LIMIT 1;";
             prepStmt = con.prepareStatement(wordQuery);
-            res = prepStmt.executeQuery();
-            String word = null;
-            if(res.next()){
-                word = res.getString(1);
-            }
-            wordQuery = "UPDATE DRAW SET word = ? ORDER BY gameID DESC LIMIT 1";
-            prepStmt = con.prepareStatement(wordQuery);
-            prepStmt.setString(1, word);
             prepStmt.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
@@ -887,11 +886,9 @@ public class DBConnection {
             res = prepStmt.executeQuery();
             if (res.next()) {
                 int drawing = res.getInt("drawing");
-                if (drawing == 0 || drawing == 2) {
-                    return false;
-                }
+                return drawing == 1;
             }
-            return true;
+            return false;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {

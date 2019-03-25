@@ -28,7 +28,7 @@ import java.util.TimerTask;
  */
 
 public class LiveChatComponents {
-    private static Timer timer = null;
+    private static Timer timerLive = null;
     private static ScrollPane sp;
     private static StringBuilder messages = new StringBuilder();
     private static TextField tf;
@@ -83,27 +83,30 @@ public class LiveChatComponents {
      * @param chatText Text-object which displays the messages
      */
     private static void showMessages(Text chatText) {
-        timer = new Timer();
+        timerLive = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                StringBuilder newMessages = DBConnection.getNewMessages2();
-                messages.append(newMessages);
+                new Thread(()->{
+                    StringBuilder newMessages = DBConnection.getNewMessages();
+                    messages.append(newMessages);
+                }).start();
 
                 chatText.setText(messages.toString());
                 sp.setVvalue(1.0);
             }
         };
-        timer.schedule(task, 0, +5000);
+        timerLive.schedule(task, 0, +5000);
     }
 
 
     /**
      * Turns of the timer when called
      */
-    public static void turnOfTimer() {
-        if (timer != null) {
-            timer.cancel();
+    public static void turnOffLiveChatTimer() {
+        if (timerLive != null) {
+            timerLive.cancel();
+            timerLive.purge();
         }
     }
 
