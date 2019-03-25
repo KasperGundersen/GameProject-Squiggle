@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import Database.HikariCP;
@@ -118,6 +119,7 @@ public class MainMenu extends Scenes{
         GameLogicComponents.setPrivileges();
         MainScene.setScene(MainScene.gl.getSc());
         DBConnection.deleteMessages();
+        LiveChatComponents.cleanChat();
     }
 
     private void logOutSystem(){

@@ -31,6 +31,7 @@ public class LiveChatComponents {
     private static Timer timer = null;
     private static ScrollPane sp;
     private static StringBuilder messages = new StringBuilder();
+    private static TextField tf;
 
     //-----------Right-----------//
 
@@ -49,7 +50,7 @@ public class LiveChatComponents {
         sp.setFitToWidth(true);
         sp.setFitToHeight(true);
 
-        TextField tf = new TextField();
+        tf = new TextField();
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
         HBox hb = new HBox();
@@ -60,14 +61,20 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
-            if (!(UserInfo.getGuessedCorrectly())) {
-                DBConnection.insertMessage(text);
-                //showMessages(lc, tf);
-                tf.clear();
+
+            if (!(UserInfo.getGuessedCorrectly())) { //If player has not answered correctly yet
+                insertMessages(text);
+            }
+            if (UserInfo.getGuessedCorrectly() && !(checkWord(text))) { //If user wants to write something more but has corrected correct
+                insertMessages(text);
             }
         });
-
         return vb;
+    }
+
+    private static void insertMessages(String text) {
+        DBConnection.insertMessage(text);
+        tf.clear();
     }
 
     /**
@@ -89,6 +96,7 @@ public class LiveChatComponents {
         };
         timer.schedule(task, 0, +5000);
     }
+
 
     /**
      * Turns of the timer when called
