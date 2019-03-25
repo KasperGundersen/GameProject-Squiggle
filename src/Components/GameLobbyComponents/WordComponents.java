@@ -21,6 +21,7 @@ public class WordComponents {
         return word;
     }
 
+
     public static String generateWord(){
         return DBConnection.getRandomWord();
     }
