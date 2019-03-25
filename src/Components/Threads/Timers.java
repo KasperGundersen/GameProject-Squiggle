@@ -90,15 +90,17 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Updates playerList");
-                updateData();
+                if (timeRemaining % 5 == 0) {
+                    updateData();
+                    System.out.println("Updates playerList - Timer 4");
+                }
                 if (timeRemaining > 80) {
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
                 } else {
                     turnOffTimer2(); // Turns off timer that updates image.
-                    turnOffTimer4(); // turns off countdown timer
+                    turnOffTimer4(); // Turns off countdown timer
                     GameLogicComponents.reset();
                 }
             }
