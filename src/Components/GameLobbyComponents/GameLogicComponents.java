@@ -48,8 +48,6 @@ public class GameLogicComponents {
         DBConnection.resetCorrectGuesses();
         LiveChatComponents.cleanChat();
         UserInfo.setDrawing(DBConnection.isDrawing());
-
-
         //Update userInfo for drawer();
         setPrivileges();
         //New canvas
