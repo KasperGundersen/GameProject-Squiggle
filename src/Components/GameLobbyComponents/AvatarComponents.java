@@ -1,6 +1,7 @@
 package Components.GameLobbyComponents;
 
 import Components.Player;
+import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
 import javafx.application.Platform;
@@ -82,7 +83,11 @@ public class AvatarComponents {
                             iv.setFitHeight(50);
                             iv.setFitWidth(50);
                         }
-                        setText(userName + ", score: " + DBConnection.getPoints());
+                        System.out.println(p.getUserID());
+                        System.out.println(DBConnection.getPointsByUserID(p.getUserID()));
+                        //setText(userName + ", score: " + DBConnection.getPointsByUserID(p.getUserID()));
+                        //setText(userName + ", score: " + p.getPoints());
+                        setText(userName + ", score: " + DBConnection.getPointsByUserID(DBConnection.getUserID(userName)));
                         setGraphic(iv);
                     }
                 }

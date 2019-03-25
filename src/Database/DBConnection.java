@@ -619,6 +619,26 @@ public class DBConnection {
         return 0;
     }
 
+    public static int getPointsByUserID(int userID){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT points FROM GAME where userID =" + userID;
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("points");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return 0;
+    }
+
     // Updates the amount of points this user has
     public static void updatePoints(int addPoints){
         Connection con = null;
