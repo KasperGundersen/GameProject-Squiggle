@@ -1,6 +1,6 @@
 package Components.Threads;
 
-import Components.GameLobbyComponents.TimerComponent;
+import Components.GameLobbyComponents.GameLogicComponents;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,8 +15,8 @@ public class Timers {
 
     private static Timer timer;
     private static Timer timer2;
-    private static Timer timer3;
     private static Timer timer4;
+    private static volatile Thread thread;
 
 
     public static void timer(){
@@ -24,15 +24,24 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                setImage();
+                System.out.println("Downloads and displays image from DB - Timer1");
+                new Thread(() -> {
+                    thread = Thread.currentThread();
+                    setImage();
+                }).start();
             }
         };
-        timer.schedule(task, 0, +5000); // was originaly 5000
+        timer.schedule(task, 0, +7000); // was originaly 5000
     }
 
     public static void turnOffTimer() {
+        if (thread != null) {
+            thread.interrupt();
+        }
         if (timer != null) {
             timer.cancel();
+            timer.purge();
+            System.out.println("Actually closed Timer 1");
         }
     }
 
@@ -42,6 +51,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("Uploads new version of drawing to DB - Timer 2");
                 updateImage();
             }
         };
@@ -49,42 +59,32 @@ public class Timers {
     }
 
     // Method for turning off timer, used when time has run out
-    public static void turnOfTimer2() {
+    public static void turnOffTimer2() {
         if (timer2 != null) {
             timer2.cancel();
+            timer2.purge();
+            System.out.println("Actually turned off timer 2");
         }
     }
 
-    public static void timer3(){
-        timer3 = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                updateData();
-            }
-        };
-        timer3.schedule(task, 0, +5000);
-    }
-
-    public static void turnOfTimer3() {
-        if (timer3 != null) {
-            timer3.cancel();
-        }
-    }
 
     public static void timer4(){
         timer4 = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
+                if (timeRemaining % 5 == 0) {
+                    updateData();
+                    System.out.println("Updates playerList - Timer 4");
+                }
                 if (timeRemaining > 80) {
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
                 } else {
-                    turnOfTimer2(); // Turns off timer that updates image.
-                    turnOffTimer4(); // turns off countdown timer
-                    TimerComponent.reset();
+                    turnOffTimer2(); // Turns off timer that updates image.
+                    turnOffTimer4(); // Turns off countdown timer
+                    GameLogicComponents.reset();
                 }
             }
         };
@@ -94,6 +94,7 @@ public class Timers {
     public static void turnOffTimer4() {
         if (timer4 != null) {
             timer4.cancel();
+            timer4.purge();
         }
     }
 }

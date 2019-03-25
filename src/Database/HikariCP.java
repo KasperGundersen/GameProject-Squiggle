@@ -22,8 +22,6 @@ public class HikariCP {
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         config.setPoolName("Squiggle Pool");
-        config.setMaxLifetime(30000);
-
         ds = new HikariDataSource(config);
     }
 
