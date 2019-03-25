@@ -647,7 +647,7 @@ public class DBConnection {
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID =" + UserInfo.getUserID();
+            String query = "UPDATE GAME SET points = " + addPoints +" WHERE userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch(SQLException e) {
