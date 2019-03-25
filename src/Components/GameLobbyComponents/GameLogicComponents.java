@@ -42,6 +42,7 @@ public class GameLogicComponents {
     public static void reset(){
         DBConnection.setNewDrawer();
         DBConnection.deleteMessages();
+        UserInfo.setGuessedCorrectly(false);
         LiveChatComponents.cleanChat();
         UserInfo.setDrawing(DBConnection.isDrawing());
 

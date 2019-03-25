@@ -60,9 +60,11 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
-            DBConnection.insertMessage(text);
-            //showMessages(lc, tf);
-            tf.clear();
+            if (!(UserInfo.getGuessedCorrectly())) {
+                DBConnection.insertMessage(text);
+                //showMessages(lc, tf);
+                tf.clear();
+            }
         });
 
         return vb;
@@ -105,8 +107,8 @@ public class LiveChatComponents {
     public static boolean checkWord(String word) {
         boolean correct = false;
         if(word.equals(WordComponents.getWord())){
+            UserInfo.setGuessedCorrectly(true);
             correct = true;
-
             if(UserInfo.getDrawing()){
                 PointSystem.setPointsDrawer();
             }else{

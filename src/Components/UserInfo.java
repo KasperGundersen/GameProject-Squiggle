@@ -25,6 +25,7 @@ public class UserInfo {
     private static Color color;
     private static String userEmail;
     private static int tempHighestChatID;
+    private static boolean guessedCorrectly = false;
 
 
     /**
@@ -163,5 +164,13 @@ public class UserInfo {
      */
     public static void setTempHighestChatID(int tempHighestChatID) {
         UserInfo.tempHighestChatID = tempHighestChatID;
+    }
+
+    public static boolean getGuessedCorrectly() {
+        return guessedCorrectly;
+    }
+
+    public static void setGuessedCorrectly(boolean guessedCorrectly) {
+        UserInfo.guessedCorrectly = guessedCorrectly;
     }
 }
