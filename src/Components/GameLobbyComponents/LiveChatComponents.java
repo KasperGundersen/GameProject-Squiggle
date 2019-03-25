@@ -110,8 +110,8 @@ public class LiveChatComponents {
             if(UserInfo.getDrawing()){
                 PointSystem.setPointsDrawer();
             }else{
-                DBConnection.setCorrectGuess(UserInfo.getUserID());
                 PointSystem.setPointsGuesser();
+                DBConnection.setCorrectGuess(UserInfo.getUserID());
             }
 
 
