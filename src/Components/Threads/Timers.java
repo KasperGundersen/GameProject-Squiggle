@@ -16,9 +16,8 @@ public class Timers {
     private static Timer timer;
     private static Timer timer2;
     private static Timer timer4;
-    private static Timer timer5;
-    private static volatile Thread thread;
-
+    private static Thread thread;
+    public static boolean closed = false;
 
     public static void timer(){
         timer = new Timer();
@@ -29,12 +28,20 @@ public class Timers {
                 new Thread(() -> {
                     thread = Thread.currentThread();
                     setImage();
+                    if (closed) {
+                        thread.interrupt();
+                        timer.cancel();
+                        timer.purge();
+                    }
                 }).start();
             }
         };
         timer.schedule(task, 0, +7000); // was originaly 5000
     }
 
+    public static void setClosed(boolean bool) {
+        closed = bool;
+    }
     public static void turnOffTimer() {
         if (thread != null) {
             thread.interrupt();

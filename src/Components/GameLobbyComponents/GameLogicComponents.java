@@ -33,6 +33,7 @@ public class GameLogicComponents {
             GameLobby.bp.setBottom(null);
             System.out.println("Tries to turn off timer 2");
             turnOffTimer2();
+            turnOffTimer();
             timer();
         }
     }
