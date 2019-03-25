@@ -39,10 +39,6 @@ public class GameLogicComponents {
     /**
      * Reset method, sets new drawer, clears livechat and updates privileges
      */
-<<<<<<< src/Components/GameLobbyComponents/GameLogicComponents.java
-    public static void reset(){
-        
-=======
     public static void reset() {
         Service<Void> service = new Service<Void>() {
             @Override
