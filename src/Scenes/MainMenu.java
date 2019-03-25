@@ -117,6 +117,7 @@ public class MainMenu extends Scenes{
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
         GameLogicComponents.setPrivileges();
         MainScene.setScene(MainScene.gl.getSc());
+        DBConnection.deleteMessages();
     }
 
     private void logOutSystem(){
