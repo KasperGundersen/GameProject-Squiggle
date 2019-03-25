@@ -67,23 +67,6 @@ public class Timers {
         }
     }
 
-    /*
-    public static void timer3(){
-        timer3 = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-            }
-        };
-        timer3.schedule(task, 0, +10000);
-    }
-
-    public static void turnOffTimer3() {
-        if (timer3 != null) {
-            timer3.cancel();
-        }
-    }
-    */
 
     public static void timer4(){
         timer4 = new Timer();
