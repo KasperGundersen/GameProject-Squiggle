@@ -10,7 +10,7 @@ public class WordComponents {
     private static String word;
 
     public static HBox addWordUI(){
-        word = generateWord();
+        word = DBConnection.getRandomWord();
         HBox hb = new HBox();
         Label wordLabel = new Label("Word: " + showWord());
         wordLabel.setFont(new Font(20));
@@ -20,10 +20,6 @@ public class WordComponents {
 
     public static String getWord(){
         return word;
-    }
-
-    public static String generateWord(){
-        return DBConnection.getRandomWord();
     }
 
     public static String showWord(){
