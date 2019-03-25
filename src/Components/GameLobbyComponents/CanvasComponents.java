@@ -136,19 +136,17 @@ public class CanvasComponents {
         gc.strokeRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
-        new Thread(() -> {
-            if(UserInfo.getDrawing()) {
-                uploadImage();
-                DBConnection.setRandomWord();
-            }else{
-                try {
-                    Thread.sleep(2000);
-                    updateImage();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        if(UserInfo.getDrawing()) {
+            uploadImage();
+            DBConnection.setRandomWord();
+        }else{
+            try {
+                Thread.sleep(2000);
+                updateImage();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
+        }
 
         //////////////////////////////////////////////
         if (UserInfo.getDrawing()) {
