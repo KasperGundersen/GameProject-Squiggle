@@ -91,7 +91,6 @@ public class LiveChatComponents {
                     StringBuilder newMessages = DBConnection.getNewMessages();
                     messages.append(newMessages);
                 }).start();
-
                 chatText.setText(messages.toString());
                 sp.setVvalue(1.0);
             }

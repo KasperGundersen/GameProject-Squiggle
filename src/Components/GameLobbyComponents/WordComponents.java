@@ -10,6 +10,7 @@ public class WordComponents {
     private static String word;
 
     public static HBox addWordUI(){
+        System.out.println(DBConnection.getRandomWord());
         word = DBConnection.getRandomWord();
         HBox hb = new HBox();
         Label wordLabel = new Label("Word: " + showWord());

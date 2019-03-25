@@ -138,6 +138,7 @@ public class CanvasComponents {
         if(UserInfo.getDrawing()) {
             uploadImage();
             DBConnection.setRandomWord();
+            System.out.println("HEI HEI MOTHERFUCKER!!!");
         }else{
             setImage();
         }
@@ -175,7 +176,7 @@ public class CanvasComponents {
         if (UserInfo.getDrawing()) {
             WritableImage wim = canvasSnapshot(canvas);
             byte[] blob = imageToByte(wim);
-            DBConnection.uploadImage(blob, "insertWord");
+            DBConnection.uploadImage(blob, WordComponents.getWord());
         }
     }
 
