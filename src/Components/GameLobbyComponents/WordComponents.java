@@ -12,9 +12,9 @@ public class WordComponents {
     public static HBox addWordUI(){
         word = generateWord();
         HBox hb = new HBox();
-        Label word = new Label("Word: " + showWord());
-        word.setFont(new Font(20));
-        hb.getChildren().add(word);
+        Label wordLabel = new Label("Word: " + showWord());
+        wordLabel.setFont(new Font(20));
+        hb.getChildren().add(wordLabel);
         return hb;
     }
 
