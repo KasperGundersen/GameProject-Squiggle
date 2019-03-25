@@ -13,18 +13,18 @@ public class PointSystem {
     // input is round result, then the DB is updated with new totScore
     public static void setPointsGuesser(){
         int amtCorrect = DBConnection.getAmtCorrect();
-        int newPoints;
+        int points;
 
         if(amtCorrect==0){
-            newPoints = 150;
+            points = 150;
         }else if(amtCorrect==1){
-            newPoints = 100;
+            points = 100;
         }else if (amtCorrect==2){
-            newPoints=75;
+            points=75;
         } else{
-            newPoints = 50;
+            points = 50;
         }
-        DBConnection.updatePoints(newPoints);
+        DBConnection.updatePoints(points);
     }
 
 

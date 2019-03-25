@@ -588,10 +588,9 @@ public class DBConnection {
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String query = "update GAME set correctGuess = 0 where correctGuess <> 0";
+            String query = "update GAME set correctGuess = 0 where correctGuess > 0";
             prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-
+            prepStmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }finally{
@@ -606,9 +605,8 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "SELECT points FROM GAME where userID = ?;";
+            String query = "SELECT points FROM GAME where userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, UserInfo.getUserID());
             res = prepStmt.executeQuery();
             if (res.next()) {
                 return res.getInt("points");
@@ -629,9 +627,8 @@ public class DBConnection {
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID = ?";
+            String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
