@@ -7,9 +7,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
 public class WordComponents {
-    private static String word = generateWord();
+    private static String word;
 
     public static HBox addWordUI(){
+        word = generateWord();
         HBox hb = new HBox();
         Label word = new Label("Word: " + showWord());
         word.setFont(new Font(20));
