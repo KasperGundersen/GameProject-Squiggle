@@ -43,7 +43,6 @@ public abstract class Scenes {
         this.HEIGHT = HEIGHT;
     }
 
-
     //Getters
     public GridPane getGp() {
         return gp;

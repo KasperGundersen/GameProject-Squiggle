@@ -24,7 +24,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Downloads and displays image from DB - Timer1");
                 new Thread(() -> {
                     thread = Thread.currentThread();
                     setImage();
@@ -49,7 +48,6 @@ public class Timers {
         if (timer != null) {
             timer.cancel();
             timer.purge();
-            System.out.println("Actually closed Timer 1");
         }
     }
 
@@ -59,7 +57,6 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Uploads new version of drawing to DB - Timer 2");
                 updateImage();
             }
         };
@@ -71,7 +68,6 @@ public class Timers {
         if (timer2 != null) {
             timer2.cancel();
             timer2.purge();
-            System.out.println("Actually turned off timer 2");
         }
     }
 
@@ -83,15 +79,14 @@ public class Timers {
             public void run() {
                 if (timeRemaining % 5 == 0) {
                     updateData();
-                    System.out.println("Updates playerList - Timer 4");
                 }
                 if (timeRemaining > 80) {
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
                 } else {
-                    turnOffTimer2(); // Turns off timer that updates image.
-                    turnOffTimer4(); // Turns off countdown timer
+                    //turnOffTimer2(); // Turns off timer that updates image.
+                    //turnOffTimer4(); // Turns off countdown timer
                     GameLogicComponents.reset();
                 }
             }

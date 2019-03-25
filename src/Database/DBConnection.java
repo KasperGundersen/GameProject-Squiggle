@@ -808,10 +808,14 @@ public class DBConnection {
             String wordQuery = "SELECT COUNT(*) FROM GAME WHERE drawing = 0";
             prepStmt = con.prepareStatement(wordQuery);
             res = prepStmt.executeQuery();
+            int result = 0;
             if (res.next()) {
-                return true;
-            } else {
+                result = res.getInt("COUNT(*)");
+            }
+            if (result == 0) {
                 return false;
+            } else {
+                return true;
             }
         }catch (SQLException e){
             e.printStackTrace();
