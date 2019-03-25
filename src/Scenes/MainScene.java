@@ -1,5 +1,7 @@
 package Scenes;
 
+import Components.GameLobbyComponents.TimerComponent;
+import Components.Threads.Timers;
 import Components.Toast;
 import Components.UserInfo;
 import javafx.scene.Scene;
@@ -43,6 +45,7 @@ public class MainScene {
     private void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
+            Timers.setClosed(true);
             Components.Threads.Timers.turnOffTimer();
             Components.Threads.Timers.turnOffTimer2();
             Components.Threads.Timers.turnOffTimer4();
