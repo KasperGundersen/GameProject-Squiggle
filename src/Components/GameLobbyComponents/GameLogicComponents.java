@@ -80,6 +80,5 @@ public class GameLogicComponents {
             }
         };
         service.start();
->>>>>>> src/Components/GameLobbyComponents/GameLogicComponents.java
     }
 }
