@@ -140,12 +140,7 @@ public class CanvasComponents {
             uploadImage();
             DBConnection.setRandomWord();
         }else{
-            try {
-                Thread.sleep(2000);
-                updateImage();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            setImage();
         }
 
         //////////////////////////////////////////////
@@ -178,44 +173,48 @@ public class CanvasComponents {
      * Main upload method. Uploads drawing as bytes
      */
     public static void uploadImage(){
-        WritableImage wim = canvasSnapshot(canvas);
-        byte[] blob = imageToByte(wim);
-        DBConnection.uploadImage(blob, "insertWord");
+        if (UserInfo.getDrawing()) {
+            WritableImage wim = canvasSnapshot(canvas);
+            byte[] blob = imageToByte(wim);
+            DBConnection.uploadImage(blob, "insertWord");
+        }
     }
 
     /**
      * Uploads an updated version of drawing to Database
      */
     public static void updateImage() {
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    WritableImage wim = canvasSnapshot(canvas);
-                                    new Thread(()->{
-                                        DBConnection.updateImage(imageToByte(wim));
-                                    }).start();
-                                }finally{
-                                    latch.countDown();
+        if (UserInfo.getDrawing()) {
+            Service<Void> service = new Service<Void>() {
+                @Override
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            //Background work
+                            final CountDownLatch latch = new CountDownLatch(1);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try{
+                                        WritableImage wim = canvasSnapshot(canvas);
+                                        new Thread(()->{
+                                            DBConnection.updateImage(imageToByte(wim));
+                                        }).start();
+                                    }finally{
+                                        latch.countDown();
+                                    }
                                 }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
+                            });
+                            latch.await();
+                            //Keep with the background work
+                            return null;
+                        }
+                    };
+                }
+            };
+            service.start();
+        }
     }
 
     /**
@@ -248,14 +247,16 @@ public class CanvasComponents {
      * Converts blob back to image, paints this at canvas
      */
     public static void setImage(){
-        try {
-            BufferedImage bi = ImageIO.read(DBConnection.getImage());
-            if(bi != null){
-                Image img = SwingFXUtils.toFXImage(bi, null);
-                gc.drawImage(img, 0,0);
+        if (!UserInfo.getDrawing()) {
+            try {
+                BufferedImage bi = ImageIO.read(DBConnection.getImage());
+                if(bi != null){
+                    Image img = SwingFXUtils.toFXImage(bi, null);
+                    gc.drawImage(img, 0,0);
+                }
+            }catch (IOException e){
+                e.printStackTrace();
             }
-        }catch (IOException e){
-            e.printStackTrace();
         }
     }
 
