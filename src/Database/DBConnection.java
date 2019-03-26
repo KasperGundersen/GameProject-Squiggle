@@ -752,6 +752,7 @@ public class DBConnection {
 
             //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             // Must also be changed in timers class timer 4
+            // Must also be changed in timerComponent - setTimerText
             String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 60 SECOND));";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
@@ -812,19 +813,28 @@ public class DBConnection {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
+        boolean temp;
         try{
             con = HikariCP.getCon();
+            String startQuery = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(startQuery);
+            prepStmt.executeUpdate();
             String wordQuery = "SELECT COUNT(*) FROM GAME WHERE drawing = 0";
             prepStmt = con.prepareStatement(wordQuery);
             res = prepStmt.executeQuery();
+            String stopQuery = "COMMIT;";
+            prepStmt = con.prepareStatement(stopQuery);
+            prepStmt.executeUpdate();
             int result = 0;
             if (res.next()) {
                 result = res.getInt("COUNT(*)");
             }
             if (result == 0) {
-                return false;
+                temp = false;
+            } else {
+                temp = true;
             }
-            return true;
+            return temp;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
