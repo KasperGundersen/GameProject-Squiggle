@@ -229,7 +229,7 @@ public class DBConnection {
                 prepStmt.executeUpdate();
                 UserInfo.setDrawing(true);
             }
-            String stopQuery = "START TRANSATION;";
+            String stopQuery = "COMMIT;";
             prepStmt = con.prepareStatement(stopQuery);
             prepStmt.executeUpdate();
         } catch(SQLException e ) {
