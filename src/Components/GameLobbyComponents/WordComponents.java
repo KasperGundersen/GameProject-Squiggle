@@ -11,6 +11,7 @@ public class WordComponents {
 
     public static HBox addWordUI(){
         word = DBConnection.getRandomWord();
+        System.out.println(word);
         HBox hb = new HBox();
         Label wordLabel = new Label("Word: " + showWord());
         wordLabel.setFont(new Font(20));

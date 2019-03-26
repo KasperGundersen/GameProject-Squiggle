@@ -27,6 +27,13 @@ public class MainScene {
     public static UserInfo user = new UserInfo();
     public static Toast toast = new Toast(stage, WIDTH, HEIGHT);
 
+    public static double getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static double getWIDTH() {
+        return WIDTH;
+    }
 
     public static void setScene(Scene sc) {
         stage.setScene(sc);

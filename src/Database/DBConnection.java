@@ -3,7 +3,10 @@ package Database;
 
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
+import Components.Threads.Timers;
 import Components.UserInfo;
+import Scenes.MainMenu;
+import Scenes.MainScene;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
@@ -924,4 +927,81 @@ public class DBConnection {
         }
         return false;
     }
+
+    public static boolean initializeRound() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int amt0 = 0;
+        int amt1 = 0;
+        int amt2 = 0;
+        try {
+            con = HikariCP.getCon();
+            String query = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "SELECT (SELECT COUNT(*) FROM GAME WHERE drawing = 0) AS 'v0', " +
+                    "(SELECT COUNT(*) FROM GAME WHERE drawing = 1) AS 'v1', " +
+                    "(SELECT COUNT(*) FROM GAME WHERE drawing = 2) AS 'v2';";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            amt0 = res.getInt("v0");
+            amt1 = res.getInt("v1");
+            amt2 = res.getInt("v2");
+
+            if (amt1 == 0 && amt2 == 0) {
+                // If no-one has drawn or is drawing
+                query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.setInt(2, 0);
+                prepStmt.setInt(3, 0);
+                prepStmt.setInt(4, 0);
+                prepStmt.executeUpdate();
+            } else if (amt0 > 0 && amt1 == 1) {
+                // Reset round
+                if(UserInfo.getDrawing()) {
+                    query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
+                    prepStmt = con.prepareStatement(query);
+                    prepStmt.executeUpdate();
+                }
+                query = "SELECT * FROM GAME WHERE drawing=1;";
+                prepStmt = con.prepareStatement(query);
+                res = prepStmt.executeQuery();
+                if (!res.next()) {
+                    query = "UPDATE GAME SET drawing=1 WHERE drawing=0 LIMIT 1;";
+                    prepStmt = con.prepareStatement(query);
+                    prepStmt.executeUpdate();
+                }
+            } else if (amt0 == 0 && amt1 == 1) {
+                // Kick players
+                query = "DELETE FROM GAME WHERE userID = ?";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.executeUpdate();
+                Timers.setClosed(true);
+                Timers.turnOffTimer();
+                Timers.turnOffTimer2();
+                Timers.turnOffTimer4();
+                MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
+                MainScene.setScene(MainScene.mm.getSc());
+                MainScene.gl = null;
+            } else {
+                System.out.println("Not drawn or drawing: " + amt0);
+                System.out.println("Currently drawing: " + amt1);
+                System.out.println("Done drawing: " + amt2);
+            }
+            query = "COMMIT;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return false;
+    }
+
 }

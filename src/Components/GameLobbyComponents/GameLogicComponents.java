@@ -122,4 +122,21 @@ public class GameLogicComponents {
             service.start();
         }
     }
+
+    public static void newResetMethodThatWorks(){
+        Task<Void> task = new Task<Void>() {
+            @Override protected Void call() throws Exception {
+
+                DBConnection.enterGame();
+                DBConnection.setDrawer();
+                MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
+                GameLogicComponents.setPrivileges();
+                MainScene.setScene(MainScene.gl.getSc());
+                DBConnection.deleteMessages();
+                LiveChatComponents.cleanChat();
+
+                return null;
+            }
+        };
+    }
 }
