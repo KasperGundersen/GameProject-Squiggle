@@ -829,6 +829,7 @@ public class DBConnection {
             if (res.next()) {
                 result = res.getInt("COUNT(*)");
             }
+            System.out.println(result);
             if (result == 0) {
                 temp = false;
             } else {
