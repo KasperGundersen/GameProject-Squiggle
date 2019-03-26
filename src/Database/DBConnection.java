@@ -214,6 +214,9 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
+            String startQuery = "START TRANSATION;";
+            prepStmt = con.prepareStatement(startQuery);
+            prepStmt.executeUpdate();
             String query = "SELECT * FROM GAME WHERE drawing=1";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
@@ -226,6 +229,9 @@ public class DBConnection {
                 prepStmt.executeUpdate();
                 UserInfo.setDrawing(true);
             }
+            String stopQuery = "START TRANSATION;";
+            prepStmt = con.prepareStatement(stopQuery);
+            prepStmt.executeUpdate();
         } catch(SQLException e ) {
             e.printStackTrace();
         } finally {

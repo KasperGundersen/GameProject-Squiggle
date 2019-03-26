@@ -79,6 +79,7 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
+            setClosed(false);
             Service<Void> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {
