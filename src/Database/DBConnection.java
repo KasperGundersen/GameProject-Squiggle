@@ -753,7 +753,7 @@ public class DBConnection {
             //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             // Must also be changed in timers class timer 4
             // Must also be changed in timerComponent - setTimerText
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 60 SECOND));";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
@@ -829,7 +829,6 @@ public class DBConnection {
             if (res.next()) {
                 result = res.getInt("COUNT(*)");
             }
-            System.out.println(result);
             if (result == 0) {
                 temp = false;
             } else {

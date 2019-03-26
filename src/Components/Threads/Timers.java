@@ -81,7 +81,7 @@ public class Timers {
                 if (timeRemaining % 5 == 0) {
                     updateData();
                 }
-                if (timeRemaining > 30) {
+                if (timeRemaining > 80) {
                     setTimerText(false);
                     justReset = false;
                 } else if (timeRemaining > 0) {

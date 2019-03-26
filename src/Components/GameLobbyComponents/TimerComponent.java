@@ -1,18 +1,14 @@
 package Components.GameLobbyComponents;
 
 import Database.DBConnection;
-import Scenes.GameLobby;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 import static Components.Threads.Timers.timer4;
@@ -66,7 +62,7 @@ public class TimerComponent {
                                     if (gameStarted) {
                                         countDown.setText("Remaining time: " + timeRemaining);
                                     } else {
-                                        countDown.setText("Game starts in: " + (timeRemaining - 30));
+                                        countDown.setText("Game starts in: " + (timeRemaining - 80));
                                     }
                                 }finally{
                                     latch.countDown();
