@@ -214,6 +214,9 @@ public class DBConnection {
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
+            String startQuery = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(startQuery);
+            prepStmt.executeUpdate();
             String query = "SELECT * FROM GAME WHERE drawing=1";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
@@ -226,6 +229,9 @@ public class DBConnection {
                 prepStmt.executeUpdate();
                 UserInfo.setDrawing(true);
             }
+            String stopQuery = "COMMIT;";
+            prepStmt = con.prepareStatement(stopQuery);
+            prepStmt.executeUpdate();
         } catch(SQLException e ) {
             e.printStackTrace();
         } finally {
@@ -743,7 +749,8 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
+            // Also need to change time in timer4 // should be 140 seconds
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 30 SECOND));";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
@@ -814,9 +821,8 @@ public class DBConnection {
             }
             if (result == 0) {
                 return false;
-            } else {
-                return true;
             }
+            return true;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
