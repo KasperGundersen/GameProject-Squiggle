@@ -18,6 +18,7 @@ public class Timers {
     private static Timer timer4;
     private static Thread thread;
     public static boolean closed = false;
+    private static boolean readyReset;
 
     public static void timer(){
         timer = new Timer();
@@ -81,13 +82,17 @@ public class Timers {
                     updateData();
                 }
                 if (timeRemaining > 80) {
+                    readyReset = true;
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
                 } else {
                     //turnOffTimer2(); // Turns off timer that updates image.
                     //turnOffTimer4(); // Turns off countdown timer
-                    GameLogicComponents.reset();
+                    if (readyReset) {
+                        GameLogicComponents.reset();
+                        readyReset = false;
+                    }
                 }
             }
         };
