@@ -7,7 +7,6 @@ import css.Css;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -90,8 +89,6 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        logInButton.setOnMouseEntered(e -> MainScene.li.getSc().setCursor(Cursor.HAND));
-        logInButton.setOnMouseExited(e -> MainScene.li.getSc().setCursor(Cursor.DEFAULT));
         Css.setStyle(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);

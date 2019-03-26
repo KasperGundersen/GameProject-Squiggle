@@ -39,6 +39,8 @@ public class CanvasComponents {
     private static GraphicsContext gc;
 
     private static int WIDTH = 600, HEIGHT = 450;
+    private static Timer timer;
+    private static Timer timer2;
     private static Color color = Color.rgb(244,244,244);
 
     /**

@@ -20,6 +20,7 @@ public class MainScene {
     public static Scenes su = null;
     public static Scenes mp = null;
     public static Scenes gl = null;
+    public static Scenes lc = null;
 
 
     // User
