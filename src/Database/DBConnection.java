@@ -749,7 +749,9 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            // Also need to change time in timer4 // should be 140 seconds
+
+            //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
+            // Must also be changed in timers class timer 4
             String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 30 SECOND));";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
