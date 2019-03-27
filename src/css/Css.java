@@ -27,12 +27,12 @@ public class Css {
 
     public static void setStyle(Button button) {
         button.setStyle("-fx-background-color: #ff94a9;" +
-                "-fx-border-color: #ffda94; -fx-border-width: 3px;");
+                "-fx-border-color: #9a4a7c; -fx-border-width: 3px;");
     }
 
     public static void setStyle(TextField field) {
         field.setStyle("-fx-background-color: rgb(255,255,255);" +
-                "-fx-border-color: #3759ff;" +
+                "-fx-border-color: #9a4a7c;" +
                 "-fx-border-width: 3px;");
 
     }
