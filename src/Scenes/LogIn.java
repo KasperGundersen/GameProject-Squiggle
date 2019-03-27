@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -61,12 +62,14 @@ public class LogIn extends Scenes {
 
         //Add error Label
         loginError = new Label();
+        Css.setText(loginError);
         gridPane.add(loginError,1,0,2,2);
         loginError.setVisible(false);
         super.errorFont(loginError);
 
         // Add Name Label
         Label nameLabel = new Label("Username: ");
+        Css.setText(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
@@ -78,6 +81,7 @@ public class LogIn extends Scenes {
 
         // Add Password Label
         Label passwordLabel = new Label("Password: ");
+        Css.setText(passwordLabel);
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
@@ -139,7 +143,8 @@ public class LogIn extends Scenes {
         helpbutton.setOnAction(e -> Help.start());
 
         fontChange(UserInfo.getFontSize(), getNodes());
-        changeBackground(getGrid(), UserInfo.getColor());
+        Css.setBackground(gridPane);
+        //changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private void loginSystem(){

@@ -1,6 +1,7 @@
 package Scenes;
 
 import Database.DBConnection;
+import css.Css;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -10,13 +11,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.management.remote.SubjectDelegationPermission;
+import java.io.File;
 
 public class Help{
     private static GridPane grid;
@@ -31,7 +35,7 @@ public class Help{
 
         //Label label = new Label();
 
-        String message = (" Quick start:\n" +
+        Text message = new Text(" Quick start:\n" +
                 "\n" +
                 "1. The first thing you need to do is to register a new user. \n" +
                 "You do this by clicking the “register new user” button. \n" +
@@ -99,10 +103,14 @@ public class Help{
                 "win the most points. \n" +
                 "The drawer will also win points on the basis of the number of \n" +
                 "players that managed to guess the correct word.");
-        ObservableList<String> items = FXCollections.observableArrayList(message);
-        ListView<String> text = new ListView<>(items);
-        text.setPrefHeight(450);
-        text.setPrefWidth(380);
+
+        message.setFont(new Font(11.6));
+
+        ScrollPane text = new ScrollPane();
+        text.setFitToWidth(true);
+        text.setContent(message);
+        text.setPrefWidth(360);
+
 
 
         grid.add(text,0, 0);
@@ -113,9 +121,11 @@ public class Help{
 
         grid.add(backButton, 0, 1);
         GridPane.setHalignment(backButton, HPos.CENTER);
-        GridPane.setMargin(backButton, new Insets(20, 0, 20, 0));
+        GridPane.setMargin(backButton, new Insets(5, 0, 10, 0));
+        GridPane.setMargin(text, new Insets(10, 0, 0, 0));
 
         Scene scene = new Scene(grid);
+        Css.setBackground(grid);
 
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setHeight(HEIGHT);

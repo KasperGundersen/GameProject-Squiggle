@@ -1,8 +1,12 @@
 package css;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+
+import java.io.File;
 
 public class Css {
     public static String selectorButton(){
@@ -27,9 +31,18 @@ public class Css {
     }
 
     public static void setStyle(TextField field) {
-        field.setStyle("-fx-background-color: #bfffc9;" +
-                "-fx-border-color: #ffda94;" +
+        field.setStyle("-fx-background-color: rgb(255,255,255);" +
+                "-fx-border-color: #3759ff;" +
                 "-fx-border-width: 3px;");
 
+    }
+
+    public static void setBackground(GridPane grid){
+        String url = new File("resources/SquiggleTheme.png").toURI().toString();
+        grid.setStyle("-fx-background-image: url(\"" + url + "\");");
+    }
+
+    public static void setText(Label label){
+        label.setStyle("-fx-text-fill: #fefff3; -fx-font-size: 17px; -fx-font-weight: BOLD");
     }
 }
