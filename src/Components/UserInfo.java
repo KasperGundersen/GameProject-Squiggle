@@ -37,7 +37,7 @@ public class UserInfo {
         this.colorHex = null;
         this.soundOn = true;
         this.avatarID = 0;
-        this.drawing = false;
+        // this.drawing = false;
         this.fontSize = 16;
         this.color = Color.web("0xffe6b3");
 
@@ -71,10 +71,11 @@ public class UserInfo {
     /**
      * Gets the boolean-value of drawing player
      * @return true or false depending on the status of the player in-game
-     */
+
     public static boolean getDrawing() {
         return drawing;
     }
+    */
 
     public static String getUserEmail() {
         return userEmail;
@@ -102,10 +103,11 @@ public class UserInfo {
     /**
      * Sets the drawing-status of the user
      * @param bool true or false depending on the status
-     */
+
     public static void setDrawing(boolean bool) {
         drawing = bool;
     }
+    */
 
     /**
      * Sets the avatarID of the user

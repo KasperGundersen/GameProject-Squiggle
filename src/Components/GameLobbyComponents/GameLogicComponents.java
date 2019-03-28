@@ -11,7 +11,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-import java.util.Timer;
+
 import java.util.concurrent.CountDownLatch;
 
 import static Components.GameLobbyComponents.CanvasComponents.*;
@@ -26,8 +26,7 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        boolean drawing = UserInfo.getDrawing();
-        if (drawing) {
+        if (DBConnection.getDrawing()) {
             GameLobby.bp.setBottom(addDrawingUI());
             turnOffTimer();
             timer2();
@@ -42,6 +41,7 @@ public class GameLogicComponents {
     /**
      * Reset method, sets new drawer, clears livechat and updates privileges
      */
+    /*
     public static void reset() {
         if (!(DBConnection.drawersLeft())) {
             Service<Void> service = new Service<Void>() {
@@ -92,15 +92,15 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
-                                        if (UserInfo.getDrawing()) {
+                                        if (DBConnection.getDrawing()) {
                                             PointSystem.setPointsDrawer(UserInfo.getUserID());
                                         }
-                                        DBConnection.setNewDrawer();
+                                        // DBConnection.setNewDrawer();
                                         DBConnection.deleteMessages();
                                         UserInfo.setGuessedCorrectly(false);
                                         DBConnection.resetCorrectGuesses();
                                         LiveChatComponents.cleanChat();
-                                        UserInfo.setDrawing(DBConnection.isDrawing());
+                                        // UserInfo.setDrawing(DBConnection.isDrawing());
                                         //Update userInfo for drawer();
                                         setPrivileges();
                                         //New canvas
@@ -122,21 +122,17 @@ public class GameLogicComponents {
             service.start();
         }
     }
+    */
 
     public static void newResetMethodThatWorks(){
         Task<Void> task = new Task<Void>() {
             @Override protected Void call() throws Exception {
 
-                DBConnection.enterGame();
-                DBConnection.setDrawer();
-                MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
-                GameLogicComponents.setPrivileges();
-                MainScene.setScene(MainScene.gl.getSc());
-                DBConnection.deleteMessages();
-                LiveChatComponents.cleanChat();
 
                 return null;
             }
         };
     }
 }
+
+

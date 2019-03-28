@@ -4,6 +4,7 @@ import Components.GameLobbyComponents.TimerComponent;
 import Components.Threads.Timers;
 import Components.Toast;
 import Components.UserInfo;
+import Database.DBConnection;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -53,6 +54,8 @@ public class MainScene {
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
             Timers.setClosed(true);
+            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
+            DBConnection.exitGame();
             Components.Threads.Timers.turnOffTimer();
             Components.Threads.Timers.turnOffTimer2();
             Components.Threads.Timers.turnOffTimer4();

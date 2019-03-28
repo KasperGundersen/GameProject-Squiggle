@@ -1,6 +1,7 @@
 package Components.Threads;
 
 import Components.GameLobbyComponents.GameLogicComponents;
+import Database.DBConnection;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +19,7 @@ public class Timers {
     private static Timer timer4;
     private static Thread thread;
     public static boolean closed = false;
-    private static boolean readyReset;
+    private static boolean readyReset = true;
 
     public static void timer(){
         timer = new Timer();
@@ -82,7 +83,9 @@ public class Timers {
                     updateData();
                 }
                 if (timeRemaining > 80) {
-                    readyReset = true;
+                    if (!readyReset) {
+                        readyReset = true;
+                    }
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
                     setTimerText(true);
@@ -90,7 +93,7 @@ public class Timers {
                     //turnOffTimer2(); // Turns off timer that updates image.
                     //turnOffTimer4(); // Turns off countdown timer
                     if (readyReset) {
-                        GameLogicComponents.reset();
+                        DBConnection.initializeRound();
                         readyReset = false;
                     }
                 }

@@ -135,14 +135,15 @@ public class CanvasComponents {
         gc.strokeRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
-        if(UserInfo.getDrawing()) {
+        if(DBConnection.getDrawing()) {
             uploadImage();
+            // Makes new instance of game
         }else{
             setImage();
         }
 
         //////////////////////////////////////////////
-        if (UserInfo.getDrawing()) {
+        if (DBConnection.getDrawing()) {
 
             canvas.setOnMousePressed(e -> {
                 if (draw.isSelected()) {
@@ -171,7 +172,7 @@ public class CanvasComponents {
      * Main upload method. Uploads drawing as bytes
      */
     public static void uploadImage(){
-        if (UserInfo.getDrawing()) {
+        if (DBConnection.getDrawing()) {
             WritableImage wim = canvasSnapshot(canvas);
             byte[] blob = imageToByte(wim);
             DBConnection.setRandomWord();
@@ -183,7 +184,7 @@ public class CanvasComponents {
      * Uploads an updated version of drawing to Database
      */
     public static void updateImage() {
-        if (UserInfo.getDrawing()) {
+        if (DBConnection.getDrawing()) {
             Service<Void> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {
@@ -246,7 +247,7 @@ public class CanvasComponents {
      * Converts blob back to image, paints this at canvas
      */
     public static void setImage(){
-        if (!UserInfo.getDrawing()) {
+        if (!DBConnection.getDrawing()) {
             try {
                 BufferedImage bi = ImageIO.read(DBConnection.getImage());
                 if(bi != null){

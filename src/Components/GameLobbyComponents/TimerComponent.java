@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.Threads.Timers;
 import Database.DBConnection;
 import Scenes.GameLobby;
 import javafx.application.Platform;
@@ -15,7 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
-import static Components.Threads.Timers.timer4;
+
 
 /**
  * Class that holds the timer UI
@@ -40,7 +41,7 @@ public class TimerComponent {
         countDown = new Label("Remaining time: " + timeRemaining);
         countDown.setFont(new Font(20));
         vb.getChildren().add(countDown);
-        timer4();
+        Timers.timer4();
         return vb;
     }
 

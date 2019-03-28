@@ -113,6 +113,8 @@ public class MainMenu extends Scenes{
     }
 
     private void joinGameSystem(){
+        DBConnection.initializeRound();
+        /*
         DBConnection.enterGame();
         DBConnection.setDrawer();
         MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
@@ -120,6 +122,7 @@ public class MainMenu extends Scenes{
         MainScene.setScene(MainScene.gl.getSc());
         DBConnection.deleteMessages();
         LiveChatComponents.cleanChat();
+        */
     }
 
     private void logOutSystem(){
