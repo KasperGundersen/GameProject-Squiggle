@@ -856,7 +856,9 @@ public class DBConnection {
                 amt1 = res.getInt("v1");
                 amt2 = res.getInt("v2");
             }
-
+            System.out.println("amt0: " + amt0);
+            System.out.println("amt1: " + amt1);
+            System.out.println("amt2: " + amt2);
             if (amt1 == 0 && amt2 == 0 && !gameStarted) {
                 // If no-one has drawn or is drawing
                 query = "START TRANSACTION;";
