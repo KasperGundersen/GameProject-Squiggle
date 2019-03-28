@@ -42,6 +42,8 @@ public class CanvasComponents {
     private static Timer timer;
     private static Timer timer2;
     private static Color color = Color.rgb(244,244,244);
+    private static WritableImage tempWim;
+
 
     /**
      * Adds the drawing UI at the bottom of the display
@@ -223,9 +225,36 @@ public class CanvasComponents {
      * @return WritableImage Image of the canvas
      */
     private static WritableImage canvasSnapshot(Canvas canvas) {
-        WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
-        SnapshotParameters spa = new SnapshotParameters();
-        return canvas.snapshot(spa, writableImage);
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
+                                    SnapshotParameters spa = new SnapshotParameters();
+                                    tempWim = canvas.snapshot(spa, writableImage);
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
+        System.out.println(tempWim.toString());
+        return tempWim;
     }
 
     /**
@@ -259,9 +288,5 @@ public class CanvasComponents {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void blobToImage(){
-
     }
 }
