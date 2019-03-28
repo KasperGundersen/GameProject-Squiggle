@@ -830,7 +830,7 @@ public class DBConnection {
         return false;
     }
 
-    public static void initializeRound() {
+    public static void initializeRound(boolean gameStarted) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -857,7 +857,7 @@ public class DBConnection {
                 amt2 = res.getInt("v2");
             }
 
-            if (amt1 == 0 && amt2 == 0) {
+            if (amt1 == 0 && amt2 == 0 && !gameStarted) {
                 // If no-one has drawn or is drawing
                 query = "START TRANSACTION;";
                 prepStmt = con.prepareStatement(query);
@@ -885,7 +885,30 @@ public class DBConnection {
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
                 MainScene.setScene(MainScene.gl);
-            } else if (amt0 > 0 && amt1 == 1) {
+            } else if (amt1 == 1 && !gameStarted) {
+                // If a player is already drawing, but new player wants to join
+                query = "START TRANSACTION;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
+
+                query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.setInt(2, 0);
+                prepStmt.setInt(3, 0);
+                prepStmt.setInt(4, 0);
+                prepStmt.executeUpdate();
+
+                query = "COMMIT;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
+
+                MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
+                GameLogicComponents.setPrivileges();
+                DBConnection.deleteMessages();
+                LiveChatComponents.cleanChat();
+                MainScene.setScene(MainScene.gl);
+            } else if (amt0 > 0 && amt1 == 1 && gameStarted) {
                 // Reset round
                 if(getDrawing()) {
                     query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
@@ -905,7 +928,7 @@ public class DBConnection {
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
                 MainScene.setScene(MainScene.gl);
-            } else if (amt0 == 0) {
+            } else if (amt0 == 0 && gameStarted) {
                 // Kick players
                 query = "DELETE FROM GAME WHERE userID = ?";
                 prepStmt = con.prepareStatement(query);

@@ -93,7 +93,7 @@ public class Timers {
                     //turnOffTimer2(); // Turns off timer that updates image.
                     //turnOffTimer4(); // Turns off countdown timer
                     if (readyReset) {
-                        DBConnection.initializeRound();
+                        DBConnection.initializeRound(true);
                         readyReset = false;
                     }
                 }
