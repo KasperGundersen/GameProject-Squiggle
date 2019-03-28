@@ -957,4 +957,19 @@ public class DBConnection {
         }
     }
 
+    public static void resetAll() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "UPDATE GAME SET reset=0;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
 }

@@ -85,6 +85,7 @@ public class Timers {
                 if (timeRemaining > 80) {
                     if (!readyReset) {
                         readyReset = true;
+                        DBConnection.resetAll();
                     }
                     setTimerText(false);
                 } else if (timeRemaining > 0) {
