@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
 import static Components.GameLobbyComponents.CanvasComponents.*;
@@ -14,7 +15,11 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        if (DBConnection.getDrawing()) {
+        boolean l = DBConnection.getDrawing();
+        System.out.println(l);
+        System.out.println(UserInfo.getUserName());
+        System.out.println("--------");
+        if (l) {
             GameLobby.bp.setBottom(addDrawingUI());
             turnOffTimer();
             timer2();

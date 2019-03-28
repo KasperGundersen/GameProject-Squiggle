@@ -81,8 +81,9 @@ public class Timers {
             public void run() {
                 if (timeRemaining % 5 == 0) {
                     updateData();
+                    DBConnection.KickPlayers();
                 }
-                if (timeRemaining > 80) {
+                if (timeRemaining > 10) {
                     if (!readyReset) {
                         readyReset = true;
                     }

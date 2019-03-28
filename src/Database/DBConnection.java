@@ -656,7 +656,7 @@ public class DBConnection {
             con = HikariCP.getCon();
             //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             // Must also be changed in timers class timer 4
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 20 SECOND));";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
@@ -819,7 +819,9 @@ public class DBConnection {
             res = prepStmt.executeQuery();
             if (res.next()) {
                 int drawing = res.getInt("drawing");
-                return drawing == 1;
+                boolean l = drawing == 1;
+                System.out.println(l);
+                return l;
             }
             return false;
         } catch (SQLException e) {
@@ -881,12 +883,11 @@ public class DBConnection {
                 query = "COMMIT;";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.executeUpdate();
-
                 MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
-                GameLogicComponents.setPrivileges();
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
                 MainScene.setScene(MainScene.gl);
+
             } else if (amt1 == 1 && !gameStarted) {
                 // If a player is already drawing, but new player wants to join
                 query = "START TRANSACTION;";
@@ -904,12 +905,11 @@ public class DBConnection {
                 query = "COMMIT;";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.executeUpdate();
-
                 MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
-                GameLogicComponents.setPrivileges();
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
                 MainScene.setScene(MainScene.gl);
+
             } else if (amt0 > 0 && amt1 == 1 && gameStarted) {
                 // Reset round
                 if(getDrawing()) {
@@ -926,16 +926,43 @@ public class DBConnection {
                     prepStmt.executeUpdate();
                 }
                 MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
-                GameLogicComponents.setPrivileges();
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
                 MainScene.setScene(MainScene.gl);
-            } else if (amt0 == 0 && gameStarted) {
+            } else {
+                System.out.println("Not drawn or drawing: " + amt0);
+                System.out.println("Currently drawing: " + amt1);
+                System.out.println("Done drawing: " + amt2);
+                System.out.println(getDrawing());
+                System.out.println(UserInfo.getUserName());
+            }
+
+
+            GameLogicComponents.setPrivileges();
+
+            if (amt0 == 0 && amt1 == 0 && gameStarted) {
                 // Kick players
-                query = "DELETE FROM GAME WHERE userID = ?";
+                query = "DELETE FROM GAME";
                 prepStmt = con.prepareStatement(query);
-                prepStmt.setInt(1, UserInfo.getUserID());
                 prepStmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+    }
+
+    public static void KickPlayers(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT * FROM GAME;";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (!(res.next())) {
                 LiveChatComponents.turnOffLiveChatTimer();
                 Timers.setClosed(true);
                 Timers.turnOffTimer();
@@ -944,16 +971,13 @@ public class DBConnection {
                 MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
                 MainScene.setScene(MainScene.mm);
                 MainScene.gl = null;
-            } else {
-                System.out.println("Not drawn or drawing: " + amt0);
-                System.out.println("Currently drawing: " + amt1);
-                System.out.println("Done drawing: " + amt2);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection(con, prepStmt, res);
         }
+
     }
 
 }
