@@ -176,10 +176,35 @@ public class CanvasComponents {
      */
     public static void uploadImage(){
         if (DBConnection.getDrawing()) {
-            WritableImage wim = canvasSnapshot(canvas);
-            byte[] blob = imageToByte(wim);
-            DBConnection.setRandomWord();
-            DBConnection.uploadImage(blob, DBConnection.getRandomWord());
+            Service<Void> service = new Service<Void>() {
+                @Override
+                protected Task<Void> createTask() {
+                    return new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            //Background work
+                            final CountDownLatch latch = new CountDownLatch(1);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try{
+                                        WritableImage wim = canvasSnapshot(canvas);
+                                        byte[] blob = imageToByte(wim);
+                                        DBConnection.setRandomWord();
+                                        DBConnection.uploadImage(blob, DBConnection.getRandomWord());
+                                    }finally{
+                                        latch.countDown();
+                                    }
+                                }
+                            });
+                            latch.await();
+                            //Keep with the background work
+                            return null;
+                        }
+                    };
+                }
+            };
+            service.start();
         }
     }
 
@@ -225,36 +250,9 @@ public class CanvasComponents {
      * @return WritableImage Image of the canvas
      */
     private static WritableImage canvasSnapshot(Canvas canvas) {
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
-                                    SnapshotParameters spa = new SnapshotParameters();
-                                    tempWim = canvas.snapshot(spa, writableImage);
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
-        System.out.println(tempWim.toString());
-        return tempWim;
+        WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
+        SnapshotParameters spa = new SnapshotParameters();
+        return canvas.snapshot(spa, writableImage);
     }
 
     /**
