@@ -861,21 +861,18 @@ public class DBConnection {
             System.out.println("amt2: " + amt2);
             if (amt1 == 0 && amt2 == 0 && !gameStarted) {
                 // If no-one has drawn or is drawing
+                System.out.println("Set new drawer");
                 query = "START TRANSACTION;";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.executeUpdate();
 
-                query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
+                query = "INSERT INTO GAME VALUES (?, ?, ?, ?, ?)";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.setInt(1, UserInfo.getUserID());
                 prepStmt.setInt(2, 0);
-                prepStmt.setInt(3, 0);
+                prepStmt.setInt(3, 1);
                 prepStmt.setInt(4, 0);
-                prepStmt.executeUpdate();
-
-                query = "UPDATE GAME SET drawing=1 WHERE userID=?";
-                prepStmt = con.prepareStatement(query);
-                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.setInt(5, 1);
                 prepStmt.executeUpdate();
 
                 query = "COMMIT;";
@@ -883,22 +880,24 @@ public class DBConnection {
                 prepStmt.executeUpdate();
 
                 MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT());
-                GameLogicComponents.setPrivileges();
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
+                GameLogicComponents.setPrivileges();
                 MainScene.setScene(MainScene.gl);
             } else if (amt1 == 1 && !gameStarted) {
                 // If a player is already drawing, but new player wants to join
+                System.out.println("guesser joins");
                 query = "START TRANSACTION;";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.executeUpdate();
 
-                query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
+                query = "INSERT INTO GAME VALUES (?, ?, ?, ?, ?)";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.setInt(1, UserInfo.getUserID());
                 prepStmt.setInt(2, 0);
                 prepStmt.setInt(3, 0);
                 prepStmt.setInt(4, 0);
+                prepStmt.setInt(5, 1);
                 prepStmt.executeUpdate();
 
                 query = "COMMIT;";
@@ -912,8 +911,9 @@ public class DBConnection {
                 MainScene.setScene(MainScene.gl);
             } else if (amt0 > 0 && amt1 == 1 && gameStarted) {
                 // Reset round
+                System.out.println("resets");
                 if(getDrawing()) {
-                    query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
+                    query = "UPDATE GAME SET drawing=2 WHERE drawing=1 AND reset=0;";
                     prepStmt = con.prepareStatement(query);
                     prepStmt.executeUpdate();
                 }
@@ -921,7 +921,7 @@ public class DBConnection {
                 prepStmt = con.prepareStatement(query);
                 res = prepStmt.executeQuery();
                 if (!res.next()) {
-                    query = "UPDATE GAME SET drawing=1 WHERE drawing=0 LIMIT 1;";
+                    query = "UPDATE GAME SET drawing=1, reset=1 WHERE drawing=0 LIMIT 1;";
                     prepStmt = con.prepareStatement(query);
                     prepStmt.executeUpdate();
                 }
@@ -932,6 +932,7 @@ public class DBConnection {
                 MainScene.setScene(MainScene.gl);
             } else if (amt0 == 0 && gameStarted) {
                 // Kick players
+                System.out.println("kicks");
                 query = "DELETE FROM GAME WHERE userID = ?";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.setInt(1, UserInfo.getUserID());

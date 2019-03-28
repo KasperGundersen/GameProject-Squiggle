@@ -136,6 +136,7 @@ public class CanvasComponents {
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
         if(DBConnection.getDrawing()) {
+            System.out.println("uploads image");
             uploadImage();
             // Makes new instance of game
         }else{
