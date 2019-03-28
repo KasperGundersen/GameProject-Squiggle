@@ -19,11 +19,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.sql.Connection;
 
 
 public class MainMenu extends Scenes{
-    private static GridPane gridPane;
 
     public MainMenu(double width, double height) {
         super(width, height);
@@ -31,7 +29,6 @@ public class MainMenu extends Scenes{
     }
 
     private void addUIControls(GridPane gridPane) {
-        this.gridPane = gridPane;
         double prefHeight = 40;
         double prefWidth = 200;
         // Add Header
@@ -89,56 +86,28 @@ public class MainMenu extends Scenes{
         GridPane.setValignment(quitButton, VPos.CENTER);
 
 
-        //Button action
+        // BUTTON ACTION //////////////
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
-        joinGameButton.setOnAction(e -> joinGameSystem());
+        joinGameButton.setOnAction(e -> DBConnection.initializeRound());
         logOutButton.setOnAction(e -> {
             if(ConfirmBox.display("Warning!", "Sure you want to log out?")){
                 logOutSystem();
             }
         });
         quitButton.setOnAction(e -> {
-            if (ConfirmBox.display("Do you want to quit?", "Sure you want to exit?")){
-                MainScene.closeStage();
-            }
+            MainScene.closeProgram();
         });
         myPageButton.setOnAction(e -> {
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.mp.getSc());
+            MainScene.setScene(MainScene.mp);
         });
-
-        //Need to update font everytime
-        fontChange(UserInfo.getFontSize(), getNodes());
-        changeBackground(getGrid(), UserInfo.getColor());
-    }
-
-    private void joinGameSystem(){
-        DBConnection.initializeRound();
-        /*
-        DBConnection.enterGame();
-        DBConnection.setDrawer();
-        MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
-        GameLogicComponents.setPrivileges();
-        MainScene.setScene(MainScene.gl.getSc());
-        DBConnection.deleteMessages();
-        LiveChatComponents.cleanChat();
-        */
     }
 
     private void logOutSystem(){
         MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-        MainScene.setScene(MainScene.li.getSc());
+        MainScene.setScene(MainScene.li);
+        MainScene.mm = null;
         DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
     }
-
-
-    public static ObservableList<Node> getNodes() {
-        return gridPane.getChildren();
-    }
-
-    public static GridPane getGrid() {
-        return gridPane;
-    }
-
 }
 

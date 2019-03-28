@@ -9,12 +9,6 @@ import Components.UserInfo;
 import Scenes.GameLobby;
 import Scenes.MainMenu;
 import Scenes.MainScene;
-import Scenes.Scenes;
-import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.scene.image.WritableImage;
-
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +16,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.CountDownLatch;
 
 public class DBConnection {
 
@@ -217,74 +210,6 @@ public class DBConnection {
         return 0;
     }
 
-
-    // Method that runs on "Join Game", sets drawing to 1, if no one else is ingame
-    /*
-    public static void setDrawer() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String startQuery = "START TRANSACTION;";
-            prepStmt = con.prepareStatement(startQuery);
-            prepStmt.executeUpdate();
-            String query = "SELECT * FROM GAME WHERE drawing=1";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-            if (res.next()) {
-                UserInfo.setDrawing(false);
-            } else {
-                String query2 = "UPDATE GAME SET drawing=1 WHERE userID=?";
-                prepStmt = con.prepareStatement(query2);
-                prepStmt.setInt(1, UserInfo.getUserID());
-                prepStmt.executeUpdate();
-                UserInfo.setDrawing(true);
-            }
-            String stopQuery = "COMMIT;";
-            prepStmt = con.prepareStatement(stopQuery);
-            prepStmt.executeUpdate();
-        } catch(SQLException e ) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-    public static void setNewDrawer() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String startQuery = "START TRANSACTION;";
-            prepStmt = con.prepareStatement(startQuery);
-            prepStmt.executeUpdate();
-            if(getDrawing()) {
-                String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
-                prepStmt = con.prepareStatement(query);
-                prepStmt.executeUpdate();
-            }
-            String query2 = "SELECT * FROM GAME WHERE drawing=1;";
-            prepStmt = con.prepareStatement(query2);
-            res = prepStmt.executeQuery();
-            if (res.next()) {
-                UserInfo.setDrawing(false);
-            } else {
-                String query3 = "UPDATE GAME SET drawing=1 WHERE drawing=0 LIMIT 1;";
-                prepStmt = con.prepareStatement(query3);
-                prepStmt.executeUpdate();
-            }
-            String commitQuery = "COMMIT;";
-            prepStmt = con.prepareStatement(commitQuery);
-            prepStmt.executeUpdate();
-        } catch(SQLException e ) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-    */
-
     // Puts user in GAME table, where all users in a game are
     public static void enterGame() {
         Connection con = null;
@@ -414,39 +339,6 @@ public class DBConnection {
         }
         return null;
     }
-
- /*   public static ArrayList<String> getNewMessages() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            int highestID = getHighestChatID();
-            int tempHighestChatID = UserInfo.getTempHighestChatID();
-            String query = "SELECT input, userID FROM CHAT where ChatID > " + tempHighestChatID + " and ChatID <= " + highestID + ";";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-
-            ArrayList<String> messages = new ArrayList<>();
-            while (res.next()) {
-                if (!(res.getString("input").equals("")) && !(LiveChatComponents.checkWord(res.getString("input")))) {
-                    int userId = res.getInt("userID");
-                    if (userId == 0) {
-                        messages.add(res.getString("input"));
-                    } else {
-                        messages.add(getUsername(userId) + ": " + res.getString("input"));
-                    }
-                }
-            }
-            UserInfo.setTempHighestChatID(getHighestChatID());
-            return messages;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }*/
 
     public static StringBuilder getNewMessages() {
         Connection con = null;
@@ -992,7 +884,7 @@ public class DBConnection {
                 GameLogicComponents.setPrivileges();
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
-                setSceneService(MainScene.gl);
+                MainScene.setScene(MainScene.gl);
             } else if (amt0 > 0 && amt1 == 1) {
                 // Reset round
                 if(getDrawing()) {
@@ -1012,19 +904,20 @@ public class DBConnection {
                 GameLogicComponents.setPrivileges();
                 DBConnection.deleteMessages();
                 LiveChatComponents.cleanChat();
-                setSceneService(MainScene.gl);
+                MainScene.setScene(MainScene.gl);
             } else if (amt0 == 0) {
                 // Kick players
                 query = "DELETE FROM GAME WHERE userID = ?";
                 prepStmt = con.prepareStatement(query);
                 prepStmt.setInt(1, UserInfo.getUserID());
                 prepStmt.executeUpdate();
+                LiveChatComponents.turnOffLiveChatTimer();
                 Timers.setClosed(true);
                 Timers.turnOffTimer();
                 Timers.turnOffTimer2();
                 Timers.turnOffTimer4();
                 MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
-                setSceneService(MainScene.mm);
+                MainScene.setScene(MainScene.mm);
                 MainScene.gl = null;
             } else {
                 System.out.println("Not drawn or drawing: " + amt0);
@@ -1036,35 +929,6 @@ public class DBConnection {
         } finally {
             closeConnection(con, prepStmt, res);
         }
-    }
-
-    public static void setSceneService(Scenes sceneChange) {
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    MainScene.setScene(sceneChange.getSc());
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
     }
 
 }
