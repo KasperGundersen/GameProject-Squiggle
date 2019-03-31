@@ -34,7 +34,7 @@ public class Timers {
                         CanvasComponents.setImage();
                     }
                 }
-                if (timeRemaining > 80) {
+                if (timeRemaining > 10) {
                     if (!readyReset) {
                         readyReset = true;
                     }

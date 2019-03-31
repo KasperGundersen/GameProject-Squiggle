@@ -1,6 +1,5 @@
 package Components.GameLobbyComponents;
 
-import Components.Threads.Timers;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
