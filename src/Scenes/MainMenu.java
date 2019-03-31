@@ -88,7 +88,7 @@ public class MainMenu extends Scenes{
 
         // BUTTON ACTION //////////////
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
-        joinGameButton.setOnAction(e -> DBConnection.initializeRound(false));
+        joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> {
             if(ConfirmBox.display("Warning!", "Sure you want to log out?")){
                 logOutSystem();
@@ -101,6 +101,14 @@ public class MainMenu extends Scenes{
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp);
         });
+    }
+
+    private void joinGameSystem() {
+        DBConnection.joinGame();
+        MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
+        GameLogicComponents.setPrivileges();
+        MainScene.setScene(MainScene.gl);
+        MainScene.mm = null;
     }
 
     private void logOutSystem(){

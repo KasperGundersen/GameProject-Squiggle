@@ -82,11 +82,8 @@ public class MainScene {
     public static void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
-            Timers.setClosed(true);
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();
-            Components.Threads.Timers.turnOffTimer();
-            Components.Threads.Timers.turnOffTimer2();
             Components.Threads.Timers.turnOffTimer4();
             stage.close();
         }
