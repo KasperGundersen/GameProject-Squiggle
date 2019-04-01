@@ -34,7 +34,7 @@ public class Timers {
             @Override
             public void run() {
                 if (start) {
-                    if (timeRemaining == 80) {
+                    if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
                         makeDrawable(CanvasComponents.getGc());
                     }
                     if (timeRemaining % 5 == 0) {
@@ -45,7 +45,7 @@ public class Timers {
                             CanvasComponents.setImage();
                         }
                     }
-                    if (timeRemaining > 80) {
+                    if (timeRemaining > Math.round(GameLogicComponents.gameTime * 0.84)) {
                         if (!readyReset) {
                             readyReset = true;
                         }

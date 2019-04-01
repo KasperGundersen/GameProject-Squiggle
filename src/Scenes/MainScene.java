@@ -4,6 +4,7 @@ import Components.Threads.Timers;
 import Components.Toast;
 import Components.UserInfo;
 import Database.DBConnection;
+import com.sun.tools.javac.Main;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -14,7 +15,7 @@ import java.util.concurrent.CountDownLatch;
 public class MainScene {
 
     private static final double HEIGHT = 600;
-    private static final double WIDTH = 1000;
+    private static final double WIDTH = 1060;
 
     private static Stage stage;
 
@@ -76,6 +77,7 @@ public class MainScene {
             e.consume();
             closeProgram();
         });
+        MainScene.stage.setResizable(false);
         setScene(li);
         MainScene.stage.show();
     }

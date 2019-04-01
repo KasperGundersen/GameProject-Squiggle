@@ -1,18 +1,12 @@
 package Scenes;
 
-import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
-import Components.GameLobbyComponents.LiveChatComponents;
 import Components.UserInfo;
 import Database.DBConnection;
-import Database.HikariCP;
-import com.sun.tools.javac.Main;
 import css.Css;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -48,14 +42,13 @@ public class MainMenu extends Scenes{
 
         gridPane.add(iv, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(20, 0,20,0));
+        GridPane.setMargin(iv, new Insets(20, 0,0,0));
 
         // Add error Label
         gameStartedLabel = new Label();
         gameStartedLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
         gridPane.add(gameStartedLabel, 0,1,2,1);
         GridPane.setHalignment(gameStartedLabel, HPos.CENTER);
-        GridPane.setMargin(gameStartedLabel, new Insets(20, 0,20,0));
 
         // Join game button
         Button joinGameButton = new Button("Join Game");

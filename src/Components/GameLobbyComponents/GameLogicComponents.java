@@ -19,6 +19,7 @@ import static Components.Threads.Timers.*;
  */
 public class GameLogicComponents {
 
+    public static int gameTime = 95;
     private static int currentRound = 1;
 
     public static int getCurrentRound() {
