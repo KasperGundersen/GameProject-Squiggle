@@ -19,6 +19,7 @@ import static Components.Threads.Timers.*;
  */
 public class GameLogicComponents {
 
+    public static int gameTime = 95;
     private static int currentRound = 1;
 
     public static int getCurrentRound() {
@@ -52,6 +53,7 @@ public class GameLogicComponents {
                                 public void run() {
                                     try{
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
+                                        LiveChatComponents.cleanChat();
                                         GameLogicComponents.setPrivileges();
                                         MainScene.setScene(MainScene.gl);
                                     }finally{
