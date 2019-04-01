@@ -5,6 +5,7 @@ import Components.Email;
 import Components.Toast;
 import Components.UserInfo;
 import com.sun.tools.javac.Main;
+import css.Css;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -176,6 +177,7 @@ public class SignUp extends Scenes {
         submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
+        Css.buttonStyleRed(submitButton);
         gridPane.add(submitButton, 0, 6, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
@@ -183,12 +185,14 @@ public class SignUp extends Scenes {
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 3, 7);
+        Css.buttonStyleRed(optionButton);
         GridPane.setHalignment(optionButton, HPos.LEFT);
         GridPane.setValignment(optionButton, VPos.BOTTOM);
 
         // Go back button
         Button backButton = new Button("Go Back");
         gridPane.add(backButton, 0, 7);
+        Css.buttonStyleRed(backButton);
         GridPane.setHalignment(backButton, HPos.LEFT);
         GridPane.setValignment(backButton, VPos.BOTTOM);
 
