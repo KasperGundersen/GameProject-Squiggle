@@ -221,7 +221,15 @@ public class MyPage extends Scenes{
         window.showAndWait();
     }
 
-    public static GridPane getGrid() {
-        return gridPane;
+    public static String changePassword(){
+        if(newPassword.getText() == null || repeatPassword.getText() == null){
+            ConfirmBox.displayWarning("Warning", "You have to enter a new password");
+            return null;
+        }
+        if(!(newPassword.getText().equals(repeatPassword.getText()))){
+            ConfirmBox.displayWarning("Warning", "Your password have to be equal");
+            return null;
+        }
+        return newPassword.getText();
     }
 }

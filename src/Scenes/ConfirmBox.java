@@ -19,7 +19,7 @@ import static css.Css.confirmButton;
 
 class ConfirmBox{
     private static boolean answer;
-    private static final double WIDTH = 350, HEIGHT = 150;
+    private static final double WIDTH = 500, HEIGHT = 150;
 
     static boolean display(String title, String message){
         Stage stage = new Stage();
