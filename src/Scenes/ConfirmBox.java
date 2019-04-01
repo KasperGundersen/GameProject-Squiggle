@@ -60,7 +60,6 @@ class ConfirmBox{
         stage.setTitle(title);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
 

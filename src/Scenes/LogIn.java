@@ -8,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -54,12 +55,14 @@ public class LogIn extends Scenes {
 
         //Add error Label
         loginError = new Label();
+        Css.setText(loginError);
         gridPane.add(loginError,1,0,2,2);
         loginError.setVisible(false);
         super.errorFont(loginError);
 
         // Add Name Label
         Label nameLabel = new Label("Username: ");
+        Css.setText(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
@@ -71,6 +74,7 @@ public class LogIn extends Scenes {
 
         // Add Password Label
         Label passwordLabel = new Label("Password: ");
+        Css.setText(passwordLabel);
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
@@ -102,7 +106,16 @@ public class LogIn extends Scenes {
         // Add option button
         Button optionButton = new Button("Options");
         Css.setStyle(optionButton);
+        optionButton.setPrefWidth(70);
+        optionButton.setPrefHeight(20);
         gridPane.add(optionButton, 4, 14);
+
+        // Help button
+        Button helpbutton = new Button("Help");
+        Css.setStyle(helpbutton);
+        helpbutton.setPrefWidth(70);
+        helpbutton.setPrefHeight(20);
+        gridPane.add(helpbutton, 0, 14);
 
         // Tooltips
         final Tooltip tooltipName = new Tooltip();
@@ -123,6 +136,11 @@ public class LogIn extends Scenes {
             MainScene.setScene(MainScene.su);
             MainScene.li = null;
         });
+        helpbutton.setOnAction(e -> new Help(super.getWIDTH(), super.getHEIGHT()));
+
+        fontChange(UserInfo.getFontSize(), getNodes());
+        Css.setBackground(gridPane);
+        //changeBackground(getGrid(), UserInfo.getColor());
     }
 
     private void loginSystem(){
