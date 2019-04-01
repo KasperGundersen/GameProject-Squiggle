@@ -1,98 +1,81 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Email;
+import Components.Toast;
+import Components.UserInfo;
+import com.sun.tools.javac.Main;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Tooltip;
 
-public class SignUp extends Scenes {
+import java.io.File;
 
-    //UI initialiser alt som man bruker som objectvariabler
+import static css.Css.toolTip;
+
+/**
+ * Signup Scene where user can register
+ *
+ * @author zuimran
+ */
+public class SignUp extends Scenes {
+    //UI initialize object variables
     private static TextField nameField;
     private static TextField emailField;
     private static PasswordField passwordField;
     private static PasswordField rePasswordField;
 
-    private static Label errorUsernMail;
+    private static Label errorUserAndMail;
     private static Label errorPassword;
     private static Label emptyUser;
     private static Label emptyMail;
     private static Label emptyPassword;
 
-    private Button submitButton;
-    private Button optionButton;
-    private Button backButton;
-
-    public static void visibleUserMail(boolean b){
-        errorUsernMail.setVisible(b);
-    }
-    public static void visiblePassword(boolean b){
-        errorPassword.setVisible(b);
-    }
-    public static void visibleEmptyUser(boolean b){
-        emptyUser.setVisible(b);
-    }
-    public static void visibleEmptyMail(boolean b){
-        emptyMail.setVisible(b);
-    }
-    public static void visibleEmptyPassword(boolean b){
-        emptyPassword.setVisible(b);
-    }
+    private static int avatarID = 1;
 
     //////////////////////////////////////////////////////////////////////////////
-    //construktør fra super
-    public SignUp(double WIDTH, double HEIGHT) {
+
+    /**
+     * Constructor for the signup scene
+     * @param WIDTH     Width of the scene, double
+     * @param HEIGHT    Height of the scene, double
+     */
+    SignUp(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
-        //Legg inn metoden som legger til ui
-        addUIControls(super.getGp());
+        //UI method adds nodes to the pane
+        addUIControls(getGp());
     }
 
-    //gettere
-    public static String getName(){
-        if(nameField.getText().isEmpty()){
-            return null;
-        }
-        return nameField.getText();
-    }
-
-    public static String getMail(){
-        if(emailField.getText().isEmpty()){
-            return null;
-        }
-        return emailField.getText();
-    }
-
-    public static String getPassword(){
-        if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
-            return passwordField.getText();
-        }else {
-            return null;
-        }
-    }
-
-    // Adding UI to Grid
+    /**
+     * Adds all the UI to the scene, buttons, labels etc.
+     * @param gridPane  Gridpane that the signup UI is to be added to
+     */
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
         // Add Header
-        Label headerLabel = new Label("Sign Up");
-        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        gridPane.add(headerLabel, 0,0,2,1);
-        GridPane.setHalignment(headerLabel, HPos.CENTER);
-        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+        File file = new File("resources/Logo_SignUp.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0,0,2,1);
+        GridPane.setHalignment(iv, HPos.CENTER);
+        GridPane.setMargin(iv, new Insets(20, 0,20,0));
 
         //Add error Label
-        errorUsernMail = new Label("Username or email already taken");
-        gridPane.add(errorUsernMail,1,0,2,2);
-        errorUsernMail.setVisible(false);
-        super.errorFont(errorUsernMail);
+        errorUserAndMail = new Label("Username or email already taken");
+        gridPane.add(errorUserAndMail,1,0,2,2);
+        errorUserAndMail.setVisible(false);
+        super.errorFont(errorUserAndMail);
 
         // Add Name Label
         Label nameLabel = new Label("Username : ");
@@ -127,80 +110,229 @@ public class SignUp extends Scenes {
         emptyMail.setVisible(false);
         errorFont(emptyMail);
 
+        //////////////////////////////////////////
+
+        // Add Name Label
+        Label avatarLabel = new Label("Avatar : ");
+        gridPane.add(avatarLabel, 0,3);
+
+        //Add ImageView to show avatar
+        ImageView avatarView = new ImageView(getAvatar(avatarID));
+        avatarView.setFitWidth(150);
+        avatarView.setFitHeight(150);
+        gridPane.add(avatarView, 1, 3, 1, 1);
+        GridPane.setHalignment(avatarView, HPos.CENTER);
+
+        //Add button to go left
+        Button leftButton = new Button("<");
+        gridPane.add(leftButton, 1,3);
+        GridPane.setHalignment(leftButton, HPos.CENTER);
+        GridPane.setMargin(leftButton, new Insets(0,120,0,0));
+        super.styleSelectorButton(leftButton);
+
+        //Add button to go right
+        Button rightButton = new Button(">");
+        gridPane.add(rightButton, 1,3);
+        GridPane.setHalignment(rightButton, HPos.CENTER);
+        GridPane.setMargin(rightButton, new Insets(0,0,0,120));
+        super.styleSelectorButton(rightButton);
+
         //Add error Label
         errorPassword = new Label("Password don't match");
-        gridPane.add(errorPassword,1,2,2,2);
-        GridPane.setMargin(headerLabel, new Insets(10, 0,10,0));
+        gridPane.add(errorPassword,1,3,2,1);
+        GridPane.setValignment(errorPassword, VPos.BOTTOM);
         errorPassword.setVisible(false);
         super.errorFont(errorPassword);
 
-        // Add Passfword Label
+        // Add Password Label
         Label passwordLabel = new Label("Password : ");
-        gridPane.add(passwordLabel, 0, 3);
+        gridPane.add(passwordLabel, 0, 4);
 
         // Add Password Field
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
         GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
-        gridPane.add(passwordField, 1, 3);
+        gridPane.add(passwordField, 1, 4);
 
         //Add empty Label
         emptyPassword = new Label("Fill in password");
-        gridPane.add(emptyPassword,2,3,2,1);
+        gridPane.add(emptyPassword,2,4,2,1);
         emptyPassword.setVisible(false);
         errorFont(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
-        gridPane.add(rePasswordLabel, 0, 4);
+        gridPane.add(rePasswordLabel, 0, 5);
 
         // Add RePassword Field
         rePasswordField = new PasswordField();
         rePasswordField.setPrefHeight(prefHeight);
         rePasswordField.setPromptText("re-enter password");
-        gridPane.add(rePasswordField, 1, 4);
+        gridPane.add(rePasswordField, 1, 5);
 
         // Add Submit Button
-        submitButton = new Button("Submit");
+        Button submitButton = new Button("Submit");
         submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
-        gridPane.add(submitButton, 0, 5, 2, 1);
+        gridPane.add(submitButton, 0, 6, 2, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
 
         // Add option button
-        optionButton = new Button("Options");
-        gridPane.add(optionButton, 3, 6);
+        Button optionButton = new Button("Options");
+        gridPane.add(optionButton, 3, 7);
         GridPane.setHalignment(optionButton, HPos.LEFT);
         GridPane.setValignment(optionButton, VPos.BOTTOM);
+
         // Go back button
-        backButton = new Button("Go Back");
-        gridPane.add(backButton, 0, 6);
+        Button backButton = new Button("Go Back");
+        gridPane.add(backButton, 0, 7);
         GridPane.setHalignment(backButton, HPos.LEFT);
         GridPane.setValignment(backButton, VPos.BOTTOM);
 
-        // Button submition
-        super.buttonChangeScene(backButton, MainScene.li);
-        submitButton.setOnAction(e -> Authentication.submit());
-        optionButton.setOnAction(e -> Options.openOptions());
-
-        // Tooltips
+        //////////////Tooltips//////////////////////////////////
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
+        tooltipName.setStyle(toolTip());
 
         final Tooltip tooltipEmail = new Tooltip();
         tooltipEmail.setText("Write your Email");
         emailField.setTooltip(tooltipEmail);
+        tooltipEmail.setStyle(toolTip());
 
-        final Tooltip tooltipPasword = new Tooltip();
-        tooltipPasword.setText("Write your password");
-        passwordField.setTooltip(tooltipPasword);
+        final Tooltip tooltipPassword = new Tooltip();
+        tooltipPassword.setText("Write your password");
+        passwordField.setTooltip(tooltipPassword);
+        tooltipPassword.setStyle(toolTip());
 
         final Tooltip tooltipRePassword = new Tooltip();
         tooltipRePassword.setText("Write your password one more time");
         rePasswordField.setTooltip(tooltipRePassword);
+        tooltipRePassword.setStyle(toolTip());
+
+        ///////Button action//////////////////////////////
+        backButton.setOnAction(e -> {
+            MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
+            MainScene.setScene(MainScene.li);
+            MainScene.su = null;
+        });
+
+        submitButton.setOnAction(e -> {
+            if(Authentication.submit()){
+                MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
+                MainScene.setScene(MainScene.li);;
+                MainScene.su = null;
+                String toastMsg = "Registration successful";
+                Toast.makeText(toastMsg,1000, 500, 500);
+            }
+        });
+
+        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+
+        rightButton.setOnAction(e -> {
+            avatarID = super.loopAvatar(avatarID,1, 1,getMax());
+            avatarView.setImage(super.getAvatar(avatarID));
+        });
+
+        leftButton.setOnAction(e -> {
+            avatarID = super.loopAvatar(avatarID, -1,1,getMax());
+            avatarView.setImage(super.getAvatar(avatarID));
+        });
+    }
+    ///////////////////Dead-Methods////////////////////////////////////////
+
+    /**
+     * Sets email error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
+    public static void visibleUserMail(boolean b){
+        errorUserAndMail.setVisible(b);
+    }
+
+    /**
+     * Sets password error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
+    public static void visiblePassword(boolean b){
+        errorPassword.setVisible(b);
+    }
+
+    /**
+     * Sets empty username error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
+    public static void visibleEmptyUser(boolean b){
+        emptyUser.setVisible(b);
+    }
+
+    /**
+     * Sets empty email error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
+    public static void visibleEmptyMail(boolean b){
+        emptyMail.setVisible(b);
+    }
+
+    /**
+     * Sets empty password error message visible or invisible
+     * @param b sets visible, true, or invisible false
+     */
+    public static void visibleEmptyPassword(boolean b){
+        emptyPassword.setVisible(b);
+    }
+
+    //////////////////Getters///////////////////////////////////////////////
+
+    /**
+     * Gets username from userName TextField
+     *
+     * @see TextField
+     * @return String value of the textfield's content
+     */
+    public static String getName(){
+        if(nameField.getText().isEmpty()){
+            return null;
+        }
+        return nameField.getText();
+    }
+
+    /**
+     * Gets email from email TextField
+     *
+     * @see TextField
+     * @return String value of the textfield's content
+     */
+    public static String getMail(){
+        if(emailField.getText().isEmpty()){
+            return null;
+        }
+        return emailField.getText();
+    }
+
+    /**
+     * Gets password from password TextField
+     *
+     * @see TextField
+     * @return String value of the textfield's content
+     */
+    public static String getPassword(){
+        if(passwordField.getText().equals(rePasswordField.getText()) && !passwordField.getText().isEmpty()){
+            return passwordField.getText();
+        }else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets avatarID depending on what avatar user Selected
+     *
+     * @see ImageView
+     * @return int value of the image ID
+     */
+    public static int getAvatarID() {
+        return avatarID;
     }
 }
