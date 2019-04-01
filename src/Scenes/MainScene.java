@@ -1,9 +1,15 @@
 package Scenes;
 
+import Components.Threads.Timers;
 import Components.Toast;
 import Components.UserInfo;
-import javafx.scene.Scene;
+import Database.DBConnection;
+import javafx.application.Platform;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.stage.Stage;
+
+import java.util.concurrent.CountDownLatch;
 
 public class MainScene {
 
@@ -25,9 +31,42 @@ public class MainScene {
     public static UserInfo user = new UserInfo();
     public static Toast toast = new Toast(stage, WIDTH, HEIGHT);
 
+    public static double getHEIGHT() {
+        return HEIGHT;
+    }
 
-    public static void setScene(Scene sc) {
-        stage.setScene(sc);
+    public static double getWIDTH() {
+        return WIDTH;
+    }
+
+    public static void setScene(Scenes sc) {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    stage.setScene(sc.getSc());
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
+
     }
 
     public void initialize(Stage stage) {
@@ -37,20 +76,16 @@ public class MainScene {
             e.consume();
             closeProgram();
         });
-        setScene(li.getSc());
+        setScene(li);
         MainScene.stage.show();
     }
-    private void closeProgram(){
+    public static void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
-            Components.GameLobbyComponents.LiveChatComponents.turnOfTimer();
-            Components.Threads.Timers.turnOffTimer();
-            Components.Threads.Timers.turnOfTimer2();
-            Components.Threads.Timers.turnOfTimer3();
+            Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
+            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
+            DBConnection.exitGame();
             Components.Threads.Timers.turnOffTimer4();
             stage.close();
         }
-    }
-    static void closeStage() {
-        stage.close();
     }
 }

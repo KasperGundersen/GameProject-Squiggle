@@ -36,10 +36,7 @@ class ConfirmBox{
 
         yesButton.setOnAction(e -> {
             answer = true;
-            Components.Threads.Timers.turnOffTimer();
             stage.close();
-            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
-            DBConnection.exitGame();
         });
         noButton.setOnAction(e -> {
             answer = false;
@@ -63,7 +60,6 @@ class ConfirmBox{
         stage.setTitle(title);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
 

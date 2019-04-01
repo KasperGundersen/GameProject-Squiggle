@@ -4,10 +4,8 @@ import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -32,9 +31,6 @@ public class LogIn extends Scenes {
 
     // Error message
     private static Label loginError;
-
-    //Change by Max:
-    private static GridPane gridPane;
 
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
@@ -57,8 +53,6 @@ public class LogIn extends Scenes {
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
-        //Changes by Max:
-        this.gridPane = gridPane;
 
         File file = new File("resources/Logo.png");
         Image image = new Image(file.toURI().toString());
@@ -75,6 +69,7 @@ public class LogIn extends Scenes {
 
         //Add error Label
         loginError = new Label();
+        Css.setText(loginError);
         gridPane.add(loginError,1,0,2,2);
         loginError.setVisible(false);
         super.errorFont(loginError);
@@ -107,7 +102,8 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        Css.setStyle(logInButton);
+        //Css.buttonStyle(logInButton);
+        Css.buttonStyleRed(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
         logInButton.setPrefWidth(100);
@@ -117,17 +113,21 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        Css.setStyle(regButton);
+        //Css.buttonStyle(regButton);
+        Css.buttonStyleRed(regButton);
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(300);
         gridPane.add(regButton, 0, 5, 2, 1);
         GridPane.setHalignment(regButton, HPos.CENTER);
         GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
-        /*// Add option button
-        Button optionButton = new Button("Options");
-        Css.setStyle(optionButton);
-        gridPane.add(optionButton, 4, 14);*/
+
+
+        // Help button
+        Button helpbutton = new Button("Help");
+        Css.buttonStyleRed(helpbutton);
+        helpbutton.setPrefWidth(80);
+        gridPane.add(helpbutton, 0, 14);
 
         // Tooltips
         final Tooltip tooltipName = new Tooltip();
@@ -145,10 +145,13 @@ public class LogIn extends Scenes {
        // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.su.getSc());
+            MainScene.setScene(MainScene.su);
+            MainScene.li = null;
         });
+        helpbutton.setOnAction(e -> new Help(super.getWIDTH(), super.getHEIGHT()));
 
-        fontChange(UserInfo.getFontSize(), getNodes());
+
+        Css.setBackground(gridPane);
         //changeBackground(getGrid(), UserInfo.getColor());
     }
 
@@ -165,13 +168,4 @@ public class LogIn extends Scenes {
     public static void setTextLoginError(String newText) {
         loginError.setText(newText);
     }
-
-    public static ObservableList<Node> getNodes() {
-        return gridPane.getChildren();
-    }
-
-    public static GridPane getGrid() {
-        return gridPane;
-    }
-
 }

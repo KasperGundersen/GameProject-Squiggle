@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import Database.HikariCP;
@@ -20,12 +21,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+
 import java.io.File;
-import java.sql.Connection;
+
 
 
 public class MainMenu extends Scenes{
-    private static GridPane gridPane;
 
     public MainMenu(double width, double height) {
         super(width, height);
@@ -33,7 +34,6 @@ public class MainMenu extends Scenes{
     }
 
     private void addUIControls(GridPane gridPane) {
-        this.gridPane = gridPane;
         double prefHeight = 40;
         double prefWidth = 200;
         // Add Header
@@ -48,7 +48,7 @@ public class MainMenu extends Scenes{
 
         // Join game button
         Button joinGameButton = new Button("Join Game");
-        Css.setStyle(joinGameButton);
+        Css.buttonStyle(joinGameButton);
         joinGameButton.setPrefHeight(prefHeight);
         joinGameButton.setDefaultButton(true);
         joinGameButton.setPrefWidth(prefWidth);
@@ -58,7 +58,7 @@ public class MainMenu extends Scenes{
 
         // My Page button
         Button myPageButton = new Button("My page");
-        Css.setStyle(myPageButton);
+        Css.buttonStyle(myPageButton);
         myPageButton.setPrefHeight(prefHeight);
         myPageButton.setPrefWidth(prefWidth);
         gridPane.add(myPageButton, 0, 2, 2, 1);
@@ -67,7 +67,7 @@ public class MainMenu extends Scenes{
 
         // Options button
         Button optionButton = new Button("Options");
-        Css.setStyle(optionButton);
+        Css.buttonStyle(optionButton);
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(prefWidth);
         gridPane.add(optionButton, 0,3, 2, 1);
@@ -76,7 +76,7 @@ public class MainMenu extends Scenes{
 
         // Log Out button
         Button logOutButton = new Button("Log Out");
-        Css.setStyle(logOutButton);
+        Css.buttonStyle(logOutButton);
         logOutButton.setPrefHeight(prefHeight);
         logOutButton.setPrefWidth(prefWidth);
         gridPane.add(logOutButton, 0,4, 2, 1);
@@ -85,15 +85,16 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-        Css.setStyle(quitButton);
+        Css.buttonStyle(quitButton);
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(prefWidth);
         gridPane.add(quitButton, 0, 5, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
+        Css.setBackground(gridPane);
 
-        //Button action
+        // BUTTON ACTION //////////////
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> {
@@ -102,42 +103,27 @@ public class MainMenu extends Scenes{
             }
         });
         quitButton.setOnAction(e -> {
-            if (ConfirmBox.display("Do you want to quit?", "Sure you want to exit?")){
-                MainScene.closeStage();
-            }
+            MainScene.closeProgram();
         });
         myPageButton.setOnAction(e -> {
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.mp.getSc());
+            MainScene.setScene(MainScene.mp);
         });
-
-        //Need to update font everytime
-        fontChange(UserInfo.getFontSize(), getNodes());
-        //changeBackground(getGrid(), UserInfo.getColor());
     }
 
-    private void joinGameSystem(){
-        DBConnection.enterGame();
-        DBConnection.setDrawer();
-        MainScene.gl = new GameLobby(getWIDTH(), getHEIGHT());
+    private void joinGameSystem() {
+        DBConnection.joinGame();
+        MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
         GameLogicComponents.setPrivileges();
-        MainScene.setScene(MainScene.gl.getSc());
+        MainScene.setScene(MainScene.gl);
+        MainScene.mm = null;
     }
 
     private void logOutSystem(){
         MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-        MainScene.setScene(MainScene.li.getSc());
+        MainScene.setScene(MainScene.li);
+        MainScene.mm = null;
         DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
     }
-
-
-    public static ObservableList<Node> getNodes() {
-        return gridPane.getChildren();
-    }
-
-    public static GridPane getGrid() {
-        return gridPane;
-    }
-
 }
 

@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
@@ -17,7 +16,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -28,9 +26,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Class that deals with teh canvas ingame
+ */
 public class CanvasComponents {
     private static ToggleButton draw;
     private static ToggleButton erase;
@@ -42,8 +42,14 @@ public class CanvasComponents {
     private static Timer timer;
     private static Timer timer2;
     private static Color color = Color.rgb(244,244,244);
+    private static WritableImage tempWim;
 
-    //-----------Bottom-----------//
+
+    /**
+     * Adds the drawing UI at the bottom of the display
+     *
+     * @return HBOX HorisontaloBox with all the buttons and options
+     */
     public static HBox addDrawingUI() {
         HBox hb = new HBox();
 
@@ -75,10 +81,10 @@ public class CanvasComponents {
         cp.setValue(Color.BLACK);
 
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
-        hb.setStyle("-fx-background-color: #999");
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
         //////////////////////////////////
+
 
         File pencilFile = new File("resources/icons/pencil.png");
         Image pencil = new Image(pencilFile.toURI().toString());
@@ -87,19 +93,18 @@ public class CanvasComponents {
         ImageCursor penCur = new ImageCursor(pencil, 40, pencil.getHeight()-40);
         ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
 
-        //
-        //
-
         cp.setOnAction(e-> {
             cp.setValue(cp.getValue());
         });
+
         draw.setOnAction(e->{
-            canvas.setCursor( penCur);
+            canvas.setCursor(penCur);
         });
         erase.setOnAction(e->{
             canvas.setCursor(rubCur);
             gc.setStroke(color);
         });
+
         lineWidth1.setOnAction(e->{
             gc.setLineWidth(1);
         });
@@ -115,9 +120,11 @@ public class CanvasComponents {
         return hb;
     }
 
-    //-----------Center-----------//
-
-    public static HBox addCanvasUI(){
+    /**
+     * Adds the canvas itself, where the drawing/viewing is done.
+     * @return HBox HorizontalBox with the canvas
+     */
+    public static HBox addCanvasUI(boolean drawing){
         HBox hb = new HBox();
 
         hb.setAlignment(Pos.CENTER);
@@ -130,14 +137,20 @@ public class CanvasComponents {
         gc.strokeRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
-        if(UserInfo.getDrawing()) {
-            uploadImage();
+        if(drawing) {
+            System.out.println("uploads image");
+            WritableImage wim = canvasSnapshot(canvas);
+            byte[] blob = imageToByte(wim);
             DBConnection.setRandomWord();
+            DBConnection.uploadImage(blob, DBConnection.getRandomWord());
+            //uploadImage();
+            // Makes new instance of game
         }else{
-            updateImage();
+            setImage();
         }
+
         //////////////////////////////////////////////
-        if (UserInfo.getDrawing()) {
+        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
 
             canvas.setOnMousePressed(e -> {
                 if (draw.isSelected()) {
@@ -162,15 +175,10 @@ public class CanvasComponents {
 
     //////////// Here begins code that deals with uploading canvas to DB ///////////////
 
-    // The main upload method
+    /**
+     * Main upload method. Uploads drawing as bytes
+     */
     public static void uploadImage(){
-        WritableImage wim = canvasSnapshot(canvas);
-        byte[] blob = imageToByte(wim);
-        DBConnection.uploadImage(blob, "insertWord");
-    }
-
-    // Method that uploads an updated version of drawing to DB
-    public static void updateImage() {
         Service<Void> service = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -185,7 +193,8 @@ public class CanvasComponents {
                                 try{
                                     WritableImage wim = canvasSnapshot(canvas);
                                     byte[] blob = imageToByte(wim);
-                                    DBConnection.updateImage(blob);
+                                    DBConnection.setRandomWord();
+                                    DBConnection.uploadImage(blob, DBConnection.getRandomWord());
                                 }finally{
                                     latch.countDown();
                                 }
@@ -201,14 +210,56 @@ public class CanvasComponents {
         service.start();
     }
 
-    // Method that snapshots the canvas and returns WritableImage
+    /**
+     * Uploads an updated version of drawing to Database
+     */
+    public static void updateImage() {
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    WritableImage wim = canvasSnapshot(canvas);
+                                    new Thread(()->{
+                                        DBConnection.updateImage(imageToByte(wim));
+                                    }).start();
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
+    }
+
+    /**
+     * snapshots the canvas and returns WritableImage
+     * @return WritableImage Image of the canvas
+     */
     private static WritableImage canvasSnapshot(Canvas canvas) {
         WritableImage writableImage = new WritableImage(WIDTH, HEIGHT);
         SnapshotParameters spa = new SnapshotParameters();
         return canvas.snapshot(spa, writableImage);
     }
 
-    // Method that turns image into byte[], this is then uploaded as blob
+    /**
+     * Method that turns image into byte[], this is then uploaded as blob
+     * @param image WritableImage that is to be uploaded to database
+     * @return byte[] List of bytes that can be uploaded
+     */
     private static byte[] imageToByte(WritableImage image) {
         BufferedImage bufferimage = SwingFXUtils.fromFXImage(image, null);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -220,7 +271,9 @@ public class CanvasComponents {
         return output.toByteArray();
     }
 
-    // Needs method for getting blob and converting back to image
+    /**
+     * Converts blob back to image, paints this at canvas
+     */
     public static void setImage(){
         try {
             BufferedImage bi = ImageIO.read(DBConnection.getImage());

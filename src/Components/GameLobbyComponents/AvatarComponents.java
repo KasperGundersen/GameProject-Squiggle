@@ -1,8 +1,6 @@
 package Components.GameLobbyComponents;
-
 import Components.Player;
 import Database.DBConnection;
-import Scenes.GameLobby;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,22 +10,26 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
-import static Components.Threads.Timers.timer3;
-
-
+/**
+ * Class that adds the Avatar ListView
+ */
 public class AvatarComponents {
     public static ListView<String> listView;
     public static ArrayList<Player> players;
     public static ObservableList data;
 
+    /**
+     * Adds all the UI, shows list of online players
+     *
+     * @see ListView
+     * @return VBox VerticalBox filled with players
+     */
     public static VBox addAvatarUI() {
         VBox vb = new VBox();
         data = FXCollections.observableArrayList();
@@ -35,16 +37,24 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        timer3();
         return vb;
     }
 
+    /**
+     * Method for fetching correct avatar image
+     * @param i Image ID in the resources folder
+     * @return Image avatar Image
+     */
     private static Image getAvatar ( int i){
         File file = new File("resources/avatars/" + i + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
+    /**
+     * Inserts Players into the ListView
+     *
+     */
     private static void setIntoLV(){
         players = DBConnection.getPlayers();
         for(Player p : players) {
@@ -65,7 +75,7 @@ public class AvatarComponents {
                             iv.setFitHeight(50);
                             iv.setFitWidth(50);
                         }
-                        setText(userName + ", score: " + p.getPoints());
+                        setText(userName + ", score: " + DBConnection.getPointsByUserID(DBConnection.getUserID(userName)));
                         setGraphic(iv);
                     }
                 }
@@ -73,6 +83,11 @@ public class AvatarComponents {
         });
     }
 
+    /**
+     * Updates the ObservableList with new Players that might have joined
+     *
+     * @see ObservableList
+     */
     public static void updateData() {
         Service<Void> service = new Service<Void>() {
             @Override

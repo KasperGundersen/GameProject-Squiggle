@@ -20,20 +20,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.sql.Connection;
 
 public class MyPage extends Scenes{
-    private static int index = 0;
-    private static Button buttonLeft, buttonRight;
     private static Button backButton;
     private static Button buttonChoose;
-    private static Button buttonLobby;
-    private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
 
     //Change by max
-    private static GridPane gridPane;
     private int avatarID = UserInfo.getAvatarID();
 
     public MyPage(double WIDTH, double HEIGHT){
@@ -42,10 +36,6 @@ public class MyPage extends Scenes{
     }
 
     private void addUIControls(GridPane gridPane){
-        this.gridPane = gridPane;
-        // gridPane.setGridLinesVisible(true);
-
-
         // Header label
 
         File file = new File("resources/Logo_MyPage.png");
@@ -151,6 +141,7 @@ public class MyPage extends Scenes{
             displayNewPassword("Change password");
         });
 
+        Css.setBackground(gridPane);
 
         buttonChoose.setOnAction(e -> {
             Image chosenAvatar = chosenAvatar(avatarID);
@@ -171,9 +162,9 @@ public class MyPage extends Scenes{
         });
 
         backButton.setOnAction(e -> {
-            MainScene.setScene(MainScene.mm.getSc());
+            MainScene.setScene(MainScene.mm);
+            MainScene.mp = null;
         });
-        //changeBackground(getGrid(), UserInfo.getColor());
     }
 
     // Methods that interact with images in resources
@@ -183,16 +174,6 @@ public class MyPage extends Scenes{
         return image;
     }
 
-    private Image[] getAllAvatars(){
-        Image[] images = new Image[4];
-        File file;
-        for(int i = 0; i < 4; i++){
-            file = new File(fileLocation + (i+1) + ".jpg");
-            Image image = new Image(file.toURI().toString());
-            images[i] = image;
-        }
-        return images;
-    }
     // ///////////////////NEW PASSWORD POPUP ///////////////////////////////////
     // Method for creating new password - new popup window
     private void displayNewPassword(String title){
@@ -232,9 +213,5 @@ public class MyPage extends Scenes{
         Scene scene = new Scene(grid, 300, 300);
         window.setScene(scene);
         window.showAndWait();
-    }
-
-    public static GridPane getGrid() {
-        return gridPane;
     }
 }
