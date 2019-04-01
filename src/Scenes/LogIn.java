@@ -9,6 +9,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -54,7 +56,7 @@ public class LogIn extends Scenes {
         // Add Header
         Label headerLabel = new Label("Login");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        headerLabel.setStyle("-fx-font-size: 40px;");
+        Css.setHeaderStyle(headerLabel);
         gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
@@ -67,23 +69,27 @@ public class LogIn extends Scenes {
 
         // Add Name Label
         Label nameLabel = new Label("Username: ");
+        Css.setLabelStyle(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
         nameField = new TextField();
         Css.setStyle(nameField);
         nameField.setPrefHeight(prefHeight);
+        nameField.setPrefWidth(200);
         nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
 
         // Add Password Label
         Label passwordLabel = new Label("Password: ");
+        Css.setLabelStyle(passwordLabel);
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
         passwordField = new PasswordField();
         Css.setStyle(passwordField);
         passwordField.setPrefHeight(prefHeight);
+        passwordField.setPrefWidth(100);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
 
@@ -106,10 +112,10 @@ public class LogIn extends Scenes {
         GridPane.setHalignment(regButton, HPos.CENTER);
         GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
-        // Add option button
+        /*// Add option button
         Button optionButton = new Button("Options");
         Css.setStyle(optionButton);
-        gridPane.add(optionButton, 4, 14);
+        gridPane.add(optionButton, 4, 14);*/
 
         // Tooltips
         final Tooltip tooltipName = new Tooltip();
@@ -124,7 +130,7 @@ public class LogIn extends Scenes {
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());
-        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+       // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
