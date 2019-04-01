@@ -46,4 +46,19 @@ public class Css {
     public static void setText(Label label){
         label.setStyle("-fx-text-fill: #fefff3; -fx-font-size: 17px; -fx-font-weight: BOLD");
     }
+
+    public static void buttonStyle(Button button){
+        button.setStyle("-fx-background-color: linear-gradient(#ffd65b, #e68400), " +
+                "linear-gradient(#ffef84, #f2ba44), " +
+                "linear-gradient(#ffea6a, #efaa22), " +
+                "linear-gradient(#ff5fa8 0%, #f81de9 50%, #c90dee 100%), " +
+                "linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));" +
+                "-fx-background-radius: 30; " +
+                "-fx-background-insets: 0,1,2,3,0; " +
+                "-fx-text-fill: #ffffff; " +
+                "-fx-font-weight: bold; " +
+                "-fx-font-size: 14px; " +
+                "-fx-padding: 10 20 10 20; " +
+                "-fx-cursor: hand");
+    }
 }

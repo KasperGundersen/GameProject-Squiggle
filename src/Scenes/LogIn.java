@@ -105,16 +105,16 @@ public class LogIn extends Scenes {
 
         // Add option button
         Button optionButton = new Button("Options");
-        Css.setStyle(optionButton);
-        optionButton.setPrefWidth(70);
-        optionButton.setPrefHeight(20);
+        //Css.setStyle(optionButton);
+        Css.buttonStyle(optionButton);
+        optionButton.setPrefWidth(100);
         gridPane.add(optionButton, 4, 14);
 
         // Help button
         Button helpbutton = new Button("Help");
-        Css.setStyle(helpbutton);
-        helpbutton.setPrefWidth(70);
-        helpbutton.setPrefHeight(20);
+        //Css.setStyle(helpbutton);
+        Css.buttonStyle(helpbutton);
+        helpbutton.setPrefWidth(80);
         gridPane.add(helpbutton, 0, 14);
 
         // Tooltips
