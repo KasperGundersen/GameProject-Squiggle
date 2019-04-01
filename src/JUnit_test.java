@@ -111,4 +111,14 @@ public class JUnit_test {
         boolean expResult = true;
         assertEquals(expResult, test);
     }
+
+    @Test
+    public void wrongWordTest(){
+        WordComponents.setWord("Test");
+        boolean test = LiveChatComponents.checkWord("Wrong");
+        boolean expResult = false;
+        assertEquals(expResult, test);
+    }
+
+
 }
