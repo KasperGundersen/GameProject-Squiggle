@@ -796,13 +796,12 @@ public class DBConnection {
 
                 }
             }
-            query = "INSERT INTO GAME VALUES(?, ?, ?, ?, ?);";
+            query = "INSERT INTO GAME VALUES(?, ?, ?, ?);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.setInt(2, 0);
             prepStmt.setInt(3, 0);
-            prepStmt.setInt(4, 0);
-            prepStmt.setInt(5, currentMax);
+            prepStmt.setInt(4, currentMax);
             prepStmt.executeUpdate();
             UserInfo.setDrawRound(currentMax);
         } catch (SQLException e) {
