@@ -134,6 +134,7 @@ public class MyPage extends Scenes{
             displayNewPassword("Change password");
         });
 
+        Css.setBackground(gridPane);
 
         buttonChoose.setOnAction(e -> {
             Image chosenAvatar = chosenAvatar(avatarID);
