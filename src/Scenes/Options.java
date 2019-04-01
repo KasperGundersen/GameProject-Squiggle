@@ -40,8 +40,6 @@ public class Options extends Scenes {
         submitButton.setPrefWidth(100);
 
         submitButton.setOnAction(e -> {
-            // Add code for performing changes
-
             window.close();
 
         });

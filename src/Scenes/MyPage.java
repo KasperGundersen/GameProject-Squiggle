@@ -37,14 +37,18 @@ public class MyPage extends Scenes{
 
     private void addUIControls(GridPane gridPane){
         // Header label
-        Label header = new Label("My Page");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 42));
-        gridPane.add(header, 0, 0, 5, 1);
-        gridPane.setHalignment(header, HPos.CENTER);
+
+        File file = new File("resources/Logo_MyPage.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0, 0, 5, 1);
+        gridPane.setHalignment(iv, HPos.CENTER);
 
         // Username label
         Label nameLabel = new Label("Username: " + UserInfo.getUserName());
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Css.setLabelStyle(nameLabel);
         gridPane.add(nameLabel, 0, 1, 2, 1);
         gridPane.setHalignment(nameLabel, HPos.LEFT);
         gridPane.setValignment(nameLabel, VPos.TOP);
@@ -52,6 +56,7 @@ public class MyPage extends Scenes{
         // Email label
         Label emailLabel = new Label("Email: " + UserInfo.getUserEmail());
         emailLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Css.setLabelStyle(emailLabel);
         gridPane.add(emailLabel, 0, 2, 2, 1);
         gridPane.setHalignment(emailLabel, HPos.LEFT);
         gridPane.setValignment(emailLabel, VPos.TOP);
@@ -66,6 +71,7 @@ public class MyPage extends Scenes{
 
         // Current avatar
         Label currentAvatarLabel = new Label("Current avatar:");
+        Css.setLabelStyle(currentAvatarLabel);
         currentAvatarLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(currentAvatarLabel, 0, 4, 2, 1);
         gridPane.setHalignment(currentAvatarLabel, HPos.LEFT);
@@ -80,6 +86,7 @@ public class MyPage extends Scenes{
         // Avatar selection
         // Select new avatar label
         Label newAvatar = new Label("Select new avatar:");
+        Css.setLabelStyle(newAvatar);
         newAvatar.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(newAvatar, 1, 1, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);

@@ -10,15 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.net.URL;
 
 import static css.Css.selectorButton;
 
@@ -92,6 +91,18 @@ public abstract class Scenes {
         ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
+
+        File file = new File("resources/SquiggleTheme.png");
+        Image image = new Image(file.toURI().toString());
+        BackgroundImage backgroundimage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundimage);
+        gridPane.setBackground(background);
+
+
         return gridPane;
     }
 
