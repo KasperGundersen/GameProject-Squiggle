@@ -40,7 +40,7 @@ public class Css {
 
     public static void setBackground(GridPane grid){
         String url = new File("resources/SquiggleTheme.png").toURI().toString();
-        grid.setStyle("-fx-background-image: url(\"" + url + "\");");
+        grid.setStyle("-fx-background-image: url(" + url + ");");
     }
 
     public static void setText(Label label){

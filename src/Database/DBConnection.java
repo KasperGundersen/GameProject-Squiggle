@@ -210,26 +210,6 @@ public class DBConnection {
         return 0;
     }
 
-    // Puts user in GAME table, where all users in a game are
-    public static void enterGame() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, UserInfo.getUserID());
-            prepStmt.setInt(2, 0);
-            prepStmt.setInt(3, 0);
-            prepStmt.setInt(4, 0);
-            prepStmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, null);
-        }
-    }
-
     // Removes user from GAME table when user quits or game is over
     public static void exitGame() {
         Connection con = null;
@@ -796,13 +776,12 @@ public class DBConnection {
 
                 }
             }
-            query = "INSERT INTO GAME VALUES(?, ?, ?, ?, ?);";
+            query = "INSERT INTO GAME VALUES(?, ?, ?, ?);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.setInt(2, 0);
             prepStmt.setInt(3, 0);
-            prepStmt.setInt(4, 0);
-            prepStmt.setInt(5, currentMax);
+            prepStmt.setInt(4, currentMax);
             prepStmt.executeUpdate();
             UserInfo.setDrawRound(currentMax);
         } catch (SQLException e) {
