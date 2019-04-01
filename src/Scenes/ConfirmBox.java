@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.LiveChatComponents;
 import Database.DBConnection;
+import css.Css;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,7 +19,7 @@ import static css.Css.confirmButton;
 
 class ConfirmBox{
     private static boolean answer;
-    private static final double WIDTH = 350, HEIGHT = 150;
+    private static final double WIDTH = 500, HEIGHT = 150;
 
     static boolean display(String title, String message){
         Stage stage = new Stage();
@@ -29,10 +30,10 @@ class ConfirmBox{
 
         //Create to users
         Button yesButton = new Button("Yes");
-        yesButton.setStyle(confirmButton());
+        Css.buttonStyle(yesButton);
 
         Button noButton = new Button("No");
-        noButton.setStyle(confirmButton());
+        Css.buttonStyle(noButton);
 
         yesButton.setOnAction(e -> {
             answer = true;
@@ -49,6 +50,8 @@ class ConfirmBox{
         hbox.setPadding(new Insets(20, 0,0,0));
 
         GridPane grid = new GridPane();
+        Css.setBackground(grid);
+
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.add(label, 0,0,2,1);

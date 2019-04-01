@@ -102,8 +102,7 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        //Css.buttonStyle(logInButton);
-        Css.buttonStyleRed(logInButton);
+        Css.buttonStyle(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
         logInButton.setPrefWidth(200);
@@ -113,8 +112,7 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        //Css.buttonStyle(regButton);
-        Css.buttonStyleRed(regButton);
+        Css.buttonStyle(regButton);
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(200);
         gridPane.add(regButton, 0, 5, 2, 1);
@@ -125,7 +123,7 @@ public class LogIn extends Scenes {
 
         // Help button
         Button helpbutton = new Button("Help");
-        Css.buttonStyleRed(helpbutton);
+        Css.buttonStyle(helpbutton);
         helpbutton.setPrefWidth(80);
         gridPane.add(helpbutton, 0, 14);
 
