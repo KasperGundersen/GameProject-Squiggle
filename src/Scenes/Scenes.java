@@ -1,24 +1,35 @@
 package Scenes;
 
+import Components.UserInfo;
+import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+
+import java.io.File;
+
+import static css.Css.selectorButton;
 
 public abstract class Scenes {
 
     //Object variables
-    private GridPane gp;
+    private static GridPane gp;
     private Scene sc;
+    private static ObservableList<Node> children;
+
+    private final int max = new File("resources/avatars/").listFiles().length - 1;
 
     // Dimensions
     private final double WIDTH;
@@ -41,21 +52,28 @@ public abstract class Scenes {
         return sc;
     }
 
-    public double getHEIGHT() {
+    public void setSc(Scene sc) {
+        this.sc = sc;
+    }
+
+    public void setChildren(ObservableList<Node> newValue) {
+        this.children = newValue;
+    }
+
+    double getHEIGHT() {
         return HEIGHT;
     }
 
-    public double getWIDTH() {
+    double getWIDTH() {
         return WIDTH;
     }
 
-    //Buttonaction to swap scenes
-    public void buttonChangeScene(Button btn, Scenes scn){
-        btn.setOnAction(e -> MainScene.setScene(scn.getSc()));
+    public int getMax() {
+        return max;
     }
 
     //Standard GridPane formation
-    public GridPane createGridPane() {
+    private GridPane createGridPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
         // Position the pane at the center of the screen, both vertically and horizontally
@@ -77,7 +95,7 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    public void errorFont(Label l){
+    void errorFont(Label l){
         l.setTextFill(Color.RED);
         l.setFont(Font.font(
                 "Arial",
@@ -85,4 +103,27 @@ public abstract class Scenes {
                 Font.getDefault().getSize()
         ));
     }
+
+    void styleSelectorButton(Button b){
+        b.setPrefHeight(35);
+        b.setPrefWidth(25);
+        b.setStyle(selectorButton());
+    }
+
+    int loopAvatar(int counter, int add, int min, int max){
+        counter += add;
+        if(counter < min){
+            counter = max;
+        }else if(counter > max){
+            counter = min;
+        }
+        return counter;
+    }
+
+    public Image getAvatar(int i){
+        File file = new File("resources/avatars/" + i + ".jpg");
+        return new Image(file.toURI().toString());
+    }
+
+
 }
