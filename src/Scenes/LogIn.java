@@ -114,12 +114,14 @@ public class LogIn extends Scenes {
         Button optionButton = new Button("Options");
         Css.setStyle(optionButton);
         optionButton.setPrefWidth(70);
+        optionButton.setPrefHeight(20);
         gridPane.add(optionButton, 4, 14);
 
         // Help button
         Button helpbutton = new Button("Help");
         Css.setStyle(helpbutton);
         helpbutton.setPrefWidth(70);
+        helpbutton.setPrefHeight(20);
         gridPane.add(helpbutton, 0, 14);
 
         // Tooltips
@@ -140,7 +142,7 @@ public class LogIn extends Scenes {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su.getSc());
         });
-        helpbutton.setOnAction(e -> Help.start());
+        helpbutton.setOnAction(e -> new Help(super.getWIDTH(), super.getHEIGHT()));
 
         fontChange(UserInfo.getFontSize(), getNodes());
         Css.setBackground(gridPane);

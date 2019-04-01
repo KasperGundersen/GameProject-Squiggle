@@ -27,7 +27,8 @@ public class Css {
 
     public static void setStyle(Button button) {
         button.setStyle("-fx-background-color: #ff94a9;" +
-                "-fx-border-color: #9a4a7c; -fx-border-width: 3px;");
+                "-fx-border-color: #9a4a7c;" +
+                "-fx-border-width: 3px;");
     }
 
     public static void setStyle(TextField field) {
