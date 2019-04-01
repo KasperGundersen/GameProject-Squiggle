@@ -43,7 +43,7 @@ public class MainMenu extends Scenes{
 
         gridPane.add(iv, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(20, 0,0,0));
+        GridPane.setMargin(iv, new Insets(10, 0,0,0));
 
         // Add error Label
         gameStartedLabel = new Label();
