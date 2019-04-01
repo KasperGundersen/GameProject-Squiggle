@@ -138,7 +138,6 @@ public class LogIn extends Scenes {
         });
         helpbutton.setOnAction(e -> new Help(super.getWIDTH(), super.getHEIGHT()));
 
-        fontChange(UserInfo.getFontSize(), getNodes());
         Css.setBackground(gridPane);
         //changeBackground(getGrid(), UserInfo.getColor());
     }
