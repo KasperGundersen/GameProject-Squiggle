@@ -21,11 +21,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.sql.Connection;
 
 public class MyPage extends Scenes{
-    private static int index = 0;
-    private static Button buttonLeft, buttonRight;
     private static Button backButton;
     private static Button buttonChoose;
     private static Button buttonLobby;
@@ -36,7 +33,6 @@ public class MyPage extends Scenes{
     private static String fileLocation = "resources/avatars/";
 
     //Change by max
-    private static GridPane gridPane;
     private int avatarID = UserInfo.getAvatarID();
 
     public MyPage(double WIDTH, double HEIGHT){
@@ -45,19 +41,19 @@ public class MyPage extends Scenes{
     }
 
     private void addUIControls(GridPane gridPane){
-        this.gridPane = gridPane;
-        // gridPane.setGridLinesVisible(true);
-
-
         // Header label
-        Label header = new Label("My Page");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 42));
-        gridPane.add(header, 0, 0, 5, 1);
-        gridPane.setHalignment(header, HPos.CENTER);
+
+        File file = new File("resources/Logo_MyPage.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0, 0, 5, 1);
+        gridPane.setHalignment(iv, HPos.CENTER);
 
         // Username label
         Label nameLabel = new Label("Username: " + UserInfo.getUserName());
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Css.setLabelStyle(nameLabel);
         gridPane.add(nameLabel, 0, 1, 2, 1);
         gridPane.setHalignment(nameLabel, HPos.LEFT);
         gridPane.setValignment(nameLabel, VPos.TOP);
@@ -65,6 +61,7 @@ public class MyPage extends Scenes{
         // Email label
         Label emailLabel = new Label("Email: " + UserInfo.getUserEmail());
         emailLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Css.setLabelStyle(emailLabel);
         gridPane.add(emailLabel, 0, 2, 2, 1);
         gridPane.setHalignment(emailLabel, HPos.LEFT);
         gridPane.setValignment(emailLabel, VPos.TOP);
@@ -79,6 +76,7 @@ public class MyPage extends Scenes{
 
         // Current avatar
         Label currentAvatarLabel = new Label("Current avatar:");
+        Css.setLabelStyle(currentAvatarLabel);
         currentAvatarLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(currentAvatarLabel, 0, 4, 2, 1);
         gridPane.setHalignment(currentAvatarLabel, HPos.LEFT);
@@ -93,6 +91,7 @@ public class MyPage extends Scenes{
         // Avatar selection
         // Select new avatar label
         Label newAvatar = new Label("Select new avatar:");
+        Css.setLabelStyle(newAvatar);
         newAvatar.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(newAvatar, 1, 1, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
@@ -147,6 +146,7 @@ public class MyPage extends Scenes{
             displayNewPassword("Change password");
         });
 
+        Css.setBackground(gridPane);
 
         buttonChoose.setOnAction(e -> {
             Image chosenAvatar = chosenAvatar(avatarID);
@@ -167,9 +167,9 @@ public class MyPage extends Scenes{
         });
 
         backButton.setOnAction(e -> {
-            MainScene.setScene(MainScene.mm.getSc());
+            MainScene.setScene(MainScene.mm);
+            MainScene.mp = null;
         });
-        changeBackground(getGrid(), UserInfo.getColor());
     }
 
     // Methods that interact with images in resources
@@ -179,16 +179,6 @@ public class MyPage extends Scenes{
         return image;
     }
 
-    private Image[] getAllAvatars(){
-        Image[] images = new Image[4];
-        File file;
-        for(int i = 0; i < 4; i++){
-            file = new File(fileLocation + (i+1) + ".jpg");
-            Image image = new Image(file.toURI().toString());
-            images[i] = image;
-        }
-        return images;
-    }
     // ///////////////////NEW PASSWORD POPUP ///////////////////////////////////
     // Method for creating new password - new popup window
     private void displayNewPassword(String title){
@@ -233,17 +223,5 @@ public class MyPage extends Scenes{
 
     public static GridPane getGrid() {
         return gridPane;
-    }
-
-    public static String changePassword(){
-        if(newPassword.getText() == null || repeatPassword.getText() == null){
-            ConfirmBox.display("Warning", "You have to enter a new password");
-            return null;
-        }
-        if(!(newPassword.getText().equals(repeatPassword.getText()))){
-            ConfirmBox.display("Warning", "Your password have to be equal");
-            return null;
-        }
-       return newPassword.getText();
     }
 }

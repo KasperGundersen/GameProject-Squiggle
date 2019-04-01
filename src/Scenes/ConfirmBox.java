@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.LiveChatComponents;
 import Database.DBConnection;
+import css.Css;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,17 +30,14 @@ class ConfirmBox{
 
         //Create to users
         Button yesButton = new Button("Yes");
-        yesButton.setStyle(confirmButton());
+        Css.buttonStyle(yesButton);
 
         Button noButton = new Button("No");
-        noButton.setStyle(confirmButton());
+        Css.buttonStyle(noButton);
 
         yesButton.setOnAction(e -> {
             answer = true;
-            Components.Threads.Timers.turnOffTimer();
             stage.close();
-            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
-            DBConnection.exitGame();
         });
         noButton.setOnAction(e -> {
             answer = false;
@@ -52,6 +50,8 @@ class ConfirmBox{
         hbox.setPadding(new Insets(20, 0,0,0));
 
         GridPane grid = new GridPane();
+        Css.setBackground(grid);
+
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setPadding(new Insets(20, 20, 20, 20));
         grid.add(label, 0,0,2,1);
@@ -63,7 +63,6 @@ class ConfirmBox{
         stage.setTitle(title);
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
-        stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(scene);
         stage.showAndWait();
 

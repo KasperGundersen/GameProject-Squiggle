@@ -10,15 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.net.URL;
 
 import static css.Css.selectorButton;
 
@@ -92,39 +91,19 @@ public abstract class Scenes {
         ColumnConstraints columnTwoConstrains = new ColumnConstraints(200,200, Double.MAX_VALUE);
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
+
+        File file = new File("resources/SquiggleTheme.png");
+        Image image = new Image(file.toURI().toString());
+        BackgroundImage backgroundimage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundimage);
+        gridPane.setBackground(background);
+
+
         return gridPane;
-    }
-
-    public static void fontChange(int size, ObservableList<Node> children){
-        if(size == 0) {
-            size = 12; //default font size
-        } else {
-            size = UserInfo.getFontSize();
-        }
-
-        for (Node child : children) {
-            if (child instanceof Button) {
-                Button b = (Button) child;
-                b.setFont(Font.font("Courier", size));
-            }
-            if (child instanceof Label) {
-                Label l = (Label) child;
-                l.setFont(Font.font("Courier", size));
-            }
-            if (child instanceof Text) {
-                Text t = (Text) child;
-                t.setFont(Font.font("Courier", size));
-            }
-        }
-    }
-
-    public static void changeBackground(GridPane gridPane, Color color) {
-        if (color == null) {
-            color = Color.web("0xffe6b3");
-        }
-        String print = color.toString();
-        String formatert = print.replace("0x", "");
-        gridPane.setStyle("-fx-background-color:#" + formatert + ";");
     }
 
     void errorFont(Label l){

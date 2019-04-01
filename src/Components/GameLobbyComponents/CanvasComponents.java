@@ -39,9 +39,8 @@ public class CanvasComponents {
     private static GraphicsContext gc;
 
     private static int WIDTH = 600, HEIGHT = 450;
-    private static Timer timer;
-    private static Timer timer2;
     private static Color color = Color.rgb(244,244,244);
+
 
     /**
      * Adds the drawing UI at the bottom of the display
@@ -118,11 +117,15 @@ public class CanvasComponents {
         return hb;
     }
 
+    public static GraphicsContext getGc() {
+        return gc;
+    }
+
     /**
      * Adds the canvas itself, where the drawing/viewing is done.
      * @return HBox HorizontalBox with the canvas
      */
-    public static HBox addCanvasUI(){
+    public static HBox addCanvasUI(boolean drawing){
         HBox hb = new HBox();
 
         hb.setAlignment(Pos.CENTER);
@@ -135,33 +138,40 @@ public class CanvasComponents {
         gc.strokeRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
-        if(UserInfo.getDrawing()) {
-            uploadImage();
+        if(drawing) {
+            System.out.println("uploads image");
+            WritableImage wim = canvasSnapshot(canvas);
+            byte[] blob = imageToByte(wim);
+            DBConnection.setRandomWord();
+            DBConnection.uploadImage(blob, DBConnection.getRandomWord());
+            //uploadImage();
+            // Makes new instance of game
         }else{
             setImage();
         }
 
         //////////////////////////////////////////////
-        if (UserInfo.getDrawing()) {
-
+        return hb;
+    }
+    public static void makeDrawable(GraphicsContext gcon) {
+        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
             canvas.setOnMousePressed(e -> {
                 if (draw.isSelected()) {
-                    gc.setStroke(cp.getValue());
+                    gcon.setStroke(cp.getValue());
                 }
-                gc.beginPath();
-                gc.lineTo(e.getX(), e.getY());
+                gcon.beginPath();
+                gcon.lineTo(e.getX(), e.getY());
             });
             canvas.setOnMouseDragged(e -> {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
+                gcon.lineTo(e.getX(), e.getY());
+                gcon.stroke();
             });
             canvas.setOnMouseReleased(e -> {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-                gc.closePath();
+                gcon.lineTo(e.getX(), e.getY());
+                gcon.stroke();
+                gcon.closePath();
             });
         }
-        return hb;
     }
 
 
@@ -171,49 +181,70 @@ public class CanvasComponents {
      * Main upload method. Uploads drawing as bytes
      */
     public static void uploadImage(){
-        if (UserInfo.getDrawing()) {
-            WritableImage wim = canvasSnapshot(canvas);
-            byte[] blob = imageToByte(wim);
-            DBConnection.setRandomWord();
-            DBConnection.uploadImage(blob, DBConnection.getRandomWord());
-        }
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    WritableImage wim = canvasSnapshot(canvas);
+                                    byte[] blob = imageToByte(wim);
+                                    DBConnection.setRandomWord();
+                                    DBConnection.uploadImage(blob, DBConnection.getRandomWord());
+                                }finally{
+                                    latch.countDown();
+                                }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
     }
 
     /**
      * Uploads an updated version of drawing to Database
      */
     public static void updateImage() {
-        if (UserInfo.getDrawing()) {
-            Service<Void> service = new Service<Void>() {
-                @Override
-                protected Task<Void> createTask() {
-                    return new Task<Void>() {
-                        @Override
-                        protected Void call() throws Exception {
-                            //Background work
-                            final CountDownLatch latch = new CountDownLatch(1);
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try{
-                                        WritableImage wim = canvasSnapshot(canvas);
-                                        new Thread(()->{
-                                            DBConnection.updateImage(imageToByte(wim));
-                                        }).start();
-                                    }finally{
-                                        latch.countDown();
-                                    }
+        Service<Void> service = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        //Background work
+                        final CountDownLatch latch = new CountDownLatch(1);
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                try{
+                                    WritableImage wim = canvasSnapshot(canvas);
+                                    new Thread(()->{
+                                        DBConnection.updateImage(imageToByte(wim));
+                                    }).start();
+                                }finally{
+                                    latch.countDown();
                                 }
-                            });
-                            latch.await();
-                            //Keep with the background work
-                            return null;
-                        }
-                    };
-                }
-            };
-            service.start();
-        }
+                            }
+                        });
+                        latch.await();
+                        //Keep with the background work
+                        return null;
+                    }
+                };
+            }
+        };
+        service.start();
     }
 
     /**
@@ -246,20 +277,14 @@ public class CanvasComponents {
      * Converts blob back to image, paints this at canvas
      */
     public static void setImage(){
-        if (!UserInfo.getDrawing()) {
-            try {
-                BufferedImage bi = ImageIO.read(DBConnection.getImage());
-                if(bi != null){
-                    Image img = SwingFXUtils.toFXImage(bi, null);
-                    gc.drawImage(img, 0,0);
-                }
-            }catch (IOException e){
-                e.printStackTrace();
+        try {
+            BufferedImage bi = ImageIO.read(DBConnection.getImage());
+            if(bi != null){
+                Image img = SwingFXUtils.toFXImage(bi, null);
+                gc.drawImage(img, 0,0);
             }
+        }catch (IOException e){
+            e.printStackTrace();
         }
-    }
-
-    public static void blobToImage(){
-
     }
 }

@@ -83,7 +83,7 @@ public class Authentication {
         if((DBConnection.exists("userName", username))&&(DBConnection.exists("password", hash))) {
             if (!DBConnection.getLoggedIn(username)) {
                 MainScene.mm = new MainMenu(WIDTH, HEIGHT);
-                MainScene.setScene(MainScene.mm.getSc());
+                MainScene.setScene(MainScene.mm);
                 DBConnection.setLoggedIn(username, 1);
             } else {
                 // already logged in error

@@ -4,17 +4,21 @@ import Components.Authentication;
 import Components.Email;
 import Components.Toast;
 import Components.UserInfo;
+import com.sun.tools.javac.Main;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Tooltip;
+
+import java.io.File;
 
 import static css.Css.toolTip;
 
@@ -38,8 +42,6 @@ public class SignUp extends Scenes {
 
     private static int avatarID = 1;
 
-    private static GridPane gridPane;
-
     //////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -58,14 +60,16 @@ public class SignUp extends Scenes {
      * @param gridPane  Gridpane that the signup UI is to be added to
      */
     private void addUIControls(GridPane gridPane) {
-        this.gridPane = gridPane;
         double prefHeight = 40;
         // Add Header
-        Label headerLabel = new Label("Sign Up");
-        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        gridPane.add(headerLabel, 0,0,2,1);
-        GridPane.setHalignment(headerLabel, HPos.CENTER);
-        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+        File file = new File("resources/Logo_SignUp.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0,0,2,1);
+        GridPane.setHalignment(iv, HPos.CENTER);
+        GridPane.setMargin(iv, new Insets(20, 0,20,0));
 
         //Add error Label
         errorUserAndMail = new Label("Username or email already taken");
@@ -212,13 +216,15 @@ public class SignUp extends Scenes {
         ///////Button action//////////////////////////////
         backButton.setOnAction(e -> {
             MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-            MainScene.setScene(MainScene.li.getSc());
+            MainScene.setScene(MainScene.li);
+            MainScene.su = null;
         });
 
         submitButton.setOnAction(e -> {
             if(Authentication.submit()){
                 MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
-                MainScene.setScene(MainScene.li.getSc());;
+                MainScene.setScene(MainScene.li);;
+                MainScene.su = null;
                 String toastMsg = "Registration successful";
                 Toast.makeText(toastMsg,1000, 500, 500);
             }
@@ -235,9 +241,6 @@ public class SignUp extends Scenes {
             avatarID = super.loopAvatar(avatarID, -1,1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
         });
-
-        fontChange(UserInfo.getFontSize(), getNodes());
-        changeBackground(getGrid(), UserInfo.getColor());
     }
     ///////////////////Dead-Methods////////////////////////////////////////
 
@@ -331,24 +334,5 @@ public class SignUp extends Scenes {
      */
     public static int getAvatarID() {
         return avatarID;
-    }
-
-    /**
-     * Method that returns the current scene's nodes
-     * @return nodes of the current scene
-     */
-    public static ObservableList<Node> getNodes() {
-        return gridPane.getChildren();
-    }
-
-    //Must make an own method to get the GridPane dedicated to each scene
-
-    /**
-     * Gets gridpane of current Scene
-     * @see GridPane
-     * @return  GridPane of the current scene
-     */
-    public static GridPane getGrid() {
-        return gridPane;
     }
 }

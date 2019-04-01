@@ -27,7 +27,7 @@ public class WordComponents {
         String space = "   ";
         String period = ".";
         String result ="";
-        boolean drawing = UserInfo.getDrawing();
+        boolean drawing = UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound();
         String word = getWord();
         if(drawing){
             return word;

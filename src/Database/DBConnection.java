@@ -1,10 +1,14 @@
 /* This class has static methods so we wont have to make objects of this class to use its methods */
 package Database;
 
+import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
+import Components.Threads.Timers;
 import Components.UserInfo;
-
+import Scenes.GameLobby;
+import Scenes.MainMenu;
+import Scenes.MainScene;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
@@ -225,92 +229,6 @@ public class DBConnection {
         return 0;
     }
 
-
-    // Method that runs on "Join Game", sets drawing to 1, if no one else is ingame
-    public static void setDrawer() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String startQuery = "START TRANSACTION;";
-            prepStmt = con.prepareStatement(startQuery);
-            prepStmt.executeUpdate();
-            String query = "SELECT * FROM GAME WHERE drawing=1";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-            if (res.next()) {
-                UserInfo.setDrawing(false);
-            } else {
-                String query2 = "UPDATE GAME SET drawing=1 WHERE userID=?";
-                prepStmt = con.prepareStatement(query2);
-                prepStmt.setInt(1, UserInfo.getUserID());
-                prepStmt.executeUpdate();
-                UserInfo.setDrawing(true);
-            }
-            String stopQuery = "COMMIT;";
-            prepStmt = con.prepareStatement(stopQuery);
-            prepStmt.executeUpdate();
-        } catch(SQLException e ) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-    public static void setNewDrawer() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String startQuery = "START TRANSACTION;";
-            prepStmt = con.prepareStatement(startQuery);
-            prepStmt.executeUpdate();
-            if(UserInfo.getDrawing()) {
-                String query = "UPDATE GAME SET drawing=2 WHERE drawing=1;";
-                prepStmt = con.prepareStatement(query);
-                prepStmt.executeUpdate();
-            }
-            String query2 = "SELECT * FROM GAME WHERE drawing=1;";
-            prepStmt = con.prepareStatement(query2);
-            res = prepStmt.executeQuery();
-            if (res.next()) {
-                UserInfo.setDrawing(false);
-            } else {
-                String query3 = "UPDATE GAME SET drawing=1 WHERE drawing=0 LIMIT 1;";
-                prepStmt = con.prepareStatement(query3);
-                prepStmt.executeUpdate();
-            }
-            String commitQuery = "COMMIT;";
-            prepStmt = con.prepareStatement(commitQuery);
-            prepStmt.executeUpdate();
-        } catch(SQLException e ) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-
-    // Puts user in GAME table, where all users in a game are
-    public static void enterGame() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "INSERT INTO GAME VALUES (?, ?, ?, ?)";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, UserInfo.getUserID());
-            prepStmt.setInt(2, 0);
-            prepStmt.setInt(3, 0);
-            prepStmt.setInt(4, 0);
-            prepStmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, null);
-        }
-    }
-
     // Removes user from GAME table when user quits or game is over
     public static void exitGame() {
         Connection con = null;
@@ -420,39 +338,6 @@ public class DBConnection {
         }
         return null;
     }
-
- /*   public static ArrayList<String> getNewMessages() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            int highestID = getHighestChatID();
-            int tempHighestChatID = UserInfo.getTempHighestChatID();
-            String query = "SELECT input, userID FROM CHAT where ChatID > " + tempHighestChatID + " and ChatID <= " + highestID + ";";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-
-            ArrayList<String> messages = new ArrayList<>();
-            while (res.next()) {
-                if (!(res.getString("input").equals("")) && !(LiveChatComponents.checkWord(res.getString("input")))) {
-                    int userId = res.getInt("userID");
-                    if (userId == 0) {
-                        messages.add(res.getString("input"));
-                    } else {
-                        messages.add(getUsername(userId) + ": " + res.getString("input"));
-                    }
-                }
-            }
-            UserInfo.setTempHighestChatID(getHighestChatID());
-            return messages;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }*/
 
     public static StringBuilder getNewMessages() {
         Connection con = null;
@@ -770,7 +655,7 @@ public class DBConnection {
             con = HikariCP.getCon();
             //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             // Must also be changed in timers class timer 4
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND), default);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
@@ -824,32 +709,6 @@ public class DBConnection {
 
         }
         return null;
-    }
-
-    public static boolean drawersLeft() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try{
-            con = HikariCP.getCon();
-            String wordQuery = "SELECT COUNT(*) FROM GAME WHERE drawing = 0";
-            prepStmt = con.prepareStatement(wordQuery);
-            res = prepStmt.executeQuery();
-            int result = 0;
-            if (res.next()) {
-                result = res.getInt("COUNT(*)");
-            }
-            if (result == 0) {
-                return false;
-            } else {
-                return true;
-            }
-        }catch (SQLException e){
-            e.printStackTrace();
-        }finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return false;
     }
 
     public static void setRandomWord(){
@@ -911,7 +770,6 @@ public class DBConnection {
                 cal1.set(Calendar.SECOND, cal2.get(Calendar.SECOND));
                 date = cal1.getTime();
             }
-
             return date;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -921,26 +779,30 @@ public class DBConnection {
         return null;
     }
 
-    public static boolean isDrawing() {
+    public static void joinGame() {
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "SELECT drawing FROM GAME WHERE userID=?;";
+            String query = "SELECT COALESCE(MAX(playerNr),0) as max FROM GAME";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            int currentMax = 0;
+            if (res.next()) {
+                currentMax = res.getInt("max") + 1;
+            }
+            query = "INSERT INTO GAME VALUES(?, ?, ?, ?);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setInt(1, UserInfo.getUserID());
-            res = prepStmt.executeQuery();
-            if (res.next()) {
-                int drawing = res.getInt("drawing");
-                return drawing == 1;
-            }
-            return false;
+            prepStmt.setInt(2, 0);
+            prepStmt.setInt(3, 0);
+            prepStmt.setInt(4, currentMax);
+            prepStmt.executeUpdate();
+            UserInfo.setDrawRound(currentMax);
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
         }
-        return false;
+
     }
 }

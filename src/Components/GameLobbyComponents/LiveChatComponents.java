@@ -119,7 +119,7 @@ public class LiveChatComponents {
         if(word.equalsIgnoreCase(WordComponents.getWord())){
             UserInfo.setGuessedCorrectly(true);
             correct = true;
-            if(!(UserInfo.getDrawing())) {
+            if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) {
                 PointSystem.setPointsGuesser(UserInfo.getUserID());
                 DBConnection.setCorrectGuess(UserInfo.getUserID());
             }
