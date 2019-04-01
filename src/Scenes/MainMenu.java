@@ -85,6 +85,7 @@ public class MainMenu extends Scenes{
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
+        Css.setBackground(gridPane);
 
         // BUTTON ACTION //////////////
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
