@@ -1,4 +1,6 @@
 import Components.Encryptor;
+import Components.GameLobbyComponents.LiveChatComponents;
+import Components.GameLobbyComponents.WordComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import org.junit.jupiter.api.*;
@@ -98,6 +100,15 @@ public class JUnit_test {
     public void getAmtPlayersTest() throws Exception {
         int test = DBConnection.getAmtPlayer();
         int expResult = 0;
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void checkWordTest(){
+        String word = "test";
+        WordComponents.setWord(word);
+        boolean test = LiveChatComponents.checkWord(word);
+        boolean expResult = true;
         assertEquals(expResult, test);
     }
 }

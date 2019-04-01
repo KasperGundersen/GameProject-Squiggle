@@ -22,6 +22,10 @@ public class WordComponents {
         return word;
     }
 
+    public static void setWord(String w){
+        word = w;
+    }
+
     public static String showWord(){
         String line = "___  ";
         String space = "   ";
