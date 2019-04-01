@@ -19,6 +19,25 @@ import java.util.Date;
 
 public class DBConnection {
 
+    public static void changePassword(int userID, String hash, String salt){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "update USERS set password = ?, salt = ? where userID = ?";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, hash);
+            prepStmt.setString(2, salt);
+            prepStmt.setInt(3, userID);
+            prepStmt.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
         Connection con = null;

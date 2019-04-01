@@ -52,7 +52,7 @@ public class MainMenu extends Scenes{
 
         // Join game button
         Button joinGameButton = new Button("Join Game");
-        Css.buttonStyleRed(joinGameButton);
+        Css.buttonStyle(joinGameButton);
         joinGameButton.setPrefHeight(prefHeight);
         joinGameButton.setDefaultButton(true);
         joinGameButton.setPrefWidth(prefWidth);
@@ -62,7 +62,7 @@ public class MainMenu extends Scenes{
 
         // My Page button
         Button myPageButton = new Button("My page");
-        Css.buttonStyleRed(myPageButton);
+        Css.buttonStyle(myPageButton);
         myPageButton.setPrefHeight(prefHeight);
         myPageButton.setPrefWidth(prefWidth);
         gridPane.add(myPageButton, 0, 3, 2, 1);
@@ -71,7 +71,7 @@ public class MainMenu extends Scenes{
 
         // Options button
         Button optionButton = new Button("Options");
-        Css.buttonStyleRed(optionButton);
+        Css.buttonStyle(optionButton);
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(prefWidth);
         gridPane.add(optionButton, 0,4, 2, 1);
@@ -80,7 +80,7 @@ public class MainMenu extends Scenes{
 
         // Log Out button
         Button logOutButton = new Button("Log Out");
-        Css.buttonStyleRed(logOutButton);
+        Css.buttonStyle(logOutButton);
         logOutButton.setPrefHeight(prefHeight);
         logOutButton.setPrefWidth(prefWidth);
         gridPane.add(logOutButton, 0,5, 2, 1);
@@ -89,7 +89,7 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-        Css.buttonStyleRed(quitButton);
+        Css.buttonStyle(quitButton);
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(prefWidth);
         gridPane.add(quitButton, 0, 6, 2, 1);
@@ -123,6 +123,7 @@ public class MainMenu extends Scenes{
             DBConnection.joinGame();
             MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
             GameLogicComponents.setPrivileges();
+            LiveChatComponents.cleanChat();
             MainScene.setScene(MainScene.gl);
             MainScene.mm = null;
         }

@@ -62,19 +62,20 @@ public class Css {
     }
 
     public static void buttonStyle(Button button){
-        button.setStyle("-fx-background-color: " +
-                //"linear-gradient(#ffd65b, #e68400), " +
-                //"linear-gradient(#ffef84, #f2ba44), " +
-                //"linear-gradient(#ffea6a, #efaa22), " +
-                "linear-gradient(#ff5fa8 0%, #f81de9 50%, #c90dee 100%), " +
-                "linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));" +
-                "-fx-background-radius: 30; " +
-                "-fx-background-insets: 0,1,2,3,0; " +
-                "-fx-text-fill: #ffffff; " +
-                "-fx-font-weight: bold; " +
-                "-fx-font-size: 14px; " +
-                "-fx-padding: 10 20 10 20; " +
-                "-fx-cursor: hand");
+        button.setStyle("\n" +
+                "    -fx-background-color: \n" +
+                "        #9a4a7c,\n" +
+                "        linear-gradient(#f81de9 0%, #d444ee 20%, #9b119d 100%),\n" +
+                "        linear-gradient(#d444ee, #9b119d),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "    -fx-background-radius: 5,4,3,5;\n" +
+                "    -fx-background-insets: 0,1,2,0;\n" +
+                "    -fx-text-fill: white;\n" +
+                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
+                "    -fx-font-family: \"Arial\";\n" +
+                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
+                "    -fx-font-size: 12px;\n" +
+                "    -fx-padding: 10 20 10 20;");
     }
 
     public static void buttonStyleRed(Button button){
