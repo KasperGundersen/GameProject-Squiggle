@@ -130,6 +130,7 @@ public class MainMenu extends Scenes{
             DBConnection.joinGame();
             MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
             GameLogicComponents.setPrivileges();
+            LiveChatComponents.cleanChat();
             MainScene.setScene(MainScene.gl);
             MainScene.mm = null;
         }
