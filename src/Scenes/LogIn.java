@@ -7,10 +7,19 @@ import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.io.File;
 
 import static css.Css.toolTip;
 
@@ -45,13 +54,18 @@ public class LogIn extends Scenes {
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
 
+        File file = new File("resources/Logo.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+        gridPane.add(iv,0,0,2,1);
+
         // Add Header
-        Label headerLabel = new Label("Login");
-        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        headerLabel.setStyle("-fx-font-size: 40px;");
-        gridPane.add(headerLabel, 0,0,2,1);
-        GridPane.setHalignment(headerLabel, HPos.CENTER);
-        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+        //Label headerLabel = new Label("Login");
+        //headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        //Css.setHeaderStyle(headerLabel);
+        //gridPane.add(headerLabel, 0,0,2,1);
+        GridPane.setHalignment(iv, HPos.CENTER);
+        GridPane.setMargin(iv, new Insets(10, 0,10,0));
 
         //Add error Label
         loginError = new Label();
@@ -62,54 +76,50 @@ public class LogIn extends Scenes {
 
         // Add Name Label
         Label nameLabel = new Label("Username: ");
-        Css.setText(nameLabel);
+        Css.setLabelStyle(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
         nameField = new TextField();
         Css.setStyle(nameField);
         nameField.setPrefHeight(prefHeight);
+        nameField.setPrefWidth(200);
         nameField.setPromptText("xXPussySlayerXx");
         gridPane.add(nameField, 1,1);
 
         // Add Password Label
         Label passwordLabel = new Label("Password: ");
-        Css.setText(passwordLabel);
+        Css.setLabelStyle(passwordLabel);
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
         passwordField = new PasswordField();
         Css.setStyle(passwordField);
         passwordField.setPrefHeight(prefHeight);
+        passwordField.setPrefWidth(100);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 3);
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        //Css.buttonStyle(logInButton);
         Css.buttonStyleRed(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
-        logInButton.setPrefWidth(100);
+        logInButton.setPrefWidth(200);
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
         GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        //Css.buttonStyle(regButton);
         Css.buttonStyleRed(regButton);
         regButton.setPrefHeight(prefHeight);
-        regButton.setPrefWidth(300);
+        regButton.setPrefWidth(200);
         gridPane.add(regButton, 0, 5, 2, 1);
         GridPane.setHalignment(regButton, HPos.CENTER);
         GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
-        // Add option button
-        Button optionButton = new Button("Options");
-        Css.buttonStyleRed(optionButton);
-        optionButton.setPrefWidth(100);
-        gridPane.add(optionButton, 4, 14);
+
 
         // Help button
         Button helpbutton = new Button("Help");
@@ -130,13 +140,14 @@ public class LogIn extends Scenes {
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());
-        optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+       // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su);
             MainScene.li = null;
         });
         helpbutton.setOnAction(e -> new Help(super.getWIDTH(), super.getHEIGHT()));
+
 
         Css.setBackground(gridPane);
         //changeBackground(getGrid(), UserInfo.getColor());

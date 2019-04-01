@@ -19,6 +19,25 @@ import java.util.Date;
 
 public class DBConnection {
 
+    public static void changePassword(int userID, String hash, String salt){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "update USERS set password = ?, salt = ? where userID = ?";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setString(1, hash);
+            prepStmt.setString(2, salt);
+            prepStmt.setInt(3, userID);
+            prepStmt.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
     // Method that registers a user
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
         Connection con = null;
@@ -636,10 +655,11 @@ public class DBConnection {
             con = HikariCP.getCon();
             //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             // Must also be changed in timers class timer 4
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND), default);";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL ? SECOND), default);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
+            prepStmt.setInt(3, GameLogicComponents.gameTime);
             prepStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -772,9 +792,6 @@ public class DBConnection {
             int currentMax = 0;
             if (res.next()) {
                 currentMax = res.getInt("max") + 1;
-                if (currentMax == 1) {
-
-                }
             }
             query = "INSERT INTO GAME VALUES(?, ?, ?, ?);";
             prepStmt = con.prepareStatement(query);

@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
@@ -24,6 +25,10 @@ import java.io.File;
 public class MyPage extends Scenes{
     private static Button backButton;
     private static Button buttonChoose;
+    private static Button buttonLobby;
+    private static PasswordField newPassword;
+    private static PasswordField repeatPassword;
+    private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
 
@@ -37,14 +42,18 @@ public class MyPage extends Scenes{
 
     private void addUIControls(GridPane gridPane){
         // Header label
-        Label header = new Label("My Page");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 42));
-        gridPane.add(header, 0, 0, 5, 1);
-        gridPane.setHalignment(header, HPos.CENTER);
+
+        File file = new File("resources/Logo_MyPage.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0, 0, 5, 1);
+        gridPane.setHalignment(iv, HPos.CENTER);
 
         // Username label
         Label nameLabel = new Label("Username: " + UserInfo.getUserName());
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Css.setLabelStyle(nameLabel);
         gridPane.add(nameLabel, 0, 1, 2, 1);
         gridPane.setHalignment(nameLabel, HPos.LEFT);
         gridPane.setValignment(nameLabel, VPos.TOP);
@@ -52,6 +61,7 @@ public class MyPage extends Scenes{
         // Email label
         Label emailLabel = new Label("Email: " + UserInfo.getUserEmail());
         emailLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        Css.setLabelStyle(emailLabel);
         gridPane.add(emailLabel, 0, 2, 2, 1);
         gridPane.setHalignment(emailLabel, HPos.LEFT);
         gridPane.setValignment(emailLabel, VPos.TOP);
@@ -66,6 +76,7 @@ public class MyPage extends Scenes{
 
         // Current avatar
         Label currentAvatarLabel = new Label("Current avatar:");
+        Css.setLabelStyle(currentAvatarLabel);
         currentAvatarLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(currentAvatarLabel, 0, 4, 2, 1);
         gridPane.setHalignment(currentAvatarLabel, HPos.LEFT);
@@ -80,6 +91,7 @@ public class MyPage extends Scenes{
         // Avatar selection
         // Select new avatar label
         Label newAvatar = new Label("Select new avatar:");
+        Css.setLabelStyle(newAvatar);
         newAvatar.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(newAvatar, 1, 1, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
@@ -178,12 +190,12 @@ public class MyPage extends Scenes{
 
         Label header = new Label("Change password");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        PasswordField passwordField = new PasswordField();
-        passwordField.setPrefHeight(40);
-        passwordField.setPrefWidth(200);
-        passwordField.setPromptText("Enter new password");
+        newPassword = new PasswordField();
+        newPassword.setPrefHeight(40);
+        newPassword.setPrefWidth(200);
+        newPassword.setPromptText("Enter new password");
 
-        PasswordField repeatPassword = new PasswordField();
+        repeatPassword = new PasswordField();
         repeatPassword.setPrefHeight(40);
         repeatPassword.setPromptText("Repeat your new password");
 
@@ -191,6 +203,7 @@ public class MyPage extends Scenes{
         save.setPrefHeight(40);
         save.setPrefWidth(200);
         save.setOnAction(e -> {
+            Authentication.changePassword();
             window.close();
         });
 
@@ -198,7 +211,7 @@ public class MyPage extends Scenes{
         grid.setVgap(30);
         grid.setAlignment(Pos.CENTER);
         grid.add(header, 0, 0);
-        grid.add(passwordField, 0, 1);
+        grid.add(newPassword, 0, 1);
         grid.add(repeatPassword, 0,2);
         grid.add(save, 0, 3);
         grid.setHalignment(save, HPos.CENTER);
@@ -206,5 +219,17 @@ public class MyPage extends Scenes{
         Scene scene = new Scene(grid, 300, 300);
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    public static String changePassword(){
+        if(newPassword.getText() == null || repeatPassword.getText() == null){
+            ConfirmBox.display("Warning", "You have to enter a new password");
+            return null;
+        }
+        if(!(newPassword.getText().equals(repeatPassword.getText()))){
+            ConfirmBox.display("Warning", "Your password have to be equal");
+            return null;
+        }
+        return newPassword.getText();
     }
 }

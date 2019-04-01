@@ -70,7 +70,7 @@ public class TimerComponent {
                                     if (gameStarted) {
                                         countDown.setText("Remaining time: " + timeRemaining);
                                     } else {
-                                        countDown.setText("Game starts in: " + (timeRemaining - 10));
+                                        countDown.setText("Game starts in: " + (timeRemaining - Math.round(GameLogicComponents.gameTime * 0.84)));
                                     }
                                 }finally{
                                     latch.countDown();
