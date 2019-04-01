@@ -223,11 +223,11 @@ public class MyPage extends Scenes{
 
     public static String changePassword(){
         if(newPassword.getText() == null || repeatPassword.getText() == null){
-            ConfirmBox.displayWarning("Warning", "You have to enter a new password");
+            ConfirmBox.display("Warning", "You have to enter a new password");
             return null;
         }
         if(!(newPassword.getText().equals(repeatPassword.getText()))){
-            ConfirmBox.displayWarning("Warning", "Your password have to be equal");
+            ConfirmBox.display("Warning", "Your password have to be equal");
             return null;
         }
         return newPassword.getText();

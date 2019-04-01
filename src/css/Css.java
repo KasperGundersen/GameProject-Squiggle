@@ -65,8 +65,8 @@ public class Css {
         button.setStyle("\n" +
                 "    -fx-background-color: \n" +
                 "        #9a4a7c,\n" +
-                "        linear-gradient(#f81de9 0%, #d444ee 20%, #9b119d 100%),\n" +
-                "        linear-gradient(#d444ee, #9b119d),\n" +
+                "        linear-gradient(#2ff86d 0%, #d8f8de 20%, #f81de9 100%),\n" +
+                "        linear-gradient(#d8f8de, #2ff86d),\n" +
                 "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
                 "    -fx-background-radius: 5,4,3,5;\n" +
                 "    -fx-background-insets: 0,1,2,0;\n" +
