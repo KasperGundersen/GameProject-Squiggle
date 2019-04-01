@@ -655,10 +655,11 @@ public class DBConnection {
             con = HikariCP.getCon();
             //String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND));";
             // Must also be changed in timers class timer 4
-            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL 140 SECOND), default);";
+            String query = "INSERT INTO DRAW VALUES (default, ?, ?, DATE_ADD(NOW(), INTERVAL ? SECOND), default);";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, word);
             prepStmt.setBlob(2, new SerialBlob(blob));
+            prepStmt.setInt(3, GameLogicComponents.gameTime);
             prepStmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
