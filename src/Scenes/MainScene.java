@@ -84,7 +84,7 @@ public class MainScene {
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();
-            Components.Threads.Timers.turnOffTimer4();
+            Components.Threads.Timers.stopHeartBeat();
             stage.close();
         }
     }

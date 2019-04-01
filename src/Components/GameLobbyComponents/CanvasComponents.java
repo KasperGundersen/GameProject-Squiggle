@@ -39,10 +39,7 @@ public class CanvasComponents {
     private static GraphicsContext gc;
 
     private static int WIDTH = 600, HEIGHT = 450;
-    private static Timer timer;
-    private static Timer timer2;
     private static Color color = Color.rgb(244,244,244);
-    private static WritableImage tempWim;
 
 
     /**
@@ -120,6 +117,10 @@ public class CanvasComponents {
         return hb;
     }
 
+    public static GraphicsContext getGc() {
+        return gc;
+    }
+
     /**
      * Adds the canvas itself, where the drawing/viewing is done.
      * @return HBox HorizontalBox with the canvas
@@ -150,26 +151,27 @@ public class CanvasComponents {
         }
 
         //////////////////////////////////////////////
+        return hb;
+    }
+    public static void makeDrawable(GraphicsContext gcon) {
         if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-
             canvas.setOnMousePressed(e -> {
                 if (draw.isSelected()) {
-                    gc.setStroke(cp.getValue());
+                    gcon.setStroke(cp.getValue());
                 }
-                gc.beginPath();
-                gc.lineTo(e.getX(), e.getY());
+                gcon.beginPath();
+                gcon.lineTo(e.getX(), e.getY());
             });
             canvas.setOnMouseDragged(e -> {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
+                gcon.lineTo(e.getX(), e.getY());
+                gcon.stroke();
             });
             canvas.setOnMouseReleased(e -> {
-                gc.lineTo(e.getX(), e.getY());
-                gc.stroke();
-                gc.closePath();
+                gcon.lineTo(e.getX(), e.getY());
+                gcon.stroke();
+                gcon.closePath();
             });
         }
-        return hb;
     }
 
 
