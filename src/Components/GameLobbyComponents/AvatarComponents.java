@@ -1,8 +1,6 @@
 package Components.GameLobbyComponents;
-
 import Components.Player;
 import Database.DBConnection;
-import Scenes.GameLobby;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,15 +10,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
-
-import static Components.Threads.Timers.timer3;
 
 /**
  * Class that adds the Avatar ListView
@@ -43,7 +37,6 @@ public class AvatarComponents {
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);
-        timer3();
         return vb;
     }
 
@@ -82,7 +75,7 @@ public class AvatarComponents {
                             iv.setFitHeight(50);
                             iv.setFitWidth(50);
                         }
-                        setText(userName + ", score: " + p.getPoints());
+                        setText(userName + ", score: " + DBConnection.getPointsByUserID(DBConnection.getUserID(userName)));
                         setGraphic(iv);
                     }
                 }

@@ -1,5 +1,7 @@
 package Components.GameLobbyComponents;
 
+import Components.Threads.Timers;
+import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
 import javafx.application.Platform;
@@ -15,8 +17,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
-import static Components.Threads.Timers.timer4;
-import static Components.Threads.Timers.turnOfTimer2;
+
 
 /**
  * Class that holds the timer UI
@@ -36,12 +37,14 @@ public class TimerComponent {
         Date currentTime = new Date();
         long diff = time.getTime() - currentTime.getTime();
         timeRemaining = (int) diff / 1000;
+        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
+            timeRemaining += 1;
+        }
 
         VBox vb = new VBox();
         countDown = new Label("Remaining time: " + timeRemaining);
         countDown.setFont(new Font(20));
         vb.getChildren().add(countDown);
-        timer4();
         return vb;
     }
 
@@ -67,7 +70,7 @@ public class TimerComponent {
                                     if (gameStarted) {
                                         countDown.setText("Remaining time: " + timeRemaining);
                                     } else {
-                                        countDown.setText("Game starts in: " + (timeRemaining - 80));
+                                        countDown.setText("Game starts in: " + (timeRemaining - 10));
                                     }
                                 }finally{
                                     latch.countDown();
@@ -92,35 +95,4 @@ public class TimerComponent {
         timeRemaining = newTime;
     }
 
-    /**
-     * The reset method, runs the actual reset method, but in a service thread
-     */
-    public static void reset() {
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    GameLogicComponents.reset();
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
-    }
 }

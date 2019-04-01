@@ -43,7 +43,6 @@ public abstract class Scenes {
         this.HEIGHT = HEIGHT;
     }
 
-
     //Getters
     public GridPane getGp() {
         return gp;
@@ -94,38 +93,6 @@ public abstract class Scenes {
         columnTwoConstrains.setHgrow(Priority.ALWAYS);
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
         return gridPane;
-    }
-
-    public static void fontChange(int size, ObservableList<Node> children){
-        if(size == 0) {
-            size = 12; //default font size
-        } else {
-            size = UserInfo.getFontSize();
-        }
-
-        for (Node child : children) {
-            if (child instanceof Button) {
-                Button b = (Button) child;
-                b.setFont(Font.font("Courier", size));
-            }
-            if (child instanceof Label) {
-                Label l = (Label) child;
-                l.setFont(Font.font("Courier", size));
-            }
-            if (child instanceof Text) {
-                Text t = (Text) child;
-                t.setFont(Font.font("Courier", size));
-            }
-        }
-    }
-
-    public static void changeBackground(GridPane gridPane, Color color) {
-        if (color == null) {
-            color = Color.web("0xffe6b3");
-        }
-        String print = color.toString();
-        String formatert = print.replace("0x", "");
-        gridPane.setStyle("-fx-background-color:#" + formatert + ";");
     }
 
     void errorFont(Label l){

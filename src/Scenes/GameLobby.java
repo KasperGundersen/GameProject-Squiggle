@@ -17,17 +17,22 @@ public class GameLobby extends Scenes{
 
     public static BorderPane bp;
 
-    public GameLobby(double WIDTH, double HEIGHT) {
+    public GameLobby(double WIDTH, double HEIGHT, boolean drawing) {
         super(WIDTH, HEIGHT);
         bp = new BorderPane();
         setSc(new Scene(bp, WIDTH, HEIGHT));
-        addUIControls(bp);
+        addUIControls(bp, drawing);
     }
 
-    private void addUIControls(BorderPane borderPane){
-        borderPane.setCenter(addCanvasUI());
+    private void addUIControls(BorderPane borderPane, boolean drawing){
+        borderPane.setCenter(addCanvasUI(drawing));
         borderPane.setRight(liveChatUI());
         borderPane.setLeft(addAvatarUI());
+        if (drawing) {
+            borderPane.setBottom(addDrawingUI());
+        } else {
+            borderPane.setBottom(null);
+        }
         setTop();
     }
 

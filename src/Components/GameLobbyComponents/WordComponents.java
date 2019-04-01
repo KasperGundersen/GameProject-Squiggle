@@ -7,13 +7,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
 public class WordComponents {
-    private static String word = generateWord();
+    private static String word;
 
     public static HBox addWordUI(){
+        word = DBConnection.getRandomWord();
         HBox hb = new HBox();
-        Label word = new Label("Word: " + showWord());
-        word.setFont(new Font(20));
-        hb.getChildren().add(word);
+        Label wordLabel = new Label("Word: " + showWord());
+        wordLabel.setFont(new Font(20));
+        hb.getChildren().add(wordLabel);
         return hb;
     }
 
@@ -21,16 +22,12 @@ public class WordComponents {
         return word;
     }
 
-    public static String generateWord(){
-        return DBConnection.getRandomWord();
-    }
-
     public static String showWord(){
         String line = "___  ";
         String space = "   ";
         String period = ".";
         String result ="";
-        boolean drawing = UserInfo.getDrawing();
+        boolean drawing = UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound();
         String word = getWord();
         if(drawing){
             return word;
