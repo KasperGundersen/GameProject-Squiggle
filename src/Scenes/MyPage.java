@@ -47,11 +47,13 @@ public class MyPage extends Scenes{
 
 
         // Header label
-        Label header = new Label("My Page");
-        header.setStyle("-fx-text-fill: white");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 42));
-        gridPane.add(header, 0, 0, 5, 1);
-        gridPane.setHalignment(header, HPos.CENTER);
+
+        File file = new File("resources/Logo_MyPage.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0, 0, 5, 1);
+        gridPane.setHalignment(iv, HPos.CENTER);
 
         // Username label
         Label nameLabel = new Label("Username: " + UserInfo.getUserName());

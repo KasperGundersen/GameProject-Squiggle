@@ -10,11 +10,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Tooltip;
+
+import java.io.File;
 
 import static css.Css.toolTip;
 
@@ -61,11 +64,14 @@ public class SignUp extends Scenes {
         this.gridPane = gridPane;
         double prefHeight = 40;
         // Add Header
-        Label headerLabel = new Label("Sign Up");
-        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        gridPane.add(headerLabel, 0,0,2,1);
-        GridPane.setHalignment(headerLabel, HPos.CENTER);
-        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+        File file = new File("resources/Logo_SignUp.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0,0,2,1);
+        GridPane.setHalignment(iv, HPos.CENTER);
+        GridPane.setMargin(iv, new Insets(20, 0,20,0));
 
         //Add error Label
         errorUserAndMail = new Label("Username or email already taken");

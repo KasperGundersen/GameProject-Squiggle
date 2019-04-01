@@ -14,10 +14,13 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.io.File;
 import java.sql.Connection;
 
 
@@ -34,12 +37,14 @@ public class MainMenu extends Scenes{
         double prefHeight = 40;
         double prefWidth = 200;
         // Add Header
-        Label headerLabel = new Label("Main Menu");
-        headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        Css.setHeaderStyle(headerLabel);
-        gridPane.add(headerLabel, 0,0,2,1);
-        GridPane.setHalignment(headerLabel, HPos.CENTER);
-        GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
+
+        File file = new File("resources/Logo_Main_Menu.png");
+        Image image = new Image(file.toURI().toString());
+        ImageView iv = new ImageView(image);
+
+        gridPane.add(iv, 0,0,2,1);
+        GridPane.setHalignment(iv, HPos.CENTER);
+        GridPane.setMargin(iv, new Insets(20, 0,20,0));
 
         // Join game button
         Button joinGameButton = new Button("Join Game");

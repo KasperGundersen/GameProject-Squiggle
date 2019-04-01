@@ -95,7 +95,6 @@ public abstract class Scenes {
 
         File file = new File("resources/SquiggleTheme.png");
         Image image = new Image(file.toURI().toString());
-        System.out.println(image);
         BackgroundImage backgroundimage = new BackgroundImage(image,
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundRepeat.NO_REPEAT,
