@@ -3,6 +3,7 @@ package Components.GameLobbyComponents;
 import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
+import css.Css;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -53,6 +54,7 @@ public class LiveChatComponents {
         tf = new TextField();
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
+        Css.buttonStyleRed(btn);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);
         vb.getChildren().addAll(livechatLabel, sp,hb);
