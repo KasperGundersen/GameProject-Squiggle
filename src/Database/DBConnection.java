@@ -772,9 +772,6 @@ public class DBConnection {
             int currentMax = 0;
             if (res.next()) {
                 currentMax = res.getInt("max") + 1;
-                if (currentMax == 1) {
-
-                }
             }
             query = "INSERT INTO GAME VALUES(?, ?, ?, ?);";
             prepStmt = con.prepareStatement(query);

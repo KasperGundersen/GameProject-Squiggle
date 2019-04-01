@@ -19,9 +19,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
+import java.util.Date;
 
 
 public class MainMenu extends Scenes{
+
+    private Label gameStartedLabel;
 
     public MainMenu(double width, double height) {
         super(width, height);
@@ -31,6 +34,7 @@ public class MainMenu extends Scenes{
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
         double prefWidth = 200;
+
         // Add Header
         Label headerLabel = new Label("Main Menu");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -39,13 +43,20 @@ public class MainMenu extends Scenes{
         GridPane.setHalignment(headerLabel, HPos.CENTER);
         GridPane.setMargin(headerLabel, new Insets(20, 0,20,0));
 
+        // Add error Label
+        gameStartedLabel = new Label();
+        gameStartedLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        gridPane.add(gameStartedLabel, 0,1,2,1);
+        GridPane.setHalignment(gameStartedLabel, HPos.CENTER);
+        GridPane.setMargin(gameStartedLabel, new Insets(20, 0,20,0));
+
         // Join game button
         Button joinGameButton = new Button("Join Game");
         Css.buttonStyle(joinGameButton);
         joinGameButton.setPrefHeight(prefHeight);
         joinGameButton.setDefaultButton(true);
         joinGameButton.setPrefWidth(prefWidth);
-        gridPane.add(joinGameButton, 0, 1, 2, 1);
+        gridPane.add(joinGameButton, 0, 2, 2, 1);
         GridPane.setHalignment(joinGameButton, HPos.CENTER);
         GridPane.setValignment(joinGameButton, VPos.CENTER);
 
@@ -54,7 +65,7 @@ public class MainMenu extends Scenes{
         Css.buttonStyle(myPageButton);
         myPageButton.setPrefHeight(prefHeight);
         myPageButton.setPrefWidth(prefWidth);
-        gridPane.add(myPageButton, 0, 2, 2, 1);
+        gridPane.add(myPageButton, 0, 3, 2, 1);
         GridPane.setHalignment(myPageButton, HPos.CENTER);
         GridPane.setValignment(myPageButton, VPos.CENTER);
 
@@ -63,7 +74,7 @@ public class MainMenu extends Scenes{
         Css.buttonStyle(optionButton);
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(prefWidth);
-        gridPane.add(optionButton, 0,3, 2, 1);
+        gridPane.add(optionButton, 0,4, 2, 1);
         GridPane.setHalignment(optionButton, HPos.CENTER);
         GridPane.setValignment(optionButton, VPos.CENTER);
 
@@ -72,7 +83,7 @@ public class MainMenu extends Scenes{
         Css.buttonStyle(logOutButton);
         logOutButton.setPrefHeight(prefHeight);
         logOutButton.setPrefWidth(prefWidth);
-        gridPane.add(logOutButton, 0,4, 2, 1);
+        gridPane.add(logOutButton, 0,5, 2, 1);
         GridPane.setHalignment(logOutButton, HPos.CENTER);
         GridPane.setValignment(logOutButton, VPos.CENTER);
 
@@ -81,7 +92,7 @@ public class MainMenu extends Scenes{
         Css.buttonStyle(quitButton);
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(prefWidth);
-        gridPane.add(quitButton, 0, 5, 2, 1);
+        gridPane.add(quitButton, 0, 6, 2, 1);
         GridPane.setHalignment(quitButton, HPos.CENTER);
         GridPane.setValignment(quitButton, VPos.CENTER);
 
@@ -105,11 +116,16 @@ public class MainMenu extends Scenes{
     }
 
     private void joinGameSystem() {
-        DBConnection.joinGame();
-        MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
-        GameLogicComponents.setPrivileges();
-        MainScene.setScene(MainScene.gl);
-        MainScene.mm = null;
+        int time = (int)((DBConnection.getDrawTimer().getTime() - (new Date().getTime())) / 1000);
+        if (time < 80 && time > 0) {
+            gameStartedLabel.setText("Game already in progress, ends in: " + time + " seconds.");
+        } else {
+            DBConnection.joinGame();
+            MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
+            GameLogicComponents.setPrivileges();
+            MainScene.setScene(MainScene.gl);
+            MainScene.mm = null;
+        }
     }
 
     private void logOutSystem(){

@@ -6,16 +6,12 @@ import Database.DBConnection;
 import Scenes.GameLobby;
 import Scenes.MainMenu;
 import Scenes.MainScene;
-import com.mysql.cj.jdbc.admin.MiniAdmin;
-import com.sun.tools.javac.Main;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.image.WritableImage;
 
 import java.util.concurrent.CountDownLatch;
 
-import static Components.GameLobbyComponents.CanvasComponents.*;
 import static Components.Threads.Timers.*;
 
 /**
@@ -33,8 +29,8 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        Timers.turnOffTimer4();
-        Timers.timer4();
+        Timers.stopHeartBeat();
+        Timers.startHeartBeat();
     }
 
     public static void incrementRoundCounter() {
@@ -72,12 +68,10 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
-            turnOffTimer4();
+            stopHeartBeat();
             MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.mm);
             MainScene.gl = null;
         }
     }
 }
-
-
