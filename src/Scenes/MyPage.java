@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
@@ -28,6 +29,8 @@ public class MyPage extends Scenes{
     private static Button backButton;
     private static Button buttonChoose;
     private static Button buttonLobby;
+    private static PasswordField newPassword;
+    private static PasswordField repeatPassword;
     private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
@@ -197,12 +200,12 @@ public class MyPage extends Scenes{
 
         Label header = new Label("Change password");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        PasswordField passwordField = new PasswordField();
-        passwordField.setPrefHeight(40);
-        passwordField.setPrefWidth(200);
-        passwordField.setPromptText("Enter new password");
+        newPassword = new PasswordField();
+        newPassword.setPrefHeight(40);
+        newPassword.setPrefWidth(200);
+        newPassword.setPromptText("Enter new password");
 
-        PasswordField repeatPassword = new PasswordField();
+        repeatPassword = new PasswordField();
         repeatPassword.setPrefHeight(40);
         repeatPassword.setPromptText("Repeat your new password");
 
@@ -210,6 +213,7 @@ public class MyPage extends Scenes{
         save.setPrefHeight(40);
         save.setPrefWidth(200);
         save.setOnAction(e -> {
+            Authentication.changePassword();
             window.close();
         });
 
@@ -217,7 +221,7 @@ public class MyPage extends Scenes{
         grid.setVgap(30);
         grid.setAlignment(Pos.CENTER);
         grid.add(header, 0, 0);
-        grid.add(passwordField, 0, 1);
+        grid.add(newPassword, 0, 1);
         grid.add(repeatPassword, 0,2);
         grid.add(save, 0, 3);
         grid.setHalignment(save, HPos.CENTER);
@@ -229,5 +233,17 @@ public class MyPage extends Scenes{
 
     public static GridPane getGrid() {
         return gridPane;
+    }
+
+    public static String changePassword(){
+        if(newPassword.getText() == null || repeatPassword.getText() == null){
+            ConfirmBox.display("Warning", "You have to enter a new password");
+            return null;
+        }
+        if(!(newPassword.getText().equals(repeatPassword.getText()))){
+            ConfirmBox.display("Warning", "Your password have to be equal");
+            return null;
+        }
+       return newPassword.getText();
     }
 }

@@ -11,7 +11,14 @@ import java.sql.Statement;
 
 public class Authentication {
 
-
+    public static void changePassword(){
+        int userID = UserInfo.getUserID();
+        String password = MyPage.changePassword();
+        String encryptor = Encryptor.Encryptor(password, null);
+        String hash = Encryptor.getHash(encryptor);
+        String salt = Encryptor.getSalt(encryptor);
+        DBConnection.changePassword(userID, hash, salt);
+    }
     public static boolean submit(){
         String username = SignUp.getName();
         String mail = SignUp.getMail();
