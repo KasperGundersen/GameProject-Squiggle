@@ -42,7 +42,7 @@ public class GameLogicComponents {
 
     public static void reset() {
         boolean ok = false;
-        while (!ok) {
+        while (!ok && currentRound <= DBConnection.getAmtPlayer()) {
             if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
                 ok = true;
             } else {
