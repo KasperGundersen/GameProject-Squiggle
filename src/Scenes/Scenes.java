@@ -135,6 +135,4 @@ public abstract class Scenes {
         File file = new File("resources/avatars/" + i + ".jpg");
         return new Image(file.toURI().toString());
     }
-
-
 }
