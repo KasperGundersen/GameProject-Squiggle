@@ -26,7 +26,9 @@ public class DBConnection {
             String query = "select avatarID from USERS where userID=" + userID;
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
-            avatarID = res.getInt("avatarID");
+            if(res.next()) {
+                avatarID = res.getInt("avatarID");
+            }
             return avatarID;
         }catch(SQLException e){
             e.printStackTrace();

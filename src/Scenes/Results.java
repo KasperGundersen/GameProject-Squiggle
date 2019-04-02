@@ -46,9 +46,16 @@ public class Results extends Scenes{
         int amtPlayers = players.size();
 
         HBox hboxes[] = new HBox[amtPlayers];
+        ImageView[] images = new ImageView[amtPlayers];
 
         for(int i = 0; i < amtPlayers; i++){
             hboxes[i] = new HBox(10);
+            int userID = players.get(i);
+            int avatarID = DBConnection.getAvatarID(userID);
+            images[i] = new ImageView(getAvatar(avatarID));
+            images[i].setFitWidth(50);
+            images[i].setFitHeight(50);
+
 
             userIDLbl = new Label("User ID: " + players.get(i));
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -59,6 +66,7 @@ public class Results extends Scenes{
 
             hboxes[i].getChildren().addAll(userIDLbl, pointsLbl, guessesLbl);
             gp.add(hboxes[i], 1, i+1, 1, 1);
+            gp.add(images[i], 0, i+1, 1, 1);
         }
     }
 }
