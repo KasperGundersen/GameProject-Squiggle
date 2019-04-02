@@ -2,6 +2,7 @@ package Components.GameLobbyComponents;
 
 import Components.UserInfo;
 import Database.DBConnection;
+import css.Css;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -52,6 +53,8 @@ public class CanvasComponents {
 
         draw = new ToggleButton("Draw");
         erase = new ToggleButton("Erase");
+        Css.buttonStyle(draw);
+        Css.buttonStyle(erase);
         ToggleButton[] tools = {draw, erase};
         ToggleGroup tgTools = new ToggleGroup();
         for (ToggleButton tool : tools) {
@@ -65,6 +68,10 @@ public class CanvasComponents {
         ToggleButton lineWidth2 = new ToggleButton("2");
         ToggleButton lineWidth3 = new ToggleButton("3");
         ToggleButton lineWidth4 = new ToggleButton("4");
+        Css.buttonStyle(lineWidth1);
+        Css.buttonStyle(lineWidth2);
+        Css.buttonStyle(lineWidth3);
+        Css.buttonStyle(lineWidth4);
         ToggleButton[] penSize = {lineWidth1, lineWidth2, lineWidth3, lineWidth4};
         ToggleGroup tgLineWidth = new ToggleGroup();
         for (ToggleButton tb : penSize) {

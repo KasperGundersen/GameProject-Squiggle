@@ -1,5 +1,6 @@
 package Scenes;
 
+import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,6 +39,7 @@ public class Options extends Scenes {
 
         Button submitButton = new Button("Submit");
         submitButton.setPrefWidth(100);
+        Css.buttonStyleRed(submitButton);
 
         submitButton.setOnAction(e -> {
             window.close();

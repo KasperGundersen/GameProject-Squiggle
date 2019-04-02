@@ -42,7 +42,6 @@ public class MyPage extends Scenes{
 
     private void addUIControls(GridPane gridPane){
         // Header label
-
         File file = new File("resources/Logo_MyPage.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
@@ -68,7 +67,7 @@ public class MyPage extends Scenes{
 
         // Change password Button
         buttonChangePassword = new Button("Change password");
-        Css.setStyle(buttonChangePassword);
+        Css.buttonStyleRed(buttonChangePassword);
         buttonChangePassword.setPrefHeight(40);
         buttonChangePassword.setPrefWidth(150);
         gridPane.add(buttonChangePassword, 0, 3, 2, 1);
@@ -126,7 +125,7 @@ public class MyPage extends Scenes{
 
         // Update current avatar button
         buttonChoose = new Button("Choose avatar");
-        Css.setStyle(buttonChoose);
+        Css.buttonStyleRed(buttonChoose);
         buttonChoose.setPrefHeight(40);
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
@@ -135,7 +134,7 @@ public class MyPage extends Scenes{
 
         // Back button
         backButton = new Button("Back");
-        Css.setStyle(backButton);
+        Css.buttonStyleRed(backButton);
         backButton.setPrefHeight(40);
         backButton.setPrefWidth(80);
         gridPane.add(backButton, 0, 6, 1, 1);
