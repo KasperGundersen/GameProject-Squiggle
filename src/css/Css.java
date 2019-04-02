@@ -49,7 +49,7 @@ public class Css {
     public static void setLabelStyle(Label label) {
         label.setStyle("-fx-text-fill: white;" +
                 "-fx-font-size: 14;\n" +
-                "-fx-font-family: \"Gill Sans Ultra Bold\";");
+                "-fx-font-family: \"Cooper Black\";");
     }
 
     public static void setBackground(GridPane grid){
@@ -89,7 +89,7 @@ public class Css {
                 "        radial-gradient(center 50% 50%, radius 100%, #f81de9, #c90dee);\n" +
                 "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 2,0,0,1 );\n" +
                 "    -fx-font-weight: bold;\n" +
-                "    -fx-font-family: \"Gill Sans Ultra Bold\";\n" +
+                "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
                 "    -fx-font-size: 1.1em;");
     }
