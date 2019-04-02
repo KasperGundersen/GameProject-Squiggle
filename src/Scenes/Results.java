@@ -27,9 +27,9 @@ public class Results extends Scenes{
 
     public Results(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
-        addUIControls(getGp());
+       // addUIControls(getGp());
     }
-
+/*
     public static void addUIControls(GridPane gp){
         header = new Label("Results");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -41,22 +41,23 @@ public class Results extends Scenes{
         ArrayList<Integer> players = DBConnection.getPlayersList();
         ArrayList<Integer> guesses = DBConnection.getGuessesList();
         int amtPlayers = players.size();
-
+        System.out.println(amtPlayers);
         Label userIDLbl;
         Label pointsLbl;
         Label guessesLbl;
 
 
-        HBox hboxes[] = new HBox[amtPlayers];
-        ImageView images[] = new ImageView[amtPlayers];
+      //  HBox hboxes[] = new HBox[amtPlayers];
+        ImageView[] images = new ImageView[amtPlayers];
 
 
         for(int i = 0; i < amtPlayers; i++){
-            hboxes[i] = new HBox(10);
-            images[i] = new ImageView(getAvatarResults(players.get(i)));
+          //  hboxes[i] = new HBox(10);
 
+           // images[i] = new ImageView(getAvatarResults(DBConnection.getAvatarID(players.get(i))));
+            System.out.println(DBConnection.getAvatarID(players.get(i)));
 
-            userIDLbl = new Label("User ID: " + players.get(i));
+         /*   userIDLbl = new Label("User ID: " + players.get(i));
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
             pointsLbl = new Label("Points: " + points.get(i));
             pointsLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -64,14 +65,14 @@ public class Results extends Scenes{
             guessesLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
 
             hboxes[i].getChildren().addAll(userIDLbl, pointsLbl, guessesLbl);
-            gp.add(images[i], 0, i+1, 2, 1);
-            gp.add(hboxes[i], 1, i+1, 2, 1);
+        //    gp.add(images[i], 0, i+1, 1, 1);
+           // gp.add(hboxes[i], 1, i+1, 1, 1);
         }
     }
 
-    private static Image getAvatarResults(int userID){
-        int avatarID = DBConnection.getAvatarID(userID);
+    private static Image getAvatarResults(int avatarID){
         Image avatar = getAvatar(avatarID);
         return avatar;
     }
+    */
 }

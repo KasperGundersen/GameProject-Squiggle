@@ -81,7 +81,6 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
-
             MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.rs);
             MainScene.gl = null;
