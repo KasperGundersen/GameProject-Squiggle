@@ -53,7 +53,6 @@ public class LogIn extends Scenes {
 
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
-        gridPane.setGridLinesVisible(true);
 
         File file = new File("resources/logos/Logo_LogIn.png");
         Image image = new Image(file.toURI().toString());
