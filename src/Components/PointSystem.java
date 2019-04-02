@@ -11,7 +11,7 @@ public class PointSystem {
 
     //1,2,3 get points, and everybody who guess correct.
     // input is round result, then the DB is updated with new totScore
-    public static void setPointsGuesser(int userID){
+    public static void setPointsGuesser(){
         int amtCorrect = DBConnection.getAmtCorrect();
         int points;
         if (amtCorrect == 0) { //Temp fix because setPointsGuesser runs twice
