@@ -19,6 +19,49 @@ import java.util.Date;
 
 public class DBConnection {
 
+    public static ArrayList<Integer> getPointsList(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Integer> points = new ArrayList<>();
+        try{
+            con = HikariCP.getCon();
+            String query = "select points from GAME";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                points.add(res.getInt("points"));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
+        return points;
+    }
+
+    public static ArrayList<Integer> getPlayersList(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Integer> players = new ArrayList<>();
+        try{
+            con = HikariCP.getCon();
+            String query = "select userID from GAME";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            while(res.next()){
+                players.add(res.getInt("userID"));
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
+        return players;
+    }
+
+
     public static void changePassword(int userID, String hash, String salt){
         Connection con = null;
         PreparedStatement prepStmt = null;
