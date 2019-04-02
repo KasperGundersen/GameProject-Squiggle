@@ -6,6 +6,7 @@ import Database.DBConnection;
 import Scenes.GameLobby;
 import Scenes.MainMenu;
 import Scenes.MainScene;
+import Scenes.Results;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -70,11 +71,12 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
+
+            MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
+            MainScene.setScene(MainScene.rs);
+            MainScene.gl = null;
             DBConnection.exitGame();
             stopHeartBeat();
-            MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
-            MainScene.setScene(MainScene.mm);
-            MainScene.gl = null;
         }
     }
 }
