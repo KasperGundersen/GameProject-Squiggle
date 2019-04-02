@@ -57,6 +57,7 @@ public class Timers {
                                 PointSystem.setPointsDrawer();
                                 DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
                             }
+
                             GameLogicComponents.incrementRoundCounter();
                             GameLogicComponents.reset();
                             readyReset = false;

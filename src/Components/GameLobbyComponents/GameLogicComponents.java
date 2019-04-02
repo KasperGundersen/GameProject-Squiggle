@@ -68,11 +68,11 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
-                                        UserInfo.setGuessedCorrectly(false);
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
                                         LiveChatComponents.cleanChat();
                                         GameLogicComponents.setPrivileges();
                                         MainScene.setScene(MainScene.gl);
+                                        UserInfo.setGuessedCorrectly(false);
                                     }finally{
                                         latch.countDown();
                                     }
