@@ -24,7 +24,6 @@ import java.util.concurrent.CountDownLatch;
  * Where time remaining is synched across computers and displayed
  */
 public class TimerComponent {
-
     private static Label countDown;
     public static int timeRemaining;
 
@@ -37,8 +36,8 @@ public class TimerComponent {
         Date currentTime = new Date();
         long diff = time.getTime() - currentTime.getTime();
         timeRemaining = (int) diff / 1000;
-        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-            timeRemaining += 1;
+        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound() + 1) {
+            timeRemaining -= 1;
         }
 
         VBox vb = new VBox();

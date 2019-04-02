@@ -62,15 +62,17 @@ public class SignUp extends Scenes {
      */
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
-        // Add Header
 
-        File file = new File("resources/Logo_SignUp.png");
+        File file = new File("resources/logos/Logo_SignUp.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
 
-        gridPane.add(iv, 0,0,2,1);
+        gridPane.add(iv, 0,0,4,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(20, 0,20,0));
+        //GridPane.setMargin(iv, new Insets(20, 0,20,0));
+
 
         //Add error Label
         errorUserAndMail = new Label("Username or email already taken");
@@ -117,6 +119,7 @@ public class SignUp extends Scenes {
         Label avatarLabel = new Label("Avatar : ");
         gridPane.add(avatarLabel, 0,3);
 
+
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
         avatarView.setFitWidth(150);
@@ -153,7 +156,7 @@ public class SignUp extends Scenes {
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
-        GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
+        //GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
         gridPane.add(passwordField, 1, 4);
 
         //Add empty Label
@@ -178,7 +181,7 @@ public class SignUp extends Scenes {
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
         Css.buttonStyleRed(submitButton);
-        gridPane.add(submitButton, 0, 6, 2, 1);
+        gridPane.add(submitButton, 0, 6, 4, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
 

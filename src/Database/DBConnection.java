@@ -397,6 +397,24 @@ public class DBConnection {
         }
     }
 
+    //Livechat methods start
+    public static void cleanChat() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+                String query = "DELETE FROM CHAT;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
+
+
     public static ArrayList<String> getMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -611,11 +629,9 @@ public class DBConnection {
             String query = "SELECT points FROM GAME where userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
-            int result = 0;
             if (res.next()) {
-                result = res.getInt("points");
+                return res.getInt("points");
             }
-            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -736,11 +752,10 @@ public class DBConnection {
             String query = "SELECT SUM(correctGuess) FROM GAME;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
-            int result = 0;
             if (res.next()) {
-                result = res.getInt("SUM(correctGuess)");
+                return res.getInt("SUM(correctGuess)");
             }
-            return result;
+            return 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;

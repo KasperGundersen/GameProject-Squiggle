@@ -37,11 +37,11 @@ public class Timers {
                     }
                     if (timeRemaining % 5 == 0) {
                         updateData();
-                        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-                            updateImage();
-                        } else {
-                            CanvasComponents.setImage();
-                        }
+                    }
+                    if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
+                        updateImage();
+                    } else {
+                        CanvasComponents.setImage();
                     }
                     if (timeRemaining > Math.round(GameLogicComponents.gameTime * 0.84)) {
                         if (!readyReset) {

@@ -104,7 +104,6 @@ public class LiveChatComponents {
         timerLive.schedule(task, 0, +1000);
     }
 
-
     /**
      * Turns of the timer when called
      */
@@ -121,12 +120,11 @@ public class LiveChatComponents {
      * @return true or false depending on the answer
      */
     public static boolean checkWord(String word) {
-
         boolean correct = false;
         if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) { //Only check if user is guesser
             if (word.equalsIgnoreCase(WordComponents.getWord())) {
                 correct = true;
-                PointSystem.setPointsGuesser(UserInfo.getUserID());
+                PointSystem.setPointsGuesser();
                 DBConnection.setCorrectGuess(UserInfo.getUserID());
                 UserInfo.setGuessedCorrectly(true);
                 return correct;
@@ -144,5 +142,6 @@ public class LiveChatComponents {
      */
     public static void cleanChat() {
         messages.setLength(0);
+        DBConnection.cleanChat();
     }
 }
