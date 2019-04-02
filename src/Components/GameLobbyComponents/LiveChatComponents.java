@@ -30,7 +30,7 @@ import java.util.TimerTask;
 public class LiveChatComponents {
     private static Timer timerLive = null;
     private static ScrollPane sp;
-    private static StringBuilder messages = new StringBuilder();
+    public static StringBuilder messages = new StringBuilder();
     private static TextField tf;
 
     //-----------Right-----------//

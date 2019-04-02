@@ -2,6 +2,7 @@ package Components.Threads;
 
 import Components.GameLobbyComponents.CanvasComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
+import Components.GameLobbyComponents.LiveChatComponents;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;

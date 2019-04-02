@@ -806,4 +806,24 @@ public class DBConnection {
         }
 
     }
+
+    public static boolean playerToDraw(int currentRound) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT userID FROM GAME WHERE playerNr = ?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, currentRound);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

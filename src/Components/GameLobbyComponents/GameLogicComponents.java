@@ -39,6 +39,14 @@ public class GameLogicComponents {
     }
 
     public static void reset() {
+        boolean ok = false;
+        while (!ok) {
+            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
+                ok = true;
+            } else {
+                GameLogicComponents.incrementRoundCounter();
+            }
+        }
         if (currentRound <= DBConnection.getAmtPlayer()) {
             Service<Void> service = new Service<Void>() {
                 @Override
