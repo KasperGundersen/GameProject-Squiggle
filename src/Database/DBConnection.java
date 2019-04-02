@@ -313,6 +313,24 @@ public class DBConnection {
         }
     }
 
+    //Livechat methods start
+    public static void cleanChat() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+                String query = "DELETE FROM CHAT;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
+
+
+
     public static ArrayList<String> getMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
