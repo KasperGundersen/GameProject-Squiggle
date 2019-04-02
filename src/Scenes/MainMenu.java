@@ -50,6 +50,7 @@ public class MainMenu extends Scenes{
         // Add error Label
         gameStartedLabel = new Label();
         gameStartedLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        gameStartedLabel.setStyle("-fx-text-fill: #ffffff");
         gridPane.add(gameStartedLabel, 0,1,2,1);
         GridPane.setHalignment(gameStartedLabel, HPos.CENTER);
 

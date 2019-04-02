@@ -37,8 +37,8 @@ public class TimerComponent {
         Date currentTime = new Date();
         long diff = time.getTime() - currentTime.getTime();
         timeRemaining = (int) diff / 1000;
-        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-            timeRemaining += 1;
+        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound() + 1) {
+            timeRemaining -= 1;
         }
 
         VBox vb = new VBox();

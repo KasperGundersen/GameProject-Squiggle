@@ -25,13 +25,10 @@ public class MainScene {
     public static Scenes su = null;
     public static Scenes mp = null;
     public static Scenes gl = null;
-    public static Scenes lc = null;
     public static Scenes rs = null;
-
 
     // User
     public static UserInfo user = new UserInfo();
-    public static Toast toast = new Toast(stage, WIDTH, HEIGHT);
 
     public static double getHEIGHT() {
         return HEIGHT;
@@ -73,6 +70,7 @@ public class MainScene {
 
     public void initialize(Stage stage) {
         MainScene.stage = stage;
+        MainScene.stage.centerOnScreen();
         MainScene.stage.setTitle("Squiggle");
         MainScene.stage.setOnCloseRequest(e -> {
             e.consume();
@@ -81,7 +79,10 @@ public class MainScene {
         MainScene.stage.setResizable(false);
         setScene(li);
         MainScene.stage.show();
+        MainScene.stage.centerOnScreen();
     }
+
+
     public static void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
