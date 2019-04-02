@@ -340,7 +340,6 @@ public class DBConnection {
     }
 
     public static void resetCorrectGuess() {
-        System.out.println("Nå reseter jeg correct guesses");
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
@@ -566,9 +565,7 @@ public class DBConnection {
         Connection con = null;
         PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
-        System.out.println("Old points for userID: " + UserInfo.getUserID() + ": " + oldPoints);
         int newPoints = oldPoints + addPoints;
-        System.out.println("New Points for userID: " + UserInfo.getUserID() + ": " +  newPoints);
         try {
             con = HikariCP.getCon();
             String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID =" + UserInfo.getUserID();
@@ -630,7 +627,6 @@ public class DBConnection {
     }
 
     public static void setCorrectGuess(int userID){
-        System.out.println("Nå setter jeg correct guess");
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;

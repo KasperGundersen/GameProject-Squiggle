@@ -101,7 +101,7 @@ public class LiveChatComponents {
                 sp.setVvalue(1.0);
             }
         };
-        timerLive.schedule(task, 0, +5000);
+        timerLive.schedule(task, 0, +1000);
     }
 
 

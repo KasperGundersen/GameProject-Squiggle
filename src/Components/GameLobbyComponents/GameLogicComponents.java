@@ -53,7 +53,6 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
-                                        System.out.println("AmtOFCorrect players after reset: "+DBConnection.getAmtCorrect());
                                         UserInfo.setGuessedCorrectly(false);
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
                                         LiveChatComponents.cleanChat();
