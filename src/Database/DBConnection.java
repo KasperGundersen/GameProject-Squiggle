@@ -421,6 +421,22 @@ public class DBConnection {
         return null;
     }
 
+    public static void resetCorrectGuess() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "update GAME set correctGuess = 0;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt,res);
+        }
+    }
+
     public static StringBuilder getNewMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -593,9 +609,11 @@ public class DBConnection {
             String query = "SELECT points FROM GAME where userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
+            int result = 0;
             if (res.next()) {
-                return res.getInt("points");
+                result = res.getInt("points");
             }
+            return result;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -625,14 +643,14 @@ public class DBConnection {
     }
 
     // Updates the amount of points this user has
-    public static void updatePoints(int addPoints, int userID){
+    public static void updatePoints(int addPoints){
         Connection con = null;
         PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + addPoints +" WHERE userID =" + userID;
+            String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch(SQLException e) {
@@ -887,5 +905,25 @@ public class DBConnection {
             e.printStackTrace();
         }
 
+    }
+
+    public static boolean playerToDraw(int currentRound) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT userID FROM GAME WHERE playerNr = ?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, currentRound);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

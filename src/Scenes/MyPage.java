@@ -42,7 +42,6 @@ public class MyPage extends Scenes{
 
     private void addUIControls(GridPane gridPane){
         // Header label
-
         File file = new File("resources/Logo_MyPage.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);

@@ -1,5 +1,6 @@
 package Components.GameLobbyComponents;
 
+import Components.PointSystem;
 import Components.Threads.Timers;
 import Components.UserInfo;
 import Database.DBConnection;
@@ -40,6 +41,14 @@ public class GameLogicComponents {
     }
 
     public static void reset() {
+        boolean ok = false;
+        while (!ok) {
+            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
+                ok = true;
+            } else {
+                GameLogicComponents.incrementRoundCounter();
+            }
+        }
         if (currentRound <= DBConnection.getAmtPlayer()) {
             Service<Void> service = new Service<Void>() {
                 @Override
@@ -53,6 +62,7 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
+                                        UserInfo.setGuessedCorrectly(false);
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
                                         LiveChatComponents.cleanChat();
                                         GameLogicComponents.setPrivileges();
