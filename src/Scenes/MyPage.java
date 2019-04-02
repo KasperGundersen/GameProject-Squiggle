@@ -42,9 +42,11 @@ public class MyPage extends Scenes{
 
     private void addUIControls(GridPane gridPane){
         // Header label
-        File file = new File("resources/Logo_MyPage.png");
+        File file = new File("resources/logos/Logo_MyPage.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
 
         gridPane.add(iv, 0, 0, 5, 1);
         gridPane.setHalignment(iv, HPos.CENTER);

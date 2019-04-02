@@ -37,13 +37,15 @@ public class MainMenu extends Scenes{
 
         // Add Header
 
-        File file = new File("resources/Logo_Main_Menu.png");
+        File file = new File("resources/logos/Logo_MainMenu.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
 
         gridPane.add(iv, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(10, 0,0,0));
+        //GridPane.setMargin(iv, new Insets(10, 0,0,0));
 
         // Add error Label
         gameStartedLabel = new Label();
