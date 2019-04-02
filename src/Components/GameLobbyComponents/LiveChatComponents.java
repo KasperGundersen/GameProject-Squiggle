@@ -142,5 +142,6 @@ public class LiveChatComponents {
      */
     public static void cleanChat() {
         messages.setLength(0);
+        DBConnection.cleanChat();
     }
 }
