@@ -83,7 +83,7 @@ public class MainScene {
         MainScene.stage.show();
     }
     public static void closeProgram(){
-        if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
+        if(ConfirmBox.display("Warning!", "Sure you want to \n exit?")){
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
             DBConnection.exitGame();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
