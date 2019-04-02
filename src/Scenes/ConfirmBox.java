@@ -30,10 +30,10 @@ class ConfirmBox{
 
         //Create to users
         Button yesButton = new Button("Yes");
-        Css.buttonStyle(yesButton);
+        Css.buttonStyleRed(yesButton);
 
         Button noButton = new Button("No");
-        Css.buttonStyle(noButton);
+        Css.buttonStyleRed(noButton);
 
         yesButton.setOnAction(e -> {
             answer = true;

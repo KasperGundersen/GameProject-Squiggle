@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
@@ -61,13 +62,13 @@ public class Css {
         label.setStyle("-fx-text-fill: #fefff3; -fx-font-size: 17px; -fx-font-weight: BOLD");
     }
 
-    public static void buttonStyle(Button button){
+    public static void buttonStyle(ToggleButton button){
         button.setStyle("\n" +
                 "    -fx-background-color: \n" +
                 "        #9a4a7c,\n" +
-                "        linear-gradient(#f81de9 0%, #d444ee 20%, #9b119d 100%),\n" +
-                "        linear-gradient(#d444ee, #9b119d),\n" +
-                "        radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));\n" +
+                "        linear-gradient(#f898f0 0%, #c461f8 20%, #8908ce 100%),\n" +
+                "        linear-gradient(#f898f0, #8908ce),\n" +
+                "        radial-gradient(center 50% 0%, radius 100%, rgba(248,152,240,0.9), rgb(137,8,206));\n" +
                 "    -fx-background-radius: 5,4,3,5;\n" +
                 "    -fx-background-insets: 0,1,2,0;\n" +
                 "    -fx-text-fill: white;\n" +
