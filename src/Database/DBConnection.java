@@ -4,11 +4,8 @@ package Database;
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
-import Components.Threads.Timers;
 import Components.UserInfo;
-import Scenes.GameLobby;
-import Scenes.MainMenu;
-import Scenes.MainScene;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +15,26 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DBConnection {
+
+    public static int getAvatarID(int userID){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        int avatarID = -1;
+        try{
+            con = HikariCP.getCon();
+            String query = "select avatarID from USERS where userID=" + userID;
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            avatarID = res.getInt("avatarID");
+            return avatarID;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+            return avatarID;
+        }
+    }
 
     public static ArrayList<Integer> getPointsList(){
         Connection con = null;
@@ -60,6 +77,28 @@ public class DBConnection {
         }
         return players;
     }
+
+    public static ArrayList<Integer> getGuessesList(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        ArrayList<Integer> guesses = new ArrayList<>();
+        try{
+            con = HikariCP.getCon();
+            String query = "select correctGuess from GAME";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            while(res.next()) {
+                guesses.add(res.getInt("correctGuess"));
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }finally{
+            closeConnection(con, prepStmt, res);
+        }
+        return guesses;
+    }
+
 
 
     public static void changePassword(int userID, String hash, String salt){

@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.AvatarComponents;
 import Components.Player;
+import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -31,20 +33,46 @@ public class Results extends Scenes{
     public static void addUIControls(GridPane gp){
         header = new Label("Results");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        gp.add(header, 1, 1, 2, 1);
+        gp.add(header, 1, 0, 2, 1);
         gp.setGridLinesVisible(true);
+
 
         ArrayList<Integer> points = DBConnection.getPointsList();
         ArrayList<Integer> players = DBConnection.getPlayersList();
+        ArrayList<Integer> guesses = DBConnection.getGuessesList();
         int amtPlayers = players.size();
+
+        Label userIDLbl;
+        Label pointsLbl;
+        Label guessesLbl;
 
 
         HBox hboxes[] = new HBox[amtPlayers];
+        ImageView images[] = new ImageView[amtPlayers];
+
+
         for(int i = 0; i < amtPlayers; i++){
-            hboxes[i] = new HBox();
-            hboxes[i].getChildren().addAll(new Label(Integer.toString(players.get(i))),
-                                           new Label(Integer.toString(points.get(i))));
-            gp.add(hboxes[i], 1, i, 2, 1);
+            hboxes[i] = new HBox(10);
+            images[i] = new ImageView();
+
+            images[i].setImage(getAvatarResults());
+
+            userIDLbl = new Label("User ID: " + players.get(i));
+            userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+            pointsLbl = new Label("Points: " + points.get(i));
+            pointsLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+            guessesLbl = new Label("Correct guesses: " + guesses.get(i));
+            guessesLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+            hboxes[i].getChildren().addAll(userIDLbl, pointsLbl, guessesLbl);
+            gp.add(images[i], 0, i+1, 2, 1);
+            gp.add(hboxes[i], 1, i+1, 2, 1);
         }
+    }
+
+    private static Image getAvatarResults(){
+        int avatarID = DBConnection.getAvatarID(UserInfo.getUserID());
+        Image avatar = getAvatar(avatarID);
+        return avatar;
     }
 }
