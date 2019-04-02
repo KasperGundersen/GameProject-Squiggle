@@ -2,6 +2,7 @@ package Components.Threads;
 
 import Components.GameLobbyComponents.CanvasComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
@@ -54,6 +55,11 @@ public class Timers {
                         setTimerText(true);
                     } else {
                         if (readyReset) {
+                            //Her blir amtCorrect av en eller annen grunn resettet
+                            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawer
+                                PointSystem.setPointsDrawer();
+                                DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
+                            }
                             GameLogicComponents.incrementRoundCounter();
                             GameLogicComponents.reset();
                             readyReset = false;

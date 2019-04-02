@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,6 +62,9 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
+            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawing
+
+            }
 
             if (!(UserInfo.getGuessedCorrectly())) { //If player has not answered correctly yet
                 insertMessages(text);
@@ -115,19 +119,23 @@ public class LiveChatComponents {
      * @return true or false depending on the answer
      */
     public static boolean checkWord(String word) {
+
         boolean correct = false;
-        if(word.equalsIgnoreCase(WordComponents.getWord())){
-            UserInfo.setGuessedCorrectly(true);
-            correct = true;
-            if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) {
+        if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) { //Only check if user is guesser
+            if (word.equalsIgnoreCase(WordComponents.getWord())) {
+                correct = true;
                 PointSystem.setPointsGuesser(UserInfo.getUserID());
                 DBConnection.setCorrectGuess(UserInfo.getUserID());
+                UserInfo.setGuessedCorrectly(true);
+                return correct;
+            } else {
+                correct = false;
+                return correct;
             }
-            return correct;
-        }else{
-            return correct;
         }
+        return correct;
     }
+
 
     /**
      * Method that cleans the chat. Used when the game is reset

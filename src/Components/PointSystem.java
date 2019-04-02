@@ -15,23 +15,25 @@ public class PointSystem {
         int amtCorrect = DBConnection.getAmtCorrect();
         int points;
 
-        if(amtCorrect==0){
+        if(amtCorrect==1){
+            System.out.println("første riktig");
             points = 150;
-        }else if(amtCorrect==1){
+        }else if(amtCorrect==2){
+            System.out.println("andre riktig");
             points = 100;
-        }else if (amtCorrect==2){
+        }else if (amtCorrect==3){
+            System.out.println("tredje riktig");
             points=75;
         } else{
             points = 50;
         }
-        DBConnection.updatePoints(points, userID);
+        DBConnection.updatePoints(points);
     }
 
 
-    public static void setPointsDrawer(int userID){
+    public static void setPointsDrawer(){
             int amtCorrect = DBConnection.getAmtCorrect();
-            int points = DBConnection.getPoints();
-            int newPoints = points + (amtCorrect*50);
-            DBConnection.updatePoints(newPoints, userID);
+            int newPoints = (50 * amtCorrect);
+            DBConnection.updatePoints(newPoints);
     }
 }
