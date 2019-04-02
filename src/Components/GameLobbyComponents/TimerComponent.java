@@ -24,7 +24,6 @@ import java.util.concurrent.CountDownLatch;
  * Where time remaining is synched across computers and displayed
  */
 public class TimerComponent {
-
     private static Label countDown;
     public static int timeRemaining;
 
