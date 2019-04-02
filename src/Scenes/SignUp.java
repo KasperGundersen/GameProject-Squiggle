@@ -119,7 +119,6 @@ public class SignUp extends Scenes {
         Label avatarLabel = new Label("Avatar : ");
         gridPane.add(avatarLabel, 0,3);
 
-        gridPane.setGridLinesVisible(true);
 
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
