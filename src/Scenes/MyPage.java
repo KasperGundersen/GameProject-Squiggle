@@ -41,7 +41,7 @@ public class MyPage extends Scenes{
     }
 
     private void addUIControls(GridPane gridPane){
-        // Header label
+        // Header image
         File file = new File("resources/logos/Logo_MyPage.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
@@ -71,7 +71,7 @@ public class MyPage extends Scenes{
         buttonChangePassword = new Button("Change password");
         Css.buttonStyleRed(buttonChangePassword);
         buttonChangePassword.setPrefHeight(40);
-        buttonChangePassword.setPrefWidth(150);
+        buttonChangePassword.setPrefWidth(180);
         gridPane.add(buttonChangePassword, 0, 3, 2, 1);
         gridPane.setHalignment(buttonChangePassword, HPos.LEFT);
 
@@ -92,22 +92,20 @@ public class MyPage extends Scenes{
         // Avatar selection
         // Select new avatar label
         Label newAvatar = new Label("Select new avatar:");
-        Css.setLabelStyle(newAvatar);
-        newAvatar.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        gridPane.add(newAvatar, 1, 1, 3, 1);
+        Css.setHeaderStyle(newAvatar);
+        gridPane.add(newAvatar, 1, 0, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
-        gridPane.setMargin(newAvatar, new Insets(0,0,0,550));
+        gridPane.setMargin(newAvatar, new Insets(115,0,0,495));
 
 
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
         avatarView.setFitWidth(360);
         avatarView.setFitHeight(360);
-        gridPane.add(avatarView, 1, 2, 3, 5);
+        gridPane.add(avatarView, 1, 0, 3, 5);
         gridPane.setHalignment(avatarView, HPos.LEFT);
         gridPane.setValignment(avatarView, VPos.TOP);
-        gridPane.setMargin(avatarView, new Insets(0, 0, 0, 450));
-
+        gridPane.setMargin(avatarView, new Insets(180, 0, 0, 440));
 
         //Add button to go left
         Button leftButton = new Button("<");
@@ -122,7 +120,7 @@ public class MyPage extends Scenes{
         gridPane.add(rightButton, 1,2, 3, 5);
         GridPane.setHalignment(rightButton, HPos.LEFT);
         gridPane.setValignment(rightButton, VPos.CENTER);
-        GridPane.setMargin(rightButton, new Insets(0,0,0,745));
+        GridPane.setMargin(rightButton, new Insets(0,0,0,755));
         super.styleSelectorButton(rightButton);
 
         // Update current avatar button
@@ -132,7 +130,7 @@ public class MyPage extends Scenes{
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
         gridPane.setHalignment(buttonChoose, HPos.LEFT);
-        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 350));
+        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 320));
 
         // Back button
         backButton = new Button("Back");
