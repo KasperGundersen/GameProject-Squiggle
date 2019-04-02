@@ -106,7 +106,7 @@ public class MainMenu extends Scenes{
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> {
-            if(ConfirmBox.display("Warning!", "Sure you want to log out?")){
+            if(ConfirmBox.display("Warning!", "Sure you want to \n log out?")){
                 logOutSystem();
             }
         });
