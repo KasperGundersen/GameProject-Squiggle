@@ -53,9 +53,8 @@ public class Results extends Scenes{
 
         for(int i = 0; i < amtPlayers; i++){
             hboxes[i] = new HBox(10);
-            images[i] = new ImageView();
+            images[i] = new ImageView(getAvatarResults(players.get(i)));
 
-            images[i].setImage(getAvatarResults());
 
             userIDLbl = new Label("User ID: " + players.get(i));
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 20));
@@ -70,8 +69,8 @@ public class Results extends Scenes{
         }
     }
 
-    private static Image getAvatarResults(){
-        int avatarID = DBConnection.getAvatarID(UserInfo.getUserID());
+    private static Image getAvatarResults(int userID){
+        int avatarID = DBConnection.getAvatarID(userID);
         Image avatar = getAvatar(avatarID);
         return avatar;
     }
