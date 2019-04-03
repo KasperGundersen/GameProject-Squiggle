@@ -37,11 +37,10 @@ public class GameLobby extends Scenes{
         borderPane.setCenter(canvas);
         borderPane.setRight(livechat);
         borderPane.setLeft(avatar);
-        BorderPane.setMargin(avatar,new Insets(43,0,12,12));
-        BorderPane.setMargin(livechat,new Insets(0,0,30,0));
-        System.out.println(avatar.getPrefHeight());
+        BorderPane.setMargin(avatar,new Insets(43,2,12,2));
+        BorderPane.setMargin(livechat,new Insets(0,2,30,2));
+        BorderPane.setMargin(canvas,new Insets(0,2,0,2));
         String url = new File("resources/SquiggleTheme.png").toURI().toString();
-
         borderPane.setStyle("-fx-background-image: url(\"" + url + "\");");
         if (drawing) {
             borderPane.setBottom(addDrawingUI());
