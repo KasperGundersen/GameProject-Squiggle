@@ -55,9 +55,11 @@ public class LiveChatComponents {
         sp.setContent(lc);
 
         tf = new TextField();
+        tf.setPrefWidth(125);
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
         Css.buttonStyleRed(btn);
+        btn.setPrefWidth(80);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);
         vb.getChildren().addAll(livechatLabel, sp,hb);
