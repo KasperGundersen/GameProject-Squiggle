@@ -136,7 +136,7 @@ public class CanvasComponents {
         HBox hb = new HBox();
 
         hb.setAlignment(Pos.CENTER);
-        canvas = new Canvas(WIDTH, HEIGHT);
+        canvas = new Canvas(WIDTH-20, HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(color);
         gc.fillRect(0,0,WIDTH, HEIGHT);
@@ -156,7 +156,6 @@ public class CanvasComponents {
         }else{
             setImage();
         }
-
         //////////////////////////////////////////////
         return hb;
     }

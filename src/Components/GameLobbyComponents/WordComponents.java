@@ -14,6 +14,7 @@ public class WordComponents {
         HBox hb = new HBox();
         Label wordLabel = new Label("Word: " + showWord());
         wordLabel.setFont(new Font(20));
+        wordLabel.setStyle("-fx-text-fill: white");
         hb.getChildren().add(wordLabel);
         return hb;
     }

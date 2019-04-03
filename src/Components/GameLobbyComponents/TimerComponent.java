@@ -43,6 +43,7 @@ public class TimerComponent {
         VBox vb = new VBox();
         countDown = new Label("Remaining time: " + timeRemaining);
         countDown.setFont(new Font(20));
+        countDown.setStyle("-fx-text-fill: white");
         vb.getChildren().add(countDown);
         return vb;
     }

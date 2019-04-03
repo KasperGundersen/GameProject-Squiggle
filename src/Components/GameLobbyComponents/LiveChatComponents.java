@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -44,13 +45,14 @@ public class LiveChatComponents {
         VBox vb = new VBox();
         Label livechatLabel = new Label("Live chat:");
         livechatLabel.setFont(new Font(20));
+        livechatLabel.setStyle("-fx-text-fill: white");
         livechatLabel.setPadding(new Insets(0,130, 0, 0));
         //livechatLabel.setAlignment(Pos.TOP_LEFT);
         sp = new ScrollPane();
+        sp.setPrefHeight(423);
+        sp.setFitToWidth(true);
         Text lc = new Text();
         sp.setContent(lc);
-        sp.setFitToWidth(true);
-        sp.setFitToHeight(true);
 
         tf = new TextField();
         Button btn = new Button("enter");
