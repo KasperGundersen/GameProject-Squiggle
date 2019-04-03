@@ -3,6 +3,7 @@ package Scenes;
 import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -21,6 +22,7 @@ public class Results extends Scenes{
     private static ArrayList<Integer> players = DBConnection.getPlayersList();
     private static ArrayList<Integer> guesses = DBConnection.getGuessesList();
     private static ArrayList<String> names = getNamesFromID();
+    private static Button mmBtn;
 
 
     public Results(double WIDTH, double HEIGHT){
@@ -35,6 +37,7 @@ public class Results extends Scenes{
         gp.setHalignment(header, HPos.CENTER);
         gp.setValignment(header, VPos.CENTER);
         gp.setGridLinesVisible(false);
+
 
 
         HBox hboxes[] = new HBox[players.size()];
@@ -61,7 +64,15 @@ public class Results extends Scenes{
             gp.setHalignment(hboxes[i], HPos.CENTER);
             gp.setValignment(hboxes[i], VPos.CENTER);
             gp.add(images[i], 0, i+1, 1, 1);
+
+
         }
+        mmBtn = new Button("Main menu");
+        gp.add(mmBtn, 1, 5, 1, 1);
+        mmBtn.setOnAction(e -> {
+            MainScene.setScene(MainScene.mm);
+            MainScene.mp = null;
+        });
     }
 
     public static ArrayList<String> getNamesFromID(){
