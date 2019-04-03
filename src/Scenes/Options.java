@@ -38,7 +38,11 @@ public class Options extends Scenes {
         Label musicLabel = new Label("Music");
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
-        musicCheckBox.setSelected(true);
+        if (Music.audio.isPlaying()) {
+            musicCheckBox.setSelected(true);
+        } else {
+            musicCheckBox.setSelected(false);
+        }
         grid.add(musicCheckBox, 1,3);
         musicCheckBox.setOnAction(e -> {
             if (musicCheckBox.isSelected()) {
