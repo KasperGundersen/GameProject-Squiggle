@@ -80,6 +80,30 @@ public class DBConnection {
         return players;
     }
 
+    public static ArrayList<String> fromIDtoName(ArrayList<Integer> IDs){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        String query;
+        ArrayList<String> nameList = new ArrayList<>();
+        try{
+            con = HikariCP.getCon();
+            for(int i = 0; i < IDs.size(); i++){
+                query = "select userName from USERS where userID=" + IDs.get(i);
+                prepStmt = con.prepareStatement(query);
+                res = prepStmt.executeQuery();
+                if(res.next()){
+                    nameList.add(res.getString("userNames"));
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+            return nameList;
+        }
+    }
+
     public static ArrayList<Integer> getGuessesList(){
         Connection con = null;
         PreparedStatement prepStmt = null;
