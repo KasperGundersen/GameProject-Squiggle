@@ -139,6 +139,7 @@ public class MainMenu extends Scenes{
         MainScene.setScene(MainScene.li);
         MainScene.mm = null;
         DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
+        Music.stopMusic();
     }
 }
 

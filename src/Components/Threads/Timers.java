@@ -68,6 +68,9 @@ public class Timers {
             }
         };
         heartBeat.schedule(task, 0, +1000);
+        if (!start) {
+            task.cancel();
+        }
     }
 
     public static void stopHeartBeat() {
