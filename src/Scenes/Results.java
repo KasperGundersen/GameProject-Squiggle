@@ -70,6 +70,8 @@ public class Results extends Scenes{
 
             hboxes[i].getChildren().addAll(userIDLbl, pointsLbl, guessesLbl);
             gp.add(hboxes[i], 1, i+1, 1, 1);
+            gp.setHalignment(hboxes[i], HPos.CENTER);
+            gp.setValignment(hboxes[i], VPos.CENTER);
             gp.add(images[i], 0, i+1, 1, 1);
         }
     }
