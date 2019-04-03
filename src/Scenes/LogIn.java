@@ -1,24 +1,18 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Threads.Music;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 import java.io.File;
 
 import static css.Css.toolTip;
@@ -137,7 +131,7 @@ public class LogIn extends Scenes {
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());
-       // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+        // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su);

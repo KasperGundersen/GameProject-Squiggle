@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Threads.Music;
 import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -34,7 +35,15 @@ public class Options extends Scenes {
         Label musicLabel = new Label("Music");
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
+        musicCheckBox.setSelected(true);
         grid.add(musicCheckBox, 1,3);
+        musicCheckBox.setOnAction(e -> {
+            if (musicCheckBox.isSelected()) {
+                Music.playMusic();
+            } else {
+                Music.stopMusic();
+            }
+        });
 
 
         Button submitButton = new Button("Submit");

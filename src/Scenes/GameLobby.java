@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
+import Components.Threads.Music;
 import Components.Threads.Timers;
 import css.Css;
 import javafx.scene.Scene;
@@ -26,7 +27,6 @@ public class GameLobby extends Scenes{
         bp = new BorderPane();
         setSc(new Scene(bp, WIDTH, HEIGHT));
         addUIControls(bp, drawing);
-        Timers.playMusic();
     }
 
     private void addUIControls(BorderPane borderPane, boolean drawing){
