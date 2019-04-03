@@ -65,7 +65,6 @@ public class Results extends Scenes{
             gp.setValignment(hboxes[i], VPos.CENTER);
             gp.add(images[i], 0, i+1, 1, 1);
 
-
         }
         mmBtn = new Button("Main menu");
         gp.add(mmBtn, 1, 5, 1, 1);
