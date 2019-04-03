@@ -156,7 +156,6 @@ public class CanvasComponents {
         }else{
             setImage();
         }
-
         //////////////////////////////////////////////
         return hb;
     }
