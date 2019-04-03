@@ -5,7 +5,10 @@ import Components.GameLobbyComponents.GameLogicComponents;
 import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
+import javafx.concurrent.Task;
+import javafx.scene.media.AudioClip;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,6 +17,7 @@ import static Components.GameLobbyComponents.CanvasComponents.makeDrawable;
 import static Components.GameLobbyComponents.CanvasComponents.updateImage;
 import static Components.GameLobbyComponents.TimerComponent.setTimerText;
 import static Components.GameLobbyComponents.TimerComponent.timeRemaining;
+import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 public class Timers {
 
@@ -57,6 +61,7 @@ public class Timers {
                                 PointSystem.setPointsDrawer();
                                 DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
                             }
+
                             GameLogicComponents.incrementRoundCounter();
                             GameLogicComponents.reset();
                             readyReset = false;
@@ -80,5 +85,24 @@ public class Timers {
             heartBeat.cancel();
             heartBeat.purge();
         }
+    }
+    public static void playMusic() {
+        final Task task = new Task() {
+
+            @Override
+            protected Object call() throws Exception {
+                System.out.println("Playing music");
+                int s = INDEFINITE;
+                //AudioClip audio = new AudioClip(getClass().getResource("resources/music/music.wav").toExternalForm());
+                File file = new File("resources/music/music.wav");
+                AudioClip audio = new AudioClip(file.toURI().toString());
+                audio.setVolume(1.5f);
+                audio.setCycleCount(s);
+                audio.play();
+                return null;
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 }

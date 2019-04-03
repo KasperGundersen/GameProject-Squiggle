@@ -64,16 +64,26 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
-            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawing
+            boolean playertype = UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound();
+                if (!(playertype)) { //Guesser
+                    if (!(UserInfo.getGuessedCorrectly()) && checkWord(text)) { //If player has not answered correctly yet
+                        DBConnection.setCorrectGuess(UserInfo.getUserID());
+                        UserInfo.setGuessedCorrectly(true);
+                        PointSystem.setPointsGuesser();
+                        insertMessages(text);
+                    }
+                    if (!UserInfo.getGuessedCorrectly() && !(checkWord(text))) {
+                        insertMessages(text);
+                    }
+                    if (UserInfo.getGuessedCorrectly() && !(checkWord(text))) { //If user wants to write something more but has corrected correct
+                        insertMessages(text);
+                    }
+                } else {
+                    if(!(checkWord(text))) {
+                        insertMessages(text);
+                    }
+                }
 
-            }
-
-            if (!(UserInfo.getGuessedCorrectly())) { //If player has not answered correctly yet
-                insertMessages(text);
-            }
-            if (UserInfo.getGuessedCorrectly() && !(checkWord(text))) { //If user wants to write something more but has corrected correct
-                insertMessages(text);
-            }
         });
         return vb;
     }
@@ -114,11 +124,15 @@ public class LiveChatComponents {
         }
     }
 
-    /**
-     * Method that checks if guessed word is correct
-     * @param word the word guessed
-     * @return true or false depending on the answer
-     */
+    public static boolean checkWord(String word) {
+        if (word.equalsIgnoreCase(WordComponents.getWord())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+/*
     public static boolean checkWord(String word) {
         boolean correct = false;
         if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) { //Only check if user is guesser
@@ -134,7 +148,7 @@ public class LiveChatComponents {
             }
         }
         return correct;
-    }
+    }*/
 
 
     /**
