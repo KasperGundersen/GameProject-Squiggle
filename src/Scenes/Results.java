@@ -1,24 +1,15 @@
 package Scenes;
 
-import Components.GameLobbyComponents.AvatarComponents;
-import Components.Player;
-import Components.UserInfo;
 import Database.DBConnection;
-import css.Css;
-import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Results extends Scenes{
@@ -29,7 +20,7 @@ public class Results extends Scenes{
     private static ArrayList<Integer> points = DBConnection.getPointsList();
     private static ArrayList<Integer> players = DBConnection.getPlayersList();
     private static ArrayList<Integer> guesses = DBConnection.getGuessesList();
-    private static ArrayList<String> names = DBConnection.fromIDtoName(players);
+    private static ArrayList<String> names = getNamesFromID();
 
 
     public Results(double WIDTH, double HEIGHT){
@@ -46,14 +37,11 @@ public class Results extends Scenes{
         gp.setGridLinesVisible(false);
 
 
+        HBox hboxes[] = new HBox[players.size()];
+        ImageView[] images = new ImageView[players.size()];
 
-        int amtPlayers = players.size();
-
-        HBox hboxes[] = new HBox[amtPlayers];
-        ImageView[] images = new ImageView[amtPlayers];
-
-        for(int i = 0; i < amtPlayers; i++){
-            hboxes[i] = new HBox(10);
+        for(int i = 0; i < players.size(); i++){
+            hboxes[i] = new HBox(15);
             int userID = players.get(i);
             int avatarID = DBConnection.getAvatarID(userID);
             images[i] = new ImageView(getAvatar(avatarID));
@@ -74,5 +62,13 @@ public class Results extends Scenes{
             gp.setValignment(hboxes[i], VPos.CENTER);
             gp.add(images[i], 0, i+1, 1, 1);
         }
+    }
+
+    public static ArrayList<String> getNamesFromID(){
+        for(int i = 0; i < players.size(); i++){
+            String name = DBConnection.getUsername(players.get(i));
+            names.add(name);
+        }
+        return names;
     }
 }

@@ -100,8 +100,8 @@ public class DBConnection {
             e.printStackTrace();
         }finally {
             closeConnection(con, prepStmt, res);
-            return nameList;
         }
+        return nameList;
     }
 
     public static ArrayList<Integer> getGuessesList(){
@@ -468,7 +468,6 @@ public class DBConnection {
     public static void resetCorrectGuess() {
         Connection con = null;
         PreparedStatement prepStmt = null;
-        ResultSet res = null;
         try {
             con = HikariCP.getCon();
             String query = "update GAME set correctGuess = 0;";
@@ -477,7 +476,7 @@ public class DBConnection {
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt,res);
+            closeConnection(con, prepStmt,null);
         }
     }
 
