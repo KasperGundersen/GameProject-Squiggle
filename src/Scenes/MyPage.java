@@ -95,7 +95,7 @@ public class MyPage extends Scenes{
         Css.setHeaderStyle(newAvatar);
         gridPane.add(newAvatar, 1, 0, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
-        gridPane.setMargin(newAvatar, new Insets(115,0,0,495));
+        gridPane.setMargin(newAvatar, new Insets(100,0,0,495));
 
 
         //Add ImageView to show avatar
@@ -105,7 +105,7 @@ public class MyPage extends Scenes{
         gridPane.add(avatarView, 1, 0, 3, 5);
         gridPane.setHalignment(avatarView, HPos.LEFT);
         gridPane.setValignment(avatarView, VPos.TOP);
-        gridPane.setMargin(avatarView, new Insets(180, 0, 0, 440));
+        gridPane.setMargin(avatarView, new Insets(163, 0, 0, 440));
 
         //Add button to go left
         Button leftButton = new Button("<");
