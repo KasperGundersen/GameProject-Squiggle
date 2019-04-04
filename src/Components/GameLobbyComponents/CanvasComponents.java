@@ -134,14 +134,11 @@ public class CanvasComponents {
      */
     public static HBox addCanvasUI(boolean drawing){
         HBox hb = new HBox();
-
         hb.setAlignment(Pos.CENTER);
         canvas = new Canvas(WIDTH-20, HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(color);
-        gc.setFill(Color.AQUA);
-        gc.setLineWidth(4);
-        gc.strokeRect(0,0,WIDTH, HEIGHT);
+        gc.fillRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
         if(drawing) {

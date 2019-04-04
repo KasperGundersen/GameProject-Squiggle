@@ -32,6 +32,8 @@ public class Music {
         if (audio.isPlaying()) {
             audio.stop();
         }
-        task.cancel(true);
+        if (task != null) {
+            task.cancel(true);
+        }
     }
 }

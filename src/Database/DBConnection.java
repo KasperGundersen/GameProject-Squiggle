@@ -430,25 +430,6 @@ public class DBConnection {
         return -1;
     }
 
-    public static boolean deleteMessages() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "delete from CHAT";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
-            return true;
-        }catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-
-
     //Livechat methods end
 
     // Get username given userID

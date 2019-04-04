@@ -20,11 +20,12 @@ public class Timers {
 
     private static Timer heartBeat;
     private static boolean readyReset = false;
-    private static AtomicBoolean start;
+    // private static AtomicBoolean start = new AtomicBoolean();
+    private static boolean start;
 
     public static void startHeartBeat() {
-        start = new AtomicBoolean();
-        start.set(true);
+        // start.set(true);
+        start = true;
         heartBeat();
     }
 
@@ -33,7 +34,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (start.get()) {
+                if (start) {
                     if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
                         makeDrawable(CanvasComponents.getGc());
                     }
@@ -70,13 +71,14 @@ public class Timers {
             }
         };
         heartBeat.schedule(task, 0, +1000);
-        if (start.get()) {
+        if (!start) {
             task.cancel();
         }
     }
 
     public static void stopHeartBeat() {
-        start.set(false);
+        // start.set(false);
+        start = false;
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
