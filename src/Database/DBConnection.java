@@ -783,6 +783,7 @@ public class DBConnection {
                 cal1.set(Calendar.HOUR_OF_DAY, cal2.get(Calendar.HOUR_OF_DAY));
                 cal1.set(Calendar.MINUTE, cal2.get(Calendar.MINUTE));
                 cal1.set(Calendar.SECOND, cal2.get(Calendar.SECOND));
+                cal1.add(Calendar.SECOND, 3600);
                 date = cal1.getTime();
             }
             return date;

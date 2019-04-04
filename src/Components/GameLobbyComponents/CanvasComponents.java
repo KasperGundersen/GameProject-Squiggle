@@ -134,7 +134,6 @@ public class CanvasComponents {
      */
     public static HBox addCanvasUI(boolean drawing){
         HBox hb = new HBox();
-
         hb.setAlignment(Pos.CENTER);
         canvas = new Canvas(WIDTH-20, HEIGHT);
         gc = canvas.getGraphicsContext2D();
