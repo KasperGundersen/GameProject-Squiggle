@@ -18,7 +18,7 @@ import javafx.util.Duration;
  * Toast display is displayed as information for a couple of seconds
  */
 
-public final class Toast{
+public class Toast{
     private static double WIDTH, HEIGHT;
     private static Stage s;
 

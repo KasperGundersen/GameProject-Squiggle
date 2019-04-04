@@ -773,7 +773,6 @@ public class DBConnection {
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()) {
-                System.out.println(res.getTime("timer"));
                 Date time = res.getTime("timer");
                 Date date1 = res.getDate("timer");
                 Calendar cal1 = Calendar.getInstance();
@@ -786,7 +785,6 @@ public class DBConnection {
                 cal1.set(Calendar.SECOND, cal2.get(Calendar.SECOND));
                 cal1.add(Calendar.SECOND, 3600);
                 date = cal1.getTime();
-                System.out.println(date);
             }
             return date;
         } catch (SQLException e) {

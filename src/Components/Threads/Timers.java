@@ -18,7 +18,7 @@ import static Components.GameLobbyComponents.TimerComponent.timeRemaining;
 
 public class Timers {
 
-    private static Timer heartBeat;
+    public static Timer heartBeat;
     private static boolean readyReset = false;
     // private static AtomicBoolean start = new AtomicBoolean();
     private static boolean start;

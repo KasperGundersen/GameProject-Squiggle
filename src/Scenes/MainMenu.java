@@ -122,7 +122,7 @@ public class MainMenu extends Scenes{
 
     private void joinGameSystem() {
         int time = (int)((DBConnection.getDrawTimer().getTime() - (new Date().getTime())) / 1000);
-        if (time < 80 && time > 0 && DBConnection.getAmtPlayer() > 0) {
+        if (time < GameLogicComponents.gameTime * 0.84 && time > 0 && DBConnection.getAmtPlayer() > 0) {
             gameStartedLabel.setText("Game already in progress, ends in: " + time + " seconds.");
         } else {
             DBConnection.joinGame();
