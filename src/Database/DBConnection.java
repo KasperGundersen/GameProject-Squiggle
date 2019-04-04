@@ -127,7 +127,7 @@ public class DBConnection {
 
 
 
-    public static void changePassword(int userID, String hash, String salt){
+    public static boolean changePassword(int userID, String hash, String salt){
         Connection con = null;
         PreparedStatement prepStmt = null;
         try{
@@ -138,9 +138,11 @@ public class DBConnection {
             prepStmt.setString(2, salt);
             prepStmt.setInt(3, userID);
             prepStmt.executeUpdate();
+            return true;
 
         }catch(SQLException e){
             e.printStackTrace();
+            return false;
         }finally{
             closeConnection(con, prepStmt, null);
         }
