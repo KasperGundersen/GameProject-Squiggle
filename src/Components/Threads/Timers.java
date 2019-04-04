@@ -66,7 +66,7 @@ public class Timers {
                             }
 
                             Toast t = new Toast(MainScene.stage, MainScene.getWIDTH(), MainScene.getHEIGHT());
-                            t.makeText(WordComponents.getWord(),1000, 500, 500);
+                            t.makeText(WordComponents.getWord(),2000, 500, 500);
                             GameLogicComponents.incrementRoundCounter();
                             GameLogicComponents.reset();
                             readyReset = false;
