@@ -430,25 +430,6 @@ public class DBConnection {
         return -1;
     }
 
-    public static boolean deleteMessages() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "delete from CHAT";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
-            return true;
-        }catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-
-
     //Livechat methods end
 
     // Get username given userID
@@ -792,6 +773,7 @@ public class DBConnection {
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
             if (res.next()) {
+                System.out.println(res.getTime("timer"));
                 Date time = res.getTime("timer");
                 Date date1 = res.getDate("timer");
                 Calendar cal1 = Calendar.getInstance();
@@ -803,6 +785,7 @@ public class DBConnection {
                 cal1.set(Calendar.MINUTE, cal2.get(Calendar.MINUTE));
                 cal1.set(Calendar.SECOND, cal2.get(Calendar.SECOND));
                 date = cal1.getTime();
+                System.out.println(date);
             }
             return date;
         } catch (SQLException e) {

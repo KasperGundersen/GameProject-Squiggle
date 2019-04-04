@@ -140,9 +140,6 @@ public class CanvasComponents {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(color);
         gc.fillRect(0,0,WIDTH, HEIGHT);
-        gc.setFill(Color.AQUA);
-        gc.setLineWidth(4);
-        gc.strokeRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
         if(drawing) {
