@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -44,18 +45,21 @@ public class LiveChatComponents {
         VBox vb = new VBox();
         Label livechatLabel = new Label("Live chat:");
         livechatLabel.setFont(new Font(20));
+        livechatLabel.setStyle("-fx-text-fill: white");
         livechatLabel.setPadding(new Insets(0,130, 0, 0));
         //livechatLabel.setAlignment(Pos.TOP_LEFT);
         sp = new ScrollPane();
+        sp.setPrefHeight(423);
+        sp.setFitToWidth(true);
         Text lc = new Text();
         sp.setContent(lc);
-        sp.setFitToWidth(true);
-        sp.setFitToHeight(true);
 
         tf = new TextField();
+        tf.setPrefWidth(125);
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
         Css.buttonStyleRed(btn);
+        btn.setPrefWidth(80);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);
         vb.getChildren().addAll(livechatLabel, sp,hb);
@@ -64,16 +68,26 @@ public class LiveChatComponents {
 
         btn.setOnAction(e -> {
             String text = tf.getText();
-            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawing
+            boolean playertype = UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound();
+                if (!(playertype)) { //Guesser
+                    if (!(UserInfo.getGuessedCorrectly()) && checkWord(text)) { //If player has not answered correctly yet
+                        DBConnection.setCorrectGuess(UserInfo.getUserID());
+                        UserInfo.setGuessedCorrectly(true);
+                        PointSystem.setPointsGuesser();
+                        insertMessages(text);
+                    }
+                    if (!UserInfo.getGuessedCorrectly() && !(checkWord(text))) {
+                        insertMessages(text);
+                    }
+                    if (UserInfo.getGuessedCorrectly() && !(checkWord(text))) { //If user wants to write something more but has corrected correct
+                        insertMessages(text);
+                    }
+                } else {
+                    if(!(checkWord(text))) {
+                        insertMessages(text);
+                    }
+                }
 
-            }
-
-            if (!(UserInfo.getGuessedCorrectly())) { //If player has not answered correctly yet
-                insertMessages(text);
-            }
-            if (UserInfo.getGuessedCorrectly() && !(checkWord(text))) { //If user wants to write something more but has corrected correct
-                insertMessages(text);
-            }
         });
         return vb;
     }
@@ -114,11 +128,15 @@ public class LiveChatComponents {
         }
     }
 
-    /**
-     * Method that checks if guessed word is correct
-     * @param word the word guessed
-     * @return true or false depending on the answer
-     */
+    public static boolean checkWord(String word) {
+        if (word.equalsIgnoreCase(WordComponents.getWord())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+/*
     public static boolean checkWord(String word) {
         boolean correct = false;
         if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) { //Only check if user is guesser
@@ -134,7 +152,7 @@ public class LiveChatComponents {
             }
         }
         return correct;
-    }
+    }*/
 
 
     /**

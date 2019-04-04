@@ -1,5 +1,6 @@
 package Components;
 
+import Components.Threads.Music;
 import Database.DBConnection;
 import Scenes.*;
 
@@ -85,6 +86,7 @@ public class Authentication {
                 MainScene.mm = new MainMenu(WIDTH, HEIGHT);
                 MainScene.setScene(MainScene.mm);
                 DBConnection.setLoggedIn(username, 1);
+                Music.playMusic();
             } else {
                 // already logged in error
                 LogIn.setTextLoginError("User already logged in");

@@ -2,10 +2,15 @@ package Scenes;
 
 import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
+import Components.Threads.Music;
+import Components.Threads.Timers;
 import css.Css;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 
 import java.io.File;
@@ -28,9 +33,15 @@ public class GameLobby extends Scenes{
     }
 
     private void addUIControls(BorderPane borderPane, boolean drawing){
-        borderPane.setCenter(addCanvasUI(drawing));
-        borderPane.setRight(liveChatUI());
-        borderPane.setLeft(addAvatarUI());
+        HBox canvas = addCanvasUI(drawing);
+        VBox livechat = liveChatUI();
+        VBox avatar = addAvatarUI();
+        borderPane.setCenter(canvas);
+        borderPane.setRight(livechat);
+        borderPane.setLeft(avatar);
+        BorderPane.setMargin(avatar,new Insets(43,2,12,2));
+        BorderPane.setMargin(livechat,new Insets(0,2,30,2));
+        BorderPane.setMargin(canvas,new Insets(0,2,0,2));
         String url = new File("resources/SquiggleTheme.png").toURI().toString();
         borderPane.setStyle("-fx-background-image: url(\"" + url + "\");");
         if (drawing) {
