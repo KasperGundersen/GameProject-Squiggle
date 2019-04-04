@@ -93,7 +93,7 @@ public class DBConnection {
                 prepStmt = con.prepareStatement(query);
                 res = prepStmt.executeQuery();
                 if(res.next()){
-                    nameList.add(res.getString("userNames"));
+                    nameList.add(res.getString("userName"));
                 }
             }
         }catch(SQLException e){

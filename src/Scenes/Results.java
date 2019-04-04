@@ -17,11 +17,10 @@ public class Results extends Scenes{
     private static Label header;
     private static Label userIDLbl;
     private static Label pointsLbl;
-    private static Label guessesLbl;
+    private static Label placementLbl;
     private static ArrayList<Integer> points = DBConnection.getPointsList();
     private static ArrayList<Integer> players = DBConnection.getPlayersList();
-    private static ArrayList<Integer> guesses = DBConnection.getGuessesList();
-    private static ArrayList<String> names = getNamesFromID();
+    private static ArrayList<String> names = DBConnection.fromIDtoName(players);
     private static Button mmBtn;
 
 
@@ -30,7 +29,7 @@ public class Results extends Scenes{
         addUIControls(getGp());
     }
 
-    public static void addUIControls(GridPane gp){
+    public void addUIControls(GridPane gp){
         header = new Label("Results");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 48));
         gp.add(header, 1, 0, 1, 1);
@@ -56,21 +55,23 @@ public class Results extends Scenes{
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
             pointsLbl = new Label("Points: " + points.get(i));
             pointsLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-            guessesLbl = new Label("Correct guesses: " + guesses.get(i));
-            guessesLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+            placementLbl = new Label(Integer.toString(i+1));
+            placementLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 
-            hboxes[i].getChildren().addAll(userIDLbl, pointsLbl, guessesLbl);
+
+            hboxes[i].getChildren().addAll(placementLbl, userIDLbl, pointsLbl);
             gp.add(hboxes[i], 1, i+1, 1, 1);
             gp.setHalignment(hboxes[i], HPos.CENTER);
             gp.setValignment(hboxes[i], VPos.CENTER);
             gp.add(images[i], 0, i+1, 1, 1);
-
         }
+
         mmBtn = new Button("Main menu");
         gp.add(mmBtn, 1, 5, 1, 1);
         mmBtn.setOnAction(e -> {
+            MainScene.mm = new MainMenu(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mm);
-            MainScene.mp = null;
+            MainScene.rs = null;
         });
     }
 
