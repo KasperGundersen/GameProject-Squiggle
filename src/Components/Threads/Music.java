@@ -29,7 +29,11 @@ public class Music {
     }
 
     public static void stopMusic() {
-        audio.stop();
-        task.cancel(true);
+        if (audio.isPlaying()) {
+            audio.stop();
+        }
+        if (task != null) {
+            task.cancel(true);
+        }
     }
 }

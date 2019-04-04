@@ -31,7 +31,6 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        Timers.stopHeartBeat();
         Timers.startHeartBeat();
     }
 
