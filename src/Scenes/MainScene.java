@@ -18,7 +18,7 @@ public class MainScene {
     private static final double HEIGHT = 600;
     private static final double WIDTH = 1000;
 
-    private static Stage stage;
+    public static Stage stage;
 
     // Scenes
     public static Scenes li = new LogIn(WIDTH, HEIGHT);

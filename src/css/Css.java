@@ -2,10 +2,7 @@ package css;
 
 
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.io.File;
@@ -61,21 +58,20 @@ public class Css {
         label.setStyle("-fx-text-fill: #fefff3; -fx-font-size: 17px; -fx-font-weight: BOLD");
     }
 
-    public static void buttonStyle(ToggleButton button){
-        button.setStyle("\n" +
+    public static void buttonStyleRed(ToggleButton button){
+        button.setStyle("-fx-padding: 8 15 15 15;\n" +
+                "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                "    -fx-background-radius: 8;\n" +
                 "    -fx-background-color: \n" +
-                "        #9a4a7c,\n" +
-                "        linear-gradient(#f898f0 0%, #c461f8 20%, #8908ce 100%),\n" +
-                "        linear-gradient(#f898f0, #8908ce),\n" +
-                "        radial-gradient(center 50% 0%, radius 100%, rgba(248,152,240,0.9), rgb(137,8,206));\n" +
-                "    -fx-background-radius: 5,4,3,5;\n" +
-                "    -fx-background-insets: 0,1,2,0;\n" +
-                "    -fx-text-fill: white;\n" +
-                "    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );\n" +
-                "    -fx-font-family: \"Arial\";\n" +
-                "    -fx-text-fill: linear-gradient(white, #d0d0d0);\n" +
-                "    -fx-font-size: 12px;\n" +
-                "    -fx-padding: 10 20 10 20;");
+                "        linear-gradient(from 0% 93% to 0% 100%, #9a4a7c 0%, #9a4a7c 100%),\n" +
+                "        #9b119d,\n" +
+                "        #d86e3a,\n" +
+                "        radial-gradient(center 50% 50%, radius 100%, #f81de9, #c90dee);\n" +
+                "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 2,0,0,1 );\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-font-family: \"Cooper Black\";\n" +
+                "     -fx-text-fill: white;\n" +
+                "    -fx-font-size: 1.1em;");
     }
 
     public static void buttonStyleRed(Button button){
@@ -92,5 +88,22 @@ public class Css {
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
                 "    -fx-font-size: 1.1em;");
+    }
+
+    public static void buttonStyleRed(ColorPicker button){
+        button.setStyle("-fx-padding: 8 15 15 15;\n" +
+                "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
+                "    -fx-background-radius: 8;\n" +
+                "    -fx-background-color: \n" +
+                "        linear-gradient(from 0% 93% to 0% 100%, #9a4a7c 0%, #9a4a7c 100%),\n" +
+                "        #9b119d,\n" +
+                "        #d86e3a,\n" +
+                "        radial-gradient(center 50% 50%, radius 100%, #f81de9, #c90dee);\n" +
+                "    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 2,0,0,1 );\n" +
+                "    -fx-font-weight: bold;\n" +
+                "    -fx-font-family: \"Cooper Black\";\n" +
+                "     -fx-text-fill: white;\n" +
+                "    -fx-font-size: 1.1em;" +
+                "    -fx-pref-height: auto");
     }
 }
