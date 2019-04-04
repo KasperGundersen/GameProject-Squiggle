@@ -35,7 +35,7 @@ public class TimerComponent {
         Date time = DBConnection.getDrawTimer();
         Date currentTime = new Date();
         long diff = time.getTime() - currentTime.getTime();
-        timeRemaining = (int) diff / 1000;
+        timeRemaining = ((int) diff / 1000) + 3600;
         if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound() + 1) {
             timeRemaining -= 1;
         }
@@ -43,6 +43,7 @@ public class TimerComponent {
         VBox vb = new VBox();
         countDown = new Label("Remaining time: " + timeRemaining);
         countDown.setFont(new Font(20));
+        countDown.setStyle("-fx-text-fill: white");
         vb.getChildren().add(countDown);
         return vb;
     }

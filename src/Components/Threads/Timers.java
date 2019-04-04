@@ -57,6 +57,7 @@ public class Timers {
                                 PointSystem.setPointsDrawer();
                                 DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
                             }
+
                             GameLogicComponents.incrementRoundCounter();
                             GameLogicComponents.reset();
                             readyReset = false;
@@ -67,6 +68,9 @@ public class Timers {
             }
         };
         heartBeat.schedule(task, 0, +1000);
+        if (!start) {
+            task.cancel();
+        }
     }
 
     public static void stopHeartBeat() {

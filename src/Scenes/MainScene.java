@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Threads.Music;
 import Components.Threads.Timers;
 import Components.Toast;
 import Components.UserInfo;
@@ -85,6 +86,7 @@ public class MainScene {
 
     public static void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to \n exit?")){
+            Music.stopMusic();
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
             DBConnection.exitGame();
             DBConnection.setLoggedIn(LogIn.getUserName(), 0);
