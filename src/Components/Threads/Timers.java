@@ -8,6 +8,7 @@ import Components.Toast;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.MainScene;
+import javafx.concurrent.Service;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,6 +64,7 @@ public class Timers {
                                 PointSystem.setPointsDrawer();
                                 DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
                             }
+
                             Toast t = new Toast(MainScene.stage, MainScene.getWIDTH(), MainScene.getHEIGHT());
                             t.makeText(WordComponents.getWord(),1000, 500, 500);
                             GameLogicComponents.incrementRoundCounter();
