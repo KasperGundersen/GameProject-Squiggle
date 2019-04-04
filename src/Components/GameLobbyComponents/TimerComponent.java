@@ -35,7 +35,7 @@ public class TimerComponent {
         Date time = DBConnection.getDrawTimer();
         Date currentTime = new Date();
         long diff = time.getTime() - currentTime.getTime();
-        timeRemaining = ((int) diff / 1000) + 3600;
+        timeRemaining = (int) diff / 1000;
         if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound() + 1) {
             timeRemaining -= 1;
         }

@@ -8,6 +8,7 @@ import Database.DBConnection;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static Components.GameLobbyComponents.AvatarComponents.updateData;
 import static Components.GameLobbyComponents.CanvasComponents.makeDrawable;
@@ -19,10 +20,11 @@ public class Timers {
 
     private static Timer heartBeat;
     private static boolean readyReset = false;
-    private static boolean start;
+    private static AtomicBoolean start;
 
     public static void startHeartBeat() {
-        start = true;
+        start = new AtomicBoolean();
+        start.set(true);
         heartBeat();
     }
 
@@ -31,7 +33,7 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (start) {
+                if (start.get()) {
                     if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
                         makeDrawable(CanvasComponents.getGc());
                     }
@@ -68,13 +70,13 @@ public class Timers {
             }
         };
         heartBeat.schedule(task, 0, +1000);
-        if (!start) {
+        if (start.get()) {
             task.cancel();
         }
     }
 
     public static void stopHeartBeat() {
-        start = false;
+        start.set(false);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

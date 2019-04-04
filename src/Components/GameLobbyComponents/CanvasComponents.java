@@ -139,7 +139,6 @@ public class CanvasComponents {
         canvas = new Canvas(WIDTH-20, HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(color);
-        gc.fillRect(0,0,WIDTH, HEIGHT);
         gc.setFill(Color.AQUA);
         gc.setLineWidth(4);
         gc.strokeRect(0,0,WIDTH, HEIGHT);

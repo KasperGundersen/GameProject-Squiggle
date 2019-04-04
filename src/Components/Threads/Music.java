@@ -29,7 +29,9 @@ public class Music {
     }
 
     public static void stopMusic() {
-        audio.stop();
+        if (audio.isPlaying()) {
+            audio.stop();
+        }
         task.cancel(true);
     }
 }
