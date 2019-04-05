@@ -52,6 +52,7 @@ public class LiveChatComponents {
         sp.setPrefHeight(423);
         sp.setFitToWidth(true);
         Text lc = new Text();
+        lc.setWrappingWidth(sp.getWidth());
         sp.setContent(lc);
 
         tf = new TextField();
@@ -69,6 +70,7 @@ public class LiveChatComponents {
         btn.setOnAction(e -> {
             String text = tf.getText();
             boolean playertype = UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound();
+            if (text.length() <= 30) {
                 if (!(playertype)) { //Guesser
                     if (!(UserInfo.getGuessedCorrectly()) && checkWord(text)) { //If player has not answered correctly yet
                         DBConnection.setCorrectGuess(UserInfo.getUserID());
@@ -83,11 +85,11 @@ public class LiveChatComponents {
                         insertMessages(text);
                     }
                 } else {
-                    if(!(checkWord(text))) {
+                    if (!(checkWord(text))) {
                         insertMessages(text);
                     }
                 }
-
+            }
         });
         return vb;
     }
