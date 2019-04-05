@@ -3,6 +3,7 @@ package Scenes;
 import Components.Player;
 import Components.UserInfo;
 import Database.DBConnection;
+import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -32,6 +33,7 @@ public class Results extends Scenes{
     public void addUIControls(GridPane gp){
         header = new Label("Results");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 48));
+        header.setStyle("-fx-text-fill: white");
         gp.add(header, 1, 0, 1, 1);
         gp.setHalignment(header, HPos.CENTER);
         gp.setValignment(header, VPos.CENTER);
@@ -52,10 +54,13 @@ public class Results extends Scenes{
 
             userIDLbl = new Label("Player: " + players.get(i).getUsername());
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+            userIDLbl.setStyle("-fx-text-fill: white");
             pointsLbl = new Label("Points: " + players.get(i).getPoints());
             pointsLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+            pointsLbl.setStyle("-fx-text-fill: white");
             placementLbl = new Label(Integer.toString(i+1));
             placementLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+            placementLbl.setStyle("-fx-text-fill: white");
 
 
             hboxes[i].getChildren().addAll(placementLbl, userIDLbl, pointsLbl);
@@ -66,6 +71,7 @@ public class Results extends Scenes{
         }
 
         mmBtn = new Button("Main menu");
+        Css.buttonStyleRed(mmBtn);
         gp.add(mmBtn, 1, 5, 1, 1);
         mmBtn.setOnAction(e -> {
             DBConnection.exitGame();
