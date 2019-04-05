@@ -83,7 +83,6 @@ public class Timers {
                         readyReset = false;
                     }
                 }
-
             }
         };
         heartBeat.schedule(task, 0, +1000);

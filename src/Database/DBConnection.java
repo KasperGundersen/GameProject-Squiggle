@@ -4,11 +4,8 @@ package Database;
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
-import Components.Threads.Timers;
 import Components.UserInfo;
-import Scenes.GameLobby;
-import Scenes.MainMenu;
-import Scenes.MainScene;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DBConnection {
-
-    public static void changePassword(int userID, String hash, String salt){
+    public static boolean changePassword(int userID, String hash, String salt){
         Connection con = null;
         PreparedStatement prepStmt = null;
         try{
@@ -30,9 +26,11 @@ public class DBConnection {
             prepStmt.setString(2, salt);
             prepStmt.setInt(3, userID);
             prepStmt.executeUpdate();
+            return true;
 
         }catch(SQLException e){
             e.printStackTrace();
+            return false;
         }finally{
             closeConnection(con, prepStmt, null);
         }
@@ -360,7 +358,6 @@ public class DBConnection {
     public static void resetCorrectGuess() {
         Connection con = null;
         PreparedStatement prepStmt = null;
-        ResultSet res = null;
         try {
             con = HikariCP.getCon();
             String query = "update GAME set correctGuess = 0;";
@@ -369,7 +366,7 @@ public class DBConnection {
         }catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt,res);
+            closeConnection(con, prepStmt,null);
         }
     }
 

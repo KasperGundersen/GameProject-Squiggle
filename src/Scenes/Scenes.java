@@ -131,10 +131,8 @@ public abstract class Scenes {
         return counter;
     }
 
-    public Image getAvatar(int i){
+    public static Image getAvatar(int i){
         File file = new File("resources/avatars/" + i + ".jpg");
         return new Image(file.toURI().toString());
     }
-
-
 }

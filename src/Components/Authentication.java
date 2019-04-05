@@ -12,13 +12,12 @@ import java.sql.Statement;
 
 public class Authentication {
 
-    public static void changePassword(){
+    public static boolean changePassword(String newPassword){
         int userID = UserInfo.getUserID();
-        String password = MyPage.changePassword();
-        String encryptor = Encryptor.Encryptor(password, null);
+        String encryptor = Encryptor.Encryptor(newPassword, null);
         String hash = Encryptor.getHash(encryptor);
         String salt = Encryptor.getSalt(encryptor);
-        DBConnection.changePassword(userID, hash, salt);
+        return DBConnection.changePassword(userID, hash, salt);
     }
     public static boolean submit(){
         String username = SignUp.getName();

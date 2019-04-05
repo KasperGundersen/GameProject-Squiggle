@@ -3,8 +3,10 @@ package Scenes;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Database.DBConnection;
 import css.Css;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -70,5 +72,47 @@ class ConfirmBox{
         stage.showAndWait();
 
         return answer;
+    }
+
+    public static void displayWarning(String title, String message){
+        Stage stage = new Stage();
+        stage.setMinWidth(600);
+
+
+
+        Label label = new Label();
+        label.setText(message);
+        label.setTextAlignment(TextAlignment.CENTER);
+        label.setFont(Font.font("Cooper Black", FontWeight.BOLD, 22));
+        label.setStyle("-fx-text-fill: white;");
+
+        //Create to users
+        Button okBtn = new Button("Ok");
+        Css.buttonStyleRed(okBtn);
+
+        okBtn.setOnAction(e -> {
+            stage.close();
+        });
+
+        GridPane grid = new GridPane();
+        Css.setBackground(grid);
+
+        grid.setVgap(30);
+        grid.setAlignment(Pos.TOP_CENTER);
+        grid.setPadding(new Insets(20, 20, 20, 20));
+        grid.add(label, 0,0,2,1);
+        grid.add(okBtn,1,1, 2, 2);
+        grid.setHalignment(okBtn, HPos.CENTER);
+        grid.setValignment(okBtn, VPos.CENTER);
+
+
+        Scene scene = new Scene(grid);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle(title);
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
+        stage.setScene(scene);
+        stage.showAndWait();
     }
 }
