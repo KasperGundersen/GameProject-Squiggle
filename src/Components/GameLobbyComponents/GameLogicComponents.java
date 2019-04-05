@@ -50,15 +50,6 @@ public class GameLogicComponents {
      * Sets new drawer, or quits game if everyone has drawn.
      */
     public static void reset() {
-        boolean ok = false;
-        while (!ok && currentRound <= DBConnection.getAmtPlayer()) {
-            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
-                ok = true;
-            } else {
-                GameLogicComponents.incrementRoundCounter();
-            }
-        }
-
         if (currentRound <= DBConnection.getAmtPlayer()) {
             Service<Void> service = new Service<Void>() {
                 @Override

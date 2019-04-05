@@ -70,6 +70,14 @@ public class Timers {
                         Toast t = new Toast(MainScene.stage, MainScene.getWIDTH(), MainScene.getHEIGHT());
                         t.makeText(WordComponents.getWord(),2000, 500, 500);
                         GameLogicComponents.incrementRoundCounter();
+
+                        while (GameLogicComponents.getCurrentRound() <= DBConnection.getAmtPlayer()) {
+                            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
+                                break;
+                            } else {
+                                GameLogicComponents.incrementRoundCounter();
+                            }
+                        }
                         GameLogicComponents.reset();
                         readyReset = false;
                     }
