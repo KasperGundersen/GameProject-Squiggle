@@ -53,8 +53,8 @@ public class CanvasComponents {
 
         draw = new ToggleButton("Draw");
         erase = new ToggleButton("Erase");
-        Css.buttonStyle(draw);
-        Css.buttonStyle(erase);
+        Css.buttonStyleRed(draw);
+        Css.buttonStyleRed(erase);
         ToggleButton[] tools = {draw, erase};
         ToggleGroup tgTools = new ToggleGroup();
         for (ToggleButton tool : tools) {
@@ -68,10 +68,10 @@ public class CanvasComponents {
         ToggleButton lineWidth2 = new ToggleButton("2");
         ToggleButton lineWidth3 = new ToggleButton("3");
         ToggleButton lineWidth4 = new ToggleButton("4");
-        Css.buttonStyle(lineWidth1);
-        Css.buttonStyle(lineWidth2);
-        Css.buttonStyle(lineWidth3);
-        Css.buttonStyle(lineWidth4);
+        Css.buttonStyleRed(lineWidth1);
+        Css.buttonStyleRed(lineWidth2);
+        Css.buttonStyleRed(lineWidth3);
+        Css.buttonStyleRed(lineWidth4);
         ToggleButton[] penSize = {lineWidth1, lineWidth2, lineWidth3, lineWidth4};
         ToggleGroup tgLineWidth = new ToggleGroup();
         for (ToggleButton tb : penSize) {
@@ -83,7 +83,7 @@ public class CanvasComponents {
 
         cp = new ColorPicker();
         cp.setValue(Color.BLACK);
-
+        Css.buttonStyleRed(cp);
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
@@ -137,7 +137,7 @@ public class CanvasComponents {
         hb.setAlignment(Pos.CENTER);
         canvas = new Canvas(WIDTH-20, HEIGHT);
         gc = canvas.getGraphicsContext2D();
-        gc.setFill(color);
+        gc.setFill(Color.WHITE);
         gc.fillRect(0,0,WIDTH, HEIGHT);
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
