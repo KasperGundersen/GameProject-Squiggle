@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import static Components.Threads.Timers.*;
@@ -30,9 +31,7 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        if (heartBeat != null) {
-            stopHeartBeat();
-        }
+        stopHeartBeat();
         Timers.startHeartBeat();
     }
 
@@ -41,6 +40,10 @@ public class GameLogicComponents {
      */
     public static void incrementRoundCounter() {
         currentRound++;
+    }
+
+    public static void setCurrentRound(int currentRound) {
+        GameLogicComponents.currentRound = currentRound;
     }
 
     /**
@@ -70,6 +73,11 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
+                                        if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
+                                            while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime())) {
+                                                System.out.println((int)(DBConnection.getDrawTimer().getTime() - new Date().getTime() / 1000));
+                                            }
+                                        }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
                                         LiveChatComponents.cleanChat();
                                         GameLogicComponents.setPrivileges();
@@ -94,6 +102,7 @@ public class GameLogicComponents {
             MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.mm);
             MainScene.gl = null;
+            setCurrentRound(1);
         }
     }
 }

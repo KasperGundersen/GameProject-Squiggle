@@ -24,12 +24,12 @@ public class Timers {
 
     public static Timer heartBeat;
     private static boolean readyReset = false;
-    // private static AtomicBoolean start = new AtomicBoolean();
-    private static boolean start;
+    private static AtomicBoolean start = new AtomicBoolean();
+    // private static boolean start;
 
     public static void startHeartBeat() {
-        // start.set(true);
-        start = true;
+        start.set(true);
+        // start = true;
         heartBeat();
     }
 
@@ -38,58 +38,54 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (start) {
-                    if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
-                        makeDrawable(CanvasComponents.getGc());
+                if (!start.get()) {
+                    return;
+                }
+                if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
+                    makeDrawable(CanvasComponents.getGc());
+                }
+                if (timeRemaining % 5 == 0) {
+                    updateData();
+                }
+                if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
+                    updateImage();
+                } else {
+                    CanvasComponents.setImage();
+                }
+                if (timeRemaining > Math.round(GameLogicComponents.gameTime * 0.84)) {
+                    if (!readyReset) {
+                        readyReset = true;
                     }
-                    if (timeRemaining % 5 == 0) {
-                        updateData();
-                    }
-                    if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-                        updateImage();
-                    } else {
-                        CanvasComponents.setImage();
-                    }
-                    if (timeRemaining > Math.round(GameLogicComponents.gameTime * 0.84)) {
-                        if (!readyReset) {
-                            readyReset = true;
+                    setTimerText(false);
+                } else if (timeRemaining > 0) {
+                    setTimerText(true);
+                } else {
+                    if (readyReset) {
+                        //Her blir amtCorrect av en eller annen grunn resettet
+                        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawer
+                            PointSystem.setPointsDrawer();
+                            DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
                         }
-                        setTimerText(false);
-                    } else if (timeRemaining > 0) {
-                        setTimerText(true);
-                    } else {
-                        if (readyReset) {
-                            //Her blir amtCorrect av en eller annen grunn resettet
-                            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawer
-                                PointSystem.setPointsDrawer();
-                                DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
-                            }
 
-                            Toast t = new Toast(MainScene.stage, MainScene.getWIDTH(), MainScene.getHEIGHT());
-                            t.makeText(WordComponents.getWord(),2000, 500, 500);
-                            GameLogicComponents.incrementRoundCounter();
-                            GameLogicComponents.reset();
-                            readyReset = false;
-                        }
+                        Toast t = new Toast(MainScene.stage, MainScene.getWIDTH(), MainScene.getHEIGHT());
+                        t.makeText(WordComponents.getWord(),2000, 500, 500);
+                        GameLogicComponents.incrementRoundCounter();
+                        GameLogicComponents.reset();
+                        readyReset = false;
                     }
                 }
 
             }
         };
         heartBeat.schedule(task, 0, +1000);
-        if (!start) {
+        if (!start.get()) {
             task.cancel();
         }
     }
 
     public static void stopHeartBeat() {
-        // start.set(false);
-        start = false;
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        start.set(false);
+        // start = false;
         if (heartBeat != null) {
             heartBeat.cancel();
             heartBeat.purge();

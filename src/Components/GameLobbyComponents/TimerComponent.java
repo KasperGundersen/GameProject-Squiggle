@@ -36,9 +36,11 @@ public class TimerComponent {
         Date currentTime = new Date();
         long diff = time.getTime() - currentTime.getTime();
         timeRemaining = (int) diff / 1000;
+        /*
         if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound() + 1) {
             timeRemaining -= 3;
         }
+        */
 
         VBox vb = new VBox();
         countDown = new Label("Remaining time: " + timeRemaining);

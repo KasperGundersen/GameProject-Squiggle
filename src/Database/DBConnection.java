@@ -663,6 +663,7 @@ public class DBConnection {
 
     // Uploads image to database
     public static void uploadImage(byte[] blob, String word) {
+        System.out.println("Uploads image");
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
