@@ -51,7 +51,7 @@ public class GameLogicComponents {
      * Sets new drawer, or quits game if everyone has drawn.
      */
     public static void reset() {
-        if (currentRound <= DBConnection.getAmtPlayer()) {
+        if (currentRound <= DBConnection.getMaxRound()) {
             Service<Void> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {
@@ -66,7 +66,6 @@ public class GameLogicComponents {
                                     try{
                                         if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
                                             while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime())) {
-                                                System.out.println((int)(DBConnection.getDrawTimer().getTime() - new Date().getTime() / 1000));
                                             }
                                         }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());

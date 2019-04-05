@@ -72,8 +72,7 @@ public class Timers {
                         GameLogicComponents.incrementRoundCounter();
 
                         while (GameLogicComponents.getCurrentRound() <= DBConnection.getMaxRound()) {
-                            System.out.println(DBConnection.playerToDraw(GameLogicComponents.getCurrentRound()));
-                            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
+                           if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
                                 break;
                             } else {
                                 GameLogicComponents.incrementRoundCounter();
