@@ -142,7 +142,6 @@ public class CanvasComponents {
         gc.setLineWidth(1);
         hb.getChildren().addAll(canvas);
         if(drawing) {
-            System.out.println("uploads image");
             WritableImage wim = canvasSnapshot(canvas);
             byte[] blob = imageToByte(wim);
             DBConnection.setRandomWord();

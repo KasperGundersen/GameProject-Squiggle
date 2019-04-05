@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import static Components.Threads.Timers.*;
@@ -31,9 +32,7 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        if (heartBeat != null) {
-            stopHeartBeat();
-        }
+        stopHeartBeat();
         Timers.startHeartBeat();
     }
 
@@ -44,20 +43,14 @@ public class GameLogicComponents {
         currentRound++;
     }
 
+    public static void setCurrentRound(int currentRound) {
+        GameLogicComponents.currentRound = currentRound;
+    }
+
     /**
      * Sets new drawer, or quits game if everyone has drawn.
      */
     public static void reset() {
-        /*
-        boolean ok = false;
-        while (!ok && currentRound <= DBConnection.getAmtPlayer()) {
-            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
-                ok = true;
-            } else {
-                GameLogicComponents.incrementRoundCounter();
-            }
-        }
-        */
         if (currentRound <= DBConnection.getAmtPlayer()) {
             Service<Void> service = new Service<Void>() {
                 @Override
@@ -71,6 +64,11 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
+                                        if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
+                                            while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime())) {
+                                                System.out.println((int)(DBConnection.getDrawTimer().getTime() - new Date().getTime() / 1000));
+                                            }
+                                        }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
                                         LiveChatComponents.cleanChat();
                                         GameLogicComponents.setPrivileges();
@@ -90,11 +88,12 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
+            DBConnection.exitGame();
+            stopHeartBeat();
             MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.rs);
             MainScene.gl = null;
-            DBConnection.exitGame();
-            stopHeartBeat();
+            setCurrentRound(1);
         }
     }
 }
