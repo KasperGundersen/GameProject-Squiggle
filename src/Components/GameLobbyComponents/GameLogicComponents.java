@@ -88,7 +88,6 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
-            DBConnection.exitGame();
             stopHeartBeat();
             MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.rs);

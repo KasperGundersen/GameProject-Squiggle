@@ -68,6 +68,7 @@ public class Results extends Scenes{
         mmBtn = new Button("Main menu");
         gp.add(mmBtn, 1, 5, 1, 1);
         mmBtn.setOnAction(e -> {
+            DBConnection.exitGame();
             MainScene.mm = new MainMenu(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mm);
             MainScene.rs = null;
