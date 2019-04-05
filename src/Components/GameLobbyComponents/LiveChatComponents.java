@@ -94,6 +94,10 @@ public class LiveChatComponents {
         return vb;
     }
 
+    /**
+     * Method which inserts messages to database and clears the textfield
+     * @param text
+     */
     private static void insertMessages(String text) {
         DBConnection.insertMessage(text);
         tf.clear();
@@ -130,6 +134,11 @@ public class LiveChatComponents {
         }
     }
 
+    /**
+     * Checks whether a word is correct or not
+     * @param word guessed word
+     * @return true or false depending on word
+     */
     public static boolean checkWord(String word) {
         if (word.equalsIgnoreCase(WordComponents.getWord())) {
             return true;
@@ -137,25 +146,6 @@ public class LiveChatComponents {
             return false;
         }
     }
-
-/*
-    public static boolean checkWord(String word) {
-        boolean correct = false;
-        if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) { //Only check if user is guesser
-            if (word.equalsIgnoreCase(WordComponents.getWord())) {
-                correct = true;
-                PointSystem.setPointsGuesser();
-                DBConnection.setCorrectGuess(UserInfo.getUserID());
-                UserInfo.setGuessedCorrectly(true);
-                return correct;
-            } else {
-                correct = false;
-                return correct;
-            }
-        }
-        return correct;
-    }*/
-
 
     /**
      * Method that cleans the chat. Used when the game is reset
