@@ -189,6 +189,7 @@ public class MyPage extends Scenes{
 
         Label header = new Label("Change password");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        Css.setText(header);
         newPassword = new PasswordField();
         newPassword.setPrefHeight(40);
         newPassword.setPrefWidth(200);
@@ -201,9 +202,11 @@ public class MyPage extends Scenes{
         Button save = new Button("Save change");
         save.setPrefHeight(40);
         save.setPrefWidth(200);
+        Css.buttonStyleRed(save);
         save.setOnAction(e -> {
-            Authentication.changePassword();
-            window.close();
+            if(changePassword()){
+                window.close();
+            }
         });
 
         GridPane grid = new GridPane();
@@ -215,20 +218,24 @@ public class MyPage extends Scenes{
         grid.add(save, 0, 3);
         grid.setHalignment(save, HPos.CENTER);
 
+        Css.setBackground(grid);
         Scene scene = new Scene(grid, 300, 300);
         window.setScene(scene);
         window.showAndWait();
     }
 
-    public static String changePassword(){
-        if(newPassword.getText() == null || repeatPassword.getText() == null){
-            ConfirmBox.display("Warning", "You have to enter a new password");
-            return null;
+    public static boolean changePassword(){
+        if(newPassword.getText().equals("") || repeatPassword.getText().equals("")){
+            ConfirmBox.displayWarning("Warning", "You have to enter a new password");
+            return false;
+        }else if(!(newPassword.getText().equals(repeatPassword.getText()))){
+            ConfirmBox.displayWarning("Warning", "Your passwords have to be equal");
+            return false;
+        }else{
+            if(Authentication.changePassword(newPassword.getText())){
+                ConfirmBox.displayWarning("Success", "Your password was successfully changed!");
+            }
         }
-        if(!(newPassword.getText().equals(repeatPassword.getText()))){
-            ConfirmBox.display("Warning", "Your password have to be equal");
-            return null;
-        }
-        return newPassword.getText();
+        return true;
     }
 }
