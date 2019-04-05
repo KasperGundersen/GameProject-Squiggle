@@ -17,11 +17,7 @@ public class Authentication {
         String encryptor = Encryptor.Encryptor(newPassword, null);
         String hash = Encryptor.getHash(encryptor);
         String salt = Encryptor.getSalt(encryptor);
-        if(DBConnection.changePassword(userID, hash, salt)){
-            return true;
-        }else{
-            return false;
-        }
+        return DBConnection.changePassword(userID, hash, salt);
     }
     public static boolean submit(){
         String username = SignUp.getName();
