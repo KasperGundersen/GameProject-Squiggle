@@ -1,5 +1,7 @@
 package Scenes;
 
+import Components.Player;
+import Components.UserInfo;
 import Database.DBConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -18,9 +20,7 @@ public class Results extends Scenes{
     private static Label userIDLbl;
     private static Label pointsLbl;
     private static Label placementLbl;
-    private static ArrayList<Integer> points = DBConnection.getPointsList();
-    private static ArrayList<Integer> players = DBConnection.getPlayersList();
-    private static ArrayList<String> names = DBConnection.fromIDtoName(players);
+    private static ArrayList<Player> players = DBConnection.getPlayers();
     private static Button mmBtn;
 
 
@@ -44,16 +44,15 @@ public class Results extends Scenes{
 
         for(int i = 0; i < players.size(); i++){
             hboxes[i] = new HBox(15);
-            int userID = players.get(i);
-            int avatarID = DBConnection.getAvatarID(userID);
+            int avatarID = players.get(i).getAvatarID();
             images[i] = new ImageView(getAvatar(avatarID));
             images[i].setFitWidth(50);
             images[i].setFitHeight(50);
 
 
-            userIDLbl = new Label("Player: " + names.get(i));
+            userIDLbl = new Label("Player: " + players.get(i).getUsername());
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-            pointsLbl = new Label("Points: " + points.get(i));
+            pointsLbl = new Label("Points: " + players.get(i).getPoints());
             pointsLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
             placementLbl = new Label(Integer.toString(i+1));
             placementLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -73,13 +72,5 @@ public class Results extends Scenes{
             MainScene.setScene(MainScene.mm);
             MainScene.rs = null;
         });
-    }
-
-    public static ArrayList<String> getNamesFromID(){
-        for(int i = 0; i < players.size(); i++){
-            String name = DBConnection.getUsername(players.get(i));
-            names.add(name);
-        }
-        return names;
     }
 }
