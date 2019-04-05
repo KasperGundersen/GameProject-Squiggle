@@ -71,7 +71,8 @@ public class Timers {
                         t.makeText(WordComponents.getWord(),2000, 500, 500);
                         GameLogicComponents.incrementRoundCounter();
 
-                        while (GameLogicComponents.getCurrentRound() <= DBConnection.getAmtPlayer()) {
+                        while (GameLogicComponents.getCurrentRound() <= DBConnection.getMaxRound()) {
+                            System.out.println(DBConnection.playerToDraw(GameLogicComponents.getCurrentRound()));
                             if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
                                 break;
                             } else {

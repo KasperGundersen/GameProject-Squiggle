@@ -819,6 +819,8 @@ public class DBConnection {
             UserInfo.setDrawRound(currentMax);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
         }
 
     }
@@ -839,7 +841,30 @@ public class DBConnection {
             return false;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
         }
         return false;
+    }
+
+    public static int getMaxRound() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT MAX(playerNr) AS maxNr FROM GAME;";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("maxNr");
+            }
+            return -1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
     }
 }
