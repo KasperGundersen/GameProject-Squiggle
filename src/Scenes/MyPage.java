@@ -132,7 +132,7 @@ public class MyPage extends Scenes{
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
         gridPane.setHalignment(buttonChoose, HPos.LEFT);
-        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 320));
+        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 120));
 
         // Back button
         backButton = new Button("Back");
