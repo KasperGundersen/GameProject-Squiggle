@@ -48,6 +48,12 @@ public class Results extends Scenes{
 
 
         Collections.sort(players);
+
+        if (players.get(0).getUserID() == UserInfo.getUserID()) {
+            DBConnection.updateStats(true);
+        } else {
+            DBConnection.updateStats(false);
+        }
         HBox hboxes[] = new HBox[players.size()];
         ImageView[] images = new ImageView[players.size()];
 

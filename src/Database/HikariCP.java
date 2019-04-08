@@ -2,8 +2,6 @@ package Database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -26,6 +24,11 @@ public class HikariCP {
         ds = new HikariDataSource(config);
     }
 
+    /**
+     * Gets a connection from the HikariCP connection pool
+     * @return Connection Connection to the database
+     * @throws SQLException
+     */
     public static Connection getCon() throws SQLException {
         return ds.getConnection();
     }

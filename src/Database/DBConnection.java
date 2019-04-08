@@ -75,13 +75,25 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
+            String query = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, userName);
             prepStmt.setString(2, hash);
             prepStmt.setString(3, salt);
             prepStmt.setString(4, userEmail);
             prepStmt.setInt(5, avatarID);
+            prepStmt.executeUpdate();
+
+            query = "INSERT INTO STATS VALUES(LAST_INSERT_ID(), 0, 0)";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "COMMIT;";
+            prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch (SQLSyntaxErrorException e) {
             e.printStackTrace();
@@ -91,6 +103,7 @@ public class DBConnection {
             closeConnection(con, prepStmt, null);
         }
     }
+
 
     /**
      * Method which looks for input in the given column in the database
