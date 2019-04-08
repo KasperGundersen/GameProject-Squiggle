@@ -17,7 +17,7 @@ public class Words {
      * @param args Main method
      */
     public static void main(String[] args) {
-        String wordlist = "C:\\Users\\Zaim Imran\\Documents\\Git\\squiggle\\src\\Database\\wordlist.txt";
+        String wordlist = "src/Database/wordlist.txt";
         try {
             FileReader readConnection = new FileReader(wordlist);
             BufferedReader readWordlist = new BufferedReader(readConnection);
