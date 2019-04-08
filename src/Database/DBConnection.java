@@ -1007,6 +1007,10 @@ public class DBConnection {
         return -1;
     }
 
+    /**
+     * Method that updates the amount of games won and played in the table STATS
+     * @param won checks if a player has won the game
+     */
     public static void updateStats(boolean won){
         Connection con = null;
         PreparedStatement prepStmt = null;
