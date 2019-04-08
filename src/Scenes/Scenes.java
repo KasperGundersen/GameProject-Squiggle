@@ -21,6 +21,9 @@ import java.net.URL;
 
 import static css.Css.selectorButton;
 
+/**
+ * Abstract class that makes the foundation of all the scenes
+ */
 public abstract class Scenes {
 
     //Object variables
@@ -42,36 +45,65 @@ public abstract class Scenes {
         this.HEIGHT = HEIGHT;
     }
 
-    //Getters
+    /**
+     * Method that gets the gridpane
+     * @return returns the gridpane
+     */
     public GridPane getGp() {
         return gp;
     }
-
+    /**
+     * Method that gets the Scene
+     * @return returns the Scene
+     */
     public Scene getSc(){
         return sc;
     }
 
+    /**
+     * Method that sets the scene
+     * @param sc The scene that will be set
+     */
     public void setSc(Scene sc) {
         this.sc = sc;
     }
 
+    /**
+     * MEthod that sets the children in the oberservable list
+     * @param newValue The value of the Observable list
+     */
     public void setChildren(ObservableList<Node> newValue) {
         this.children = newValue;
     }
 
+    /**
+     * Method that gets the height of the scene
+     * @return returns the height
+     */
     double getHEIGHT() {
         return HEIGHT;
     }
 
+    /**
+     * Method that gets the width of the scene
+     * @return returns the width
+     */
     double getWIDTH() {
         return WIDTH;
     }
 
+    /**
+     * Method that gets the max number of avatars in the resources
+     * @return returns the max number
+     */
     public int getMax() {
         return max;
     }
 
-    //Standard GridPane formation
+    /**
+     * Method that creates the Standard GridPane formation
+     * @return returns the GridPane
+     */
     private GridPane createGridPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
@@ -102,17 +134,7 @@ public abstract class Scenes {
         Background background = new Background(backgroundimage);
         gridPane.setBackground(background);
 
-
         return gridPane;
-    }
-
-    void errorFont(Label l){
-        l.setTextFill(Color.RED);
-        l.setFont(Font.font(
-                "Arial",
-                FontPosture.ITALIC,
-                Font.getDefault().getSize()
-        ));
     }
 
     void styleSelectorButton(Button b){

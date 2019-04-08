@@ -78,8 +78,7 @@ public class SignUp extends Scenes {
         errorUserAndMail = new Label("Username or email already taken");
         gridPane.add(errorUserAndMail,1,0,2,2);
         errorUserAndMail.setVisible(false);
-        super.errorFont(errorUserAndMail);
-
+        Css.errorFont(errorUserAndMail);
         // Add Name Label
         Label nameLabel = new Label("Username : ");
         gridPane.add(nameLabel, 0,1);
@@ -95,7 +94,7 @@ public class SignUp extends Scenes {
         emptyUser = new Label("Fill in username");
         gridPane.add(emptyUser,2,1,2,1);
         emptyUser.setVisible(false);
-        super.errorFont(emptyUser);
+        Css.errorFont(emptyUser);
 
         // Add Email Label
         Label emailLabel = new Label("Email : ");
@@ -111,9 +110,8 @@ public class SignUp extends Scenes {
         emptyMail = new Label("Fill in mail");
         gridPane.add(emptyMail,2,2,2,1);
         emptyMail.setVisible(false);
-        errorFont(emptyMail);
+        Css.errorFont(emptyMail);
 
-        //////////////////////////////////////////
 
         // Add Name Label
         Label avatarLabel = new Label("Avatar : ");
@@ -146,7 +144,7 @@ public class SignUp extends Scenes {
         gridPane.add(errorPassword,1,3,2,1);
         GridPane.setValignment(errorPassword, VPos.BOTTOM);
         errorPassword.setVisible(false);
-        super.errorFont(errorPassword);
+        Css.errorFont(errorPassword);
 
         // Add Password Label
         Label passwordLabel = new Label("Password : ");
@@ -163,7 +161,7 @@ public class SignUp extends Scenes {
         emptyPassword = new Label("Fill in password");
         gridPane.add(emptyPassword,2,4,2,1);
         emptyPassword.setVisible(false);
-        errorFont(emptyPassword);
+        Css.errorFont(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
@@ -290,8 +288,6 @@ public class SignUp extends Scenes {
     public static void visibleEmptyPassword(boolean b){
         emptyPassword.setVisible(b);
     }
-
-    //////////////////Getters///////////////////////////////////////////////
 
     /**
      * Gets username from userName TextField

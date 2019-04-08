@@ -4,6 +4,9 @@ package css;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 
 import java.io.File;
 
@@ -46,7 +49,7 @@ public class Css {
     public static void setLabelStyle(Label label) {
         label.setStyle("-fx-text-fill: white;" +
                 "-fx-font-size: 14;\n" +
-                "-fx-font-family: \"Cooper Black\";");
+                "-fx-font-family: \"Cooper Blackone\";");
     }
 
     public static void setBackground(GridPane grid){
@@ -105,5 +108,13 @@ public class Css {
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
                 "    -fx-font-size: 1.1em;");
+    }
+
+
+    public static void errorFont(Label label){
+        label.setStyle("-fx-font-weight: ITALIC;\n" +
+                "   -fx-font-family: \"Cooper Black\";\n" +
+                "   -fx-text-fill: white;\n" +
+                "   -fx-font-size: 17px;");
     }
 }
