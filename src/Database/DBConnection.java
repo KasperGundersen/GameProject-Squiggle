@@ -968,4 +968,85 @@ public class DBConnection {
         }
         return -1;
     }
+
+    /**
+     * Gets the amount of games played for a specific player
+     * @param uid the players userID
+     * @return amount of games played by the user
+     */
+    public static int getGamesPlayed(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesPlayed AS gplayed FROM STATS WHERE userID =?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gplayed");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Gets the amount of games won for a specific user
+     * @param uid the userID of the user
+     * @return amount of games won by the user
+     */
+    public static int getGamesWon(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesWon AS gwon FROM STATS WHERE userID = ?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gwon");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Method that updates the amount of games won and played in the table STATS
+     * @param won checks if a player has won the game
+     */
+    public static void updateStats(boolean won){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "UPDATE STATS SET gamesPlayed = gamesPlayed + 1 WHERE userID =?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            prepStmt.executeUpdate();
+            if(won){
+                query = "UPDATE STATS SET gamesWon = gamesWon + 1 WHERE userID =?;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.executeUpdate();
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
 }

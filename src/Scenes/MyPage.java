@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -133,7 +134,7 @@ public class MyPage extends Scenes{
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
         gridPane.setHalignment(buttonChoose, HPos.LEFT);
-        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 320));
+        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 120));
 
         // Back button
         backButton = new Button("Back");
@@ -142,6 +143,10 @@ public class MyPage extends Scenes{
         backButton.setPrefWidth(80);
         gridPane.add(backButton, 0, 6, 1, 1);
         gridPane.setHalignment(backButton, HPos.LEFT);
+
+        VBox winsvbox = wins();
+        gridPane.add(winsvbox, 0,1,3,3);
+        gridPane.setMargin(winsvbox, new Insets(100,0,0,215));
 
         // Button action
         buttonChangePassword.setOnAction(e -> {
@@ -249,5 +254,33 @@ public class MyPage extends Scenes{
             }
         }
         return true;
+    }
+
+    /**
+     * Method to put the games played, won and a win percentage in a VBox
+     * @return a VBox containing three labels
+     */
+    private static VBox wins(){
+
+        VBox vbox = new VBox(5);
+
+        Label gamesPlayed = new Label("Games Played: " + DBConnection.getGamesPlayed());
+        Css.setHeaderStyle(gamesPlayed);
+        Label gamesWon = new Label("Games Won: " + DBConnection.getGamesWon());
+        Css.setHeaderStyle(gamesWon);
+
+        double winPercentage;
+        double gplayed = (double)DBConnection.getGamesPlayed();
+        double gwon = (double)DBConnection.getGamesWon();
+        if(gplayed == 0){
+            winPercentage = 0;
+        }else{
+            winPercentage = (gwon/gplayed)*100;
+        }
+
+        Label winPercent = new Label("Win Percentage: " + String.format("%.0f", winPercentage) + "%");
+        Css.setHeaderStyle(winPercent);
+        vbox.getChildren().addAll(gamesPlayed, gamesWon, winPercent);
+        return vbox;
     }
 }
