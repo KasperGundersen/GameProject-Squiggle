@@ -11,8 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-
 import java.io.File;
 
 import static Components.GameLobbyComponents.AvatarComponents.addAvatarUI;
@@ -68,5 +66,4 @@ public class GameLobby extends Scenes{
         hb.getChildren().addAll(addTimerUI(), addWordUI());
         bp.setTop(hb);
     }
-
 }
