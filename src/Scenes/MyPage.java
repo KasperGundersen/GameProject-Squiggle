@@ -19,9 +19,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 
+/**
+ * Class thats creates and displays the MyPage, where you can view your avatar, and change the avatar and password
+ */
 public class MyPage extends Scenes{
     private static Button backButton;
     private static Button buttonChoose;
@@ -32,7 +34,6 @@ public class MyPage extends Scenes{
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
 
-    //Change by max
     private int avatarID = UserInfo.getAvatarID();
 
     public MyPage(double WIDTH, double HEIGHT){
@@ -40,6 +41,10 @@ public class MyPage extends Scenes{
         addUIControls(getGp());
     }
 
+    /**
+     * Method which creates the MyPage scene
+     * @param gridPane extendes a Gridpane from the MainScene
+     */
     private void addUIControls(GridPane gridPane){
         // Header image
         File file = new File("resources/logos/Logo_MyPage.png");
@@ -88,7 +93,6 @@ public class MyPage extends Scenes{
         avatarImage.setFitWidth(150);
         gridPane.setHalignment(avatarImage, HPos.LEFT);
 
-
         // Avatar selection
         // Select new avatar label
         Label newAvatar = new Label("Select new avatar:");
@@ -96,7 +100,6 @@ public class MyPage extends Scenes{
         gridPane.add(newAvatar, 1, 0, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
         gridPane.setMargin(newAvatar, new Insets(100,0,0,495));
-
 
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
@@ -154,7 +157,6 @@ public class MyPage extends Scenes{
             DBConnection.setAvatarID(UserInfo.getUserID(), avatarID);
         });
 
-
         rightButton.setOnAction(e -> {
             avatarID = super.loopAvatar(avatarID,1, 1,getMax());
             avatarView.setImage(super.getAvatar(avatarID));
@@ -171,15 +173,21 @@ public class MyPage extends Scenes{
         });
     }
 
-    // Methods that interact with images in resources
+    /**
+     * Methods that interact with images in resources
+     * @param avatarID uses the avatarID to get the chorence image
+     * @return returns the avatar image
+     */
     private Image chosenAvatar(int avatarID){
         File file = new File(fileLocation + (avatarID) + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
-    // ///////////////////NEW PASSWORD POPUP ///////////////////////////////////
-    // Method for creating new password - new popup window
+    /**
+     * Method for creating new password - new popup window
+     * @param title The title of the popup window
+     */
     private void displayNewPassword(String title){
         Stage window = new Stage();
 
@@ -224,6 +232,10 @@ public class MyPage extends Scenes{
         window.showAndWait();
     }
 
+    /**
+     * Method that checks if your new password is correct.
+     * @return Return a boolean thats reflect the status of the password
+     */
     public static boolean changePassword(){
         if(newPassword.getText().equals("") || repeatPassword.getText().equals("")){
             ConfirmBox.displayWarning("Warning", "You have to enter a new password");
