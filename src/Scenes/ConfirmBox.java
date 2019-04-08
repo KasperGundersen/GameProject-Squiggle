@@ -19,11 +19,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import static css.Css.confirmButton;
-
+/**
+ * Class that creates confimration boxes, with custom title and message
+ */
 class ConfirmBox{
     private static boolean answer;
     private static final double WIDTH = 300, HEIGHT = 190;
-
+    /**
+     * Method which displays a pop up window, thats makes you confirm your choice before you quit
+     * @param title sets the title of the window
+     * @param message A custom message which displays as a label
+     */
     static boolean display(String title, String message){
         Stage stage = new Stage();
 
@@ -33,7 +39,6 @@ class ConfirmBox{
         label.setFont(Font.font("Cooper Black", FontWeight.BOLD, 22));
         label.setStyle("-fx-text-fill: white;");
 
-        //Create to users
         Button yesButton = new Button("Yes");
         Css.buttonStyleRed(yesButton);
 
@@ -74,11 +79,14 @@ class ConfirmBox{
         return answer;
     }
 
+    /**
+     * Method which displays a pop up window, thats makes you click OK
+     * @param title sets the title of the window
+     * @param message A custom message which displays as a label
+     */
     public static void displayWarning(String title, String message){
         Stage stage = new Stage();
         stage.setMinWidth(600);
-
-
 
         Label label = new Label();
         label.setText(message);
@@ -86,7 +94,6 @@ class ConfirmBox{
         label.setFont(Font.font("Cooper Black", FontWeight.BOLD, 22));
         label.setStyle("-fx-text-fill: white;");
 
-        //Create to users
         Button okBtn = new Button("Ok");
         Css.buttonStyleRed(okBtn);
 
@@ -104,7 +111,6 @@ class ConfirmBox{
         grid.add(okBtn,1,1, 2, 2);
         grid.setHalignment(okBtn, HPos.CENTER);
         grid.setValignment(okBtn, VPos.CENTER);
-
 
         Scene scene = new Scene(grid);
 

@@ -20,7 +20,9 @@ import static Components.GameLobbyComponents.CanvasComponents.*;
 import static Components.GameLobbyComponents.LiveChatComponents.liveChatUI;
 import static Components.GameLobbyComponents.TimerComponent.addTimerUI;
 import static Components.GameLobbyComponents.WordComponents.addWordUI;
-
+/**
+ * Class which displays the game lobby where the game takes place
+ */
 public class GameLobby extends Scenes{
 
     public static BorderPane bp;
@@ -32,6 +34,11 @@ public class GameLobby extends Scenes{
         addUIControls(bp, drawing);
     }
 
+    /**
+     *
+     * @param borderPane creates a borderPane where we put the game-components. Canvas, avatars and livechat
+     * @param drawing a boolean checking if the player is drawing. If the player is drawing the drawingcomponents will appear
+     */
     private void addUIControls(BorderPane borderPane, boolean drawing){
         HBox canvas = addCanvasUI(drawing);
         VBox livechat = liveChatUI();
@@ -55,6 +62,9 @@ public class GameLobby extends Scenes{
         setTop();
     }
 
+    /**
+     * Sets a HBox with word and timer at the top of the gamelobby-window
+     */
     public static void setTop(){
         HBox hb = new HBox();
         hb.setSpacing(60);
