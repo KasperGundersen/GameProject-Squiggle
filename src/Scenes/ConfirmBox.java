@@ -23,7 +23,11 @@ import static css.Css.confirmButton;
 class ConfirmBox{
     private static boolean answer;
     private static final double WIDTH = 300, HEIGHT = 190;
-
+    /**
+     * Method which displays a pop up window, thats makes you confirm your choice before you quit
+     * @param title sets the title of the window
+     * @param message A custom message which displays as a label
+     */
     static boolean display(String title, String message){
         Stage stage = new Stage();
 
@@ -74,6 +78,11 @@ class ConfirmBox{
         return answer;
     }
 
+    /**
+     * Method which displays a pop up window, thats makes you click OK
+     * @param title sets the title of the window
+     * @param message A custom message which displays as a label
+     */
     public static void displayWarning(String title, String message){
         Stage stage = new Stage();
         stage.setMinWidth(600);
