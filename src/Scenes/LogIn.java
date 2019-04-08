@@ -32,7 +32,7 @@ public class LogIn extends Scenes {
     }
 
     /**
-     *
+     * Method which gets the username written
      * @return returns the usernanme written in the namefield
      */
     public static String getUserName(){
@@ -43,7 +43,7 @@ public class LogIn extends Scenes {
     }
 
     /**
-     *
+     * Method which gets the password written
      * @return Returns the password written in the password field
      */
     public static String getPassword(){
@@ -54,7 +54,7 @@ public class LogIn extends Scenes {
     }
 
     /**
-     *
+     * Method which creates the log in scene
      * @param gridPane Uses a Gridpane which extends from main scene
      */
     private void addUIControls(GridPane gridPane) {
@@ -158,13 +158,17 @@ public class LogIn extends Scenes {
     }
 
     /**
-     *
+     * Method which checks if the log in information is correct
      * @param b if the log in information is wrong, a errormessage will occour
      */
     public static void visibleLoginError(boolean b){
         loginError.setVisible(b);
     }
 
+    /**
+     * Method which set the error text
+     * @param newText
+     */
     public static void setTextLoginError(String newText) {
         loginError.setText(newText);
     }
