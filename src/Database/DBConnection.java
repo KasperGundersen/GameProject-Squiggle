@@ -1004,4 +1004,25 @@ public class DBConnection {
         }
         return -1;
     }
+
+    public static void updateStats(boolean won, int uid){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "UPDATE STATS SET gamesPlayed = gamesPlayed + 1 WHERE userID = "+ uid +";";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+            if(won){
+                query = "UPDATE STATS SET gamesWon = gamesWon + 1 WHERE userID = " + uid + ";";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, null);
+        }
+    }
 }
