@@ -3,7 +3,6 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
-import com.mysql.cj.xdevapi.DbDoc;
 import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
