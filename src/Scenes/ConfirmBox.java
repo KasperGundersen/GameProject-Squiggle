@@ -18,7 +18,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import static css.Css.confirmButton;
+
 /**
  * Class that creates confimration boxes, with custom title and message
  */

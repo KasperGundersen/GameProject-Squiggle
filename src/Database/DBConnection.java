@@ -248,30 +248,6 @@ public class DBConnection {
         }
     }
 
-    public static ArrayList<String> getWords(String category) {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "SELECT word FROM LIBRARY WHERE category=?;";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setString(1, category);
-            res = prepStmt.executeQuery();
-            ArrayList<String> wordList = new ArrayList<>();
-            while(res.next()) {
-                wordList.add(res.getString("word"));
-                return wordList;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }
-
-
     // Fetches userID given username, used upon initialization of user, log in
 
     /**
@@ -725,8 +701,6 @@ public class DBConnection {
         }
     }
 
-    // Gets the number of people who has guessed correctly
-
     /**
      * Method which gets how many players who have guessed correctly in game
      * @return the amount of correct guesses
@@ -971,7 +945,6 @@ public class DBConnection {
 
     /**
      * Gets the amount of games played for a specific player
-     * @param uid the players userID
      * @return amount of games played by the user
      */
     public static int getGamesPlayed(){
@@ -998,7 +971,6 @@ public class DBConnection {
 
     /**
      * Gets the amount of games won for a specific user
-     * @param uid the userID of the user
      * @return amount of games won by the user
      */
     public static int getGamesWon(){

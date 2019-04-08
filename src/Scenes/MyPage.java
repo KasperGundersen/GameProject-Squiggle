@@ -201,8 +201,7 @@ public class MyPage extends Scenes{
         window.setMinWidth(250);
 
         Label header = new Label("Change password");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        Css.setText(header);
+        Css.setHeaderStyle(header);
         newPassword = new PasswordField();
         newPassword.setPrefHeight(40);
         newPassword.setPrefWidth(200);
@@ -264,9 +263,9 @@ public class MyPage extends Scenes{
 
         VBox vbox = new VBox(5);
 
-        Label gamesPlayed = new Label("Games Played: " + DBConnection.getGamesPlayed());
+        Label gamesPlayed = new Label("Games Played:     " + DBConnection.getGamesPlayed());
         Css.setHeaderStyle(gamesPlayed);
-        Label gamesWon = new Label("Games Won: " + DBConnection.getGamesWon());
+        Label gamesWon = new Label("Games Won:         " + DBConnection.getGamesWon());
         Css.setHeaderStyle(gamesWon);
 
         double winPercentage;

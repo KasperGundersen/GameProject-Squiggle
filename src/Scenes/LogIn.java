@@ -71,7 +71,7 @@ public class LogIn extends Scenes {
 
         //Add error Label
         loginError = new Label();
-        Css.setText(loginError);
+        Css.errorFont(loginError);
         gridPane.add(loginError,1,0,2,2);
         loginError.setVisible(false);
         Css.errorFont(loginError);
