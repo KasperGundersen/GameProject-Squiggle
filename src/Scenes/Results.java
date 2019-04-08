@@ -13,11 +13,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Class thats show the result of the game after a game is playes
+ */
 public class Results extends Scenes{
     private static Label header;
     private static Label userIDLbl;
@@ -26,12 +28,15 @@ public class Results extends Scenes{
     private static ArrayList<Player> players = DBConnection.getPlayers();
     private static Button mmBtn;
 
-
     public Results(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
         addUIControls(getGp());
     }
 
+    /**
+     * Method that creats the scene
+     * @param gp extendes the gridpane from the MainScene
+     */
     public void addUIControls(GridPane gp){
         header = new Label("Results");
         header.setFont(Font.font("Arial", FontWeight.BOLD, 48));
@@ -53,7 +58,6 @@ public class Results extends Scenes{
             images[i].setFitWidth(50);
             images[i].setFitHeight(50);
 
-
             userIDLbl = new Label("Player: " + players.get(i).getUsername());
             userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
             userIDLbl.setStyle("-fx-text-fill: white");
@@ -63,7 +67,6 @@ public class Results extends Scenes{
             placementLbl = new Label(Integer.toString(i+1));
             placementLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
             placementLbl.setStyle("-fx-text-fill: white");
-
 
             hboxes[i].getChildren().addAll(placementLbl, userIDLbl, pointsLbl);
             gp.add(hboxes[i], 1, i+1, 1, 1);

@@ -21,8 +21,9 @@ import java.util.Date;
 
 import java.io.File;
 
-
-
+/**
+ * Class thats crates the main menu which contains several buttons for further choices
+ */
 public class MainMenu extends Scenes{
 
     private Label gameStartedLabel;
@@ -32,12 +33,15 @@ public class MainMenu extends Scenes{
         addUIControls(getGp());
     }
 
+    /**
+     * Method that creates the main menu scene
+     * @param gridPane Gridpane which extends from the main scene
+     */
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
         double prefWidth = 200;
 
         // Add Header
-
         File file = new File("resources/logos/Logo_MainMenu.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
@@ -46,7 +50,6 @@ public class MainMenu extends Scenes{
 
         gridPane.add(iv, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        //GridPane.setMargin(iv, new Insets(10, 0,0,0));
 
         // Add error Label
         gameStartedLabel = new Label();
@@ -103,7 +106,7 @@ public class MainMenu extends Scenes{
 
         Css.setBackground(gridPane);
 
-        // BUTTON ACTION //////////////
+        // BUTTON ACTION
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> {
@@ -120,6 +123,10 @@ public class MainMenu extends Scenes{
         });
     }
 
+    /**
+     * Method that update the database when the player wants to join the game.
+     * When the first player joins a game the timer starts
+     */
     private void joinGameSystem() {
         int time = (int)((DBConnection.getDrawTimer().getTime() - (new Date().getTime())) / 1000);
         if (time < GameLogicComponents.gameTime * 0.84 && time > 0 && DBConnection.getAmtPlayer() > 0) {
@@ -134,6 +141,9 @@ public class MainMenu extends Scenes{
         }
     }
 
+    /**
+     * Methods that logs you out of the database and returns you to the log in scene
+     */
     private void logOutSystem(){
         MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
         MainScene.setScene(MainScene.li);

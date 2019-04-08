@@ -11,8 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-
 import java.io.File;
 
 import static Components.GameLobbyComponents.AvatarComponents.addAvatarUI;
@@ -35,8 +33,8 @@ public class GameLobby extends Scenes{
     }
 
     /**
-     *
-     * @param borderPane creates a borderPane where we put the game-components. Canvas, avatars and livechat
+     * Method that creates the game lobby scene with the game-components: Canvas, avatars and livechat
+     * @param borderPane creates a borderPane where we put the game-components.
      * @param drawing a boolean checking if the player is drawing. If the player is drawing the drawingcomponents will appear
      */
     private void addUIControls(BorderPane borderPane, boolean drawing){
@@ -71,5 +69,4 @@ public class GameLobby extends Scenes{
         hb.getChildren().addAll(addTimerUI(), addWordUI());
         bp.setTop(hb);
     }
-
 }
