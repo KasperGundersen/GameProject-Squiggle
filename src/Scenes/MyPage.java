@@ -253,14 +253,14 @@ public class MyPage extends Scenes{
 
         VBox vbox = new VBox(5);
 
-        Label gamesPlayed = new Label("Games Played: " + DBConnection.getGamesPlayed(UserInfo.getUserID()));
+        Label gamesPlayed = new Label("Games Played: " + DBConnection.getGamesPlayed());
         Css.setHeaderStyle(gamesPlayed);
-        Label gamesWon = new Label("Games Won: " + DBConnection.getGamesWon(UserInfo.getUserID()));
+        Label gamesWon = new Label("Games Won: " + DBConnection.getGamesWon());
         Css.setHeaderStyle(gamesWon);
 
         double winPercentage;
-        double gplayed = (double)DBConnection.getGamesPlayed(UserInfo.getUserID());
-        double gwon = (double)DBConnection.getGamesWon(UserInfo.getUserID());
+        double gplayed = (double)DBConnection.getGamesPlayed();
+        double gwon = (double)DBConnection.getGamesWon();
         if(gplayed == 0){
             winPercentage = 0;
         }else{

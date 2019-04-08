@@ -958,14 +958,15 @@ public class DBConnection {
      * @param uid the players userID
      * @return amount of games played by the user
      */
-    public static int getGamesPlayed(int uid){
+    public static int getGamesPlayed(){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String query = "SELECT gamesPlayed AS gplayed FROM STATS WHERE userID = " + uid + ";";
+            String query = "SELECT gamesPlayed AS gplayed FROM STATS WHERE userID =?;";
             prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
             res = prepStmt.executeQuery();
             if(res.next()){
                 return res.getInt("gplayed");
@@ -984,14 +985,15 @@ public class DBConnection {
      * @param uid the userID of the user
      * @return amount of games won by the user
      */
-    public static int getGamesWon(int uid){
+    public static int getGamesWon(){
         Connection con = null;
         PreparedStatement prepStmt = null;
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String query = "SELECT gamesWon AS gwon FROM STATS WHERE userID = " + uid + ";";
+            String query = "SELECT gamesWon AS gwon FROM STATS WHERE userID = ?;";
             prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
             res = prepStmt.executeQuery();
             if(res.next()){
                 return res.getInt("gwon");
@@ -1005,17 +1007,19 @@ public class DBConnection {
         return -1;
     }
 
-    public static void updateStats(boolean won, int uid){
+    public static void updateStats(boolean won){
         Connection con = null;
         PreparedStatement prepStmt = null;
         try{
             con = HikariCP.getCon();
-            String query = "UPDATE STATS SET gamesPlayed = gamesPlayed + 1 WHERE userID = "+ uid +";";
+            String query = "UPDATE STATS SET gamesPlayed = gamesPlayed + 1 WHERE userID =?;";
             prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
             prepStmt.executeUpdate();
             if(won){
-                query = "UPDATE STATS SET gamesWon = gamesWon + 1 WHERE userID = " + uid + ";";
+                query = "UPDATE STATS SET gamesWon = gamesWon + 1 WHERE userID =?;";
                 prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
                 prepStmt.executeUpdate();
             }
 
