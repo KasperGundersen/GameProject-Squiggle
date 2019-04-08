@@ -953,6 +953,11 @@ public class DBConnection {
         return -1;
     }
 
+    /**
+     * Gets the amount of games played for a specific player
+     * @param uid the players userID
+     * @return amount of games played by the user
+     */
     public static int getGamesPlayed(int uid){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -974,6 +979,11 @@ public class DBConnection {
         return -1;
     }
 
+    /**
+     * Gets the amount of games won for a specific user
+     * @param uid the userID of the user
+     * @return amount of games won by the user
+     */
     public static int getGamesWon(int uid){
         Connection con = null;
         PreparedStatement prepStmt = null;

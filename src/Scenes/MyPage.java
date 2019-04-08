@@ -245,6 +245,10 @@ public class MyPage extends Scenes{
         return true;
     }
 
+    /**
+     * Method to put the games played, won and a win percentage in a VBox
+     * @return a VBox containing three labels
+     */
     private static VBox wins(){
 
         VBox vbox = new VBox(5);
