@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Class thats show the result of the game after a game is playes
@@ -44,6 +46,8 @@ public class Results extends Scenes{
         gp.setValignment(header, VPos.CENTER);
         gp.setGridLinesVisible(false);
 
+
+        Collections.sort(players);
         HBox hboxes[] = new HBox[players.size()];
         ImageView[] images = new ImageView[players.size()];
 

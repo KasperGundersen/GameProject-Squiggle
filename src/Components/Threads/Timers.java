@@ -25,6 +25,7 @@ public class Timers {
     public static Timer heartBeat;
     private static boolean readyReset = false;
     private static AtomicBoolean start = new AtomicBoolean();
+    //private static boolean gameDone = false;
     // private static boolean start;
 
     public static void startHeartBeat() {
@@ -45,6 +46,15 @@ public class Timers {
                     makeDrawable(CanvasComponents.getGc());
                 }
                 if (timeRemaining % 5 == 0) {
+                    /*if (!(gameDone)) {
+                        if (DBConnection.getAmtCorrect() == DBConnection.getAmtPlayer() -1) {
+                            timeRemaining = 5;
+                            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
+                                DBConnection.changeTime();
+                            }
+                            gameDone = true;
+                        }
+                    }*/
                     updateData();
                 }
                 if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
@@ -72,8 +82,7 @@ public class Timers {
                         GameLogicComponents.incrementRoundCounter();
 
                         while (GameLogicComponents.getCurrentRound() <= DBConnection.getMaxRound()) {
-                            System.out.println(DBConnection.playerToDraw(GameLogicComponents.getCurrentRound()));
-                            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
+                           if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
                                 break;
                             } else {
                                 GameLogicComponents.incrementRoundCounter();
@@ -81,6 +90,7 @@ public class Timers {
                         }
                         GameLogicComponents.reset();
                         readyReset = false;
+                        //gameDone = false;
                     }
                 }
             }
