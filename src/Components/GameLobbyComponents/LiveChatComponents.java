@@ -49,9 +49,10 @@ public class LiveChatComponents {
         livechatLabel.setPadding(new Insets(0,130, 0, 0));
         //livechatLabel.setAlignment(Pos.TOP_LEFT);
         sp = new ScrollPane();
-        sp.setPrefHeight(423);
+        sp.setPrefHeight(420);
         sp.setFitToWidth(true);
         Text lc = new Text();
+        lc.setWrappingWidth(sp.getWidth());
         sp.setContent(lc);
 
         tf = new TextField();
@@ -69,6 +70,7 @@ public class LiveChatComponents {
         btn.setOnAction(e -> {
             String text = tf.getText();
             boolean playertype = UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound();
+            if (text.length() <= 30) {
                 if (!(playertype)) { //Guesser
                     if (!(UserInfo.getGuessedCorrectly()) && checkWord(text)) { //If player has not answered correctly yet
                         DBConnection.setCorrectGuess(UserInfo.getUserID());
@@ -83,15 +85,19 @@ public class LiveChatComponents {
                         insertMessages(text);
                     }
                 } else {
-                    if(!(checkWord(text))) {
+                    if (!(checkWord(text))) {
                         insertMessages(text);
                     }
                 }
-
+            }
         });
         return vb;
     }
 
+    /**
+     * Method which inserts messages to database and clears the textfield
+     * @param text
+     */
     private static void insertMessages(String text) {
         DBConnection.insertMessage(text);
         tf.clear();
@@ -128,6 +134,11 @@ public class LiveChatComponents {
         }
     }
 
+    /**
+     * Checks whether a word is correct or not
+     * @param word guessed word
+     * @return true or false depending on word
+     */
     public static boolean checkWord(String word) {
         if (word.equalsIgnoreCase(WordComponents.getWord())) {
             return true;
@@ -135,25 +146,6 @@ public class LiveChatComponents {
             return false;
         }
     }
-
-/*
-    public static boolean checkWord(String word) {
-        boolean correct = false;
-        if(!(UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound())) { //Only check if user is guesser
-            if (word.equalsIgnoreCase(WordComponents.getWord())) {
-                correct = true;
-                PointSystem.setPointsGuesser();
-                DBConnection.setCorrectGuess(UserInfo.getUserID());
-                UserInfo.setGuessedCorrectly(true);
-                return correct;
-            } else {
-                correct = false;
-                return correct;
-            }
-        }
-        return correct;
-    }*/
-
 
     /**
      * Method that cleans the chat. Used when the game is reset
