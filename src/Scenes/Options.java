@@ -1,15 +1,20 @@
 package Scenes;
 
+import Components.Threads.Music;
+import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class Options extends Scenes {
     private GridPane grid;
@@ -33,11 +38,24 @@ public class Options extends Scenes {
         Label musicLabel = new Label("Music");
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
+        if (Music.audio.isPlaying()) {
+            musicCheckBox.setSelected(true);
+        } else {
+            musicCheckBox.setSelected(false);
+        }
         grid.add(musicCheckBox, 1,3);
+        musicCheckBox.setOnAction(e -> {
+            if (musicCheckBox.isSelected()) {
+                Music.playMusic();
+            } else {
+                Music.stopMusic();
+            }
+        });
 
 
         Button submitButton = new Button("Submit");
         submitButton.setPrefWidth(100);
+        Css.buttonStyleRed(submitButton);
 
         submitButton.setOnAction(e -> {
             window.close();
@@ -47,6 +65,16 @@ public class Options extends Scenes {
         grid.add(submitButton, 0,4, 2,1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20,0,20,0));
+
+        File file = new File("resources/SquiggleTheme.png");
+        Image image = new Image(file.toURI().toString());
+        BackgroundImage backgroundimage = new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundimage);
+        grid.setBackground(background);
 
         Scene scene = new Scene(grid, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);

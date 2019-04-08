@@ -1,24 +1,18 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Threads.Music;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 import java.io.File;
 
 import static css.Css.toolTip;
@@ -54,18 +48,15 @@ public class LogIn extends Scenes {
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
 
-        File file = new File("resources/Logo.png");
+        File file = new File("resources/logos/Logo_LogIn.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
         gridPane.add(iv,0,0,2,1);
 
-        // Add Header
-        //Label headerLabel = new Label("Login");
-        //headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        //Css.setHeaderStyle(headerLabel);
-        //gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(10, 0,10,0));
+        //GridPane.setMargin(iv, new Insets(10, 0,10,0));
 
         //Add error Label
         loginError = new Label();
@@ -108,7 +99,7 @@ public class LogIn extends Scenes {
         logInButton.setPrefWidth(200);
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
-        GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
+        //GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
@@ -117,7 +108,7 @@ public class LogIn extends Scenes {
         regButton.setPrefWidth(200);
         gridPane.add(regButton, 0, 5, 2, 1);
         GridPane.setHalignment(regButton, HPos.CENTER);
-        GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
+        //GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
 
 
 
@@ -140,7 +131,7 @@ public class LogIn extends Scenes {
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());
-       // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
+        // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su);

@@ -1,5 +1,6 @@
 package Components;
 
+import Components.Threads.Music;
 import Database.DBConnection;
 import Scenes.*;
 
@@ -11,13 +12,12 @@ import java.sql.Statement;
 
 public class Authentication {
 
-    public static void changePassword(){
+    public static boolean changePassword(String newPassword){
         int userID = UserInfo.getUserID();
-        String password = MyPage.changePassword();
-        String encryptor = Encryptor.Encryptor(password, null);
+        String encryptor = Encryptor.Encryptor(newPassword, null);
         String hash = Encryptor.getHash(encryptor);
         String salt = Encryptor.getSalt(encryptor);
-        DBConnection.changePassword(userID, hash, salt);
+        return DBConnection.changePassword(userID, hash, salt);
     }
     public static boolean submit(){
         String username = SignUp.getName();
@@ -85,6 +85,7 @@ public class Authentication {
                 MainScene.mm = new MainMenu(WIDTH, HEIGHT);
                 MainScene.setScene(MainScene.mm);
                 DBConnection.setLoggedIn(username, 1);
+                Music.playMusic();
             } else {
                 // already logged in error
                 LogIn.setTextLoginError("User already logged in");

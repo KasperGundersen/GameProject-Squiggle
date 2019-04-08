@@ -6,10 +6,12 @@ import Database.DBConnection;
 import Scenes.GameLobby;
 import Scenes.MainMenu;
 import Scenes.MainScene;
+import Scenes.Results;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 import static Components.Threads.Timers.*;
@@ -30,14 +32,24 @@ public class GameLogicComponents {
      * Sets canvas according to who is looking at it
      */
     public static void setPrivileges() {
-        Timers.stopHeartBeat();
+        stopHeartBeat();
         Timers.startHeartBeat();
     }
 
+    /**
+     * Increments round counter
+     */
     public static void incrementRoundCounter() {
         currentRound++;
     }
 
+    public static void setCurrentRound(int currentRound) {
+        GameLogicComponents.currentRound = currentRound;
+    }
+
+    /**
+     * Sets new drawer, or quits game if everyone has drawn.
+     */
     public static void reset() {
         if (currentRound <= DBConnection.getAmtPlayer()) {
             Service<Void> service = new Service<Void>() {
@@ -52,10 +64,16 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
+                                        if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
+                                            while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime())) {
+                                                System.out.println((int)(DBConnection.getDrawTimer().getTime() - new Date().getTime() / 1000));
+                                            }
+                                        }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
                                         LiveChatComponents.cleanChat();
                                         GameLogicComponents.setPrivileges();
                                         MainScene.setScene(MainScene.gl);
+                                        UserInfo.setGuessedCorrectly(false);
                                     }finally{
                                         latch.countDown();
                                     }
@@ -71,9 +89,10 @@ public class GameLogicComponents {
             service.start();
         } else {
             stopHeartBeat();
-            MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
-            MainScene.setScene(MainScene.mm);
+            MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
+            MainScene.setScene(MainScene.rs);
             MainScene.gl = null;
+            setCurrentRound(1);
         }
     }
 }

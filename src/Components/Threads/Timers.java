@@ -2,14 +2,17 @@ package Components.Threads;
 
 import Components.GameLobbyComponents.CanvasComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
+import Components.GameLobbyComponents.WordComponents;
+import Components.PointSystem;
+import Components.Toast;
 import Components.UserInfo;
 import Database.DBConnection;
-import Scenes.GameLobby;
 import Scenes.MainScene;
-import com.sun.tools.javac.Main;
+import javafx.concurrent.Service;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static Components.GameLobbyComponents.AvatarComponents.updateData;
 import static Components.GameLobbyComponents.CanvasComponents.makeDrawable;
@@ -19,12 +22,14 @@ import static Components.GameLobbyComponents.TimerComponent.timeRemaining;
 
 public class Timers {
 
-    private static Timer heartBeat;
+    public static Timer heartBeat;
     private static boolean readyReset = false;
-    private static boolean start;
+    private static AtomicBoolean start = new AtomicBoolean();
+    // private static boolean start;
 
     public static void startHeartBeat() {
-        start = true;
+        start.set(true);
+        // start = true;
         heartBeat();
     }
 
@@ -33,46 +38,62 @@ public class Timers {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                if (start) {
-                    if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
-                        makeDrawable(CanvasComponents.getGc());
+                if (!start.get()) {
+                    return;
+                }
+                if (timeRemaining == Math.round(GameLogicComponents.gameTime * 0.84)) {
+                    makeDrawable(CanvasComponents.getGc());
+                }
+                if (timeRemaining % 5 == 0) {
+                    updateData();
+                }
+                if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
+                    updateImage();
+                } else {
+                    CanvasComponents.setImage();
+                }
+                if (timeRemaining > Math.round(GameLogicComponents.gameTime * 0.84)) {
+                    if (!readyReset) {
+                        readyReset = true;
                     }
-                    if (timeRemaining % 5 == 0) {
-                        updateData();
-                        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-                            updateImage();
-                        } else {
-                            CanvasComponents.setImage();
+                    setTimerText(false);
+                } else if (timeRemaining > 0) {
+                    setTimerText(true);
+                } else {
+                    if (readyReset) {
+                        //Her blir amtCorrect av en eller annen grunn resettet
+                        if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawer
+                            PointSystem.setPointsDrawer();
+                            DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
                         }
-                    }
-                    if (timeRemaining > Math.round(GameLogicComponents.gameTime * 0.84)) {
-                        if (!readyReset) {
-                            readyReset = true;
+
+                        Toast t = new Toast(MainScene.stage, MainScene.getWIDTH(), MainScene.getHEIGHT());
+                        t.makeText(WordComponents.getWord(),2000, 500, 500);
+                        GameLogicComponents.incrementRoundCounter();
+
+                        while (GameLogicComponents.getCurrentRound() <= DBConnection.getMaxRound()) {
+                            System.out.println(DBConnection.playerToDraw(GameLogicComponents.getCurrentRound()));
+                            if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
+                                break;
+                            } else {
+                                GameLogicComponents.incrementRoundCounter();
+                            }
                         }
-                        setTimerText(false);
-                    } else if (timeRemaining > 0) {
-                        setTimerText(true);
-                    } else {
-                        if (readyReset) {
-                            GameLogicComponents.incrementRoundCounter();
-                            GameLogicComponents.reset();
-                            readyReset = false;
-                        }
+                        GameLogicComponents.reset();
+                        readyReset = false;
                     }
                 }
-
             }
         };
         heartBeat.schedule(task, 0, +1000);
+        if (!start.get()) {
+            task.cancel();
+        }
     }
 
     public static void stopHeartBeat() {
-        start = false;
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        start.set(false);
+        // start = false;
         if (heartBeat != null) {
             heartBeat.cancel();
             heartBeat.purge();

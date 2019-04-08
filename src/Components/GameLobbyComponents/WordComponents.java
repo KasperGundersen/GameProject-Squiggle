@@ -6,22 +6,38 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+/**
+ * Class containing the different methods which involves the words players are drawing and guessing
+ */
 public class WordComponents {
     private static String word;
 
+    /**
+     * Method which returns the user interface of the word-part of the game
+     * @return HBox containg the user interface
+     */
     public static HBox addWordUI(){
         word = DBConnection.getRandomWord();
         HBox hb = new HBox();
         Label wordLabel = new Label("Word: " + showWord());
         wordLabel.setFont(new Font(20));
+        wordLabel.setStyle("-fx-text-fill: white");
         hb.getChildren().add(wordLabel);
         return hb;
     }
 
+    /**
+     * Gets the active word
+     * @return
+     */
     public static String getWord(){
         return word;
     }
 
+    /**
+     * Displays the active word
+     * @return the active word formated to the game
+     */
     public static String showWord(){
         String line = "___  ";
         String space = "   ";
