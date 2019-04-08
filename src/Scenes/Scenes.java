@@ -137,12 +137,24 @@ public abstract class Scenes {
         return gridPane;
     }
 
+    /**
+     * MEthod that styles selection buttons
+     * @param b is the button
+     */
     void styleSelectorButton(Button b){
         b.setPrefHeight(35);
         b.setPrefWidth(25);
         b.setStyle(selectorButton());
     }
 
+    /**
+     * Method that make a loop when you toggle through the avatars
+     * @param counter is the counter
+     * @param add is the adder
+     * @param min is the first avatar
+     * @param max is the last avatar
+     * @return return either the first or the last avatar
+     */
     int loopAvatar(int counter, int add, int min, int max){
         counter += add;
         if(counter < min){
@@ -153,6 +165,11 @@ public abstract class Scenes {
         return counter;
     }
 
+    /**
+     * Method that creates images from jpg files
+     * @param i is the name/index of the file
+     * @return returns the Image
+     */
     public static Image getAvatar(int i){
         File file = new File("resources/avatars/" + i + ".jpg");
         return new Image(file.toURI().toString());

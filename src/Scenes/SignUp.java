@@ -43,7 +43,6 @@ public class SignUp extends Scenes {
 
     private static int avatarID = 1;
 
-    //////////////////////////////////////////////////////////////////////////////
 
     /**
      * Constructor for the signup scene
@@ -71,8 +70,6 @@ public class SignUp extends Scenes {
 
         gridPane.add(iv, 0,0,4,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        //GridPane.setMargin(iv, new Insets(20, 0,20,0));
-
 
         //Add error Label
         errorUserAndMail = new Label("Username or email already taken");
@@ -88,7 +85,6 @@ public class SignUp extends Scenes {
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("Ola Nordmann");
         gridPane.add(nameField, 1,1);
-
 
         //Add empty Label
         emptyUser = new Label("Fill in username");
@@ -112,11 +108,9 @@ public class SignUp extends Scenes {
         emptyMail.setVisible(false);
         Css.errorFont(emptyMail);
 
-
         // Add Name Label
         Label avatarLabel = new Label("Avatar : ");
         gridPane.add(avatarLabel, 0,3);
-
 
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
