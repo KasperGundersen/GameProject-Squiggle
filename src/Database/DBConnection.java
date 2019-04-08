@@ -952,4 +952,46 @@ public class DBConnection {
         }
         return -1;
     }
+
+    public static int getGamesPlayed(int uid){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesPlayed AS gplayed FROM STATS WHERE userID = " + uid + ";";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gplayed");
+            }
+            return -1;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    public static int getGamesWon(int uid){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesWon AS gwon FROM STATS WHERE userID = " + uid + ";";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gwon");
+            }
+            return -1;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
 }

@@ -3,6 +3,7 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
+import com.mysql.cj.xdevapi.DbDoc;
 import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -15,6 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
@@ -140,6 +142,10 @@ public class MyPage extends Scenes{
         gridPane.add(backButton, 0, 6, 1, 1);
         gridPane.setHalignment(backButton, HPos.LEFT);
 
+        VBox winsvbox = wins();
+        gridPane.add(winsvbox, 0,1,3,3);
+        gridPane.setMargin(winsvbox, new Insets(100,0,0,215));
+
         // Button action
         buttonChangePassword.setOnAction(e -> {
             displayNewPassword("Change password");
@@ -237,5 +243,25 @@ public class MyPage extends Scenes{
             }
         }
         return true;
+    }
+
+    private static VBox wins(){
+
+        VBox vbox = new VBox(5);
+
+        Label gamesPlayed = new Label("Games Played: " + DBConnection.getGamesPlayed(UserInfo.getUserID()));
+        Css.setHeaderStyle(gamesPlayed);
+        Label gamesWon = new Label("Games Won: " + DBConnection.getGamesWon(UserInfo.getUserID()));
+        Css.setHeaderStyle(gamesWon);
+
+        double winPercentage;
+        double gplayed = (double)DBConnection.getGamesPlayed(UserInfo.getUserID());
+        double gwon = (double)DBConnection.getGamesWon(UserInfo.getUserID());
+        winPercentage = (gwon/gplayed)*100;
+
+        Label winPercent = new Label("Win Percentage: " + String.format("%.0f", winPercentage) + "%");
+        Css.setHeaderStyle(winPercent);
+        vbox.getChildren().addAll(gamesPlayed, gamesWon, winPercent);
+        return vbox;
     }
 }
