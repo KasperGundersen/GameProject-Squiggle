@@ -89,7 +89,6 @@ brainwash
 bodyguard-ponytail
 courthouse
 footrest-stonewall
-
 sailboat-timeshare
 eyewitness-starfish-spacewalk
 shoemaker-turndown-turnoff
@@ -98,7 +97,6 @@ bluebird-tablespoon
 stoplight-snowbird
 wheelhouse-fishhook-fishbowl
 tailgate-taillight
-takeout
 target
 steamboat-teaspoon
 shoelace
@@ -131,4 +129,4 @@ Lady Gaga-Vladimir Putin
 Third base-batman-money-rich-grandma
 penis-vagina-KKK-Pac Man-AIDS-Viagra
 soap-river-slavetrade-brothel
-crab rave-leroy jenkins-football-world
+crab rave-leroy jenkins-world
