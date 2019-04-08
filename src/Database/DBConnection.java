@@ -970,7 +970,7 @@ public class DBConnection {
             if(res.next()){
                 return res.getInt("gplayed");
             }
-            return -1;
+            return 0;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -996,7 +996,7 @@ public class DBConnection {
             if(res.next()){
                 return res.getInt("gwon");
             }
-            return -1;
+            return 0;
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
