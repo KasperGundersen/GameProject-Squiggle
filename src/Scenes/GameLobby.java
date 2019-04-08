@@ -39,8 +39,8 @@ public class GameLobby extends Scenes{
         borderPane.setCenter(canvas);
         borderPane.setRight(livechat);
         borderPane.setLeft(avatar);
-        BorderPane.setMargin(avatar,new Insets(43,2,12,2));
-        BorderPane.setMargin(livechat,new Insets(0,2,30,2));
+        BorderPane.setMargin(avatar,new Insets(36,2,30,2));
+        BorderPane.setMargin(livechat,new Insets(6,2,30,2));
         BorderPane.setMargin(canvas,new Insets(0,2,0,2));
         String url = new File("resources/SquiggleTheme.png").toURI().toString();
         borderPane.setStyle("-fx-background-image: url(\"" + url + "\");");
@@ -48,6 +48,9 @@ public class GameLobby extends Scenes{
             borderPane.setBottom(addDrawingUI());
         } else {
             borderPane.setBottom(null);
+            BorderPane.setMargin(avatar,new Insets(58,2,30,2));
+            BorderPane.setMargin(livechat,new Insets(6,2,52,2));
+            BorderPane.setMargin(canvas,new Insets(0,2,0,2));
         }
         setTop();
     }

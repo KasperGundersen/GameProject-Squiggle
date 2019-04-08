@@ -71,6 +71,7 @@ public class Css {
                 "    -fx-font-weight: bold;\n" +
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
+                "     -fx-pref-height: 20px;\n" +
                 "    -fx-font-size: 1.1em;");
     }
 
