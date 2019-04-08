@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Class which sets scenes
+ */
 public class MainScene {
 
     private static final double HEIGHT = 600;
@@ -31,14 +34,25 @@ public class MainScene {
     // User
     public static UserInfo user = new UserInfo();
 
+    /**
+     * Method thats gets the height of the stage
+     * @return returns the height
+     */
     public static double getHEIGHT() {
         return HEIGHT;
     }
-
+    /**
+     * Method thats gets the width of the stage
+     * @return returns the width
+     */
     public static double getWIDTH() {
         return WIDTH;
     }
 
+    /**
+     * Method that set the given scene
+     * @param sc Is the scene the method creates and displays
+     */
     public static void setScene(Scenes sc) {
         Service<Void> service = new Service<Void>() {
             @Override
@@ -69,6 +83,10 @@ public class MainScene {
 
     }
 
+    /**
+     * Method that initialize the stage and sets the titlte
+     * @param stage Is the stages that gets initialized
+     */
     public void initialize(Stage stage) {
         MainScene.stage = stage;
         MainScene.stage.centerOnScreen();
@@ -83,7 +101,9 @@ public class MainScene {
         MainScene.stage.centerOnScreen();
     }
 
-
+    /**
+     * Method that close the program correctly. Updates the database, logs out the player and close the current stage
+     */
     public static void closeProgram(){
         if(ConfirmBox.display("Warning!", "Sure you want to \n exit?")){
             Music.stopMusic();
