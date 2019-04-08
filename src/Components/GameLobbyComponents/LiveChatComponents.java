@@ -49,7 +49,7 @@ public class LiveChatComponents {
         livechatLabel.setPadding(new Insets(0,130, 0, 0));
         //livechatLabel.setAlignment(Pos.TOP_LEFT);
         sp = new ScrollPane();
-        sp.setPrefHeight(423);
+        sp.setPrefHeight(420);
         sp.setFitToWidth(true);
         Text lc = new Text();
         lc.setWrappingWidth(sp.getWidth());
