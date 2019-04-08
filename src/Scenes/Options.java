@@ -13,9 +13,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
-
+/**
+ * Class that create and opens a popup window where you can turn on/off the music
+ */
 public class Options extends Scenes {
     private GridPane grid;
     public Options(double WIDTH, double HEIGHT) {
@@ -23,6 +24,9 @@ public class Options extends Scenes {
         openOptions();
     }
 
+    /**
+     * Method thats creates the popup window
+     */
     public void openOptions(){
         Stage window = new Stage();
         window.setTitle("Options");
@@ -52,7 +56,6 @@ public class Options extends Scenes {
             }
         });
 
-
         Button submitButton = new Button("Submit");
         submitButton.setPrefWidth(100);
         Css.buttonStyleRed(submitButton);
@@ -81,5 +84,4 @@ public class Options extends Scenes {
         window.setScene(scene);
         window.show();
     }
-
 }
