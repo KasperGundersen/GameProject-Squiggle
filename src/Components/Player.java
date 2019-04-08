@@ -8,7 +8,7 @@
 
 package Components;
 
-public class Player {
+public class Player implements Comparable<Player>{
     private String username;
     private int userID;
     private int avatarID;
@@ -63,5 +63,11 @@ public class Player {
      */
     public double getPoints(){
         return points;
+    }
+
+    @Override
+    public int compareTo(Player o) {
+        int cmp = this.getPoints() > o.getPoints() ? -1 : this.getPoints() < o.getPoints() ? +1 : 0;
+        return cmp;
     }
 }

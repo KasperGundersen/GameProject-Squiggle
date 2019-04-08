@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Results extends Scenes{
     private static Label header;
@@ -40,7 +42,7 @@ public class Results extends Scenes{
         gp.setGridLinesVisible(false);
 
 
-
+        Collections.sort(players);
         HBox hboxes[] = new HBox[players.size()];
         ImageView[] images = new ImageView[players.size()];
 
