@@ -104,7 +104,6 @@ public class Css {
                 "    -fx-font-weight: bold;\n" +
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
-                "    -fx-font-size: 1.1em;" +
-                "    -fx-pref-height: auto");
+                "    -fx-font-size: 1.1em;");
     }
 }
