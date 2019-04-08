@@ -8,8 +8,14 @@ import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+/**
+ * Class that update the wordlist in the database with word from a txt document
+ */
 public class Words {
-
+    /**
+     * Method that reads from a file and add the words to the database
+     * @param args Main method
+     */
     public static void main(String[] args) {
         String wordlist = "C:\\Users\\Zaim Imran\\Documents\\Git\\squiggle\\src\\Database\\wordlist.txt";
         try {
