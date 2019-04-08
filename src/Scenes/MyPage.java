@@ -261,7 +261,11 @@ public class MyPage extends Scenes{
         double winPercentage;
         double gplayed = (double)DBConnection.getGamesPlayed(UserInfo.getUserID());
         double gwon = (double)DBConnection.getGamesWon(UserInfo.getUserID());
-        winPercentage = (gwon/gplayed)*100;
+        if(gplayed == 0){
+            winPercentage = 0;
+        }else{
+            winPercentage = (gwon/gplayed)*100;
+        }
 
         Label winPercent = new Label("Win Percentage: " + String.format("%.0f", winPercentage) + "%");
         Css.setHeaderStyle(winPercent);
