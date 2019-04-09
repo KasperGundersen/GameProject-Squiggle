@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import java.io.File;
 
-import static css.Css.toolTip;
 
 /**
  * Class which makes the log in scene. The scene contains of log in labels, register button, help-button and optiions-button
@@ -129,12 +128,12 @@ public class LogIn extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle(toolTip());
+        Css.setStyle(tooltipName);
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
-        tooltipPassword.setStyle(toolTip());
+        Css.setStyle(tooltipPassword);
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());

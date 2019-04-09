@@ -15,25 +15,11 @@ import java.io.File;
  */
 public class Css {
     /**
-     * Method that styles the selector button
-     * @param button The button that get styled
-     */
-    public static void selectorButton(Button button){
-        button.setStyle("-fx-background-color: rgba(255, 255, 255 ,0); " +
-                "-fx-font-weight: bold ; " +
-                "-fx-font-size: 3em; " +
-                "-fx-text-fill: white; " +
-                "-fx-font-family: ariel;");
-        button.setPrefHeight(35);
-        button.setPrefWidth(25);
-    }
-
-    /**
      * Method that styles the tooltips
-     * @return returns a color
+     * @param tooltip the tooltip that get styled
      */
-    public static String toolTip(){
-        return "-fx-background-color: cornflowerblue;";
+    public static void setStyle(Tooltip tooltip){
+        tooltip.setStyle("-fx-background-color: cornflowerblue;");
     }
 
     /**
@@ -74,7 +60,20 @@ public class Css {
         String url = new File("resources/SquiggleTheme.png").toURI().toString();
         grid.setStyle("-fx-background-image: url(" + url + ");");
     }
-
+    //BUTTONS//
+    /**
+     * Method that styles the selector button
+     * @param button The button that get styled
+     */
+    public static void selectorButton(Button button){
+        button.setStyle("-fx-background-color: rgba(255, 255, 255 ,0); " +
+                "-fx-font-weight: bold ; " +
+                "-fx-font-size: 3em; " +
+                "-fx-text-fill: white; " +
+                "-fx-font-family: ariel;");
+        button.setPrefHeight(35);
+        button.setPrefWidth(25);
+    }
     /**
      * Method that styles togglebuttons
      * @param button the button that get styled

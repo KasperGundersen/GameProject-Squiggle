@@ -137,7 +137,6 @@ public abstract class Scenes {
         return gridPane;
     }
 
-
     /**
      * Method that make a loop when you toggle through the avatars
      * @param counter is the counter

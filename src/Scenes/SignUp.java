@@ -21,7 +21,6 @@ import javafx.scene.control.Tooltip;
 
 import java.io.File;
 
-import static css.Css.toolTip;
 
 /**
  * Signup Scene where user can register
@@ -148,7 +147,6 @@ public class SignUp extends Scenes {
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
-        //GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
         gridPane.add(passwordField, 1, 4);
 
         //Add empty Label
@@ -195,22 +193,22 @@ public class SignUp extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle(toolTip());
+        Css.setStyle(tooltipName);
 
         final Tooltip tooltipEmail = new Tooltip();
         tooltipEmail.setText("Write your Email");
         emailField.setTooltip(tooltipEmail);
-        tooltipEmail.setStyle(toolTip());
+        Css.setStyle(tooltipEmail);
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
-        tooltipPassword.setStyle(toolTip());
+        Css.setStyle(tooltipPassword);
 
         final Tooltip tooltipRePassword = new Tooltip();
         tooltipRePassword.setText("Write your password one more time");
         rePasswordField.setTooltip(tooltipRePassword);
-        tooltipRePassword.setStyle(toolTip());
+        Css.setStyle(tooltipRePassword);
 
         ///////Button action//////////////////////////////
         backButton.setOnAction(e -> {
