@@ -25,8 +25,6 @@ public class Timers {
     public static Timer heartBeat;
     private static boolean readyReset = false;
     private static AtomicBoolean start = new AtomicBoolean();
-    //private static boolean gameDone = false;
-    // private static boolean start;
 
     public static void startHeartBeat() {
         start.set(true);
@@ -46,15 +44,6 @@ public class Timers {
                     makeDrawable(CanvasComponents.getGc());
                 }
                 if (timeRemaining % 5 == 0) {
-                    /*if (!(gameDone)) {
-                        if (DBConnection.getAmtCorrect() == DBConnection.getAmtPlayer() -1) {
-                            timeRemaining = 5;
-                            if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
-                                DBConnection.changeTime();
-                            }
-                            gameDone = true;
-                        }
-                    }*/
                     updateData();
                 }
                 if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) {
