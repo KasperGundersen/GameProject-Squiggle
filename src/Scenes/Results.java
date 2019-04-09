@@ -28,6 +28,11 @@ public class Results extends Scenes{
     private static ArrayList<Player> players = DBConnection.getPlayers();
     private static Button mmBtn;
 
+    /**
+     * Contstructor of results page
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public Results(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
         addUIControls(getGp());

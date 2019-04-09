@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 
 
 /**
- * Class that creates confimration boxes, with custom title and message
+ * Class that creates confirmation boxes, with custom title and message
  */
 class ConfirmBox{
     private static boolean answer;

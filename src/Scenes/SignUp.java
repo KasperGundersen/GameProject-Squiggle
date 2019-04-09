@@ -21,7 +21,6 @@ import javafx.scene.control.Tooltip;
 
 import java.io.File;
 
-import static css.Css.toolTip;
 
 /**
  * Signup Scene where user can register
@@ -124,14 +123,14 @@ public class SignUp extends Scenes {
         gridPane.add(leftButton, 1,3);
         GridPane.setHalignment(leftButton, HPos.CENTER);
         GridPane.setMargin(leftButton, new Insets(0,120,0,0));
-        super.styleSelectorButton(leftButton);
+        Css.selectorButton(leftButton);
 
         //Add button to go right
         Button rightButton = new Button(">");
         gridPane.add(rightButton, 1,3);
         GridPane.setHalignment(rightButton, HPos.CENTER);
         GridPane.setMargin(rightButton, new Insets(0,0,0,120));
-        super.styleSelectorButton(rightButton);
+        Css.selectorButton(rightButton);
 
         //Add error Label
         errorPassword = new Label("Password don't match");
@@ -148,7 +147,6 @@ public class SignUp extends Scenes {
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
         passwordField.setPromptText("password");
-        //GridPane.setMargin(passwordField, new Insets(10, 0,0,0));
         gridPane.add(passwordField, 1, 4);
 
         //Add empty Label
@@ -195,22 +193,22 @@ public class SignUp extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle(toolTip());
+        Css.setStyle(tooltipName);
 
         final Tooltip tooltipEmail = new Tooltip();
         tooltipEmail.setText("Write your Email");
         emailField.setTooltip(tooltipEmail);
-        tooltipEmail.setStyle(toolTip());
+        Css.setStyle(tooltipEmail);
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
-        tooltipPassword.setStyle(toolTip());
+        Css.setStyle(tooltipPassword);
 
         final Tooltip tooltipRePassword = new Tooltip();
         tooltipRePassword.setText("Write your password one more time");
         rePasswordField.setTooltip(tooltipRePassword);
-        tooltipRePassword.setStyle(toolTip());
+        Css.setStyle(tooltipRePassword);
 
         ///////Button action//////////////////////////////
         backButton.setOnAction(e -> {

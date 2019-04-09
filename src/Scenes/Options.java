@@ -19,6 +19,12 @@ import java.io.File;
  */
 public class Options extends Scenes {
     private GridPane grid;
+
+    /**
+     * Constructor of the Options page
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public Options(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         openOptions();

@@ -28,11 +28,18 @@ public class UserInfo {
         this.drawRound = -1;
     }
 
-
+    /**
+     * Gets the round of the draw
+     * @return the round as an int
+     */
     public static int getDrawRound() {
         return drawRound;
     }
 
+    /**
+     * Updates the drawRound
+     * @param newRound new round which will be updated
+     */
     public static void setDrawRound(int newRound) {
         drawRound = newRound;
     }
@@ -70,6 +77,10 @@ public class UserInfo {
     }
     */
 
+    /**
+     * Gets the user email of the user
+     * @return the email of the user
+     */
     public static String getUserEmail() {
         return userEmail;
     }
@@ -118,10 +129,18 @@ public class UserInfo {
         UserInfo.tempHighestChatID = tempHighestChatID;
     }
 
+    /**
+     * Gets the guessedCorrectly value of the user
+     * @return the boolean guessedCorrectly which specifies whether a user has guessed correct or not in a game
+     */
     public static boolean getGuessedCorrectly() {
         return guessedCorrectly;
     }
 
+    /**
+     * Sets the guessedCorrectly boolean of a user
+     * @param guessedCorrectly the new value of guessedCorrectly
+     */
     public static void setGuessedCorrectly(boolean guessedCorrectly) {
         UserInfo.guessedCorrectly = guessedCorrectly;
     }
