@@ -137,15 +137,6 @@ public abstract class Scenes {
         return gridPane;
     }
 
-    /**
-     * MEthod that styles selection buttons
-     * @param b is the button
-     */
-    void styleSelectorButton(Button b){
-        b.setPrefHeight(35);
-        b.setPrefWidth(25);
-        b.setStyle(selectorButton());
-    }
 
     /**
      * Method that make a loop when you toggle through the avatars

@@ -117,7 +117,7 @@ public class MyPage extends Scenes{
         GridPane.setHalignment(leftButton, HPos.LEFT);
         gridPane.setValignment(leftButton, VPos.CENTER);
         GridPane.setMargin(leftButton, new Insets(0,120,0,440));
-        super.styleSelectorButton(leftButton);
+        Css.selectorButton(leftButton);
 
         //Add button to go right
         Button rightButton = new Button(">");
@@ -125,7 +125,7 @@ public class MyPage extends Scenes{
         GridPane.setHalignment(rightButton, HPos.LEFT);
         gridPane.setValignment(rightButton, VPos.CENTER);
         GridPane.setMargin(rightButton, new Insets(0,0,0,755));
-        super.styleSelectorButton(rightButton);
+        Css.selectorButton(rightButton);
 
         // Update current avatar button
         buttonChoose = new Button("Choose avatar");
