@@ -81,7 +81,7 @@ public class LogIn extends Scenes {
         loginError.setVisible(false);
 
         // Add Name Label
-        Label nameLabel = new Label("Username: ");
+        Label nameLabel = new Label("Username :");
         Css.setStyle(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
@@ -94,7 +94,7 @@ public class LogIn extends Scenes {
         gridPane.add(nameField, 1,1);
 
         // Add Password Label
-        Label passwordLabel = new Label("Password: ");
+        Label passwordLabel = new Label("Password : ");
         Css.setStyle(passwordLabel);
         gridPane.add(passwordLabel, 0, 3);
 

@@ -9,6 +9,7 @@ import css.Css;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -76,13 +77,15 @@ public class SignUp extends Scenes {
         errorUserAndMail.setVisible(false);
         Css.setErrorStyle(errorUserAndMail);
         // Add Name Label
-        Label nameLabel = new Label("Username : ");
+        Label nameLabel = new Label("Username :");
+        Css.setStyle(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
         nameField = new TextField();
         nameField.setPrefHeight(prefHeight);
         nameField.setPromptText("Ola Nordmann");
+        Css.setStyle(nameField);
         gridPane.add(nameField, 1,1);
 
         //Add empty Label
@@ -93,11 +96,13 @@ public class SignUp extends Scenes {
 
         // Add Email Label
         Label emailLabel = new Label("Email : ");
+        Css.setStyle(emailLabel);
         gridPane.add(emailLabel, 0, 2);
 
         // Add Email Text Field
         emailField = new TextField();
         emailField.setPrefHeight(prefHeight);
+        Css.setStyle(emailField);
         emailField.setPromptText("party@myhouse.tonight");
         gridPane.add(emailField, 1, 2);
 
@@ -109,6 +114,7 @@ public class SignUp extends Scenes {
 
         // Add Name Label
         Label avatarLabel = new Label("Avatar : ");
+        Css.setStyle(avatarLabel);
         gridPane.add(avatarLabel, 0,3);
 
         //Add ImageView to show avatar
@@ -141,11 +147,13 @@ public class SignUp extends Scenes {
 
         // Add Password Label
         Label passwordLabel = new Label("Password : ");
+        Css.setStyle(passwordLabel);
         gridPane.add(passwordLabel, 0, 4);
 
         // Add Password Field
         passwordField = new PasswordField();
         passwordField.setPrefHeight(prefHeight);
+        Css.setStyle(passwordField);
         passwordField.setPromptText("password");
         gridPane.add(passwordField, 1, 4);
 
@@ -157,11 +165,13 @@ public class SignUp extends Scenes {
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
+        Css.setStyle(rePasswordLabel);
         gridPane.add(rePasswordLabel, 0, 5);
 
         // Add RePassword Field
         rePasswordField = new PasswordField();
         rePasswordField.setPrefHeight(prefHeight);
+        Css.setStyle(rePasswordField);
         rePasswordField.setPromptText("re-enter password");
         gridPane.add(rePasswordField, 1, 5);
 

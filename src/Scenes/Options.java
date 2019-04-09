@@ -41,11 +41,12 @@ public class Options extends Scenes {
         grid.setAlignment(Pos.TOP_CENTER);
 
         Label optionsLabel = new Label("Options");
-        optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
+        Css.setHeaderStyle(optionsLabel);
         optionsLabel.setPadding(new Insets(10,10,10,10));
         grid.add(optionsLabel, 0,0);
 
         Label musicLabel = new Label("Music");
+        Css.setStyle(musicLabel);
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
         if (Music.audio.isPlaying()) {
