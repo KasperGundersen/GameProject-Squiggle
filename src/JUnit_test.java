@@ -2,6 +2,7 @@ import Components.Encryptor;
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.GameLobbyComponents.WordComponents;
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import org.junit.jupiter.api.*;
@@ -146,7 +147,22 @@ public class JUnit_test {
         assertEquals(expResult, test);
     }
 
-
+    @Test
+    public void pointTest(){
+        if(DBConnection.getLoggedIn("test")){
+            return;
+        }else{
+            DBConnection.setLoggedIn("test",1);
+        }
+        UserInfo.setUserName("test");
+        int userid = DBConnection.getUserID("test");
+        DBConnection.setCorrectGuess(userid);
+        PointSystem.setPointsGuesser();
+        int test = DBConnection.getPointsByUserID(userid);
+        int expResult = 150;
+        assertEquals(expResult,test);
+        DBConnection.setLoggedIn("test",0);
+    }
 
 
 }
