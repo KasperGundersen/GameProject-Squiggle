@@ -2,8 +2,6 @@ package Database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -22,10 +20,15 @@ public class HikariCP {
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         config.setPoolName("Squiggle Pool");
-        config.setMaxLifetime(30000);
+        config.setMaxLifetime(35000);
         ds = new HikariDataSource(config);
     }
 
+    /**
+     * Gets a connection from the HikariCP connection pool
+     * @return Connection Connection to the database
+     * @throws SQLException
+     */
     public static Connection getCon() throws SQLException {
         return ds.getConnection();
     }

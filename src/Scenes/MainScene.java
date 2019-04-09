@@ -1,5 +1,6 @@
 package Scenes;
 
+import Components.Threads.Music;
 import Components.Threads.Timers;
 import Components.Toast;
 import Components.UserInfo;
@@ -12,12 +13,15 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * Class which sets scenes
+ */
 public class MainScene {
 
     private static final double HEIGHT = 600;
-    private static final double WIDTH = 1060;
+    private static final double WIDTH = 1000;
 
-    private static Stage stage;
+    public static Stage stage;
 
     // Scenes
     public static Scenes li = new LogIn(WIDTH, HEIGHT);
@@ -25,22 +29,30 @@ public class MainScene {
     public static Scenes su = null;
     public static Scenes mp = null;
     public static Scenes gl = null;
-    public static Scenes lc = null;
     public static Scenes rs = null;
-
 
     // User
     public static UserInfo user = new UserInfo();
-    public static Toast toast = new Toast(stage, WIDTH, HEIGHT);
 
+    /**
+     * Method thats gets the height of the stage
+     * @return returns the height
+     */
     public static double getHEIGHT() {
         return HEIGHT;
     }
-
+    /**
+     * Method thats gets the width of the stage
+     * @return returns the width
+     */
     public static double getWIDTH() {
         return WIDTH;
     }
 
+    /**
+     * Method that set the given scene
+     * @param sc Is the scene the method creates and displays
+     */
     public static void setScene(Scenes sc) {
         Service<Void> service = new Service<Void>() {
             @Override
@@ -71,8 +83,13 @@ public class MainScene {
 
     }
 
+    /**
+     * Method that initialize the stage and sets the titlte
+     * @param stage Is the stages that gets initialized
+     */
     public void initialize(Stage stage) {
         MainScene.stage = stage;
+        MainScene.stage.centerOnScreen();
         MainScene.stage.setTitle("Squiggle");
         MainScene.stage.setOnCloseRequest(e -> {
             e.consume();
@@ -81,12 +98,18 @@ public class MainScene {
         MainScene.stage.setResizable(false);
         setScene(li);
         MainScene.stage.show();
+        MainScene.stage.centerOnScreen();
     }
+
+    /**
+     * Method that close the program correctly. Updates the database, logs out the player and close the current stage
+     */
     public static void closeProgram(){
-        if(ConfirmBox.display("Warning!", "Sure you want to exit?")){
+        if(ConfirmBox.display("Warning!", "Sure you want to \n exit?")){
+            Music.stopMusic();
             Components.GameLobbyComponents.LiveChatComponents.turnOffLiveChatTimer();
-            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             DBConnection.exitGame();
+            DBConnection.setLoggedIn(LogIn.getUserName(), 0);
             Components.Threads.Timers.stopHeartBeat();
             stage.close();
         }

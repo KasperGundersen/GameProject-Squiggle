@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 
 import javax.management.remote.SubjectDelegationPermission;
 import java.io.File;
-
+/**
+ * Class that opens a window where you can read the user manual
+ */
 public class Help extends Scenes{
     private GridPane grid;
     private final double WIDTH = 400, HEIGHT = 500;
@@ -30,7 +32,9 @@ public class Help extends Scenes{
         super(WIDTH, HEIGHT);
         start();
     }
-
+    /**
+     * Method which displays a pop up window, where you can read the  manual
+     */
     public void start() {
         Stage stage = new Stage();
         stage.setTitle("Help - User Manual");

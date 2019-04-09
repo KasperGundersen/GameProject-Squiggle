@@ -34,6 +34,8 @@ public class AvatarComponents {
         VBox vb = new VBox();
         data = FXCollections.observableArrayList();
         listView = new ListView<>();
+        listView.setPrefHeight(450);
+        listView.setPrefWidth(200);
         setIntoLV();
         listView.setItems(data);
         vb.getChildren().add(listView);

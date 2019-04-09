@@ -2,6 +2,7 @@ package Scenes;
 
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
+import Components.Threads.Music;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
@@ -20,8 +21,9 @@ import java.util.Date;
 
 import java.io.File;
 
-
-
+/**
+ * Class thats crates the main menu which contains several buttons for further choices
+ */
 public class MainMenu extends Scenes{
 
     private Label gameStartedLabel;
@@ -31,23 +33,28 @@ public class MainMenu extends Scenes{
         addUIControls(getGp());
     }
 
+    /**
+     * Method that creates the main menu scene
+     * @param gridPane Gridpane which extends from the main scene
+     */
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
         double prefWidth = 200;
 
         // Add Header
-
-        File file = new File("resources/Logo_Main_Menu.png");
+        File file = new File("resources/logos/Logo_MainMenu.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
 
         gridPane.add(iv, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(20, 0,0,0));
 
         // Add error Label
         gameStartedLabel = new Label();
         gameStartedLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+        gameStartedLabel.setStyle("-fx-text-fill: #ffffff");
         gridPane.add(gameStartedLabel, 0,1,2,1);
         GridPane.setHalignment(gameStartedLabel, HPos.CENTER);
 
@@ -99,11 +106,11 @@ public class MainMenu extends Scenes{
 
         Css.setBackground(gridPane);
 
-        // BUTTON ACTION //////////////
+        // BUTTON ACTION
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> {
-            if(ConfirmBox.display("Warning!", "Sure you want to log out?")){
+            if(ConfirmBox.display("Warning!", "Sure you want to \n log out?")){
                 logOutSystem();
             }
         });
@@ -116,25 +123,33 @@ public class MainMenu extends Scenes{
         });
     }
 
+    /**
+     * Method that update the database when the player wants to join the game.
+     * When the first player joins a game the timer starts
+     */
     private void joinGameSystem() {
         int time = (int)((DBConnection.getDrawTimer().getTime() - (new Date().getTime())) / 1000);
-        if (time < 80 && time > 0 && DBConnection.getAmtPlayer() > 0) {
+        if (time < GameLogicComponents.gameTime * 0.84 && time > 0 && DBConnection.getAmtPlayer() > 0) {
             gameStartedLabel.setText("Game already in progress, ends in: " + time + " seconds.");
         } else {
             DBConnection.joinGame();
             MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
-            GameLogicComponents.setPrivileges();
             LiveChatComponents.cleanChat();
+            GameLogicComponents.setPrivileges();
             MainScene.setScene(MainScene.gl);
             MainScene.mm = null;
         }
     }
 
+    /**
+     * Methods that logs you out of the database and returns you to the log in scene
+     */
     private void logOutSystem(){
         MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
         MainScene.setScene(MainScene.li);
         MainScene.mm = null;
         DBConnection.setLoggedIn(UserInfo.getUserName(), 0);
+        Music.stopMusic();
     }
 }
 

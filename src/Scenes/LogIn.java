@@ -1,35 +1,29 @@
 package Scenes;
 
 import Components.Authentication;
+import Components.Threads.Music;
 import Components.UserInfo;
 import Database.DBConnection;
 import css.Css;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 import java.io.File;
 
 import static css.Css.toolTip;
 
+/**
+ * Class which makes the log in scene. The scene contains of log in labels, register button, help-button and optiions-button
+ */
 public class LogIn extends Scenes {
 
-    // Fields
     private static TextField nameField;
     private static PasswordField passwordField;
-
-    // Error message
     private static Label loginError;
 
     LogIn(double WIDTH, double HEIGHT) {
@@ -37,6 +31,10 @@ public class LogIn extends Scenes {
         addUIControls(getGp());
     }
 
+    /**
+     * Method which gets the username written
+     * @return returns the usernanme written in the namefield
+     */
     public static String getUserName(){
         if(nameField.getText() == null){
             return null;
@@ -44,6 +42,10 @@ public class LogIn extends Scenes {
         return nameField.getText();
     }
 
+    /**
+     * Method which gets the password written
+     * @return Returns the password written in the password field
+     */
     public static String getPassword(){
         if(passwordField.getText() == null){
             return null;
@@ -51,28 +53,28 @@ public class LogIn extends Scenes {
         return passwordField.getText();
     }
 
+    /**
+     * Method which creates the log in scene
+     * @param gridPane Uses a Gridpane which extends from main scene
+     */
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
 
-        File file = new File("resources/Logo.png");
+        File file = new File("resources/logos/Logo_LogIn.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
         gridPane.add(iv,0,0,2,1);
 
-        // Add Header
-        //Label headerLabel = new Label("Login");
-        //headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-        //Css.setHeaderStyle(headerLabel);
-        //gridPane.add(headerLabel, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        GridPane.setMargin(iv, new Insets(10, 0,10,0));
 
         //Add error Label
         loginError = new Label();
-        Css.setText(loginError);
+        Css.errorFont(loginError);
         gridPane.add(loginError,1,0,2,2);
         loginError.setVisible(false);
-        super.errorFont(loginError);
+        Css.errorFont(loginError);
 
         // Add Name Label
         Label nameLabel = new Label("Username: ");
@@ -108,7 +110,6 @@ public class LogIn extends Scenes {
         logInButton.setPrefWidth(200);
         gridPane.add(logInButton, 0, 4, 2, 1);
         GridPane.setHalignment(logInButton, HPos.CENTER);
-        GridPane.setMargin(logInButton, new Insets(20, 0,20,0));
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
@@ -117,9 +118,6 @@ public class LogIn extends Scenes {
         regButton.setPrefWidth(200);
         gridPane.add(regButton, 0, 5, 2, 1);
         GridPane.setHalignment(regButton, HPos.CENTER);
-        GridPane.setMargin(regButton, new Insets(20, 0, 20, 0));
-
-
 
         // Help button
         Button helpbutton = new Button("Help");
@@ -140,7 +138,6 @@ public class LogIn extends Scenes {
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());
-       // optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         regButton.setOnAction(e -> {
             MainScene.su = new SignUp(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.su);
@@ -148,21 +145,30 @@ public class LogIn extends Scenes {
         });
         helpbutton.setOnAction(e -> new Help(super.getWIDTH(), super.getHEIGHT()));
 
-
         Css.setBackground(gridPane);
-        //changeBackground(getGrid(), UserInfo.getColor());
     }
 
+    /**
+     * Method which logs in the user to the database
+     */
     private void loginSystem(){
         Authentication.logIn(getWIDTH(), getHEIGHT());
         UserInfo.setUserName(getUserName());
         UserInfo.initializeUser(DBConnection.getUserID(getUserName()));
     }
 
+    /**
+     * Method which checks if the log in information is correct
+     * @param b if the log in information is wrong, a errormessage will occour
+     */
     public static void visibleLoginError(boolean b){
         loginError.setVisible(b);
     }
 
+    /**
+     * Method which set the error text
+     * @param newText
+     */
     public static void setTextLoginError(String newText) {
         loginError.setText(newText);
     }

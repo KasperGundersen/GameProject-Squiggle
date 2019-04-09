@@ -4,11 +4,8 @@ package Database;
 import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.Player;
-import Components.Threads.Timers;
 import Components.UserInfo;
-import Scenes.GameLobby;
-import Scenes.MainMenu;
-import Scenes.MainScene;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +14,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Class containing all the different methods which involves connection to the database
+ */
 public class DBConnection {
-
-    public static void changePassword(int userID, String hash, String salt){
+    /**
+     * Method which changes the password of an user
+     * @param userID the userID of the user
+     * @param hash hashing of the password
+     * @param salt salting of the password
+     * @return true or false depending on whether the change was successful or not
+     */
+    public static boolean changePassword(int userID, String hash, String salt){
         Connection con = null;
         PreparedStatement prepStmt = null;
         try{
@@ -30,27 +36,64 @@ public class DBConnection {
             prepStmt.setString(2, salt);
             prepStmt.setInt(3, userID);
             prepStmt.executeUpdate();
+            return true;
 
         }catch(SQLException e){
             e.printStackTrace();
+            return false;
         }finally{
             closeConnection(con, prepStmt, null);
         }
     }
 
-    // Method that registers a user
+    public static void changeTime() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "update DRAW set timer = now() order by gameID limit 1";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt,res);
+        }
+    }
+
+    /**
+     * Method which registers a new user
+     * @param userName username of the user
+     * @param hash hashing of password
+     * @param salt salting of password
+     * @param userEmail the email of the user
+     * @param avatarID choosen avatarID by the user
+     */
     public static void registerUser(String userName, String hash, String salt, String userEmail, int avatarID) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
+            String query = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, userName);
             prepStmt.setString(2, hash);
             prepStmt.setString(3, salt);
             prepStmt.setString(4, userEmail);
             prepStmt.setInt(5, avatarID);
+            prepStmt.executeUpdate();
+
+            query = "INSERT INTO STATS VALUES(LAST_INSERT_ID(), 0, 0)";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "COMMIT;";
+            prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch (SQLSyntaxErrorException e) {
             e.printStackTrace();
@@ -61,7 +104,13 @@ public class DBConnection {
         }
     }
 
-    // This method looks for "input" in the given column in the database
+
+    /**
+     * Method which looks for input in the given column in the database
+     * @param columnName name of the column
+     * @param input input in that specific column
+     * @return boolean depending on the outcome
+     */
     public static boolean exists(String columnName, String input) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -83,7 +132,11 @@ public class DBConnection {
         return false;
     }
 
-    // Makes a user show as logged in when logged in
+    /**
+     * Method which updates a user's logged in status
+     * @param username username of the user
+     * @param loggedIn logged in or logged out
+     */
     public static void setLoggedIn(String username, int loggedIn) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -102,6 +155,12 @@ public class DBConnection {
     }
 
     // Gets salt, used for comparing passwords
+
+    /**
+     * Gets the salt of a users password. Used for comparing passwords
+     * @param username of the user
+     * @return the salt of the password to the user
+     */
     public static String getSalt(String username) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -125,6 +184,12 @@ public class DBConnection {
     }
 
     // For seing if a user is already logged in or not
+
+    /**
+     * Method which checks whether a user is logged in or not
+     * @param username username of that user
+     * @return boolean depending on the outcome
+     */
     public static boolean getLoggedIn(String username) {
         boolean loggedIn = false;
         Connection con = null;
@@ -148,6 +213,13 @@ public class DBConnection {
     }
 
     // General method for closing a connection, is to be used everytime getCon() is used
+
+    /**
+     * General method for closing a connection
+     * @param con Connection to ble closed
+     * @param stmt Statement to be closed
+     * @param res ResultSet to be closed
+     */
     public static void closeConnection(Connection con, Statement stmt, ResultSet res) {
         try {
             if (res != null) {
@@ -166,6 +238,12 @@ public class DBConnection {
 
 
     // Sets avatarID in the database, making the user have same avatarID on next LogIn
+
+    /**
+     * Sets the avatarID in the database
+     * @param userID userID of the user
+     * @param index index of that avatar
+     */
     public static void setAvatarID(int userID, int index) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -183,31 +261,13 @@ public class DBConnection {
         }
     }
 
-    public static ArrayList<String> getWords(String category) {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "SELECT word FROM LIBRARY WHERE category=?;";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setString(1, category);
-            res = prepStmt.executeQuery();
-            ArrayList<String> wordList = new ArrayList<>();
-            while(res.next()) {
-                wordList.add(res.getString("word"));
-                return wordList;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }
-
-
     // Fetches userID given username, used upon initialization of user, log in
+
+    /**
+     * Gets the userID of the username
+     * @param username username of the user
+     * @return the userID of the username
+     */
     public static int getUserID(String username) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -229,7 +289,9 @@ public class DBConnection {
         return 0;
     }
 
-    // Removes user from GAME table when user quits or game is over
+    /**
+     * Removes a user from GAME table when user quits or game is over
+     */
     public static void exitGame() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -246,6 +308,9 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Creates a new LIBRARY
+     */
     public static void createLib() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -269,12 +334,16 @@ public class DBConnection {
         }
     }
 
-    public static void insertIntoDB(String words) {
+    /**
+     * Inserts word into the database
+     * @param word the word to be inserted
+     */
+    public static void insertIntoDB(String word) {
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String insert = "INSERT INTO LIBRARY VALUE (default, \"" +  words + "\");";
+            String insert = "INSERT INTO LIBRARY VALUE (default, \"" +  word + "\");";
             prepStmt = con.prepareStatement(insert);
             prepStmt.executeUpdate();
         } catch (SQLSyntaxErrorException e) {
@@ -286,7 +355,10 @@ public class DBConnection {
         }
     }
 
-    //Livechat methods start
+    /**
+     * Inserts a new message into the CHAT table
+     * @param message the message to be inserted
+     */
     public static void insertMessage(String message) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -313,32 +385,46 @@ public class DBConnection {
         }
     }
 
-    public static ArrayList<String> getMessages() {
+    /**
+     * Method whichs cleans the CHAT table in the database
+      */
+    public static void cleanChat() {
         Connection con = null;
         PreparedStatement prepStmt = null;
-        ResultSet res = null;
         try {
             con = HikariCP.getCon();
-            String query = "SELECT input, userID FROM CHAT";
-            prepStmt = con.prepareStatement(query);
-            res = prepStmt.executeQuery();
-
-            ArrayList<String> messages = new ArrayList<>();
-            while (res.next()) {
-                if (!(res.getString("input").equals(""))) {
-                    int userId = res.getInt("userID");
-                    messages.add(getUsername(userId) + ": " + res.getString("input"));
-                }
-            }
-            return messages;
-        } catch (SQLException e) {
+                String query = "DELETE FROM CHAT;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.executeUpdate();
+        } catch(SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection(con, prepStmt, res);
+            closeConnection(con, prepStmt, null);
         }
-        return null;
     }
 
+    /**
+     * Method whichs resets the correctGuess column in the database
+     */
+    public static void resetCorrectGuess() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "update GAME set correctGuess = 0;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt,null);
+        }
+    }
+
+    /**
+     * Method whichs gets the new messages sent to the database
+     * @return all new messages in a StringBuilder
+     */
     public static StringBuilder getNewMessages() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -374,6 +460,10 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Method which gets the highest chatID in the CHAT table. Necessary for getting the new messages from the chat
+     * @return the highest chat ID
+     */
     public static int getHighestChatID() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -396,28 +486,14 @@ public class DBConnection {
         return -1;
     }
 
-    public static boolean deleteMessages() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "delete from CHAT";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
-            return true;
-        }catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }finally {
-            closeConnection(con, prepStmt, res);
-        }
-    }
-
-
-    //Livechat methods end
 
     // Get username given userID
+
+    /**
+     * Gets the username of an given userID
+     * @param userId the userID of the user
+     * @return the username
+     */
     public static String getUsername(int userId) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -441,6 +517,11 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     *  Method which gets the email of an useriD
+     * @param userId the userID of an user
+     * @return the mail of that particular user
+     */
     public static String getUserEmail(int userId) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -464,7 +545,10 @@ public class DBConnection {
         return null;
     }
 
-    // Gets number of players in a game
+    /**
+     * Method which gets the amount of players in game
+     * @return Amount of players in game
+     */
     public static int getAmtPlayer(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -485,23 +569,11 @@ public class DBConnection {
         return 0;
     }
 
-    public static void resetCorrectGuesses(){
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try{
-            con = HikariCP.getCon();
-            String query = "update GAME set correctGuess = 0 where correctGuess > 0";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
-        }catch(SQLException e){
-            e.printStackTrace();
-        }finally{
-            closeConnection(con, prepStmt, res);
-        }
-    }
 
-    // Gets the amount of points user has
+    /**
+     * Method which gets the amount of point the user has
+      * @return amount of points
+     */
     public static int getPoints(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -522,6 +594,11 @@ public class DBConnection {
         return 0;
     }
 
+    /**
+     * Method which gets amount of points to a specific useriD
+     * @param userID the useriD of the user
+     * @return amount of points to that user
+     */
     public static int getPointsByUserID(int userID){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -542,15 +619,18 @@ public class DBConnection {
         return 0;
     }
 
-    // Updates the amount of points this user has
-    public static void updatePoints(int addPoints, int userID){
+    /**
+     * Method which updates amount of points to the user
+      * @param addPoints how many points to be added
+     */
+    public static void updatePoints(int addPoints){
         Connection con = null;
         PreparedStatement prepStmt = null;
         int oldPoints = getPoints();
         int newPoints = oldPoints + addPoints;
         try {
             con = HikariCP.getCon();
-            String query = "UPDATE GAME SET points = " + addPoints +" WHERE userID =" + userID;
+            String query = "UPDATE GAME SET points = " + newPoints +" WHERE userID =" + UserInfo.getUserID();
             prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch(SQLException e) {
@@ -560,7 +640,10 @@ public class DBConnection {
         }
     }
 
-    // Fetches avatarID from database, allows game to show the users avatar inGame using UserInfo.avatarID variable
+    /**
+     * Method which updates the avatarID of a user
+     * @param userID the userID of the user to be updated
+     */
     public static void updateAvatarID(int userID) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -581,7 +664,10 @@ public class DBConnection {
         }
     }
 
-    // returns a list of Players (all the people in GAME). A player has ID, name, avatarId and points
+    /**
+     * Method which gets an list of all the players in game
+     * @return list of all the players
+     */
     public static ArrayList<Player> getPlayers() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -608,6 +694,10 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Method which updated the correctGuess column to a user
+     * @param userID useriD of the user
+     */
     public static void setCorrectGuess(int userID){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -624,7 +714,10 @@ public class DBConnection {
         }
     }
 
-    // Gets the number of people who has guessed correctly
+    /**
+     * Method which gets how many players who have guessed correctly in game
+     * @return the amount of correct guesses
+     */
     public static int getAmtCorrect(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -634,11 +727,10 @@ public class DBConnection {
             String query = "SELECT SUM(correctGuess) FROM GAME;";
             prepStmt = con.prepareStatement(query);
             res = prepStmt.executeQuery();
-            int result = 0;
             if (res.next()) {
-                result = res.getInt("SUM(correctGuess)");
+                return res.getInt("SUM(correctGuess)");
             }
-            return result;
+            return 0;
         } catch (SQLException e) {
             e.printStackTrace();
             return 0;
@@ -647,8 +739,14 @@ public class DBConnection {
         }
     }
 
-    // Uploads image to database
+
+    /**
+     * Method which uploads an image to the database
+     * @param blob ????
+     * @param word ???
+     */
     public static void uploadImage(byte[] blob, String word) {
+        System.out.println("Uploads image");
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
@@ -668,6 +766,10 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Method which updates an image in the database
+     * @param blob ???
+     */
     public static void updateImage(byte[] blob){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -683,6 +785,7 @@ public class DBConnection {
             closeConnection(con, prepStmt, null);
         }
     }
+
 
     public static InputStream getImage(){
         Connection con = null;
@@ -769,6 +872,7 @@ public class DBConnection {
                 cal1.set(Calendar.HOUR_OF_DAY, cal2.get(Calendar.HOUR_OF_DAY));
                 cal1.set(Calendar.MINUTE, cal2.get(Calendar.MINUTE));
                 cal1.set(Calendar.SECOND, cal2.get(Calendar.SECOND));
+                cal1.add(Calendar.SECOND, 3600);
                 date = cal1.getTime();
             }
             return date;
@@ -803,7 +907,131 @@ public class DBConnection {
             UserInfo.setDrawRound(currentMax);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
         }
 
+    }
+
+    public static boolean playerToDraw(int currentRound) {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT userID FROM GAME WHERE playerNr = ?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, currentRound);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return false;
+    }
+
+    public static int getMaxRound() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "SELECT MAX(playerNr) AS maxNr FROM GAME;";
+            prepStmt = con.prepareStatement(query);
+            res = prepStmt.executeQuery();
+            if (res.next()) {
+                return res.getInt("maxNr");
+            }
+            return -1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Gets the amount of games played for a specific player
+     * @return amount of games played by the user
+     */
+    public static int getGamesPlayed(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesPlayed AS gplayed FROM STATS WHERE userID =?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gplayed");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Gets the amount of games won for a specific user
+     * @return amount of games won by the user
+     */
+    public static int getGamesWon(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesWon AS gwon FROM STATS WHERE userID = ?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gwon");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Method that updates the amount of games won and played in the table STATS
+     * @param won checks if a player has won the game
+     */
+    public static void updateStats(boolean won){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "UPDATE STATS SET gamesPlayed = gamesPlayed + 1 WHERE userID =?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            prepStmt.executeUpdate();
+            if(won){
+                query = "UPDATE STATS SET gamesWon = gamesWon + 1 WHERE userID =?;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.executeUpdate();
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, null);
+        }
     }
 }

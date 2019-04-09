@@ -15,13 +15,16 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
 
+/**
+ * Class thats creates and displays the MyPage, where you can view your avatar, and change the avatar and password
+ */
 public class MyPage extends Scenes{
     private static Button backButton;
     private static Button buttonChoose;
@@ -32,7 +35,6 @@ public class MyPage extends Scenes{
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
 
-    //Change by max
     private int avatarID = UserInfo.getAvatarID();
 
     public MyPage(double WIDTH, double HEIGHT){
@@ -40,12 +42,17 @@ public class MyPage extends Scenes{
         addUIControls(getGp());
     }
 
+    /**
+     * Method which creates the MyPage scene
+     * @param gridPane extendes a Gridpane from the MainScene
+     */
     private void addUIControls(GridPane gridPane){
-        // Header label
-
-        File file = new File("resources/Logo_MyPage.png");
+        // Header image
+        File file = new File("resources/logos/Logo_MyPage.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
+        iv.setFitHeight(180);
+        iv.setPreserveRatio(true);
 
         gridPane.add(iv, 0, 0, 5, 1);
         gridPane.setHalignment(iv, HPos.CENTER);
@@ -68,9 +75,9 @@ public class MyPage extends Scenes{
 
         // Change password Button
         buttonChangePassword = new Button("Change password");
-        Css.setStyle(buttonChangePassword);
+        Css.buttonStyleRed(buttonChangePassword);
         buttonChangePassword.setPrefHeight(40);
-        buttonChangePassword.setPrefWidth(150);
+        buttonChangePassword.setPrefWidth(180);
         gridPane.add(buttonChangePassword, 0, 3, 2, 1);
         gridPane.setHalignment(buttonChangePassword, HPos.LEFT);
 
@@ -87,26 +94,22 @@ public class MyPage extends Scenes{
         avatarImage.setFitWidth(150);
         gridPane.setHalignment(avatarImage, HPos.LEFT);
 
-
         // Avatar selection
         // Select new avatar label
         Label newAvatar = new Label("Select new avatar:");
-        Css.setLabelStyle(newAvatar);
-        newAvatar.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        gridPane.add(newAvatar, 1, 1, 3, 1);
+        Css.setHeaderStyle(newAvatar);
+        gridPane.add(newAvatar, 1, 0, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
-        gridPane.setMargin(newAvatar, new Insets(0,0,0,550));
-
+        gridPane.setMargin(newAvatar, new Insets(100,0,0,495));
 
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
         avatarView.setFitWidth(360);
         avatarView.setFitHeight(360);
-        gridPane.add(avatarView, 1, 2, 3, 5);
+        gridPane.add(avatarView, 1, 0, 3, 5);
         gridPane.setHalignment(avatarView, HPos.LEFT);
         gridPane.setValignment(avatarView, VPos.TOP);
-        gridPane.setMargin(avatarView, new Insets(0, 0, 0, 450));
-
+        gridPane.setMargin(avatarView, new Insets(163, 0, 0, 440));
 
         //Add button to go left
         Button leftButton = new Button("<");
@@ -121,25 +124,29 @@ public class MyPage extends Scenes{
         gridPane.add(rightButton, 1,2, 3, 5);
         GridPane.setHalignment(rightButton, HPos.LEFT);
         gridPane.setValignment(rightButton, VPos.CENTER);
-        GridPane.setMargin(rightButton, new Insets(0,0,0,745));
+        GridPane.setMargin(rightButton, new Insets(0,0,0,755));
         super.styleSelectorButton(rightButton);
 
         // Update current avatar button
         buttonChoose = new Button("Choose avatar");
-        Css.setStyle(buttonChoose);
+        Css.buttonStyleRed(buttonChoose);
         buttonChoose.setPrefHeight(40);
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
         gridPane.setHalignment(buttonChoose, HPos.LEFT);
-        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 350));
+        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 120));
 
         // Back button
         backButton = new Button("Back");
-        Css.setStyle(backButton);
+        Css.buttonStyleRed(backButton);
         backButton.setPrefHeight(40);
         backButton.setPrefWidth(80);
         gridPane.add(backButton, 0, 6, 1, 1);
         gridPane.setHalignment(backButton, HPos.LEFT);
+
+        VBox winsvbox = wins();
+        gridPane.add(winsvbox, 0,1,3,3);
+        gridPane.setMargin(winsvbox, new Insets(100,0,0,215));
 
         // Button action
         buttonChangePassword.setOnAction(e -> {
@@ -154,7 +161,6 @@ public class MyPage extends Scenes{
             UserInfo.setAvatarID(avatarID);
             DBConnection.setAvatarID(UserInfo.getUserID(), avatarID);
         });
-
 
         rightButton.setOnAction(e -> {
             avatarID = super.loopAvatar(avatarID,1, 1,getMax());
@@ -172,15 +178,21 @@ public class MyPage extends Scenes{
         });
     }
 
-    // Methods that interact with images in resources
+    /**
+     * Methods that interact with images in resources
+     * @param avatarID uses the avatarID to get the chorence image
+     * @return returns the avatar image
+     */
     private Image chosenAvatar(int avatarID){
         File file = new File(fileLocation + (avatarID) + ".jpg");
         Image image = new Image(file.toURI().toString());
         return image;
     }
 
-    // ///////////////////NEW PASSWORD POPUP ///////////////////////////////////
-    // Method for creating new password - new popup window
+    /**
+     * Method for creating new password - new popup window
+     * @param title The title of the popup window
+     */
     private void displayNewPassword(String title){
         Stage window = new Stage();
 
@@ -189,7 +201,7 @@ public class MyPage extends Scenes{
         window.setMinWidth(250);
 
         Label header = new Label("Change password");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+        Css.setHeaderStyle(header);
         newPassword = new PasswordField();
         newPassword.setPrefHeight(40);
         newPassword.setPrefWidth(200);
@@ -202,9 +214,11 @@ public class MyPage extends Scenes{
         Button save = new Button("Save change");
         save.setPrefHeight(40);
         save.setPrefWidth(200);
+        Css.buttonStyleRed(save);
         save.setOnAction(e -> {
-            Authentication.changePassword();
-            window.close();
+            if(changePassword()){
+                window.close();
+            }
         });
 
         GridPane grid = new GridPane();
@@ -216,20 +230,56 @@ public class MyPage extends Scenes{
         grid.add(save, 0, 3);
         grid.setHalignment(save, HPos.CENTER);
 
+        Css.setBackground(grid);
         Scene scene = new Scene(grid, 300, 300);
         window.setScene(scene);
         window.showAndWait();
     }
 
-    public static String changePassword(){
-        if(newPassword.getText() == null || repeatPassword.getText() == null){
-            ConfirmBox.display("Warning", "You have to enter a new password");
-            return null;
+    /**
+     * Method that checks if your new password is correct.
+     * @return Return a boolean thats reflect the status of the password
+     */
+    public static boolean changePassword(){
+        if(newPassword.getText().equals("") || repeatPassword.getText().equals("")){
+            ConfirmBox.displayWarning("Warning", "You have to enter a new password");
+            return false;
+        }else if(!(newPassword.getText().equals(repeatPassword.getText()))){
+            ConfirmBox.displayWarning("Warning", "Your passwords have to be equal");
+            return false;
+        }else{
+            if(Authentication.changePassword(newPassword.getText())){
+                ConfirmBox.displayWarning("Success", "Your password was successfully changed!");
+            }
         }
-        if(!(newPassword.getText().equals(repeatPassword.getText()))){
-            ConfirmBox.display("Warning", "Your password have to be equal");
-            return null;
+        return true;
+    }
+
+    /**
+     * Method to put the games played, won and a win percentage in a VBox
+     * @return a VBox containing three labels
+     */
+    private static VBox wins(){
+
+        VBox vbox = new VBox(5);
+
+        Label gamesPlayed = new Label("Games Played:     " + DBConnection.getGamesPlayed());
+        Css.setHeaderStyle(gamesPlayed);
+        Label gamesWon = new Label("Games Won:         " + DBConnection.getGamesWon());
+        Css.setHeaderStyle(gamesWon);
+
+        double winPercentage;
+        double gplayed = (double)DBConnection.getGamesPlayed();
+        double gwon = (double)DBConnection.getGamesWon();
+        if(gplayed == 0){
+            winPercentage = 0;
+        }else{
+            winPercentage = (gwon/gplayed)*100;
         }
-        return newPassword.getText();
+
+        Label winPercent = new Label("Win Percentage: " + String.format("%.0f", winPercentage) + "%");
+        Css.setHeaderStyle(winPercent);
+        vbox.getChildren().addAll(gamesPlayed, gamesWon, winPercent);
+        return vbox;
     }
 }
