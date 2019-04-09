@@ -2,17 +2,23 @@ package Components.GameLobbyComponents;
 
 import Components.UserInfo;
 import Database.DBConnection;
+import Scenes.MainMenu;
+import Scenes.MainScene;
+import Scenes.Options;
+import Scenes.Results;
 import css.Css;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -28,6 +34,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
+
+import static Components.Threads.Timers.stopHeartBeat;
 
 /**
  * Class that deals with the canvas ingame
@@ -81,10 +89,16 @@ public class CanvasComponents {
         }
         tgLineWidth.selectToggle(lineWidth1);
 
+        Button leaveButton = new Button("Leave game");
+        Button optionButton = new Button("Options");
+        Css.setStyle(leaveButton);
+        Css.setStyle(optionButton);
+
+
         cp = new ColorPicker();
         cp.setValue(Color.BLACK);
         Css.setStyle(cp);
-        hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
+        hb.getChildren().addAll(leaveButton, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4, optionButton);
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
 
@@ -95,6 +109,7 @@ public class CanvasComponents {
         Image rubber = new Image(rubberFile.toURI().toString());
         ImageCursor penCur = new ImageCursor(pencil, 40, pencil.getHeight()-40);
         ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
+
 
         cp.setOnAction(e-> {
             cp.setValue(cp.getValue());
@@ -120,6 +135,17 @@ public class CanvasComponents {
         lineWidth4.setOnAction(e->{
             gc.setLineWidth(10);
         });
+
+        leaveButton.setOnAction(e -> {
+            DBConnection.exitGame();
+            stopHeartBeat();
+            MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
+            MainScene.setScene(MainScene.mm);
+            MainScene.gl = null;
+            GameLogicComponents.setCurrentRound(1);
+        });
+
+        optionButton.setOnAction(e -> new Options(MainScene.getWIDTH(), MainScene.getHEIGHT()));
         return hb;
     }
 
