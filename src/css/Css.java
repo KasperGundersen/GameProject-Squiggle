@@ -140,7 +140,7 @@ public class Css {
      * @param label the label that get styled
      */
     public static void errorFont(Label label){
-        label.setStyle("-fx-font-weight: ITALIC;\n" +
+        label.setStyle("-fx-font-style: ITALIC;\n" +
                 "   -fx-font-family: \"Cooper Black\";\n" +
                 "   -fx-text-fill: white;\n" +
                 "   -fx-font-size: 17px;");
