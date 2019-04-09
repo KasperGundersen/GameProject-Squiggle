@@ -28,6 +28,11 @@ public class MainMenu extends Scenes{
 
     private Label gameStartedLabel;
 
+    /**
+     * Constructor of the MainMenu scene
+     * @param width width of the scene
+     * @param height height of the scene
+     */
     public MainMenu(double width, double height) {
         super(width, height);
         addUIControls(getGp());

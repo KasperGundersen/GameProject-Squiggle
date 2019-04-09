@@ -43,6 +43,10 @@ public class GameLogicComponents {
         currentRound++;
     }
 
+    /**
+     * Sets the curent round of the game
+     * @param currentRound
+     */
     public static void setCurrentRound(int currentRound) {
         GameLogicComponents.currentRound = currentRound;
     }

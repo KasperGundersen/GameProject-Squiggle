@@ -30,7 +30,7 @@ import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Class that deals with teh canvas ingame
+ * Class that deals with the canvas ingame
  */
 public class CanvasComponents {
     private static ToggleButton draw;
@@ -87,7 +87,6 @@ public class CanvasComponents {
         hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
-        //////////////////////////////////
 
 
         File pencilFile = new File("resources/icons/pencil.png");
@@ -151,7 +150,6 @@ public class CanvasComponents {
         }else{
             setImage();
         }
-        //////////////////////////////////////////////
         return hb;
     }
     public static void makeDrawable(GraphicsContext gcon) {
@@ -174,9 +172,6 @@ public class CanvasComponents {
             });
         }
     }
-
-
-    //////////// Here begins code that deals with uploading canvas to DB ///////////////
 
     /**
      * Main upload method. Uploads drawing as bytes
