@@ -65,7 +65,7 @@ public class MainMenu extends Scenes{
 
         // Join game button
         Button joinGameButton = new Button("Join Game");
-        Css.buttonStyleRed(joinGameButton);
+        Css.setStyle(joinGameButton);
         joinGameButton.setPrefHeight(prefHeight);
         joinGameButton.setDefaultButton(true);
         joinGameButton.setPrefWidth(prefWidth);
@@ -75,7 +75,7 @@ public class MainMenu extends Scenes{
 
         // My Page button
         Button myPageButton = new Button("My page");
-        Css.buttonStyleRed(myPageButton);
+        Css.setStyle(myPageButton);
         myPageButton.setPrefHeight(prefHeight);
         myPageButton.setPrefWidth(prefWidth);
         gridPane.add(myPageButton, 0, 3, 2, 1);
@@ -84,7 +84,7 @@ public class MainMenu extends Scenes{
 
         // Options button
         Button optionButton = new Button("Options");
-        Css.buttonStyleRed(optionButton);
+        Css.setStyle(optionButton);
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(prefWidth);
         gridPane.add(optionButton, 0,4, 2, 1);
@@ -93,7 +93,7 @@ public class MainMenu extends Scenes{
 
         // Log Out button
         Button logOutButton = new Button("Log Out");
-        Css.buttonStyleRed(logOutButton);
+        Css.setStyle(logOutButton);
         logOutButton.setPrefHeight(prefHeight);
         logOutButton.setPrefWidth(prefWidth);
         gridPane.add(logOutButton, 0,5, 2, 1);
@@ -102,7 +102,7 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-        Css.buttonStyleRed(quitButton);
+        Css.setStyle(quitButton);
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(prefWidth);
         gridPane.add(quitButton, 0, 6, 2, 1);

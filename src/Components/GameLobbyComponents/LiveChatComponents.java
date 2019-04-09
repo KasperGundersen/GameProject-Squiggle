@@ -57,7 +57,7 @@ public class LiveChatComponents {
         tf.setPrefWidth(125);
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
-        Css.buttonStyleRed(btn);
+        Css.setStyle(btn);
         btn.setPrefWidth(80);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);

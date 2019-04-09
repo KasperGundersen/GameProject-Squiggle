@@ -13,7 +13,7 @@ public class Music {
      */
 
     private static Task task;
-    private static final File file = new File("resources/music/music.wav");
+    private static final File file = new File("resources/music/music1.wav");
     public static final AudioClip audio = new AudioClip(file.toURI().toString());
 
     /**

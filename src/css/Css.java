@@ -31,7 +31,7 @@ public class Css {
                 "-fx-border-color: #9a4a7c;" +
                 "-fx-border-width: 3px;");
     }
-
+    //LABELS//
     /**
      * Method that styles header labels
      * @param label the label that get styled
@@ -46,10 +46,20 @@ public class Css {
      * Method that styles labels
      * @param label the label that get styled
      */
-    public static void setLabelStyle(Label label) {
+    public static void setStyle(Label label) {
         label.setStyle("-fx-text-fill: white;" +
                 "-fx-font-size: 14;\n" +
                 "-fx-font-family: \"Gill Sans Ultra Bold\";");
+    }
+    /**
+     * Method that styles the error labels
+     * @param label the label that get styled
+     */
+    public static void setErrorStyle(Label label){
+        label.setStyle("-fx-font-style: ITALIC;\n" +
+                "   -fx-font-family: \"Cooper Black\";\n" +
+                "   -fx-text-fill: white;\n" +
+                "   -fx-font-size: 17px;");
     }
 
     /**
@@ -78,7 +88,7 @@ public class Css {
      * Method that styles togglebuttons
      * @param button the button that get styled
      */
-    public static void buttonStyleRed(ToggleButton button){
+    public static void setStyle(ToggleButton button){
         button.setStyle("-fx-padding: 8 15 15 15;\n" +
                 "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
                 "    -fx-background-radius: 8;\n" +
@@ -99,7 +109,7 @@ public class Css {
      * Method that styles buttons
      * @param button the button that get styled
      */
-    public static void buttonStyleRed(Button button){
+    public static void setStyle(Button button){
         button.setStyle("-fx-padding: 8 15 15 15;\n" +
                 "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
                 "    -fx-background-radius: 8;\n" +
@@ -119,7 +129,7 @@ public class Css {
      * Method that styles the colorpicker
      * @param colorPicker the colorpicker that get styled
      */
-    public static void buttonStyleRed(ColorPicker colorPicker){
+    public static void setStyle(ColorPicker colorPicker){
         colorPicker.setStyle("-fx-padding: 8 15 15 15;\n" +
                 "    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;\n" +
                 "    -fx-background-radius: 8;\n" +
@@ -133,16 +143,5 @@ public class Css {
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
                 "    -fx-font-size: 1.1em;");
-    }
-
-    /**
-     * Method that styles the error labels
-     * @param label the label that get styled
-     */
-    public static void errorFont(Label label){
-        label.setStyle("-fx-font-style: ITALIC;\n" +
-                "   -fx-font-family: \"Cooper Black\";\n" +
-                "   -fx-text-fill: white;\n" +
-                "   -fx-font-size: 17px;");
     }
 }

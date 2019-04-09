@@ -40,10 +40,10 @@ class ConfirmBox{
         label.setStyle("-fx-text-fill: white;");
 
         Button yesButton = new Button("Yes");
-        Css.buttonStyleRed(yesButton);
+        Css.setStyle(yesButton);
 
         Button noButton = new Button("No");
-        Css.buttonStyleRed(noButton);
+        Css.setStyle(noButton);
 
         yesButton.setOnAction(e -> {
             answer = true;
@@ -95,7 +95,7 @@ class ConfirmBox{
         label.setStyle("-fx-text-fill: white;");
 
         Button okBtn = new Button("Ok");
-        Css.buttonStyleRed(okBtn);
+        Css.setStyle(okBtn);
 
         okBtn.setOnAction(e -> {
             stage.close();

@@ -127,6 +127,7 @@ public class Help extends Scenes{
         grid.add(text,0, 0);
 
         Button backButton = new Button("Back");
+        Css.setStyle(backButton);
         backButton.setPrefWidth(100);
         backButton.setOnAction(e -> { stage.close();});
 
