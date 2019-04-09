@@ -65,7 +65,7 @@ public class MyPage extends Scenes{
         // Username label
         Label nameLabel = new Label("Username: " + UserInfo.getUserName());
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        Css.setLabelStyle(nameLabel);
+        Css.setStyle(nameLabel);
         gridPane.add(nameLabel, 0, 1, 2, 1);
         gridPane.setHalignment(nameLabel, HPos.LEFT);
         gridPane.setValignment(nameLabel, VPos.TOP);
@@ -73,14 +73,14 @@ public class MyPage extends Scenes{
         // Email label
         Label emailLabel = new Label("Email: " + UserInfo.getUserEmail());
         emailLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        Css.setLabelStyle(emailLabel);
+        Css.setStyle(emailLabel);
         gridPane.add(emailLabel, 0, 2, 2, 1);
         gridPane.setHalignment(emailLabel, HPos.LEFT);
         gridPane.setValignment(emailLabel, VPos.TOP);
 
         // Change password Button
         buttonChangePassword = new Button("Change password");
-        Css.buttonStyleRed(buttonChangePassword);
+        Css.setStyle(buttonChangePassword);
         buttonChangePassword.setPrefHeight(40);
         buttonChangePassword.setPrefWidth(180);
         gridPane.add(buttonChangePassword, 0, 3, 2, 1);
@@ -88,7 +88,7 @@ public class MyPage extends Scenes{
 
         // Current avatar
         Label currentAvatarLabel = new Label("Current avatar:");
-        Css.setLabelStyle(currentAvatarLabel);
+        Css.setStyle(currentAvatarLabel);
         currentAvatarLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(currentAvatarLabel, 0, 4, 2, 1);
         gridPane.setHalignment(currentAvatarLabel, HPos.LEFT);
@@ -134,7 +134,7 @@ public class MyPage extends Scenes{
 
         // Update current avatar button
         buttonChoose = new Button("Choose avatar");
-        Css.buttonStyleRed(buttonChoose);
+        Css.setStyle(buttonChoose);
         buttonChoose.setPrefHeight(40);
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
@@ -143,7 +143,7 @@ public class MyPage extends Scenes{
 
         // Back button
         backButton = new Button("Back");
-        Css.buttonStyleRed(backButton);
+        Css.setStyle(backButton);
         backButton.setPrefHeight(40);
         backButton.setPrefWidth(80);
         gridPane.add(backButton, 0, 6, 1, 1);
@@ -219,7 +219,7 @@ public class MyPage extends Scenes{
         Button save = new Button("Save change");
         save.setPrefHeight(40);
         save.setPrefWidth(200);
-        Css.buttonStyleRed(save);
+        Css.setStyle(save);
         save.setOnAction(e -> {
             if(changePassword()){
                 window.close();

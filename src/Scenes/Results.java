@@ -87,7 +87,7 @@ public class Results extends Scenes{
         }
 
         mmBtn = new Button("Main menu");
-        Css.buttonStyleRed(mmBtn);
+        Css.setStyle(mmBtn);
         gp.add(mmBtn, 1, 5, 1, 1);
         mmBtn.setOnAction(e -> {
             DBConnection.exitGame();
