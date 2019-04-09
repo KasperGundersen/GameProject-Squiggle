@@ -74,7 +74,7 @@ public class SignUp extends Scenes {
         errorUserAndMail = new Label("Username or email already taken");
         gridPane.add(errorUserAndMail,1,0,2,2);
         errorUserAndMail.setVisible(false);
-        Css.errorFont(errorUserAndMail);
+        Css.setErrorStyle(errorUserAndMail);
         // Add Name Label
         Label nameLabel = new Label("Username : ");
         gridPane.add(nameLabel, 0,1);
@@ -89,7 +89,7 @@ public class SignUp extends Scenes {
         emptyUser = new Label("Fill in username");
         gridPane.add(emptyUser,2,1,2,1);
         emptyUser.setVisible(false);
-        Css.errorFont(emptyUser);
+        Css.setErrorStyle(emptyUser);
 
         // Add Email Label
         Label emailLabel = new Label("Email : ");
@@ -105,7 +105,7 @@ public class SignUp extends Scenes {
         emptyMail = new Label("Fill in mail");
         gridPane.add(emptyMail,2,2,2,1);
         emptyMail.setVisible(false);
-        Css.errorFont(emptyMail);
+        Css.setErrorStyle(emptyMail);
 
         // Add Name Label
         Label avatarLabel = new Label("Avatar : ");
@@ -137,7 +137,7 @@ public class SignUp extends Scenes {
         gridPane.add(errorPassword,1,3,2,1);
         GridPane.setValignment(errorPassword, VPos.BOTTOM);
         errorPassword.setVisible(false);
-        Css.errorFont(errorPassword);
+        Css.setErrorStyle(errorPassword);
 
         // Add Password Label
         Label passwordLabel = new Label("Password : ");
@@ -153,7 +153,7 @@ public class SignUp extends Scenes {
         emptyPassword = new Label("Fill in password");
         gridPane.add(emptyPassword,2,4,2,1);
         emptyPassword.setVisible(false);
-        Css.errorFont(emptyPassword);
+        Css.setErrorStyle(emptyPassword);
 
         // Add RePassword Label
         Label rePasswordLabel = new Label("Password : ");
@@ -170,7 +170,7 @@ public class SignUp extends Scenes {
         submitButton.setPrefHeight(prefHeight);
         submitButton.setDefaultButton(true);
         submitButton.setPrefWidth(100);
-        Css.buttonStyleRed(submitButton);
+        Css.setStyle(submitButton);
         gridPane.add(submitButton, 0, 6, 4, 1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setValignment(submitButton, VPos.CENTER);
@@ -178,14 +178,14 @@ public class SignUp extends Scenes {
         // Add option button
         Button optionButton = new Button("Options");
         gridPane.add(optionButton, 3, 7);
-        Css.buttonStyleRed(optionButton);
+        Css.setStyle(optionButton);
         GridPane.setHalignment(optionButton, HPos.LEFT);
         GridPane.setValignment(optionButton, VPos.BOTTOM);
 
         // Go back button
         Button backButton = new Button("Go Back");
         gridPane.add(backButton, 0, 7);
-        Css.buttonStyleRed(backButton);
+        Css.setStyle(backButton);
         GridPane.setHalignment(backButton, HPos.LEFT);
         GridPane.setValignment(backButton, VPos.BOTTOM);
 

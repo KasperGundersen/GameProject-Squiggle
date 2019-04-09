@@ -64,7 +64,7 @@ public class Options extends Scenes {
 
         Button submitButton = new Button("Submit");
         submitButton.setPrefWidth(100);
-        Css.buttonStyleRed(submitButton);
+        Css.setStyle(submitButton);
 
         submitButton.setOnAction(e -> {
             window.close();
