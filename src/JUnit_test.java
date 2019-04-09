@@ -1,4 +1,5 @@
 import Components.Encryptor;
+import Components.GameLobbyComponents.GameLogicComponents;
 import Components.GameLobbyComponents.LiveChatComponents;
 import Components.GameLobbyComponents.WordComponents;
 import Components.UserInfo;
@@ -14,6 +15,7 @@ public class JUnit_test {
     public static void setUpClass() throws Exception {
         // Create objects of the classes that are to be tested
         UserInfo test = new UserInfo();
+        DBConnection db = new DBConnection();
     }
 
     @AfterAll
@@ -119,6 +121,32 @@ public class JUnit_test {
         boolean expResult = false;
         assertEquals(expResult, test);
     }
+
+    @Test
+    public void getCurrentRoundTest(){
+        int test = GameLogicComponents.getCurrentRound();
+        int expResult = 1;
+        assertEquals(expResult, 1);
+    }
+
+    @Test
+    public void setCurrentRoundTest(){
+        GameLogicComponents.setCurrentRound(5);
+        int test = GameLogicComponents.getCurrentRound();
+        int expResult = 5;
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void incrementCurrentRoundTest(){
+        GameLogicComponents.setCurrentRound(3);
+        GameLogicComponents.incrementRoundCounter();
+        int test = GameLogicComponents.getCurrentRound();
+        int expResult = 4;
+        assertEquals(expResult, test);
+    }
+
+
 
 
 }
