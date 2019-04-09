@@ -4,7 +4,6 @@ import Components.Threads.Timers;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
-import Scenes.MainMenu;
 import Scenes.MainScene;
 import Scenes.Results;
 import javafx.application.Platform;
@@ -21,7 +20,8 @@ import static Components.Threads.Timers.*;
  */
 public class GameLogicComponents {
 
-    public static int gameTime = 95;
+    // Usually 95
+    public static int gameTime = 40;
     private static int currentRound = 1;
 
     public static int getCurrentRound() {
@@ -64,8 +64,14 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
+                                        System.out.println("DrawRound user: " + UserInfo.getDrawRound() + "Currrent round: " + GameLogicComponents.getCurrentRound());
                                         if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
-                                            while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime())) {
+                                            System.out.println("game "+(int)(DBConnection.getDrawTimer().getTime()));
+                                            System.out.println("now "+((int)(new Date().getTime()) - 2000));
+                                            while (DBConnection.getDrawTimer().getTime() - new Date().getTime() <= 10000) {
+                                            // while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime()) - 2000) {
+                                                System.out.println("Hei1");
+                                                System.out.println("Hei2");
                                             }
                                         }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
