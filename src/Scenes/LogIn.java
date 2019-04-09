@@ -25,6 +25,12 @@ public class LogIn extends Scenes {
     private static PasswordField passwordField;
     private static Label loginError;
 
+
+    /**
+     * Constructor of the logIn scene
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUIControls(getGp());

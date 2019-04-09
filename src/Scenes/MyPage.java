@@ -37,6 +37,11 @@ public class MyPage extends Scenes{
 
     private int avatarID = UserInfo.getAvatarID();
 
+    /**
+     * Constructor of myPage.
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public MyPage(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
         addUIControls(getGp());

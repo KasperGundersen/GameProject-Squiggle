@@ -28,6 +28,11 @@ public class Help extends Scenes{
     private GridPane grid;
     private final double WIDTH = 400, HEIGHT = 500;
 
+    /**
+     * Constructor for the help scene
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public Help(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
         start();

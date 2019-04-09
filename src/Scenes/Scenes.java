@@ -37,7 +37,11 @@ public abstract class Scenes {
     private final double WIDTH;
     private final double HEIGHT;
 
-    //Constructor for abstract class, use width and height for scene
+    /**
+     * Constructor for scenes. Used for most of the other scenes in the game
+      * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public Scenes(double WIDTH, double HEIGHT){
         gp = createGridPane();
         sc = new Scene(gp, WIDTH, HEIGHT);

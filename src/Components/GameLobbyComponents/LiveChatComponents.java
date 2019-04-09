@@ -36,8 +36,6 @@ public class LiveChatComponents {
     public static StringBuilder messages = new StringBuilder();
     private static TextField tf;
 
-    //-----------Right-----------//
-
     /**
      * Implements the layout of the livechat in the gamelobby
      */
