@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 /**
- * Class that update the wordlist in the database with word from a txt document
+ * Class that updates the wordlist in the database with word from a txt document
  */
 public class Words {
     /**

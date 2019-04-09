@@ -25,6 +25,12 @@ public class GameLobby extends Scenes{
 
     public static BorderPane bp;
 
+    /**
+     * Constructor of the gameLobby class
+     * @param WIDTH width of the Scene
+     * @param HEIGHT height of the scene
+     * @param drawing boolean saying if a user is drawing or not
+     */
     public GameLobby(double WIDTH, double HEIGHT, boolean drawing) {
         super(WIDTH, HEIGHT);
         bp = new BorderPane();

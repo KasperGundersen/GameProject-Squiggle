@@ -36,8 +36,6 @@ public class LiveChatComponents {
     public static StringBuilder messages = new StringBuilder();
     private static TextField tf;
 
-    //-----------Right-----------//
-
     /**
      * Implements the layout of the livechat in the gamelobby
      */
@@ -59,7 +57,7 @@ public class LiveChatComponents {
         tf.setPrefWidth(125);
         Button btn = new Button("enter");
         btn.setDefaultButton(true);
-        Css.buttonStyleRed(btn);
+        Css.setStyle(btn);
         btn.setPrefWidth(80);
         HBox hb = new HBox();
         hb.getChildren().addAll(tf,btn);

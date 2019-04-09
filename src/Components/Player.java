@@ -65,6 +65,11 @@ public class Player implements Comparable<Player>{
         return points;
     }
 
+    /**
+     * Method comparing two players by they score
+     * @param o player comparing to
+     * @return -1, 0 or 1 depending on the points of the players
+     */
     @Override
     public int compareTo(Player o) {
         int cmp = this.getPoints() > o.getPoints() ? -1 : this.getPoints() < o.getPoints() ? +1 : 0;

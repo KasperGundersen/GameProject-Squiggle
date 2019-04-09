@@ -14,7 +14,7 @@ public class WordComponents {
 
     /**
      * Method which returns the user interface of the word-part of the game
-     * @return HBox containg the user interface
+     * @return HBox containing the user interface
      */
     public static HBox addWordUI(){
         word = DBConnection.getRandomWord();
@@ -28,7 +28,7 @@ public class WordComponents {
 
     /**
      * Gets the active word
-     * @return
+     * @return the word in game
      */
     public static String getWord(){
         return word;

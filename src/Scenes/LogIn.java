@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import java.io.File;
 
-import static css.Css.toolTip;
 
 /**
  * Class which makes the log in scene. The scene contains of log in labels, register button, help-button and optiions-button
@@ -26,6 +25,12 @@ public class LogIn extends Scenes {
     private static PasswordField passwordField;
     private static Label loginError;
 
+
+    /**
+     * Constructor of the logIn scene
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     LogIn(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         addUIControls(getGp());
@@ -71,14 +76,13 @@ public class LogIn extends Scenes {
 
         //Add error Label
         loginError = new Label();
-        Css.setText(loginError);
+        Css.setErrorStyle(loginError);
         gridPane.add(loginError,1,0,2,2);
         loginError.setVisible(false);
-        Css.errorFont(loginError);
 
         // Add Name Label
-        Label nameLabel = new Label("Username: ");
-        Css.setLabelStyle(nameLabel);
+        Label nameLabel = new Label("Username :");
+        Css.setStyle(nameLabel);
         gridPane.add(nameLabel, 0,1);
 
         // Add Name Text Field
@@ -90,8 +94,8 @@ public class LogIn extends Scenes {
         gridPane.add(nameField, 1,1);
 
         // Add Password Label
-        Label passwordLabel = new Label("Password: ");
-        Css.setLabelStyle(passwordLabel);
+        Label passwordLabel = new Label("Password : ");
+        Css.setStyle(passwordLabel);
         gridPane.add(passwordLabel, 0, 3);
 
         // Add Password Field
@@ -104,7 +108,7 @@ public class LogIn extends Scenes {
 
         // Add Login Button
         Button logInButton = new Button("Login");
-        Css.buttonStyleRed(logInButton);
+        Css.setStyle(logInButton);
         logInButton.setPrefHeight(prefHeight);
         logInButton.setDefaultButton(true);
         logInButton.setPrefWidth(200);
@@ -113,7 +117,7 @@ public class LogIn extends Scenes {
 
         // Add Registration Button
         Button regButton = new Button("Register new user");
-        Css.buttonStyleRed(regButton);
+        Css.setStyle(regButton);
         regButton.setPrefHeight(prefHeight);
         regButton.setPrefWidth(200);
         gridPane.add(regButton, 0, 5, 2, 1);
@@ -121,7 +125,7 @@ public class LogIn extends Scenes {
 
         // Help button
         Button helpbutton = new Button("Help");
-        Css.buttonStyleRed(helpbutton);
+        Css.setStyle(helpbutton);
         helpbutton.setPrefWidth(80);
         gridPane.add(helpbutton, 0, 14);
 
@@ -129,12 +133,12 @@ public class LogIn extends Scenes {
         final Tooltip tooltipName = new Tooltip();
         tooltipName.setText("Write your username");
         nameField.setTooltip(tooltipName);
-        tooltipName.setStyle(toolTip());
+        Css.setStyle(tooltipName);
 
         final Tooltip tooltipPassword = new Tooltip();
         tooltipPassword.setText("Write your password");
         passwordField.setTooltip(tooltipPassword);
-        tooltipPassword.setStyle(toolTip());
+        Css.setStyle(tooltipPassword);
 
         //ButtonAction
         logInButton.setOnAction(e -> loginSystem());

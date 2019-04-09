@@ -46,6 +46,9 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Updates the time of the newest game
+     */
     public static void changeTime() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -154,8 +157,6 @@ public class DBConnection {
         }
     }
 
-    // Gets salt, used for comparing passwords
-
     /**
      * Gets the salt of a users password. Used for comparing passwords
      * @param username of the user
@@ -182,8 +183,6 @@ public class DBConnection {
         }
         return null;
     }
-
-    // For seing if a user is already logged in or not
 
     /**
      * Method which checks whether a user is logged in or not
@@ -212,8 +211,6 @@ public class DBConnection {
         return loggedIn;
     }
 
-    // General method for closing a connection, is to be used everytime getCon() is used
-
     /**
      * General method for closing a connection
      * @param con Connection to ble closed
@@ -236,9 +233,6 @@ public class DBConnection {
         }
     }
 
-
-    // Sets avatarID in the database, making the user have same avatarID on next LogIn
-
     /**
      * Sets the avatarID in the database
      * @param userID userID of the user
@@ -260,32 +254,6 @@ public class DBConnection {
             closeConnection(con, prepStmt, null);
         }
     }
-
-    public static ArrayList<String> getWords(String category) {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "SELECT word FROM LIBRARY WHERE category=?;";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setString(1, category);
-            res = prepStmt.executeQuery();
-            ArrayList<String> wordList = new ArrayList<>();
-            while(res.next()) {
-                wordList.add(res.getString("word"));
-                return wordList;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }
-
-
-    // Fetches userID given username, used upon initialization of user, log in
 
     /**
      * Gets the userID of the username
@@ -410,7 +378,7 @@ public class DBConnection {
     }
 
     /**
-     * Method whichs cleans the CHAT table in the database
+     * Method which cleans the CHAT table in the database
       */
     public static void cleanChat() {
         Connection con = null;
@@ -428,7 +396,7 @@ public class DBConnection {
     }
 
     /**
-     * Method whichs resets the correctGuess column in the database
+     * Method which resets the correctGuess column in the database
      */
     public static void resetCorrectGuess() {
         Connection con = null;
@@ -446,7 +414,7 @@ public class DBConnection {
     }
 
     /**
-     * Method whichs gets the new messages sent to the database
+     * Method which gets the new messages sent to the database
      * @return all new messages in a StringBuilder
      */
     public static StringBuilder getNewMessages() {
@@ -509,9 +477,6 @@ public class DBConnection {
         }
         return -1;
     }
-
-
-    // Get username given userID
 
     /**
      * Gets the username of an given userID
@@ -592,7 +557,6 @@ public class DBConnection {
         }
         return 0;
     }
-
 
     /**
      * Method which gets the amount of point the user has
@@ -738,8 +702,6 @@ public class DBConnection {
         }
     }
 
-    // Gets the number of people who has guessed correctly
-
     /**
      * Method which gets how many players who have guessed correctly in game
      * @return the amount of correct guesses
@@ -764,7 +726,6 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
     }
-
 
     /**
      * Method which uploads an image to the database
@@ -984,7 +945,6 @@ public class DBConnection {
 
     /**
      * Gets the amount of games played for a specific player
-     * @param uid the players userID
      * @return amount of games played by the user
      */
     public static int getGamesPlayed(){
@@ -1011,7 +971,6 @@ public class DBConnection {
 
     /**
      * Gets the amount of games won for a specific user
-     * @param uid the userID of the user
      * @return amount of games won by the user
      */
     public static int getGamesWon(){

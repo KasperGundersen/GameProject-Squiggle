@@ -37,6 +37,11 @@ public class MyPage extends Scenes{
 
     private int avatarID = UserInfo.getAvatarID();
 
+    /**
+     * Constructor of myPage.
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public MyPage(double WIDTH, double HEIGHT){
         super(WIDTH, HEIGHT);
         addUIControls(getGp());
@@ -60,7 +65,7 @@ public class MyPage extends Scenes{
         // Username label
         Label nameLabel = new Label("Username: " + UserInfo.getUserName());
         nameLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        Css.setLabelStyle(nameLabel);
+        Css.setStyle(nameLabel);
         gridPane.add(nameLabel, 0, 1, 2, 1);
         gridPane.setHalignment(nameLabel, HPos.LEFT);
         gridPane.setValignment(nameLabel, VPos.TOP);
@@ -68,14 +73,14 @@ public class MyPage extends Scenes{
         // Email label
         Label emailLabel = new Label("Email: " + UserInfo.getUserEmail());
         emailLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        Css.setLabelStyle(emailLabel);
+        Css.setStyle(emailLabel);
         gridPane.add(emailLabel, 0, 2, 2, 1);
         gridPane.setHalignment(emailLabel, HPos.LEFT);
         gridPane.setValignment(emailLabel, VPos.TOP);
 
         // Change password Button
         buttonChangePassword = new Button("Change password");
-        Css.buttonStyleRed(buttonChangePassword);
+        Css.setStyle(buttonChangePassword);
         buttonChangePassword.setPrefHeight(40);
         buttonChangePassword.setPrefWidth(180);
         gridPane.add(buttonChangePassword, 0, 3, 2, 1);
@@ -83,7 +88,7 @@ public class MyPage extends Scenes{
 
         // Current avatar
         Label currentAvatarLabel = new Label("Current avatar:");
-        Css.setLabelStyle(currentAvatarLabel);
+        Css.setStyle(currentAvatarLabel);
         currentAvatarLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
         gridPane.add(currentAvatarLabel, 0, 4, 2, 1);
         gridPane.setHalignment(currentAvatarLabel, HPos.LEFT);
@@ -117,7 +122,7 @@ public class MyPage extends Scenes{
         GridPane.setHalignment(leftButton, HPos.LEFT);
         gridPane.setValignment(leftButton, VPos.CENTER);
         GridPane.setMargin(leftButton, new Insets(0,120,0,440));
-        super.styleSelectorButton(leftButton);
+        Css.selectorButton(leftButton);
 
         //Add button to go right
         Button rightButton = new Button(">");
@@ -125,11 +130,11 @@ public class MyPage extends Scenes{
         GridPane.setHalignment(rightButton, HPos.LEFT);
         gridPane.setValignment(rightButton, VPos.CENTER);
         GridPane.setMargin(rightButton, new Insets(0,0,0,755));
-        super.styleSelectorButton(rightButton);
+        Css.selectorButton(rightButton);
 
         // Update current avatar button
         buttonChoose = new Button("Choose avatar");
-        Css.buttonStyleRed(buttonChoose);
+        Css.setStyle(buttonChoose);
         buttonChoose.setPrefHeight(40);
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
@@ -138,7 +143,7 @@ public class MyPage extends Scenes{
 
         // Back button
         backButton = new Button("Back");
-        Css.buttonStyleRed(backButton);
+        Css.setStyle(backButton);
         backButton.setPrefHeight(40);
         backButton.setPrefWidth(80);
         gridPane.add(backButton, 0, 6, 1, 1);
@@ -201,8 +206,7 @@ public class MyPage extends Scenes{
         window.setMinWidth(250);
 
         Label header = new Label("Change password");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-        Css.setText(header);
+        Css.setHeaderStyle(header);
         newPassword = new PasswordField();
         newPassword.setPrefHeight(40);
         newPassword.setPrefWidth(200);
@@ -215,7 +219,7 @@ public class MyPage extends Scenes{
         Button save = new Button("Save change");
         save.setPrefHeight(40);
         save.setPrefWidth(200);
-        Css.buttonStyleRed(save);
+        Css.setStyle(save);
         save.setOnAction(e -> {
             if(changePassword()){
                 window.close();
@@ -264,9 +268,9 @@ public class MyPage extends Scenes{
 
         VBox vbox = new VBox(5);
 
-        Label gamesPlayed = new Label("Games Played: " + DBConnection.getGamesPlayed());
+        Label gamesPlayed = new Label("Games Played:     " + DBConnection.getGamesPlayed());
         Css.setHeaderStyle(gamesPlayed);
-        Label gamesWon = new Label("Games Won: " + DBConnection.getGamesWon());
+        Label gamesWon = new Label("Games Won:         " + DBConnection.getGamesWon());
         Css.setHeaderStyle(gamesWon);
 
         double winPercentage;

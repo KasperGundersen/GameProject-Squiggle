@@ -37,7 +37,11 @@ public abstract class Scenes {
     private final double WIDTH;
     private final double HEIGHT;
 
-    //Constructor for abstract class, use width and height for scene
+    /**
+     * Constructor for scenes. Used for most of the other scenes in the game
+      * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public Scenes(double WIDTH, double HEIGHT){
         gp = createGridPane();
         sc = new Scene(gp, WIDTH, HEIGHT);
@@ -135,16 +139,6 @@ public abstract class Scenes {
         gridPane.setBackground(background);
 
         return gridPane;
-    }
-
-    /**
-     * MEthod that styles selection buttons
-     * @param b is the button
-     */
-    void styleSelectorButton(Button b){
-        b.setPrefHeight(35);
-        b.setPrefWidth(25);
-        b.setStyle(selectorButton());
     }
 
     /**

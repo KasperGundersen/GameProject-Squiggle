@@ -1,20 +1,14 @@
 package Components.GameLobbyComponents;
 
-import Components.Threads.Timers;
-import Components.UserInfo;
 import Database.DBConnection;
-import Scenes.GameLobby;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.CountDownLatch;
 
 
