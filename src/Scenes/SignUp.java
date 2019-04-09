@@ -124,14 +124,14 @@ public class SignUp extends Scenes {
         gridPane.add(leftButton, 1,3);
         GridPane.setHalignment(leftButton, HPos.CENTER);
         GridPane.setMargin(leftButton, new Insets(0,120,0,0));
-        super.styleSelectorButton(leftButton);
+        Css.selectorButton(leftButton);
 
         //Add button to go right
         Button rightButton = new Button(">");
         gridPane.add(rightButton, 1,3);
         GridPane.setHalignment(rightButton, HPos.CENTER);
         GridPane.setMargin(rightButton, new Insets(0,0,0,120));
-        super.styleSelectorButton(rightButton);
+        Css.selectorButton(rightButton);
 
         //Add error Label
         errorPassword = new Label("Password don't match");
