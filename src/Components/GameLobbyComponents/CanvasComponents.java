@@ -206,40 +206,6 @@ public class CanvasComponents {
         }
     }
 
-    /**
-     * Main upload method. Uploads drawing as bytes
-     */
-    public static void uploadImage(){
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    WritableImage wim = canvasSnapshot(canvas);
-                                    byte[] blob = imageToByte(wim);
-                                    DBConnection.setRandomWord();
-                                    DBConnection.uploadImage(blob, DBConnection.getRandomWord());
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
-    }
 
     /**
      * Uploads an updated version of drawing to Database
