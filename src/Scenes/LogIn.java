@@ -89,7 +89,7 @@ public class LogIn extends Scenes {
         Css.setStyle(nameField);
         nameField.setPrefHeight(prefHeight);
         nameField.setPrefWidth(200);
-        nameField.setPromptText("xXPussySlayerXx");
+        nameField.setPromptText("johnAdams");
         gridPane.add(nameField, 1,1);
 
         // Add Password Label
