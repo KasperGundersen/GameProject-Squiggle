@@ -729,8 +729,8 @@ public class DBConnection {
 
     /**
      * Method which uploads an image to the database
-     * @param blob ????
-     * @param word ???
+     * @param blob the image in byte format
+     * @param word the game word
      */
     public static void uploadImage(byte[] blob, String word) {
         Connection con = null;
@@ -754,7 +754,7 @@ public class DBConnection {
 
     /**
      * Method which updates an image in the database
-     * @param blob ???
+     * @param blob the image in byte format
      */
     public static void updateImage(byte[] blob){
         Connection con = null;
@@ -772,6 +772,10 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Gets the newest image from the database
+     * @return the image of the database
+     */
 
     public static InputStream getImage(){
         Connection con = null;
@@ -801,6 +805,9 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Sets a random word to the newest game
+     */
     public static void setRandomWord(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -817,6 +824,10 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Gets the random word from the draw table in the database
+     * @return the random word
+     */
     public static String getRandomWord(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -837,6 +848,11 @@ public class DBConnection {
         return null;
     }
 
+
+    /**
+     * Gets the timer from the DRAW table in the database
+     * @return the timer in date format
+     */
     public static Date getDrawTimer() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -870,6 +886,10 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Method which makes a user join the game
+     */
+
     public static void joinGame() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -899,6 +919,11 @@ public class DBConnection {
 
     }
 
+    /**
+     * Method which checks if a player is going to draw
+     * @param currentRound the current round of the game
+     * @return true if player is drawing, false if guesser
+     */
     public static boolean playerToDraw(int currentRound) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -921,6 +946,10 @@ public class DBConnection {
         return false;
     }
 
+    /**
+     * Method which gets max round of the game
+     * @return the max round
+     */
     public static int getMaxRound() {
         Connection con = null;
         PreparedStatement prepStmt = null;

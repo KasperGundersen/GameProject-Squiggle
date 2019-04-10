@@ -15,7 +15,7 @@ public class Player implements Comparable<Player>{
     private double points;
 
     /**
-     * Contructor
+     * Contructor of the player class
      *
      * @param username  The player's username
      * @param userID    The user's ID
