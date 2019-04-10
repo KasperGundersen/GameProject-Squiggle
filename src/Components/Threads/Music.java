@@ -13,13 +13,24 @@ public class Music {
      */
 
     private static Task task;
-    private static final File file = new File("resources/music/music.wav");
-    public static final AudioClip audio = new AudioClip(file.toURI().toString());
+    private static File file;
+    private static int choosenSong;
+    public static AudioClip audio;
 
     /**
      * Method which plays music in its own separate thread
      */
-    public static void playMusic() {
+    public static void playMusic(int song) {
+        if (song == 0) {
+            choosenSong = 0;
+            file = new File("resources/music/music1.wav");
+        }
+        if (song == 1) {
+            choosenSong = 1;
+            file = new File("resources/music/SickoMode.wav");
+        }
+        audio = new AudioClip(file.toURI().toString());
+
         task = new Task() {
             @Override
             protected Object call() throws Exception {
@@ -32,6 +43,14 @@ public class Music {
         };
         Thread thread = new Thread(task);
         thread.start();
+    }
+
+    /**
+     * Method which returns the choosen song
+     * @return the choosen song
+     */
+    public static int getChoosenSong() {
+        return choosenSong;
     }
 
     /**

@@ -47,6 +47,25 @@ public class DBConnection {
     }
 
     /**
+     * Updates the time of the newest game
+     */
+    public static void changeTime() {
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try {
+            con = HikariCP.getCon();
+            String query = "update DRAW set timer = now() order by gameID limit 1";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt,res);
+        }
+    }
+
+    /**
      * Method which registers a new user
      * @param userName username of the user
      * @param hash hashing of password
@@ -59,13 +78,25 @@ public class DBConnection {
         PreparedStatement prepStmt = null;
         try {
             con = HikariCP.getCon();
-            String query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
+            String query = "START TRANSACTION;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "INSERT INTO USERS VALUES (0, ?, ?, ?, ?, ?, 0)";
             prepStmt = con.prepareStatement(query);
             prepStmt.setString(1, userName);
             prepStmt.setString(2, hash);
             prepStmt.setString(3, salt);
             prepStmt.setString(4, userEmail);
             prepStmt.setInt(5, avatarID);
+            prepStmt.executeUpdate();
+
+            query = "INSERT INTO STATS VALUES(LAST_INSERT_ID(), 0, 0)";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.executeUpdate();
+
+            query = "COMMIT;";
+            prepStmt = con.prepareStatement(query);
             prepStmt.executeUpdate();
         } catch (SQLSyntaxErrorException e) {
             e.printStackTrace();
@@ -75,6 +106,7 @@ public class DBConnection {
             closeConnection(con, prepStmt, null);
         }
     }
+
 
     /**
      * Method which looks for input in the given column in the database
@@ -125,8 +157,6 @@ public class DBConnection {
         }
     }
 
-    // Gets salt, used for comparing passwords
-
     /**
      * Gets the salt of a users password. Used for comparing passwords
      * @param username of the user
@@ -153,8 +183,6 @@ public class DBConnection {
         }
         return null;
     }
-
-    // For seing if a user is already logged in or not
 
     /**
      * Method which checks whether a user is logged in or not
@@ -183,8 +211,6 @@ public class DBConnection {
         return loggedIn;
     }
 
-    // General method for closing a connection, is to be used everytime getCon() is used
-
     /**
      * General method for closing a connection
      * @param con Connection to ble closed
@@ -207,9 +233,6 @@ public class DBConnection {
         }
     }
 
-
-    // Sets avatarID in the database, making the user have same avatarID on next LogIn
-
     /**
      * Sets the avatarID in the database
      * @param userID userID of the user
@@ -231,32 +254,6 @@ public class DBConnection {
             closeConnection(con, prepStmt, null);
         }
     }
-
-    public static ArrayList<String> getWords(String category) {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "SELECT word FROM LIBRARY WHERE category=?;";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.setString(1, category);
-            res = prepStmt.executeQuery();
-            ArrayList<String> wordList = new ArrayList<>();
-            while(res.next()) {
-                wordList.add(res.getString("word"));
-                return wordList;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection(con, prepStmt, res);
-        }
-        return null;
-    }
-
-
-    // Fetches userID given username, used upon initialization of user, log in
 
     /**
      * Gets the userID of the username
@@ -381,7 +378,7 @@ public class DBConnection {
     }
 
     /**
-     * Method whichs cleans the CHAT table in the database
+     * Method which cleans the CHAT table in the database
       */
     public static void cleanChat() {
         Connection con = null;
@@ -399,7 +396,7 @@ public class DBConnection {
     }
 
     /**
-     * Method whichs resets the correctGuess column in the database
+     * Method which resets the correctGuess column in the database
      */
     public static void resetCorrectGuess() {
         Connection con = null;
@@ -417,7 +414,7 @@ public class DBConnection {
     }
 
     /**
-     * Method whichs gets the new messages sent to the database
+     * Method which gets the new messages sent to the database
      * @return all new messages in a StringBuilder
      */
     public static StringBuilder getNewMessages() {
@@ -480,9 +477,6 @@ public class DBConnection {
         }
         return -1;
     }
-
-
-    // Get username given userID
 
     /**
      * Gets the username of an given userID
@@ -563,7 +557,6 @@ public class DBConnection {
         }
         return 0;
     }
-
 
     /**
      * Method which gets the amount of point the user has
@@ -709,8 +702,6 @@ public class DBConnection {
         }
     }
 
-    // Gets the number of people who has guessed correctly
-
     /**
      * Method which gets how many players who have guessed correctly in game
      * @return the amount of correct guesses
@@ -736,14 +727,12 @@ public class DBConnection {
         }
     }
 
-
     /**
      * Method which uploads an image to the database
-     * @param blob ????
-     * @param word ???
+     * @param blob the image in byte format
+     * @param word the game word
      */
     public static void uploadImage(byte[] blob, String word) {
-        System.out.println("Uploads image");
         Connection con = null;
         PreparedStatement prepStmt = null;
         try {
@@ -765,7 +754,7 @@ public class DBConnection {
 
     /**
      * Method which updates an image in the database
-     * @param blob ???
+     * @param blob the image in byte format
      */
     public static void updateImage(byte[] blob){
         Connection con = null;
@@ -783,6 +772,10 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Gets the newest image from the database
+     * @return the image of the database
+     */
 
     public static InputStream getImage(){
         Connection con = null;
@@ -812,6 +805,9 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Sets a random word to the newest game
+     */
     public static void setRandomWord(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -828,6 +824,10 @@ public class DBConnection {
         }
     }
 
+    /**
+     * Gets the random word from the draw table in the database
+     * @return the random word
+     */
     public static String getRandomWord(){
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -848,6 +848,11 @@ public class DBConnection {
         return null;
     }
 
+
+    /**
+     * Gets the timer from the DRAW table in the database
+     * @return the timer in date format
+     */
     public static Date getDrawTimer() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -881,6 +886,10 @@ public class DBConnection {
         return null;
     }
 
+    /**
+     * Method which makes a user join the game
+     */
+
     public static void joinGame() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -910,6 +919,11 @@ public class DBConnection {
 
     }
 
+    /**
+     * Method which checks if a player is going to draw
+     * @param currentRound the current round of the game
+     * @return true if player is drawing, false if guesser
+     */
     public static boolean playerToDraw(int currentRound) {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -932,6 +946,10 @@ public class DBConnection {
         return false;
     }
 
+    /**
+     * Method which gets max round of the game
+     * @return the max round
+     */
     public static int getMaxRound() {
         Connection con = null;
         PreparedStatement prepStmt = null;
@@ -951,5 +969,84 @@ public class DBConnection {
             closeConnection(con, prepStmt, res);
         }
         return -1;
+    }
+
+    /**
+     * Gets the amount of games played for a specific player
+     * @return amount of games played by the user
+     */
+    public static int getGamesPlayed(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesPlayed AS gplayed FROM STATS WHERE userID =?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gplayed");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Gets the amount of games won for a specific user
+     * @return amount of games won by the user
+     */
+    public static int getGamesWon(){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        ResultSet res = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "SELECT gamesWon AS gwon FROM STATS WHERE userID = ?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            res = prepStmt.executeQuery();
+            if(res.next()){
+                return res.getInt("gwon");
+            }
+            return 0;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, res);
+        }
+        return -1;
+    }
+
+    /**
+     * Method that updates the amount of games won and played in the table STATS
+     * @param won checks if a player has won the game
+     */
+    public static void updateStats(boolean won){
+        Connection con = null;
+        PreparedStatement prepStmt = null;
+        try{
+            con = HikariCP.getCon();
+            String query = "UPDATE STATS SET gamesPlayed = gamesPlayed + 1 WHERE userID =?;";
+            prepStmt = con.prepareStatement(query);
+            prepStmt.setInt(1, UserInfo.getUserID());
+            prepStmt.executeUpdate();
+            if(won){
+                query = "UPDATE STATS SET gamesWon = gamesWon + 1 WHERE userID =?;";
+                prepStmt = con.prepareStatement(query);
+                prepStmt.setInt(1, UserInfo.getUserID());
+                prepStmt.executeUpdate();
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeConnection(con, prepStmt, null);
+        }
     }
 }

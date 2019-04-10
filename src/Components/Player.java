@@ -8,14 +8,17 @@
 
 package Components;
 
-public class Player {
+/**
+ * Player class containing information and method on each player
+ */
+public class Player implements Comparable<Player>{
     private String username;
     private int userID;
     private int avatarID;
     private double points;
 
     /**
-     * Contructor
+     * Contructor of the player class
      *
      * @param username  The player's username
      * @param userID    The user's ID
@@ -63,5 +66,16 @@ public class Player {
      */
     public double getPoints(){
         return points;
+    }
+
+    /**
+     * Method comparing two players by they score
+     * @param o player comparing to
+     * @return -1, 0 or 1 depending on the points of the players
+     */
+    @Override
+    public int compareTo(Player o) {
+        int cmp = this.getPoints() > o.getPoints() ? -1 : this.getPoints() < o.getPoints() ? +1 : 0;
+        return cmp;
     }
 }

@@ -6,6 +6,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
+/**
+ * Encryptor class for encrypting password using hash and salt
+ *
+ */
+
 public class Encryptor {
 
     /**

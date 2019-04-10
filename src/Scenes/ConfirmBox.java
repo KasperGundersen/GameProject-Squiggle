@@ -18,9 +18,9 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import static css.Css.confirmButton;
+
 /**
- * Class that creates confimration boxes, with custom title and message
+ * Class that creates confirmation boxes, with custom title and message
  */
 class ConfirmBox{
     private static boolean answer;
@@ -40,10 +40,10 @@ class ConfirmBox{
         label.setStyle("-fx-text-fill: white;");
 
         Button yesButton = new Button("Yes");
-        Css.buttonStyleRed(yesButton);
+        Css.setStyle(yesButton);
 
         Button noButton = new Button("No");
-        Css.buttonStyleRed(noButton);
+        Css.setStyle(noButton);
 
         yesButton.setOnAction(e -> {
             answer = true;
@@ -95,7 +95,7 @@ class ConfirmBox{
         label.setStyle("-fx-text-fill: white;");
 
         Button okBtn = new Button("Ok");
-        Css.buttonStyleRed(okBtn);
+        Css.setStyle(okBtn);
 
         okBtn.setOnAction(e -> {
             stage.close();

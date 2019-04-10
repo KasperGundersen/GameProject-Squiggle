@@ -21,23 +21,32 @@ import java.util.Date;
 
 import java.io.File;
 
-
-
+/**
+ * Class thats crates the main menu which contains several buttons for further choices
+ */
 public class MainMenu extends Scenes{
 
     private Label gameStartedLabel;
 
+    /**
+     * Constructor of the MainMenu scene
+     * @param width width of the scene
+     * @param height height of the scene
+     */
     public MainMenu(double width, double height) {
         super(width, height);
         addUIControls(getGp());
     }
 
+    /**
+     * Method that creates the main menu scene
+     * @param gridPane Gridpane which extends from the main scene
+     */
     private void addUIControls(GridPane gridPane) {
         double prefHeight = 40;
         double prefWidth = 200;
 
         // Add Header
-
         File file = new File("resources/logos/Logo_MainMenu.png");
         Image image = new Image(file.toURI().toString());
         ImageView iv = new ImageView(image);
@@ -46,7 +55,6 @@ public class MainMenu extends Scenes{
 
         gridPane.add(iv, 0,0,2,1);
         GridPane.setHalignment(iv, HPos.CENTER);
-        //GridPane.setMargin(iv, new Insets(10, 0,0,0));
 
         // Add error Label
         gameStartedLabel = new Label();
@@ -57,7 +65,7 @@ public class MainMenu extends Scenes{
 
         // Join game button
         Button joinGameButton = new Button("Join Game");
-        Css.buttonStyleRed(joinGameButton);
+        Css.setStyle(joinGameButton);
         joinGameButton.setPrefHeight(prefHeight);
         joinGameButton.setDefaultButton(true);
         joinGameButton.setPrefWidth(prefWidth);
@@ -67,7 +75,7 @@ public class MainMenu extends Scenes{
 
         // My Page button
         Button myPageButton = new Button("My page");
-        Css.buttonStyleRed(myPageButton);
+        Css.setStyle(myPageButton);
         myPageButton.setPrefHeight(prefHeight);
         myPageButton.setPrefWidth(prefWidth);
         gridPane.add(myPageButton, 0, 3, 2, 1);
@@ -76,7 +84,7 @@ public class MainMenu extends Scenes{
 
         // Options button
         Button optionButton = new Button("Options");
-        Css.buttonStyleRed(optionButton);
+        Css.setStyle(optionButton);
         optionButton.setPrefHeight(prefHeight);
         optionButton.setPrefWidth(prefWidth);
         gridPane.add(optionButton, 0,4, 2, 1);
@@ -85,7 +93,7 @@ public class MainMenu extends Scenes{
 
         // Log Out button
         Button logOutButton = new Button("Log Out");
-        Css.buttonStyleRed(logOutButton);
+        Css.setStyle(logOutButton);
         logOutButton.setPrefHeight(prefHeight);
         logOutButton.setPrefWidth(prefWidth);
         gridPane.add(logOutButton, 0,5, 2, 1);
@@ -94,7 +102,7 @@ public class MainMenu extends Scenes{
 
         // Quit button
         Button quitButton = new Button("Quit");
-        Css.buttonStyleRed(quitButton);
+        Css.setStyle(quitButton);
         quitButton.setPrefHeight(prefHeight);
         quitButton.setPrefWidth(prefWidth);
         gridPane.add(quitButton, 0, 6, 2, 1);
@@ -103,7 +111,7 @@ public class MainMenu extends Scenes{
 
         Css.setBackground(gridPane);
 
-        // BUTTON ACTION //////////////
+        // BUTTON ACTION
         optionButton.setOnAction(e -> new Options(super.getWIDTH(), super.getHEIGHT()));
         joinGameButton.setOnAction(e -> joinGameSystem());
         logOutButton.setOnAction(e -> {
@@ -117,9 +125,14 @@ public class MainMenu extends Scenes{
         myPageButton.setOnAction(e -> {
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp);
+            MainScene.mm = null;
         });
     }
 
+    /**
+     * Method that update the database when the player wants to join the game.
+     * When the first player joins a game the timer starts
+     */
     private void joinGameSystem() {
         int time = (int)((DBConnection.getDrawTimer().getTime() - (new Date().getTime())) / 1000);
         if (time < GameLogicComponents.gameTime * 0.84 && time > 0 && DBConnection.getAmtPlayer() > 0) {
@@ -134,6 +147,9 @@ public class MainMenu extends Scenes{
         }
     }
 
+    /**
+     * Methods that logs you out of the database and returns you to the log in scene
+     */
     private void logOutSystem(){
         MainScene.li = new LogIn(super.getWIDTH(), super.getHEIGHT());
         MainScene.setScene(MainScene.li);

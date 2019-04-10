@@ -4,7 +4,6 @@ import Components.Threads.Timers;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.GameLobby;
-import Scenes.MainMenu;
 import Scenes.MainScene;
 import Scenes.Results;
 import javafx.application.Platform;
@@ -21,6 +20,7 @@ import static Components.Threads.Timers.*;
  */
 public class GameLogicComponents {
 
+    // Usually 95
     public static int gameTime = 95;
     private static int currentRound = 1;
 
@@ -43,6 +43,10 @@ public class GameLogicComponents {
         currentRound++;
     }
 
+    /**
+     * Sets the curent round of the game
+     * @param currentRound
+     */
     public static void setCurrentRound(int currentRound) {
         GameLogicComponents.currentRound = currentRound;
     }
@@ -51,7 +55,7 @@ public class GameLogicComponents {
      * Sets new drawer, or quits game if everyone has drawn.
      */
     public static void reset() {
-        if (currentRound <= DBConnection.getAmtPlayer()) {
+        if (currentRound <= DBConnection.getMaxRound()) {
             Service<Void> service = new Service<Void>() {
                 @Override
                 protected Task<Void> createTask() {
@@ -65,8 +69,8 @@ public class GameLogicComponents {
                                 public void run() {
                                     try{
                                         if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
-                                            while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime())) {
-                                                System.out.println((int)(DBConnection.getDrawTimer().getTime() - new Date().getTime() / 1000));
+                                            while (DBConnection.getDrawTimer().getTime() - new Date().getTime() <= 10000) {
+                                            // while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime()) - 2000) {
                                             }
                                         }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
@@ -88,6 +92,12 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
+            try {
+            Thread.sleep(2000);
+            }catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+
             stopHeartBeat();
             MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.rs);

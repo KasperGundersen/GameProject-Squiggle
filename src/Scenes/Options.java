@@ -13,16 +13,26 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.File;
-
+/**
+ * Class that create and opens a popup window where you can turn on/off the music
+ */
 public class Options extends Scenes {
     private GridPane grid;
+
+    /**
+     * Constructor of the Options page
+     * @param WIDTH width of the scene
+     * @param HEIGHT height of the scene
+     */
     public Options(double WIDTH, double HEIGHT) {
         super(WIDTH, HEIGHT);
         openOptions();
     }
 
+    /**
+     * Method thats creates the popup window
+     */
     public void openOptions(){
         Stage window = new Stage();
         window.setTitle("Options");
@@ -31,22 +41,48 @@ public class Options extends Scenes {
         grid.setAlignment(Pos.TOP_CENTER);
 
         Label optionsLabel = new Label("Options");
-        optionsLabel.setFont(Font.font("Arial", FontWeight.BOLD,24));
+        Css.setHeaderStyle(optionsLabel);
         optionsLabel.setPadding(new Insets(10,10,10,10));
         grid.add(optionsLabel, 0,0);
 
         Label musicLabel = new Label("Music");
+        Css.setStyle(musicLabel);
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
+
+        Label sickoModeLabel = new Label("SICKO MODE");
+        Css.setStyle(sickoModeLabel);
+        grid.add(sickoModeLabel, 0,4);
+        CheckBox sickoModeCheckBox = new CheckBox();
+
         if (Music.audio.isPlaying()) {
-            musicCheckBox.setSelected(true);
+            if(Music.getChoosenSong() == 0) {
+                musicCheckBox.setSelected(true);
+                sickoModeCheckBox.setSelected(false);
+            }
+            if (Music.getChoosenSong() == 1) {
+                musicCheckBox.setSelected(false);
+                sickoModeCheckBox.setSelected(true);
+            }
         } else {
             musicCheckBox.setSelected(false);
         }
         grid.add(musicCheckBox, 1,3);
+        grid.add(sickoModeCheckBox,1,4);
         musicCheckBox.setOnAction(e -> {
             if (musicCheckBox.isSelected()) {
-                Music.playMusic();
+                sickoModeCheckBox.setSelected(false);
+                Music.stopMusic();
+                Music.playMusic(0);
+            } else {
+                Music.stopMusic();
+            }
+        });
+        sickoModeCheckBox.setOnAction(e -> {
+            if (sickoModeCheckBox.isSelected()) {
+                musicCheckBox.setSelected(false);
+                Music.stopMusic();
+                Music.playMusic(1);
             } else {
                 Music.stopMusic();
             }
@@ -55,14 +91,14 @@ public class Options extends Scenes {
 
         Button submitButton = new Button("Submit");
         submitButton.setPrefWidth(100);
-        Css.buttonStyleRed(submitButton);
+        Css.setStyle(submitButton);
 
         submitButton.setOnAction(e -> {
             window.close();
 
         });
 
-        grid.add(submitButton, 0,4, 2,1);
+        grid.add(submitButton, 0,5, 2,1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
@@ -81,5 +117,4 @@ public class Options extends Scenes {
         window.setScene(scene);
         window.show();
     }
-
 }

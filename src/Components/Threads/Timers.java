@@ -8,8 +8,6 @@ import Components.Toast;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.MainScene;
-import javafx.concurrent.Service;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,19 +18,26 @@ import static Components.GameLobbyComponents.CanvasComponents.updateImage;
 import static Components.GameLobbyComponents.TimerComponent.setTimerText;
 import static Components.GameLobbyComponents.TimerComponent.timeRemaining;
 
+/**
+ * Static class for the game timer
+ */
 public class Timers {
 
     public static Timer heartBeat;
     private static boolean readyReset = false;
     private static AtomicBoolean start = new AtomicBoolean();
-    // private static boolean start;
 
+    /**
+     * Method that starts the game's timer
+     */
     public static void startHeartBeat() {
         start.set(true);
-        // start = true;
         heartBeat();
     }
 
+    /**
+     * The actual heartbeat of the game, updates drawing, player list, and counts down
+     */
     private static void heartBeat(){
         heartBeat = new Timer();
         TimerTask task = new TimerTask() {
@@ -61,7 +66,6 @@ public class Timers {
                     setTimerText(true);
                 } else {
                     if (readyReset) {
-                        //Her blir amtCorrect av en eller annen grunn resettet
                         if (UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound()) { //If player is drawer
                             PointSystem.setPointsDrawer();
                             DBConnection.resetCorrectGuess(); //Only one player can reset amtOfCorrectGuesses
@@ -72,7 +76,6 @@ public class Timers {
                         GameLogicComponents.incrementRoundCounter();
 
                         while (GameLogicComponents.getCurrentRound() <= DBConnection.getMaxRound()) {
-                            System.out.println(DBConnection.playerToDraw(GameLogicComponents.getCurrentRound()));
                             if (DBConnection.playerToDraw(GameLogicComponents.getCurrentRound())) {
                                 break;
                             } else {
@@ -91,9 +94,11 @@ public class Timers {
         }
     }
 
+    /**
+     * Method that stops the timer
+     */
     public static void stopHeartBeat() {
         start.set(false);
-        // start = false;
         if (heartBeat != null) {
             heartBeat.cancel();
             heartBeat.purge();

@@ -2,23 +2,31 @@ package Components.GameLobbyComponents;
 
 import Components.UserInfo;
 import Database.DBConnection;
+import Scenes.MainMenu;
+import Scenes.MainScene;
+import Scenes.Options;
+import Scenes.Results;
 import css.Css;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import javax.imageio.ImageIO;
@@ -29,8 +37,10 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.concurrent.CountDownLatch;
 
+import static Components.Threads.Timers.stopHeartBeat;
+
 /**
- * Class that deals with teh canvas ingame
+ * Class that deals with the canvas ingame
  */
 public class CanvasComponents {
     private static ToggleButton draw;
@@ -38,9 +48,8 @@ public class CanvasComponents {
     private static ColorPicker cp;
     public static Canvas canvas;
     private static GraphicsContext gc;
-
     private static int WIDTH = 600, HEIGHT = 450;
-    private static Color color = Color.rgb(244,244,244);
+    private static Color color = Color.rgb(255,255,255);
 
 
     /**
@@ -53,8 +62,8 @@ public class CanvasComponents {
 
         draw = new ToggleButton("Draw");
         erase = new ToggleButton("Erase");
-        Css.buttonStyleRed(draw);
-        Css.buttonStyleRed(erase);
+        Css.setStyle(draw);
+        Css.setStyle(erase);
         ToggleButton[] tools = {draw, erase};
         ToggleGroup tgTools = new ToggleGroup();
         for (ToggleButton tool : tools) {
@@ -68,10 +77,10 @@ public class CanvasComponents {
         ToggleButton lineWidth2 = new ToggleButton("2");
         ToggleButton lineWidth3 = new ToggleButton("3");
         ToggleButton lineWidth4 = new ToggleButton("4");
-        Css.buttonStyleRed(lineWidth1);
-        Css.buttonStyleRed(lineWidth2);
-        Css.buttonStyleRed(lineWidth3);
-        Css.buttonStyleRed(lineWidth4);
+        Css.setStyle(lineWidth1);
+        Css.setStyle(lineWidth2);
+        Css.setStyle(lineWidth3);
+        Css.setStyle(lineWidth4);
         ToggleButton[] penSize = {lineWidth1, lineWidth2, lineWidth3, lineWidth4};
         ToggleGroup tgLineWidth = new ToggleGroup();
         for (ToggleButton tb : penSize) {
@@ -81,13 +90,23 @@ public class CanvasComponents {
         }
         tgLineWidth.selectToggle(lineWidth1);
 
+        Button leaveButton = new Button("Leave game");
+        Button optionButton = new Button("Options");
+        Css.setStyle(leaveButton);
+        Css.setStyle(optionButton);
+
+
+        Region leave = new Region();
+        hb.setHgrow(leave, Priority.ALWAYS);
+        Region spacer = new Region();
+        hb.setHgrow(spacer, Priority.ALWAYS);
+
         cp = new ColorPicker();
         cp.setValue(Color.BLACK);
-        Css.buttonStyleRed(cp);
-        hb.getChildren().addAll(draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4);
+        Css.setStyle(cp);
+        hb.getChildren().addAll(leaveButton,leave, draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4, spacer, optionButton);
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
-        //////////////////////////////////
 
 
         File pencilFile = new File("resources/icons/pencil.png");
@@ -96,6 +115,7 @@ public class CanvasComponents {
         Image rubber = new Image(rubberFile.toURI().toString());
         ImageCursor penCur = new ImageCursor(pencil, 40, pencil.getHeight()-40);
         ImageCursor rubCur = new ImageCursor(rubber,10,rubber.getHeight()-80);
+
 
         cp.setOnAction(e-> {
             cp.setValue(cp.getValue());
@@ -107,6 +127,7 @@ public class CanvasComponents {
         erase.setOnAction(e->{
             canvas.setCursor(rubCur);
             gc.setStroke(color);
+            gc.setLineWidth(12);
         });
 
         lineWidth1.setOnAction(e->{
@@ -121,6 +142,17 @@ public class CanvasComponents {
         lineWidth4.setOnAction(e->{
             gc.setLineWidth(10);
         });
+
+        leaveButton.setOnAction(e -> {
+            DBConnection.exitGame();
+            stopHeartBeat();
+            MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
+            MainScene.setScene(MainScene.mm);
+            MainScene.gl = null;
+            GameLogicComponents.setCurrentRound(1);
+        });
+
+        optionButton.setOnAction(e -> new Options(MainScene.getWIDTH(), MainScene.getHEIGHT()));
         return hb;
     }
 
@@ -151,7 +183,6 @@ public class CanvasComponents {
         }else{
             setImage();
         }
-        //////////////////////////////////////////////
         return hb;
     }
     public static void makeDrawable(GraphicsContext gcon) {
@@ -175,43 +206,6 @@ public class CanvasComponents {
         }
     }
 
-
-    //////////// Here begins code that deals with uploading canvas to DB ///////////////
-
-    /**
-     * Main upload method. Uploads drawing as bytes
-     */
-    public static void uploadImage(){
-        Service<Void> service = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        //Background work
-                        final CountDownLatch latch = new CountDownLatch(1);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                try{
-                                    WritableImage wim = canvasSnapshot(canvas);
-                                    byte[] blob = imageToByte(wim);
-                                    DBConnection.setRandomWord();
-                                    DBConnection.uploadImage(blob, DBConnection.getRandomWord());
-                                }finally{
-                                    latch.countDown();
-                                }
-                            }
-                        });
-                        latch.await();
-                        //Keep with the background work
-                        return null;
-                    }
-                };
-            }
-        };
-        service.start();
-    }
 
     /**
      * Uploads an updated version of drawing to Database
