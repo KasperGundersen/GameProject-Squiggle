@@ -56,7 +56,14 @@ public class Options extends Scenes {
         CheckBox sickoModeCheckBox = new CheckBox();
 
         if (Music.audio.isPlaying()) {
-            musicCheckBox.setSelected(true);
+            if(Music.getChoosenSong() == 0) {
+                musicCheckBox.setSelected(true);
+                sickoModeCheckBox.setSelected(false);
+            }
+            if (Music.getChoosenSong() == 1) {
+                musicCheckBox.setSelected(false);
+                sickoModeCheckBox.setSelected(true);
+            }
         } else {
             musicCheckBox.setSelected(false);
         }

@@ -82,13 +82,4 @@ public class TimerComponent {
         };
         service.start();
     }
-
-    /**
-     * Methods that sets the time remaining
-     * @param newTime int seconds that are to be new time remaing
-     */
-    public static void setTimeReimaing(int newTime) {
-        timeRemaining = newTime;
-    }
-
 }
