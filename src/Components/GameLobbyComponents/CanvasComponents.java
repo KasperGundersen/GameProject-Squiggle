@@ -50,7 +50,7 @@ public class CanvasComponents {
     private static GraphicsContext gc;
 
     private static int WIDTH = 600, HEIGHT = 450;
-    private static Color color = Color.rgb(244,244,244);
+    private static Color color = Color.rgb(255,255,255);
 
 
     /**
@@ -128,6 +128,7 @@ public class CanvasComponents {
         erase.setOnAction(e->{
             canvas.setCursor(rubCur);
             gc.setStroke(color);
+            gc.setLineWidth(12);
         });
 
         lineWidth1.setOnAction(e->{
