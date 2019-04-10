@@ -44,8 +44,7 @@ public class Results extends Scenes{
      */
     public void addUIControls(GridPane gp){
         header = new Label("Results");
-        header.setFont(Font.font("Arial", FontWeight.BOLD, 48));
-        header.setStyle("-fx-text-fill: white");
+        Css.setHeaderStyle(header);
         gp.add(header, 1, 0, 1, 1);
         gp.setHalignment(header, HPos.CENTER);
         gp.setValignment(header, VPos.CENTER);
@@ -70,14 +69,11 @@ public class Results extends Scenes{
             images[i].setFitHeight(50);
 
             userIDLbl = new Label("Player: " + players.get(i).getUsername());
-            userIDLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-            userIDLbl.setStyle("-fx-text-fill: white");
+            Css.setStyle(userIDLbl);
             pointsLbl = new Label("Points: " + players.get(i).getPoints());
-            pointsLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-            pointsLbl.setStyle("-fx-text-fill: white");
+            Css.setStyle(pointsLbl);
             placementLbl = new Label(Integer.toString(i+1));
-            placementLbl.setFont(Font.font("Arial", FontWeight.BOLD, 24));
-            placementLbl.setStyle("-fx-text-fill: white");
+            Css.setStyle(placementLbl);
 
             hboxes[i].getChildren().addAll(placementLbl, userIDLbl, pointsLbl);
             gp.add(hboxes[i], 1, i+1, 1, 1);
@@ -88,7 +84,7 @@ public class Results extends Scenes{
 
         mmBtn = new Button("Main menu");
         Css.setStyle(mmBtn);
-        gp.add(mmBtn, 1, 5, 1, 1);
+        gp.add(mmBtn, 1, 7, 1, 1);
         mmBtn.setOnAction(e -> {
             DBConnection.exitGame();
             MainScene.mm = new MainMenu(super.getWIDTH(), super.getHEIGHT());
