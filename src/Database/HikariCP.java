@@ -32,7 +32,7 @@ public class HikariCP {
 
     /**
      * Gets a connection from the HikariCP connection pool
-     * @return Connection Connection to the database
+     * @return Connection to the database
      * @throws SQLException
      */
     public static Connection getCon() throws SQLException {
