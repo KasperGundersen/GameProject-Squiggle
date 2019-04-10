@@ -10,8 +10,17 @@ import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 
-public class Authentication {
+/**
+ * Authentication class for authenticating username and password for each user
+ *
+ */
 
+public class Authentication {
+    /**
+     * changePassword method generates a new hash and salt
+     * @param newPassword is the the new password from the user
+     * @return if method was successful
+     */
     public static boolean changePassword(String newPassword){
         int userID = UserInfo.getUserID();
         String encryptor = Encryptor.Encryptor(newPassword, null);
@@ -19,6 +28,12 @@ public class Authentication {
         String salt = Encryptor.getSalt(encryptor);
         return DBConnection.changePassword(userID, hash, salt);
     }
+
+    /**
+     * Submit method is called when the user is signing up and have entered all the necessary input fields
+     * It will encrypt the password before inserting into database
+     * @return if method was successful
+     */
     public static boolean submit(){
         String username = SignUp.getName();
         String mail = SignUp.getMail();
@@ -69,6 +84,12 @@ public class Authentication {
         return false;
     }
 
+    /**
+     * logIn method is used when the user is trying to log in
+     * will compare password from db to the entered password
+     * @param WIDTH of the next scene that will be displayed
+     * @param HEIGHT of the next scene that will be displayed
+     */
     public static void logIn(double WIDTH, double HEIGHT) {
         String username = LogIn.getUserName();
         String password = LogIn.getPassword();

@@ -27,7 +27,6 @@ import java.util.TimerTask;
  * The LiveChatComponents class includes the different methods
  * and JavaFX code in order to implement the livechat.
  *
- * @author maxto
  */
 
 public class LiveChatComponents {

@@ -26,7 +26,6 @@ import java.io.File;
 /**
  * Signup Scene where user can register
  *
- * @author zuimran
  */
 public class SignUp extends Scenes {
     //UI initialize object variables
