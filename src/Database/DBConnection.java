@@ -692,9 +692,8 @@ public class DBConnection {
         ResultSet res = null;
         try{
             con = HikariCP.getCon();
-            String query = "update GAME set correctGuess = 1 where userID=?";
+            String query = "update GAME set correctGuess = 1 where userID=" + userID;
             prepStmt = con.prepareStatement(query);
-            prepStmt.setInt(1, userID);
             prepStmt.executeUpdate(query);
         }catch(SQLException e){
             e.printStackTrace();
