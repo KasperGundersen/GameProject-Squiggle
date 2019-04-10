@@ -1,25 +1,15 @@
 package Scenes;
 
-import Components.UserInfo;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.Text;
 
 import java.io.File;
-import java.net.URL;
-
-import static css.Css.selectorButton;
 
 /**
  * Abstract class that makes the foundation of all the scenes

@@ -1,8 +1,6 @@
 package Scenes;
 
-import Components.GameLobbyComponents.LiveChatComponents;
-import Database.DBConnection;
-import css.Css;
+import CSS.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

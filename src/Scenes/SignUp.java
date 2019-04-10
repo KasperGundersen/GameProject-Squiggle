@@ -1,23 +1,15 @@
 package Scenes;
 
 import Components.Authentication;
-import Components.Email;
 import Components.Toast;
-import Components.UserInfo;
-import com.sun.tools.javac.Main;
-import css.Css;
-import javafx.collections.ObservableList;
+import CSS.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.control.Tooltip;
 
 import java.io.File;

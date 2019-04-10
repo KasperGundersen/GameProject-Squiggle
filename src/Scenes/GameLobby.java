@@ -1,14 +1,9 @@
 package Scenes;
 
-import Components.GameLobbyComponents.AvatarComponents;
 import Components.GameLobbyComponents.GameLogicComponents;
-import Components.GameLobbyComponents.LiveChatComponents;
-import Components.Threads.Music;
-import Components.Threads.Timers;
 import Database.DBConnection;
-import css.Css;
+import CSS.Css;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;

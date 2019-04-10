@@ -1,13 +1,11 @@
 package Components.GameLobbyComponents;
 import Components.Player;
 import Database.DBConnection;
-import css.Css;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;

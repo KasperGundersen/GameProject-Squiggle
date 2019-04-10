@@ -3,7 +3,7 @@ package Scenes;
 import Components.Player;
 import Components.UserInfo;
 import Database.DBConnection;
-import css.Css;
+import CSS.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -11,10 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**

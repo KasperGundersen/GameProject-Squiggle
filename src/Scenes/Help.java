@@ -1,26 +1,18 @@
 package Scenes;
 
-import Database.DBConnection;
-import css.Css;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import CSS.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.management.remote.SubjectDelegationPermission;
-import java.io.File;
 /**
  * Class that opens a window where you can read the user manual
  */

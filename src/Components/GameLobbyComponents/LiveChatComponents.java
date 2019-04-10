@@ -3,22 +3,18 @@ package Components.GameLobbyComponents;
 import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
-import css.Css;
-import javafx.application.Platform;
+import CSS.Css;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 

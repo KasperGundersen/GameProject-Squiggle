@@ -24,6 +24,10 @@ public class GameLogicComponents {
     public static int gameTime = 95;
     private static int currentRound = 1;
 
+    /**
+     * Gets the current round number
+     * @return current round
+     */
     public static int getCurrentRound() {
         return currentRound;
     }

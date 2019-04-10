@@ -1,12 +1,8 @@
-package css;
+package CSS;
 
 
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 
 import java.io.File;
 

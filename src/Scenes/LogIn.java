@@ -1,10 +1,9 @@
 package Scenes;
 
 import Components.Authentication;
-import Components.Threads.Music;
 import Components.UserInfo;
 import Database.DBConnection;
-import css.Css;
+import CSS.Css;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
