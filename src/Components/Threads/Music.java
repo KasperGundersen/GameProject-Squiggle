@@ -7,10 +7,10 @@ import java.io.File;
 
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
+/**
+ * Class containing methods for playing and stopping music
+ */
 public class Music {
-    /**
-     * Class containing methods for playing and stopping music
-     */
 
     private static Task task;
     private static File file;
