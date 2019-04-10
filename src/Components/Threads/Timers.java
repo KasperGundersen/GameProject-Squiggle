@@ -8,8 +8,6 @@ import Components.Toast;
 import Components.UserInfo;
 import Database.DBConnection;
 import Scenes.MainScene;
-import javafx.concurrent.Service;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -20,18 +18,26 @@ import static Components.GameLobbyComponents.CanvasComponents.updateImage;
 import static Components.GameLobbyComponents.TimerComponent.setTimerText;
 import static Components.GameLobbyComponents.TimerComponent.timeRemaining;
 
+/**
+ * Static class for the game timer
+ */
 public class Timers {
 
     public static Timer heartBeat;
     private static boolean readyReset = false;
     private static AtomicBoolean start = new AtomicBoolean();
 
+    /**
+     * Method that starts the game's timer
+     */
     public static void startHeartBeat() {
         start.set(true);
-        // start = true;
         heartBeat();
     }
 
+    /**
+     * The actual heartbeat of the game, updates drawing, player list, and counts down
+     */
     private static void heartBeat(){
         heartBeat = new Timer();
         TimerTask task = new TimerTask() {
@@ -78,7 +84,6 @@ public class Timers {
                         }
                         GameLogicComponents.reset();
                         readyReset = false;
-                        //gameDone = false;
                     }
                 }
             }
@@ -89,9 +94,11 @@ public class Timers {
         }
     }
 
+    /**
+     * Method that stops the timer
+     */
     public static void stopHeartBeat() {
         start.set(false);
-        // start = false;
         if (heartBeat != null) {
             heartBeat.cancel();
             heartBeat.purge();

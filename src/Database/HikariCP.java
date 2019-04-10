@@ -5,10 +5,16 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The connection pool used for the game. HikariCP
+ */
 public class HikariCP {
 
     private static HikariDataSource ds;
 
+    /**
+     * Configuration of the connection pool
+     */
     static{
 
         HikariConfig config = new HikariConfig();
