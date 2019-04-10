@@ -13,8 +13,6 @@ public class PointSystem {
     private static int amtCorrect;
 
 
-    //1,2,3 get points, and everybody who guess correct.
-    // input is round result, then the DB is updated with new totScore
     /**
      * Gives points to the player who guessing
      */
