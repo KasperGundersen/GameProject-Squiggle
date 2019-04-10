@@ -49,19 +49,38 @@ public class Options extends Scenes {
         Css.setStyle(musicLabel);
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
+
+        Label partyModeLabel = new Label("Party mode");
+        Css.setStyle(partyModeLabel);
+        grid.add(partyModeLabel, 0,4);
+        CheckBox partyModeBox = new CheckBox();
+
         if (Music.audio.isPlaying()) {
             musicCheckBox.setSelected(true);
         } else {
             musicCheckBox.setSelected(false);
         }
         grid.add(musicCheckBox, 1,3);
+        grid.add(partyModeBox,1,4);
         musicCheckBox.setOnAction(e -> {
             if (musicCheckBox.isSelected()) {
-                Music.playMusic();
+                partyModeBox.setSelected(false);
+                Music.stopMusic();
+                Music.playMusic(0);
             } else {
                 Music.stopMusic();
             }
         });
+        partyModeBox.setOnAction(e -> {
+            if (partyModeBox.isSelected()) {
+                musicCheckBox.setSelected(false);
+                Music.stopMusic();
+                Music.playMusic(1);
+            } else {
+                Music.stopMusic();
+            }
+        });
+
 
         Button submitButton = new Button("Submit");
         submitButton.setPrefWidth(100);
@@ -72,7 +91,7 @@ public class Options extends Scenes {
 
         });
 
-        grid.add(submitButton, 0,4, 2,1);
+        grid.add(submitButton, 0,5, 2,1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 

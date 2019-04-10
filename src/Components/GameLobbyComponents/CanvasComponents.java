@@ -104,7 +104,7 @@ public class CanvasComponents {
         cp = new ColorPicker();
         cp.setValue(Color.BLACK);
         Css.setStyle(cp);
-        hb.getChildren().addAll(leaveButton,leave, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4, spacer, optionButton);
+        hb.getChildren().addAll(leaveButton,leave, draw, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4, spacer, optionButton);
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
 

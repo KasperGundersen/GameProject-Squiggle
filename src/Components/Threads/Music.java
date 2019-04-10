@@ -13,13 +13,22 @@ public class Music {
      */
 
     private static Task task;
-    private static final File file = new File("resources/music/music1.wav");
-    public static final AudioClip audio = new AudioClip(file.toURI().toString());
+    private static File file;
+    private static File file2;
+
+    public static AudioClip audio;
 
     /**
      * Method which plays music in its own separate thread
      */
-    public static void playMusic() {
+    public static void playMusic(int i) {
+        if (i == 0) {
+            file = new File("resources/music/music1.wav");
+        } else {
+            file = new File("resources/music/music.wav");
+        }
+        audio = new AudioClip(file.toURI().toString());
+
         task = new Task() {
             @Override
             protected Object call() throws Exception {
