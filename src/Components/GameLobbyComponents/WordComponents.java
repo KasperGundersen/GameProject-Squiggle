@@ -35,6 +35,14 @@ public class WordComponents {
     }
 
     /**
+     * Sets a word and is only for test purposes as the other methods only gives a set of random words
+     * @param w sets the word we want
+     */
+    public static void setWord(String w){
+        word = w;
+    }
+
+    /**
      * Displays the active word
      * @return the active word formated to the game
      */

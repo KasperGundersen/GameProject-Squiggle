@@ -10,6 +10,8 @@ import java.sql.Connection;
 public class PointSystem {
     private int players = DBConnection.getAmtPlayer();
     private static int oldPoints = DBConnection.getPoints();
+    private static int amtCorrect;
+
 
     /**
      * Gives points to the player who guessing

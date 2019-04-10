@@ -1,4 +1,8 @@
 import Components.Encryptor;
+import Components.GameLobbyComponents.GameLogicComponents;
+import Components.GameLobbyComponents.LiveChatComponents;
+import Components.GameLobbyComponents.WordComponents;
+import Components.PointSystem;
 import Components.UserInfo;
 import Database.DBConnection;
 import org.junit.jupiter.api.*;
@@ -12,6 +16,7 @@ public class JUnit_test {
     public static void setUpClass() throws Exception {
         // Create objects of the classes that are to be tested
         UserInfo test = new UserInfo();
+        DBConnection db = new DBConnection();
     }
 
     @AfterAll
@@ -100,4 +105,64 @@ public class JUnit_test {
         int expResult = 0;
         assertEquals(expResult, test);
     }
+
+    @Test
+    public void checkWordTest(){
+        String word = "test";
+        WordComponents.setWord(word);
+        boolean test = LiveChatComponents.checkWord(word);
+        boolean expResult = true;
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void wrongWordTest(){
+        WordComponents.setWord("Test");
+        boolean test = LiveChatComponents.checkWord("Wrong");
+        boolean expResult = false;
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void getCurrentRoundTest(){
+        int test = GameLogicComponents.getCurrentRound();
+        int expResult = 1;
+        assertEquals(expResult, 1);
+    }
+
+    @Test
+    public void setCurrentRoundTest(){
+        GameLogicComponents.setCurrentRound(5);
+        int test = GameLogicComponents.getCurrentRound();
+        int expResult = 5;
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void incrementCurrentRoundTest(){
+        GameLogicComponents.setCurrentRound(3);
+        GameLogicComponents.incrementRoundCounter();
+        int test = GameLogicComponents.getCurrentRound();
+        int expResult = 4;
+        assertEquals(expResult, test);
+    }
+
+    @Test
+    public void pointTest(){
+        if(DBConnection.getLoggedIn("test")){
+            return;
+        }else{
+            DBConnection.setLoggedIn("test",1);
+        }
+        UserInfo.setUserName("test");
+        int userid = DBConnection.getUserID("test");
+        DBConnection.setCorrectGuess(userid);
+        PointSystem.setPointsGuesser();
+        int test = DBConnection.getPointsByUserID(userid);
+        int expResult = 150;
+        assertEquals(expResult,test);
+        DBConnection.setLoggedIn("test",0);
+    }
+
+
 }
