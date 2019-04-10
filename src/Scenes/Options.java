@@ -50,10 +50,10 @@ public class Options extends Scenes {
         grid.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
 
-        Label partyModeLabel = new Label("Party mode");
-        Css.setStyle(partyModeLabel);
-        grid.add(partyModeLabel, 0,4);
-        CheckBox partyModeBox = new CheckBox();
+        Label sickoModeLabel = new Label("SICKO MODE");
+        Css.setStyle(sickoModeLabel);
+        grid.add(sickoModeLabel, 0,4);
+        CheckBox sickoModeCheckBox = new CheckBox();
 
         if (Music.audio.isPlaying()) {
             musicCheckBox.setSelected(true);
@@ -61,18 +61,18 @@ public class Options extends Scenes {
             musicCheckBox.setSelected(false);
         }
         grid.add(musicCheckBox, 1,3);
-        grid.add(partyModeBox,1,4);
+        grid.add(sickoModeCheckBox,1,4);
         musicCheckBox.setOnAction(e -> {
             if (musicCheckBox.isSelected()) {
-                partyModeBox.setSelected(false);
+                sickoModeCheckBox.setSelected(false);
                 Music.stopMusic();
                 Music.playMusic(0);
             } else {
                 Music.stopMusic();
             }
         });
-        partyModeBox.setOnAction(e -> {
-            if (partyModeBox.isSelected()) {
+        sickoModeCheckBox.setOnAction(e -> {
+            if (sickoModeCheckBox.isSelected()) {
                 musicCheckBox.setSelected(false);
                 Music.stopMusic();
                 Music.playMusic(1);

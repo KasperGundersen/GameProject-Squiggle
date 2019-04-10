@@ -25,7 +25,7 @@ public class Music {
         if (i == 0) {
             file = new File("resources/music/music1.wav");
         } else {
-            file = new File("resources/music/music.wav");
+            file = new File("resources/music/SickoMode.wav");
         }
         audio = new AudioClip(file.toURI().toString());
 
