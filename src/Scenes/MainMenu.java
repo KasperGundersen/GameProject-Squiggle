@@ -125,6 +125,7 @@ public class MainMenu extends Scenes{
         myPageButton.setOnAction(e -> {
             MainScene.mp = new MyPage(super.getWIDTH(), super.getHEIGHT());
             MainScene.setScene(MainScene.mp);
+            MainScene.mm = null;
         });
     }
 

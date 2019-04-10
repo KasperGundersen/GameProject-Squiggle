@@ -3,6 +3,7 @@ package Scenes;
 import Components.Authentication;
 import Components.UserInfo;
 import Database.DBConnection;
+import com.sun.tools.javac.Main;
 import css.Css;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -89,15 +90,19 @@ public class MyPage extends Scenes{
         // Current avatar
         Label currentAvatarLabel = new Label("Current avatar:");
         Css.setStyle(currentAvatarLabel);
-        currentAvatarLabel.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-        gridPane.add(currentAvatarLabel, 0, 4, 2, 1);
+        gridPane.add(currentAvatarLabel, 1, 6, 3, 1);
+        gridPane.setMargin(currentAvatarLabel, new Insets(0, 0, 150, 300));
         gridPane.setHalignment(currentAvatarLabel, HPos.LEFT);
+        gridPane.setValignment(currentAvatarLabel,VPos.BOTTOM);
+
         Image avatar = getAvatar(avatarID);
         ImageView avatarImage = new ImageView(avatar);
-        gridPane.add(avatarImage, 0, 5, 2, 1);
+        gridPane.add(avatarImage, 1, 6, 2, 1);
         avatarImage.setFitHeight(150);
         avatarImage.setFitWidth(150);
+        gridPane.setMargin(avatarImage,new Insets(0,0,0,300));
         gridPane.setHalignment(avatarImage, HPos.LEFT);
+        gridPane.setValignment(avatarImage, VPos.BOTTOM);
 
         // Avatar selection
         // Select new avatar label
@@ -105,23 +110,23 @@ public class MyPage extends Scenes{
         Css.setHeaderStyle(newAvatar);
         gridPane.add(newAvatar, 1, 0, 3, 1);
         gridPane.setHalignment(newAvatar, HPos.LEFT);
-        gridPane.setMargin(newAvatar, new Insets(100,0,0,495));
+        gridPane.setMargin(newAvatar, new Insets(90,0,0,490));
 
         //Add ImageView to show avatar
         ImageView avatarView = new ImageView(getAvatar(avatarID));
-        avatarView.setFitWidth(360);
-        avatarView.setFitHeight(360);
+        avatarView.setFitWidth(340);
+        avatarView.setFitHeight(340);
         gridPane.add(avatarView, 1, 0, 3, 5);
         gridPane.setHalignment(avatarView, HPos.LEFT);
         gridPane.setValignment(avatarView, VPos.TOP);
-        gridPane.setMargin(avatarView, new Insets(163, 0, 0, 440));
+        gridPane.setMargin(avatarView, new Insets(148, 0, 0, 460));
 
         //Add button to go left
         Button leftButton = new Button("<");
         gridPane.add(leftButton, 1,2, 3, 5);
         GridPane.setHalignment(leftButton, HPos.LEFT);
         gridPane.setValignment(leftButton, VPos.CENTER);
-        GridPane.setMargin(leftButton, new Insets(0,120,0,440));
+        GridPane.setMargin(leftButton, new Insets(0,120,0,453));
         Css.selectorButton(leftButton);
 
         //Add button to go right
@@ -129,7 +134,7 @@ public class MyPage extends Scenes{
         gridPane.add(rightButton, 1,2, 3, 5);
         GridPane.setHalignment(rightButton, HPos.LEFT);
         gridPane.setValignment(rightButton, VPos.CENTER);
-        GridPane.setMargin(rightButton, new Insets(0,0,0,755));
+        GridPane.setMargin(rightButton, new Insets(0,0,0,765));
         Css.selectorButton(rightButton);
 
         // Update current avatar button
@@ -139,19 +144,19 @@ public class MyPage extends Scenes{
         buttonChoose.setPrefWidth(150);
         gridPane.add(buttonChoose, 3, 7, 2, 1);
         gridPane.setHalignment(buttonChoose, HPos.LEFT);
-        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 120));
+        gridPane.setMargin(buttonChoose, new Insets(0, 0, 0, 345));
 
         // Back button
         backButton = new Button("Back");
         Css.setStyle(backButton);
         backButton.setPrefHeight(40);
         backButton.setPrefWidth(80);
-        gridPane.add(backButton, 0, 6, 1, 1);
+        gridPane.add(backButton, 0, 7, 1, 1);
         gridPane.setHalignment(backButton, HPos.LEFT);
 
         VBox winsvbox = wins();
-        gridPane.add(winsvbox, 0,1,3,3);
-        gridPane.setMargin(winsvbox, new Insets(100,0,0,215));
+        gridPane.add(winsvbox, 0,2,3,3);
+        gridPane.setMargin(winsvbox, new Insets(190,0,0,0));
 
         // Button action
         buttonChangePassword.setOnAction(e -> {
@@ -178,6 +183,7 @@ public class MyPage extends Scenes{
         });
 
         backButton.setOnAction(e -> {
+            MainScene.mm = new MainMenu(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.mm);
             MainScene.mp = null;
         });
@@ -269,9 +275,9 @@ public class MyPage extends Scenes{
         VBox vbox = new VBox(5);
 
         Label gamesPlayed = new Label("Games Played:     " + DBConnection.getGamesPlayed());
-        Css.setHeaderStyle(gamesPlayed);
+        Css.setStyle(gamesPlayed);
         Label gamesWon = new Label("Games Won:         " + DBConnection.getGamesWon());
-        Css.setHeaderStyle(gamesWon);
+        Css.setStyle(gamesWon);
 
         double winPercentage;
         double gplayed = (double)DBConnection.getGamesPlayed();
@@ -283,7 +289,7 @@ public class MyPage extends Scenes{
         }
 
         Label winPercent = new Label("Win Percentage: " + String.format("%.0f", winPercentage) + "%");
-        Css.setHeaderStyle(winPercent);
+        Css.setStyle(winPercent);
         vbox.getChildren().addAll(gamesPlayed, gamesWon, winPercent);
         return vbox;
     }

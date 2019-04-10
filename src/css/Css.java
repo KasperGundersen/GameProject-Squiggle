@@ -80,7 +80,7 @@ public class Css {
                 "-fx-font-weight: bold ; " +
                 "-fx-font-size: 3em; " +
                 "-fx-text-fill: white; " +
-                "-fx-font-family: ariel;");
+                "-fx-font-family: ariel; -fx-cursor: hand");
         button.setPrefHeight(35);
         button.setPrefWidth(25);
     }
@@ -102,7 +102,7 @@ public class Css {
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
                 "     -fx-pref-height: 20px;\n" +
-                "    -fx-font-size: 1.1em;");
+                "    -fx-font-size: 1.1em;-fx-cursor: hand;");
     }
 
     /**
@@ -122,7 +122,7 @@ public class Css {
                 "    -fx-font-weight: bold;\n" +
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
-                "    -fx-font-size: 1.1em;");
+                "    -fx-font-size: 1.1em; -fx-cursor: hand");
     }
 
     /**
@@ -142,6 +142,6 @@ public class Css {
                 "    -fx-font-weight: bold;\n" +
                 "    -fx-font-family: \"Cooper Black\";\n" +
                 "     -fx-text-fill: white;\n" +
-                "    -fx-font-size: 1.1em;");
+                "    -fx-font-size: 1.1em;-fx-cursor: hand");
     }
 }
