@@ -14,17 +14,19 @@ public class Music {
 
     private static Task task;
     private static File file;
-    private static File file2;
-
+    private static int choosenSong;
     public static AudioClip audio;
 
     /**
      * Method which plays music in its own separate thread
      */
-    public static void playMusic(int i) {
-        if (i == 0) {
+    public static void playMusic(int song) {
+        if (song == 0) {
+            choosenSong = 0;
             file = new File("resources/music/music1.wav");
-        } else {
+        }
+        if (song == 1) {
+            choosenSong = 1;
             file = new File("resources/music/SickoMode.wav");
         }
         audio = new AudioClip(file.toURI().toString());
@@ -41,6 +43,14 @@ public class Music {
         };
         Thread thread = new Thread(task);
         thread.start();
+    }
+
+    /**
+     * Method which returns the choosen song
+     * @return the choosen song
+     */
+    public static int getChoosenSong() {
+        return choosenSong;
     }
 
     /**

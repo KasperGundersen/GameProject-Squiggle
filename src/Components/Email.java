@@ -10,7 +10,6 @@ import java.util.Properties;
 /**
  * Email class for sending confirm email to registered users
  *
- * @author maxto
  */
 
 public class Email {

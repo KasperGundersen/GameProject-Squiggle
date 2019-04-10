@@ -8,6 +8,9 @@
 
 package Components;
 
+/**
+ * Player class containing information and method on each player
+ */
 public class Player implements Comparable<Player>{
     private String username;
     private int userID;
@@ -15,7 +18,7 @@ public class Player implements Comparable<Player>{
     private double points;
 
     /**
-     * Contructor
+     * Contructor of the player class
      *
      * @param username  The player's username
      * @param userID    The user's ID
