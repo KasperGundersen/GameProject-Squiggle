@@ -97,6 +97,12 @@ public class GameLogicComponents {
             };
             service.start();
         } else {
+            try {
+            Thread.sleep(2000);
+            }catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+
             stopHeartBeat();
             MainScene.rs = new Results(MainScene.getWIDTH(), MainScene.getHEIGHT());
             MainScene.setScene(MainScene.rs);
