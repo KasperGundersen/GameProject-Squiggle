@@ -50,15 +50,15 @@ public class Help extends Scenes{
         Text message = new Text("\n   Quick start:\n" +
                 "\n" +
                 "   1. The first thing you need to do is to register a new user. \n" +
-                "   You do this by clicking the “register new user” button. \n" +
+                "   You do this by clicking the 'register new user' button. \n" +
                 "   Then you fill out the textboxes with your personal information. \n" +
                 "   When you have registered your user, you will receive an email \n" +
                 "   verifying your new user.\n" +
                 "   2. Now you will be taken back to the log-in-page and can log in \n" +
                 "   with your new username and password.\n" +
                 "   3. You are now at the main menu. Here you can choose between \n" +
-                "   quitting, entering the “my page” or starting a new game.\n" +
-                "   4. When selecting the “Join Game” button, you will be sent to \n" +
+                "   quitting, entering the 'my page' or starting a new game.\n" +
+                "   4. When selecting the 'Join Game' button, you will be sent to \n" +
                 "   the drawing canvas which is your gaming arena. Here you can \n" +
                 "   play with your friends when they arrive at the drawing \n" +
                 "   canvas as well.\n" +
@@ -71,7 +71,7 @@ public class Help extends Scenes{
                 "   receive point.\n" +
                 "\n" +
                 "   Registration\n" +
-                "\n   When selecting the “register new user” button you enter the \n" +
+                "\n   When selecting the 'register new user' button you enter the \n" +
                 "   registration page. Here you need to register a username. The \n" +
                 "   username can be any word or number that is not already \n" +
                 "   registered or longer than 20 characters. Then you need to \n" +
@@ -90,7 +90,7 @@ public class Help extends Scenes{
                 "   application. In the options you can customize the application \n" +
                 "   to your desire. \n" +
                 "   You can change the background color and the font size.\n" +
-                "   In “My Page” you can se your username and email. Here you \n" +
+                "   In 'My Page' you can se your username and email. Here you \n" +
                 "   also have the choice to change your password. Your avatar is \n" +
                 "   also displayed at the page, and you can toggle thru the \n" +
                 "   different avatars and change if desired.\n" +

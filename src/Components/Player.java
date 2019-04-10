@@ -8,6 +8,9 @@
 
 package Components;
 
+/**
+ * Player class containing information and method on each player
+ */
 public class Player implements Comparable<Player>{
     private String username;
     private int userID;
