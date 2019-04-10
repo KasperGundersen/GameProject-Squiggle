@@ -48,7 +48,6 @@ public class CanvasComponents {
     private static ColorPicker cp;
     public static Canvas canvas;
     private static GraphicsContext gc;
-
     private static int WIDTH = 600, HEIGHT = 450;
     private static Color color = Color.rgb(244,244,244);
 

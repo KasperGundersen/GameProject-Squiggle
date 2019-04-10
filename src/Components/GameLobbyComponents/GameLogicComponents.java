@@ -68,14 +68,9 @@ public class GameLogicComponents {
                                 @Override
                                 public void run() {
                                     try{
-                                        System.out.println("DrawRound user: " + UserInfo.getDrawRound() + "Currrent round: " + GameLogicComponents.getCurrentRound());
                                         if (UserInfo.getDrawRound() != GameLogicComponents.getCurrentRound()) {
-                                            System.out.println("game "+(int)(DBConnection.getDrawTimer().getTime()));
-                                            System.out.println("now "+((int)(new Date().getTime()) - 2000));
                                             while (DBConnection.getDrawTimer().getTime() - new Date().getTime() <= 10000) {
                                             // while ((int)(DBConnection.getDrawTimer().getTime()) < (int)(new Date().getTime()) - 2000) {
-                                                System.out.println("Hei1");
-                                                System.out.println("Hei2");
                                             }
                                         }
                                         MainScene.gl = new GameLobby(MainScene.getWIDTH(), MainScene.getHEIGHT(), UserInfo.getDrawRound() == GameLogicComponents.getCurrentRound());
