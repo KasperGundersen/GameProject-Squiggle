@@ -25,6 +25,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 
 import javax.imageio.ImageIO;
@@ -95,10 +97,15 @@ public class CanvasComponents {
         Css.setStyle(optionButton);
 
 
+        Region leave = new Region();
+        hb.setHgrow(leave, Priority.ALWAYS);
+        Region spacer = new Region();
+        hb.setHgrow(spacer, Priority.ALWAYS);
+
         cp = new ColorPicker();
         cp.setValue(Color.BLACK);
         Css.setStyle(cp);
-        hb.getChildren().addAll(leaveButton, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4, optionButton);
+        hb.getChildren().addAll(leaveButton,leave, erase, cp, lineWidth1, lineWidth2, lineWidth3, lineWidth4, spacer, optionButton);
         hb.setPrefWidth(60);
         hb.setAlignment(Pos.CENTER);
 
