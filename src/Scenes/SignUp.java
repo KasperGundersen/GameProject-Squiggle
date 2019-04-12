@@ -240,8 +240,6 @@ public class SignUp extends Scenes {
             avatarView.setImage(super.getAvatar(avatarID));
         });
     }
-    ///////////////////Dead-Methods////////////////////////////////////////
-
     /**
      * Sets email error message visible or invisible
      * @param b sets visible, true, or invisible false

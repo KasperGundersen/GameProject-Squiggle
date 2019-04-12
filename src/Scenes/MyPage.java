@@ -28,10 +28,8 @@ import java.io.File;
 public class MyPage extends Scenes{
     private static Button backButton;
     private static Button buttonChoose;
-    private static Button buttonLobby;
     private static PasswordField newPassword;
     private static PasswordField repeatPassword;
-    private static ImageView chooseAvatar;
     private static Button buttonChangePassword;
     private static String fileLocation = "resources/avatars/";
 

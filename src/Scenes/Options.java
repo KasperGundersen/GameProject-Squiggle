@@ -16,7 +16,7 @@ import java.io.File;
  * Class that create and opens a popup window where you can turn on/off the music
  */
 public class Options extends Scenes {
-    private GridPane grid;
+    private GridPane gridPane;
 
     /**
      * Constructor of the Options page
@@ -35,22 +35,22 @@ public class Options extends Scenes {
         Stage window = new Stage();
         window.setTitle("Options");
 
-        grid = new GridPane();
-        grid.setAlignment(Pos.TOP_CENTER);
+        gridPane = new GridPane();
+        gridPane.setAlignment(Pos.TOP_CENTER);
 
         Label optionsLabel = new Label("Options");
         Css.setHeaderStyle(optionsLabel);
         optionsLabel.setPadding(new Insets(10,10,10,10));
-        grid.add(optionsLabel, 0,0);
+        gridPane.add(optionsLabel, 0,0);
 
         Label musicLabel = new Label("Music");
         Css.setStyle(musicLabel);
-        grid.add(musicLabel, 0,3);
+        gridPane.add(musicLabel, 0,3);
         CheckBox musicCheckBox = new CheckBox();
 
         Label sickoModeLabel = new Label("SICKO MODE");
         Css.setStyle(sickoModeLabel);
-        grid.add(sickoModeLabel, 0,4);
+        gridPane.add(sickoModeLabel, 0,4);
         CheckBox sickoModeCheckBox = new CheckBox();
 
         if (Music.audio.isPlaying()) {
@@ -65,8 +65,8 @@ public class Options extends Scenes {
         } else {
             musicCheckBox.setSelected(false);
         }
-        grid.add(musicCheckBox, 1,3);
-        grid.add(sickoModeCheckBox,1,4);
+        gridPane.add(musicCheckBox, 1,3);
+        gridPane.add(sickoModeCheckBox,1,4);
         musicCheckBox.setOnAction(e -> {
             if (musicCheckBox.isSelected()) {
                 sickoModeCheckBox.setSelected(false);
@@ -96,7 +96,7 @@ public class Options extends Scenes {
 
         });
 
-        grid.add(submitButton, 0,5, 2,1);
+        gridPane.add(submitButton, 0,5, 2,1);
         GridPane.setHalignment(submitButton, HPos.CENTER);
         GridPane.setMargin(submitButton, new Insets(20,0,20,0));
 
@@ -108,9 +108,9 @@ public class Options extends Scenes {
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         Background background = new Background(backgroundimage);
-        grid.setBackground(background);
+        gridPane.setBackground(background);
 
-        Scene scene = new Scene(grid, 300, 300);
+        Scene scene = new Scene(gridPane, 300, 300);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(scene);
         window.show();

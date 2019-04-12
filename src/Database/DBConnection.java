@@ -46,24 +46,6 @@ public class DBConnection {
         }
     }
 
-    /**
-     * Updates the time of the newest game
-     */
-    public static void changeTime() {
-        Connection con = null;
-        PreparedStatement prepStmt = null;
-        ResultSet res = null;
-        try {
-            con = HikariCP.getCon();
-            String query = "update DRAW set timer = now() order by gameID limit 1";
-            prepStmt = con.prepareStatement(query);
-            prepStmt.executeUpdate();
-        }catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-            closeConnection(con, prepStmt,res);
-        }
-    }
 
     /**
      * Method which registers a new user

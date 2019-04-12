@@ -69,15 +69,6 @@ public class UserInfo {
     }
 
     /**
-     * Gets the boolean-value of drawing player
-     * @return true or false depending on the status of the player in-game
-
-    public static boolean getDrawing() {
-        return drawing;
-    }
-    */
-
-    /**
      * Gets the user email of the user
      * @return the email of the user
      */
