@@ -4,12 +4,6 @@ import Components.Threads.Music;
 import Database.DBConnection;
 import Scenes.*;
 
-import javax.security.auth.login.LoginContext;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.SQLSyntaxErrorException;
-import java.sql.Statement;
-
 /**
  * Authentication class for authenticating username and password for each user
  *

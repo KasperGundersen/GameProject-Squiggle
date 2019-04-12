@@ -1,11 +1,7 @@
 package Scenes;
 
-import Components.Threads.Music;
-import Components.Threads.Timers;
-import Components.Toast;
 import Components.UserInfo;
 import Database.DBConnection;
-import com.sun.tools.javac.Main;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;

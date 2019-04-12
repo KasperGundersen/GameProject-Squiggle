@@ -2,8 +2,6 @@ package Components;
 
 import Database.DBConnection;
 
-import java.sql.Connection;
-
 /**
  * Class containing the different methods which involves the point system
  */

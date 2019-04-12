@@ -1,7 +1,6 @@
 package Components;
 
 import Database.DBConnection;
-import javafx.scene.paint.Color;
 
 /**
  * UserInfo class includes information regarding the user running the program

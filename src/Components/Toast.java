@@ -1,9 +1,5 @@
 package Components;
 
-import Components.GameLobbyComponents.GameLogicComponents;
-import Components.GameLobbyComponents.LiveChatComponents;
-import Scenes.GameLobby;
-import Scenes.MainScene;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;

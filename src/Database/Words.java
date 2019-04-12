@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.sql.Connection;
-import java.util.ArrayList;
 
 /**
  * Class that updates the wordlist in the database with word from a txt document
